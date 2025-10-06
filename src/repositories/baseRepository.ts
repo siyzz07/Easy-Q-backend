@@ -4,7 +4,9 @@ import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseI
 class BaseRepository<T extends Document>
   implements IBaseRepositoryInterface<T>
 {
+
   private _Model: Model<T>;
+  
   constructor(model: Model<T>) {
     this._Model = model;
   }

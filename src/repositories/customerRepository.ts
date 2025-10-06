@@ -24,4 +24,17 @@ export class CustomerRepository
     let customerCheck = await this.findByEmail(email);
     return !!customerCheck;
   }
+
+  async customerDataByEmail(email: string): Promise<ICustomer | null> {
+    
+    let  customer = await this.findByEmail(email)
+    return customer
+  }
+
+
+  async customerDataById(id: string): Promise<ICustomer | null> {
+    
+    let customer =await this.findById(id)
+    return  customer
+  }
 }
