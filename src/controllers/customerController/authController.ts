@@ -1,0 +1,124 @@
+import { Request, Response } from "express";
+import { ICustomerInterface } from "../../interface/serviceInterface/customerServiceInterface";
+import { log } from "console";
+import { runInNewContext } from "vm";
+import { MessageEnum } from "../../enums/messagesEnum";
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
+
+class CustomerAuth {
+  private _authService: ICustomerInterface;
+
+  constructor(authService: ICustomerInterface) {
+    this._authService = authService;
+  }
+
+  addCustomer = async (req: Request, res: Response) => {
+    try {
+      const data = req.body;
+
+      const response = await this._authService.verifyEmail(data);
+
+      res.status(StatusCodeEnum.OK).json(MessageEnum.CUSTOMER_REGISTERED);
+    } catch (error: any) {
+      if (error.message == MessageEnum.CUSTOMER_ALREADY_EXISTS) {
+        res
+          .status(StatusCodeEnum.CONFLICT)
+          .json(MessageEnum.CUSTOMER_ALREADY_EXISTS);
+      }
+    }
+  };
+
+  addVerifiedCustomer = async (req: Request, res: Response) => {
+    try {
+      const data = req.body;
+      const response = await this._authService.addCustomer(data);
+
+      if (response) {
+        res.status(StatusCodeEnum.OK).json(MessageEnum.CUSTOMER_REGISTERED);
+      } else {
+        res
+          .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+          .json(MessageEnum.EMAIL_VERIFY_SUCCESS);
+      }
+    } catch (error: any) {
+      if (error.message == MessageEnum.CUSTOMER_ALREADY_EXISTS) {
+        res
+          .status(StatusCodeEnum.CONFLICT)
+          .json(MessageEnum.CUSTOMER_ALREADY_EXISTS);
+      }
+    }
+  };
+
+  customerLogin = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const data = req.body;
+
+      const response = await this._authService.customerLoginService(data);
+
+      if(response){
+     res.cookie("CustomerJwt", response.refreshToken, {
+        httpOnly: true,
+        secure: false,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+       res.status(StatusCodeEnum.OK).json({
+        message: MessageEnum.CUSTOMER_LOGIN_SUCCESS,
+        accesstoken: response.accessToken
+
+      });
+
+    }
+      
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message == MessageEnum.CUSTOMER_NOT_FOUND) {
+          res
+            .status(StatusCodeEnum.NOT_FOUND)
+            .json(MessageEnum.CUSTOMER_NOT_FOUND);
+        } else if (error.message === MessageEnum.INVALID_CREDENTIALS) {
+          res
+            .status(StatusCodeEnum.BAD_REQUEST)
+            .json(MessageEnum.INVALID_CREDENTIALS);
+        } else {
+          console.log("customer login Error", error.message);
+        }
+      } else {
+        console.log("customer login errror ", error);
+      }
+    }
+  };
+
+
+  
+//---------------------------------------------------------------------------update customer refresh token
+   refreshToken = async (req: Request, res: Response): Promise<void> => {
+        try {
+          const refreshToken = req.cookies.VendorJwt;
+
+          if (!refreshToken) {
+            res.status(400).json({ message: "Refresh token missing" });
+            return;
+          }
+
+          const accessToken = await this._authService.updateToken(refreshToken);
+
+          res.status(200).json({ accessToken });
+        } catch (error: any) {
+          switch (error.message) {
+            case "TOKEN_EXPIRED":
+              res.status(401).json({ message: MessageEnum.TOKEN_EXPIRED });
+              break;
+            case "TOKEN_INVALID":
+              res.status(401).json({ message: MessageEnum.TOKEN_INVALID });
+              break;
+            case "TOKEN_MISSING":
+              res.status(400).json({ message: MessageEnum.TOKEN_MISSING });
+              break;
+            default:
+              res.status(500).json({ message: "server error" });
+          }
+        }
+      };
+}
+
+export default CustomerAuth;
