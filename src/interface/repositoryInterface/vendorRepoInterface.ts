@@ -8,6 +8,8 @@ export interface IVendorRepo {
     vendorData(email:string):Promise<IVendor|any>
     vendorDatabyId(id:string) :Promise<IVendor|any>
     findByIdAndUpdate (id:string,data:object) :Promise<any>
+    resetPassword (email:string,passowrd:string):Promise<void>
+   
 
 
 }

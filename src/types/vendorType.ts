@@ -16,7 +16,7 @@ export interface IVendor {
   closeAt?: string;
   workingDays?: string;
   cordinates?: IZone;
-  profileImage?: string;
+  ProfileImage?: string;
   images?: string[];
   isActive?: boolean;
   planExpreData?: Date;

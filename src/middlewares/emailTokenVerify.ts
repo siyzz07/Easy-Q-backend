@@ -11,14 +11,22 @@ export const emailVerifyTokenMIddleware = (
   next: NextFunction
 ) => {
   try {
-    let token: string = req.body.token;
+    const { token, ...data } = req.body as {
+      token: string;
+      [key: string]: any;
+    };
 
     if (!token) {
       throw new Error(MessageEnum.EMAIL_TOKEN_MISSING);
     }
 
-    const decode = Jwt.verify(token, JWT_SECRET_KEY);
-    req.body = decode;
+    const decoded = Jwt.verify(token, JWT_SECRET_KEY);
+
+    if (typeof decoded === "string") {
+      throw new Error(MessageEnum.EMAIL_TOKEN_INVALID);
+    }
+
+    req.body = { ...data, ...decoded };
     next();
   } catch (error: any) {
     if (error.message == MessageEnum.EMAIL_TOKEN_MISSING) {
@@ -28,7 +36,7 @@ export const emailVerifyTokenMIddleware = (
     } else if (error.name === "TokenExpiredError") {
       console.log("Token is expired");
       res
-        .status(StatusCodeEnum.UNAUTHORIZED)
+        .status(StatusCodeEnum.BAD_REQUEST)
         .json(MessageEnum.EMAIL_TOKEN_EXPIRED);
     } else if (error.name === "JsonWebTokenError") {
       console.log("Token is invalid");

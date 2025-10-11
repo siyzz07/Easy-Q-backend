@@ -34,7 +34,7 @@ const vendorShecma = new Schema<IVendor>(
     workingDays: {
       type: String,
     },
-    profileImage: {
+    ProfileImage: {
       type: String,
     },
     isActive: {

@@ -1,4 +1,4 @@
-import { log } from "node:console";
+
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IAdminRepo } from "../../interface/repositoryInterface/adminRepoInterface";
 import { IAdminAuthServiceInterface } from "../../interface/serviceInterface/adminServiceInterface";
@@ -7,6 +7,7 @@ import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, refreshToken } from "../../utils/jwt";
 import { emit } from "node:process";
 import Jwt, { JsonWebTokenError, JwtPayload, TokenExpiredError } from "jsonwebtoken";
+import { IJwtPayload } from "../../types/common-types";
 
 export class AuthService implements IAdminAuthServiceInterface {
   private _adminRepository: IAdminRepo;
@@ -21,22 +22,30 @@ export class AuthService implements IAdminAuthServiceInterface {
     try {
       const { email, password } = data;
 
-      let adminExist = await this._adminRepository.checkAdminExist(email);
+      const adminExist = await this._adminRepository.checkAdminExist(email);
 
       if (!adminExist) {
         throw new Error(MessageEnum.ADMIN_NOT_FOUND);
       }
-      let adminData: any = await this._adminRepository.adminDataByEmail(email);
+      const adminData: any = await this._adminRepository.adminDataByEmail(email);
 
-      let mathcPassword = await comparePassword(password, adminData.password);
+      const mathcPassword = await comparePassword(password, adminData.password);
 
       if (!mathcPassword) {
         throw new Error(MessageEnum.ADMIN_PASSWORD_INCORRECT);
       }
 
       if (adminData) {
-        let AccessToken: string = accessToken(adminData._id);
-        let RefreshToken: string = refreshToken(adminData._id);
+
+
+         const payload:IJwtPayload={
+             userId:adminData._id,
+             role:'Admin'
+         }
+
+
+        const AccessToken: string = accessToken(payload);
+        const RefreshToken: string = refreshToken(payload);
 
         return { accessToken: AccessToken, refreshToken: RefreshToken };
       }

@@ -12,14 +12,14 @@ export class AdminAtuhController {
 
   loginAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
-      let data = req.body;
+      const data = req.body;
 
-      let response = await this._atuhService.loginAdmin(data);
+      const response = await this._atuhService.loginAdmin(data);
       if (response) {
          res.cookie("AdminJwt", response.refreshToken, {
         httpOnly: true,
         secure: false,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: Number(process.env.REFRESH_TOKEN_EXPIRY)
       });
        res.status(StatusCodeEnum.OK).json({
         message: MessageEnum.ADMIN_LOGIN_SUCCESS,
@@ -52,13 +52,13 @@ export class AdminAtuhController {
           const refreshToken = req.cookies.AdminJwt
 
           if (!refreshToken) {
-            res.status(400).json({ message: "Refresh token missing" });
+            res.status(StatusCodeEnum.BAD_REQUEST).json({ message:MessageEnum.TOKEN_REFRESH_MISSING });
             return;
           }
 
           const accessToken = await this._atuhService.updateToken(refreshToken)
 
-          res.status(200).json({ accessToken });
+          res.status(StatusCodeEnum.OK).json({ accessToken });
 
         } catch (error: any) {
           switch (error.message) {

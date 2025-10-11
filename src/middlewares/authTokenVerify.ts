@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import Jwt, { JsonWebTokenError, JwtPayload } from "jsonwebtoken";
-import { log } from "node:console";
 import { StatusCodeEnum } from "../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../enums/messagesEnum";
 
@@ -10,7 +9,7 @@ export const verifyToken = (
   next: NextFunction
 ) => {
     
-    let token = req.header("Authorization")?.split(" ")[1];
+    const token = req.header("Authorization")?.split(" ")[1];
     
     
     if (!token) {

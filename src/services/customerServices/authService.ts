@@ -7,6 +7,7 @@ import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, generateJwtToken, refreshToken } from "../../utils/jwt";
 import { sendEmail } from "../../utils/nodeMailer";
 import Jwt, { JsonWebTokenError, JwtPayload, TokenExpiredError } from "jsonwebtoken";
+import { IJwtPayload } from "../../types/common-types";
 
 class AuthService implements ICustomerInterface {
   private _customerRepository: ICustomerRepo;
@@ -18,17 +19,17 @@ class AuthService implements ICustomerInterface {
   //----------------------------------------------------------------------------------------verify user email
   verifyEmail = async (values: ICustomer): Promise<void> => {
     try {
-      let { email, ...payload } = { ...values };
+      const { email, ...payload } = { ...values };
 
-      let exist = await this._customerRepository.checkCustomerExist(email);
+      const exist = await this._customerRepository.checkCustomerExist(email);
 
       if (exist) {
         throw new Error(MessageEnum.CUSTOMER_ALREADY_EXISTS);
       } else {
-        let token = generateJwtToken(values);
+        const token = generateJwtToken(values);
         await sendEmail(
           email,
-          `http://localhost:5173/customer/verify-email?token=${token}`
+          `${process.env.CUSTOMER_VERIFY_MAIL}?token=${token}`
         );
       }
     } catch (error: any) {
@@ -39,14 +40,14 @@ class AuthService implements ICustomerInterface {
 
   addCustomer = async (values: ICustomer): Promise<boolean> => {
     try {
-      let { password, email, name, phone } = { ...values };
+      const { password, email, name, phone } = { ...values };
 
-      let exist = await this._customerRepository.checkCustomerExist(email);
+      const exist = await this._customerRepository.checkCustomerExist(email);
 
       if (!exist) {
-        let hashedPassword = await hashPassword(password);
+        const hashedPassword = await hashPassword(password);
 
-        let data = {
+        const data = {
           name,
           phone,
           email,
@@ -55,7 +56,7 @@ class AuthService implements ICustomerInterface {
           password: hashedPassword,
         };
 
-        let response = await this._customerRepository.addNewCustomer(data);
+        const response = await this._customerRepository.addNewCustomer(data);
 
         if (response) {
           return true;
@@ -89,11 +90,11 @@ class AuthService implements ICustomerInterface {
         return;
       }
 
-      let customerData: any =
+      const customerData: any =
         await this._customerRepository.customerDataByEmail(email);
 
       if (customerData) {
-        let passwordMatch = await comparePassword(
+        const passwordMatch = await comparePassword(
           password,
           customerData.password
         );
@@ -103,8 +104,16 @@ class AuthService implements ICustomerInterface {
           return;
         }
 
-        let AccessToken: string = accessToken(customerData._id);
-        let RefreshToken: string = refreshToken(customerData._id);
+
+        const payload:IJwtPayload = {
+          userId:customerData._id,
+          role:'Customer'
+        }
+
+        const AccessToken: string = accessToken(payload);
+        const RefreshToken: string = refreshToken(payload);
+
+        
         return { accessToken: AccessToken, refreshToken: RefreshToken };
       }
     } catch (error: unknown) {
@@ -143,6 +152,53 @@ class AuthService implements ICustomerInterface {
         }
       }
     };
+
+
+    // ------------------- reset password email verify -------------
+    resetPasswordEmailVerify = async(email: string): Promise<boolean | void> =>{
+       try {
+        
+      let exist = await this._customerRepository.checkCustomerExist(email)
+
+      if (!exist) {
+        throw new Error(MessageEnum.CUSTOMER_NOT_FOUND);
+      }
+      let token = generateJwtToken({ email });
+      await sendEmail(
+        email,
+        `${process.env.CUSTOMER_FORGOT_PASSWORD}?token=${token}`
+      );
+      return true;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+    }
+
+    //---------------------------------------------------- reset customer password
+    resetPassowrd = async (data: {
+    email: string;
+    password: string;
+  }): Promise<void> => {
+    try {
+      const { email, password } = { ...data };
+
+      let emailExist = await this._customerRepository.checkCustomerExist(email)
+      let hashedPassword = await hashPassword(password);
+
+      if (emailExist) {
+        await this._customerRepository.resetPassword(email,hashedPassword)
+        return;
+      } else {
+        throw new Error(MessageEnum.CUSTOMER_NOT_FOUND);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  };
 }
 
 export default AuthService;

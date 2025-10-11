@@ -15,27 +15,27 @@ export class VendorRepository
   }
 
   async addNewVendor(data: IVendor): Promise<boolean> {
-    let vendor = await this.create(data);
+    const vendor = await this.create(data);
     return !!vendor;
   }
 
   async checkVendorExist(email: string): Promise<boolean> {
-    let vendor = await this.findByEmail(email);
+    const vendor = await this.findByEmail(email);
     return !!vendor;
   }
 
   async vendorData(email: string): Promise<void> {
-    let vendor = this.findByEmail(email);
+    const vendor = this.findByEmail(email);
     return vendor;
   }
 
   async vendorDatabyId(id: string): Promise<IVendor | any> {
-    let vendor = this.findById(id);
+    const vendor = this.findById(id);
     return vendor;
   }
 
   async findByIdAndUpdate(id: string, data: object): Promise<any> {
-    console.log("pppp", id, data);
+    
     const vendor = await vendorModel.findByIdAndUpdate(
       id,
       { $set: data },
@@ -44,4 +44,12 @@ export class VendorRepository
 
     return vendor;
   }
+
+  //------------------------------------------ reset password
+ async resetPassword(email: string, hashedPassword: string): Promise<void> {
+  await this.updatePassword(email, hashedPassword)
+  return 
+   }
+  
+
 }

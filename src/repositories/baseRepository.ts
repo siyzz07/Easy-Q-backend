@@ -23,6 +23,14 @@ class BaseRepository<T extends Document>
   async findByEmail(email: string): Promise<T | null> {
     return this._Model.findOne({ email });
   }
+
+ async updatePassword(email: string, hashedPassword: string): Promise<T | null> {
+  return this._Model.findOneAndUpdate(
+    { email },
+    { $set: { password: hashedPassword } },
+    { new: true }
+  );
+}
 }
 
 export default BaseRepository;

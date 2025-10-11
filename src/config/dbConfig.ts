@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { Error } from 'mongoose'
-import { log } from 'node:console'
+
 
 
 const dbConfig = async (): Promise<void> => {

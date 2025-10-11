@@ -13,7 +13,7 @@ export class AuthController {
   verifyEmail = async (req: Request, res: Response): Promise<void> => {
     try {
       const data = req.body;
-      let response = await this._authService.verifyEmail(data);
+      const response = await this._authService.verifyEmail(data);
 
       res.status(StatusCodeEnum.OK).json(MessageEnum.VENDOR_REGISTERED);
     } catch (error: unknown) {
@@ -25,7 +25,7 @@ export class AuthController {
         } else {
         }
       } else {
-        console.log("internal error");
+        console.log(MessageEnum.SERVER_ERROR);
       }
     }
   };
@@ -46,7 +46,7 @@ export class AuthController {
         } else {
           res
             .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-            .json("server error please try again");
+            .json(MessageEnum.SERVER_ERROR);
         }
       } else {
         console.log("add new vendor controller error ");
@@ -58,13 +58,13 @@ export class AuthController {
 
   login = async (req: Request, res: Response) => {
     try {
-      let data = req.body;
+      const data = req.body;
       const response: any = await this._authService.vendorLogin(data);
 
       res.cookie("VendorJwt", response.refreshToken, {
         httpOnly: true,
         secure: false,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: Number(process.env.REFRESH_TOKEN_EXPIRY),
       });
 
       res.status(StatusCodeEnum.OK).json({
@@ -80,7 +80,7 @@ export class AuthController {
             .json(MessageEnum.VENDOR_NOT_FOUND);
         } else if (error.message === MessageEnum.INVALID_CREDENTIALS) {
           res
-            .status(StatusCodeEnum.UNAUTHORIZED)
+            .status(StatusCodeEnum.NOT_FOUND)
             .json(MessageEnum.INVALID_CREDENTIALS);
         }
       } else {
@@ -96,7 +96,9 @@ export class AuthController {
       const refreshToken = req.cookies.VendorJwt;
 
       if (!refreshToken) {
-        res.status(400).json({ message: "Refresh token missing" });
+        res
+          .status(StatusCodeEnum.BAD_REQUEST)
+          .json({ message: MessageEnum.TOKEN_REFRESH_MISSING });
         return;
       }
 
@@ -115,11 +117,14 @@ export class AuthController {
           res.status(400).json({ message: MessageEnum.TOKEN_MISSING });
           break;
         default:
-          res.status(500).json({ message: "server error" });
+          res
+            .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+            .json({ message: MessageEnum.SERVER_ERROR });
       }
     }
   };
 
+  //------------------------ logout vendor --------------------------
   logout = async (req: Request, res: Response): Promise<void> => {
     try {
       res.clearCookie("VendorJwt", {
@@ -134,6 +139,56 @@ export class AuthController {
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
+      }
+    }
+  };
+
+  
+  //------------------------------ verify email  for reset passowrd ---------------------
+  resestPasswordEmailVerify = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      await this._authService.resetPasswordEmailVerify(req.body.email);
+      res
+        .status(StatusCodeEnum.OK)
+        .json({ message: MessageEnum.EMAIL_SEND_SUCCESS });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message === MessageEnum.VENDOR_NOT_FOUND) {
+          res
+            .status(StatusCodeEnum.NOT_FOUND)
+            .json({ message: MessageEnum.VENDOR_NOT_FOUND });
+        } else {
+          console.log(error.message);
+        }
+      }
+    }
+  };
+
+
+  //------------------------------------- reset password -----------------------
+  resetPassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, password }: { email: string; password: string } = req.body;
+
+      await this._authService.resetPassowrd({ email, password });
+
+      res
+        .status(StatusCodeEnum.OK)
+        .json({ message: MessageEnum.PASSWROD_CAHNGE_SUCCESS });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message === MessageEnum.VENDOR_NOT_FOUND) {
+          res
+            .status(StatusCodeEnum.NOT_FOUND)
+            .json({ message: MessageEnum.VENDOR_NOT_FOUND });
+        } else {
+          res
+            .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+            .json( MessageEnum.SERVER_ERROR );
+        }
       }
     }
   };

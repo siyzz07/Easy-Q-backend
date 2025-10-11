@@ -33,7 +33,7 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo{
 
    async addAdmin(data:IAdmin):Promise<void>{
 
-     let add = await this.create(data)
+     const add = await this.create(data)
 
    }
 

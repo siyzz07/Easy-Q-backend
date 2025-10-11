@@ -22,9 +22,11 @@ class VendorShopService implements IVendorShopServiceInterface {
         hasShop:true
       };
 
+      console.log('updateData :>> ', updateData);
+
       const vendorData = await this._vendorRepo.vendorDatabyId(vendorId);
       if (vendorData) {
-        let response = await this._vendorRepo.findByIdAndUpdate(
+        const response = await this._vendorRepo.findByIdAndUpdate(
           vendorId,
           updateData
         );

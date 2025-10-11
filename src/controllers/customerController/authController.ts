@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { ICustomerInterface } from "../../interface/serviceInterface/customerServiceInterface";
-import { log } from "console";
-import { runInNewContext } from "vm";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
@@ -12,11 +10,12 @@ class CustomerAuth {
     this._authService = authService;
   }
 
+  // -----------------------------------------------------------new cusotmer add - verify email
   addCustomer = async (req: Request, res: Response) => {
     try {
       const data = req.body;
-
-      const response = await this._authService.verifyEmail(data);
+      
+      await this._authService.verifyEmail(data);
 
       res.status(StatusCodeEnum.OK).json(MessageEnum.CUSTOMER_REGISTERED);
     } catch (error: any) {
@@ -27,20 +26,21 @@ class CustomerAuth {
       }
     }
   };
-
+  
+  // ----------------------------------------------------------- add new verified customer
   addVerifiedCustomer = async (req: Request, res: Response) => {
     try {
       const data = req.body;
       const response = await this._authService.addCustomer(data);
-
+      
       if (response) {
         res.status(StatusCodeEnum.OK).json(MessageEnum.CUSTOMER_REGISTERED);
       } else {
         res
           .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
           .json(MessageEnum.EMAIL_VERIFY_SUCCESS);
-      }
-    } catch (error: any) {
+        }
+      } catch (error: any) {
       if (error.message == MessageEnum.CUSTOMER_ALREADY_EXISTS) {
         res
           .status(StatusCodeEnum.CONFLICT)
@@ -48,46 +48,48 @@ class CustomerAuth {
       }
     }
   };
-
+  
+  // ----------------------------------------------------------- login cusomer
   customerLogin = async (req: Request, res: Response): Promise<void> => {
     try {
       const data = req.body;
-
+      
+      
       const response = await this._authService.customerLoginService(data);
-
+      
       if(response){
-     res.cookie("CustomerJwt", response.refreshToken, {
+        res.cookie("CustomerJwt", response.refreshToken, {
         httpOnly: true,
         secure: false,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: Number(process.env.REFRESH_TOKEN_EXPIRY)
       });
-       res.status(StatusCodeEnum.OK).json({
+      res.status(StatusCodeEnum.OK).json({
         message: MessageEnum.CUSTOMER_LOGIN_SUCCESS,
         accesstoken: response.accessToken
-
+        
       });
 
     }
       
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message == MessageEnum.CUSTOMER_NOT_FOUND) {
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.message == MessageEnum.CUSTOMER_NOT_FOUND) {
           res
             .status(StatusCodeEnum.NOT_FOUND)
             .json(MessageEnum.CUSTOMER_NOT_FOUND);
-        } else if (error.message === MessageEnum.INVALID_CREDENTIALS) {
-          res
+          } else if (error.message === MessageEnum.INVALID_CREDENTIALS) {
+            res
             .status(StatusCodeEnum.BAD_REQUEST)
             .json(MessageEnum.INVALID_CREDENTIALS);
+          } else {
+            console.log("customer login Error", error.message);
+          }
         } else {
-          console.log("customer login Error", error.message);
+          console.log("customer login errror ", error);
         }
-      } else {
-        console.log("customer login errror ", error);
       }
-    }
-  };
-
+    };
+    
 
   
 //---------------------------------------------------------------------------update customer refresh token
@@ -119,6 +121,57 @@ class CustomerAuth {
           }
         }
       };
+
+
+  //------------------------------ reset passwor - verify customer ------------
+  
+  resetPasswrodVerifyMail = async (req:Request,res:Response) :Promise<void> =>{
+
+        try {
+      await this._authService.resetPasswordEmailVerify(req.body.email);
+      res
+        .status(StatusCodeEnum.OK)
+        .json({ message: MessageEnum.EMAIL_SEND_SUCCESS });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message === MessageEnum.CUSTOMER_NOT_FOUND) {
+          res
+            .status(StatusCodeEnum.NOT_FOUND)
+            .json({ message: MessageEnum.CUSTOMER_NOT_FOUND });
+        } else {
+          console.log(error.message);
+        }
+      }
+    }
+
+  }
+
+
+  // ---------------------------------------------- reset passowrd
+  resetPassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, password }: { email: string; password: string } = req.body;
+
+   
+      await this._authService.resetPassowrd({email,password})
+
+      res
+        .status(StatusCodeEnum.OK)
+        .json({ message: MessageEnum.PASSWROD_CAHNGE_SUCCESS });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message === MessageEnum.CUSTOMER_NOT_FOUND) {
+          res
+            .status(StatusCodeEnum.NOT_FOUND)
+            .json({ message: MessageEnum.CUSTOMER_NOT_FOUND });
+        } else {
+          res
+            .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+            .json( MessageEnum.SERVER_ERROR );
+        }
+      }
+    }
+  };
 }
 
 export default CustomerAuth;

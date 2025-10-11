@@ -8,7 +8,7 @@ export enum MessageEnum {
   CUSTOMER_LOGIN_SUCCESS = "Customer logged in successfully",
  
   
-  
+  EMAIL_SEND_SUCCESS = 'Email send successfully',
   EMAIL_VERIFY_SUCCESS = "Email verified successfully",
   EMAIL_TOKEN_EXPIRED = "Token expired, please register again",
   EMAIL_TOKEN_INVALID = "Invalid token, please register again",
@@ -26,6 +26,8 @@ export enum MessageEnum {
   INVALID_CREDENTIALS = "Invalid email or password",
   MISSING_FIELDS = "Required fields are missing",
   LOGOOUT_SUCCESS = 'Logut success',
+  SERVER_ERROR = 'Internal server error',
+  PASSWROD_CAHNGE_SUCCESS ='Password change successfully',
   
   
   
@@ -41,8 +43,7 @@ export enum MessageEnum {
   PLAN_EXPIRED = "Vendor plan has expired",
   
 
-  SHOP_DATA_ADDED_SUCCESS = "Shop data added successful",
-  SHOP_DATA_ADDED_FAILED = 'Something went wrong ,Cannot added shop data',
+  
   
   // --------------------------------------------------------------------------token
   
@@ -52,15 +53,24 @@ export enum MessageEnum {
   TOKEN_INVALID = "Invalid token",
   TOKEN_MISSING = "Token missing, please login",
   TOKEN_REFRESH_SUCCESS = "Access token refreshed successfully",
+  TOKEN_REFRESH_MISSING = "Refresh token missing",
 
 
 
 
 
   // --------------------------------------------------------------------------admin
-
+  
   ADMIN_LOGIN_SUCCESS = "Admin logged in successfully.",
   ADMIN_LOGIN_FAILED = "Invalid email or password.",
   ADMIN_NOT_FOUND = "User not found.",
   ADMIN_PASSWORD_INCORRECT = "Incorrect password.",
+
+
+  // --------------------------------------------------------------------------Shop
+
+  SHOP_DATA_FETCH_SUCCESS = "Shops fetched successfully",
+  SHOP_DATA_ADDED_SUCCESS = "Shop data added successful",
+  SHOP_DATA_ADDED_FAILED = 'Something went wrong ,Cannot added shop data',
 }
+
