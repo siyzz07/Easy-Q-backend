@@ -1,4 +1,4 @@
-import { ICustomer } from "../../types/customerType";
+import { IAddress, ICustomer, ICustomerAddressData } from "../../types/customerType";
 import { IVendor } from "../../types/vendorType";
 
 export interface ICustomerInterface {
@@ -16,5 +16,16 @@ export interface ICustomerInterface {
 export interface ICustomerServiceInterface{
 
      getVendorsData ():Promise<IVendor[]|null>
+    getCustomerData (id:string):Promise<ICustomer|void>
+}
+
+
+
+export interface ICustomerAddressServiceInterface{
+
+   addAddress (data:IAddress):Promise<void>
+   getAddress (customerId:string):Promise<IAddress[]|[]>
+   deletCustomerAddress (custoemrId:string,id:string):Promise<string|void>
+   editCustomerAddress(data:IAddress):Promise<boolean|void>
 
 }

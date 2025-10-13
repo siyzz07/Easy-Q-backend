@@ -121,6 +121,13 @@ export class VendorAuthService implements IVendorInterface {
       } else {
         let vendorData = await this._vendorRepository.vendorData(email);
 
+        if(!vendorData.isActive){
+          throw new Error(MessageEnum.VENDOR_BLOCKED)
+          return 
+        }
+
+
+
         let passwordMatch = await comparePassword(
           password,
           vendorData.password
@@ -149,6 +156,8 @@ export class VendorAuthService implements IVendorInterface {
           throw error;
         } else if (error.message === MessageEnum.INVALID_CREDENTIALS) {
           throw error;
+        }else if(error.message === MessageEnum.VENDOR_BLOCKED){
+            throw error
         }
       } else {
         console.log("vendor Login unknown error");
@@ -169,8 +178,11 @@ export class VendorAuthService implements IVendorInterface {
         process.env.JWT_REFRESH_TOKEN_KEY!
       ) as JwtPayload;
 
-      console.log(decoded);
-      const AccessToken = accessToken(decoded.userId);
+      const payload: IJwtPayload = {
+        userId: decoded.userId,
+        role: "Vendor",
+      };
+      const AccessToken = accessToken(payload);
 
       return AccessToken;
     } catch (error) {

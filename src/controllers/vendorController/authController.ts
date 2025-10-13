@@ -82,6 +82,8 @@ export class AuthController {
           res
             .status(StatusCodeEnum.NOT_FOUND)
             .json(MessageEnum.INVALID_CREDENTIALS);
+        } else if (error.message === MessageEnum.VENDOR_BLOCKED) {
+          res.status(StatusCodeEnum.NOT_FOUND).json(MessageEnum.VENDOR_BLOCKED);
         }
       } else {
         console.log("error unknown , vendor login error");
@@ -143,7 +145,6 @@ export class AuthController {
     }
   };
 
-  
   //------------------------------ verify email  for reset passowrd ---------------------
   resestPasswordEmailVerify = async (
     req: Request,
@@ -167,7 +168,6 @@ export class AuthController {
     }
   };
 
-
   //------------------------------------- reset password -----------------------
   resetPassword = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -187,7 +187,7 @@ export class AuthController {
         } else {
           res
             .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-            .json( MessageEnum.SERVER_ERROR );
+            .json(MessageEnum.SERVER_ERROR);
         }
       }
     }

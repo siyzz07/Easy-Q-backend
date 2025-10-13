@@ -1,4 +1,5 @@
 import { Document } from "mongoose"
+import { ICustomerAddress } from "../../types/customerType";
 
 
 export interface IBaseRepositoryInterface<T extends Document> {
@@ -7,7 +8,6 @@ export interface IBaseRepositoryInterface<T extends Document> {
   findById(id: string): Promise<T | null>;
   findByEmail(email:string) :Promise <T|null>
   updatePassword(email:string,hashedPassword:string):Promise <T|null>
-//   findAll(): Promise<T[]>;
-//   update(id: string, data: Partial<T>): Promise<T | null>;
-//   delete(id: string): Promise<T | null>;
+  findByCustomer(customerId:string):Promise<ICustomerAddress | null>
+
 }

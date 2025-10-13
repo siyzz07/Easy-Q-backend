@@ -6,6 +6,7 @@ import BaseRepository from "./baseRepository";
 import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
 import vendorModel from "../models/vendorModel";
 import { IVendor } from "../types/vendorType";
+import { log } from "node:console";
 
 export class CustomerRepository
   extends BaseRepository<any>

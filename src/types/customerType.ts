@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 
 
 
@@ -26,7 +27,7 @@ export interface ICustomerAddressData {
   state:string;
   country:string;
   phone:string;
-  cordinates:ICustomerZone;
+  coordinates:ICustomerZone;
   isDefaule:boolean
 
 
@@ -36,7 +37,20 @@ export interface ICustomerAddressData {
 export interface ICustomerAddress {
 
     _id?:string;
-    customerId:string;
-    address:ICustomerAddressData[]
+    customerId:Types.ObjectId
+    address:IAddress[]|[]
 
 }
+
+
+export interface IAddress{
+  _id?:string
+  address:string;
+  city:string
+  state:string;
+  country:string;
+  phone:string;
+  coordiantes:any
+  userId?:string
+}
+

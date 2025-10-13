@@ -1,5 +1,8 @@
+
+import { AdminController } from "../controllers/adminController/adminController";
 import { AdminAtuhController } from "../controllers/adminController/authController";
 import { AdminRepository } from "../repositories/adminRepository";
+import { AdminService } from "../services/adminServices/adminService";
 import { AuthService } from "../services/adminServices/atuhService";
 
 
@@ -10,4 +13,8 @@ const adminServiceInstance = new AuthService(adminRepositoryInstace)
 const adminControllerInstance = new AdminAtuhController(adminServiceInstance)
 
 
-export {adminControllerInstance}
+
+const adminService = new AdminService(adminRepositoryInstace)
+const adminController = new AdminController(adminService)
+
+export {adminControllerInstance,adminController}

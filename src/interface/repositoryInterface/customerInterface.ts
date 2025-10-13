@@ -1,4 +1,4 @@
-import { ICustomer } from "../../types/customerType"
+import { IAddress, ICustomer, ICustomerAddress } from "../../types/customerType"
 import { IVendor } from "../../types/vendorType"
 
 
@@ -14,3 +14,16 @@ export interface ICustomerRepo{
     getVendorsData() :Promise<IVendor[]|null>
 
 }
+
+
+
+export interface ICustomerAddressRepositoryInterface{
+    
+    checkUserAddressExist (customerId:string):Promise<Boolean>
+     addAddress (id:string,payload:IAddress):Promise<void>
+     addFirstAddress(id:string,payload:IAddress):Promise<void>
+     getAllAddress (custoemrId:string):Promise<ICustomerAddress|null>
+     checkAddressDuplicat (userId:string,address:string,excludeId?:string):Promise<boolean>
+     deletCustomerAddress (customerId:string,id:string) :Promise<boolean>
+     editCustomerAddress (customerId:string,addressId:string,payload:IAddress):Promise<boolean>
+    }

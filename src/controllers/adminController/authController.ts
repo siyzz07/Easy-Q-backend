@@ -16,17 +16,15 @@ export class AdminAtuhController {
 
       const response = await this._atuhService.loginAdmin(data);
       if (response) {
-         res.cookie("AdminJwt", response.refreshToken, {
-        httpOnly: true,
-        secure: false,
-        maxAge: Number(process.env.REFRESH_TOKEN_EXPIRY)
-      });
-       res.status(StatusCodeEnum.OK).json({
-        message: MessageEnum.ADMIN_LOGIN_SUCCESS,
-        accesstoken: response.accessToken
-
-      });
-        
+        res.cookie("AdminJwt", response.refreshToken, {
+          httpOnly: true,
+          secure: false,
+          maxAge: Number(process.env.REFRESH_TOKEN_EXPIRY),
+        });
+        res.status(StatusCodeEnum.OK).json({
+          message: MessageEnum.ADMIN_LOGIN_SUCCESS,
+          accesstoken: response.accessToken,
+        });
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -46,39 +44,37 @@ export class AdminAtuhController {
   };
 
   refreshToken = async (req: Request, res: Response): Promise<void> => {
-        try {
+    try {
+      const refreshToken = req.cookies.AdminJwt;
 
+      if (!refreshToken) {
+        res
+          .status(StatusCodeEnum.BAD_REQUEST)
+          .json({ message: MessageEnum.TOKEN_REFRESH_MISSING });
+        return;
+      }
 
-          const refreshToken = req.cookies.AdminJwt
+      const accessToken = await this._atuhService.updateToken(refreshToken);
 
-          if (!refreshToken) {
-            res.status(StatusCodeEnum.BAD_REQUEST).json({ message:MessageEnum.TOKEN_REFRESH_MISSING });
-            return;
-          }
+      res.status(StatusCodeEnum.OK).json({ accessToken });
+    } catch (error: any) {
+      switch (error.message) {
+        case "TOKEN_EXPIRED":
+          res.status(401).json({ message: MessageEnum.TOKEN_EXPIRED });
+          break;
+        case "TOKEN_INVALID":
+          res.status(401).json({ message: MessageEnum.TOKEN_INVALID });
+          break;
+        case "TOKEN_MISSING":
+          res.status(400).json({ message: MessageEnum.TOKEN_MISSING });
+          break;
+        default:
+          res.status(500).json({ message: "server error" });
+      }
+    }
+  };
 
-          const accessToken = await this._atuhService.updateToken(refreshToken)
-
-          res.status(StatusCodeEnum.OK).json({ accessToken });
-
-        } catch (error: any) {
-          switch (error.message) {
-            case "TOKEN_EXPIRED":
-              res.status(401).json({ message: MessageEnum.TOKEN_EXPIRED });
-              break;
-            case "TOKEN_INVALID":
-              res.status(401).json({ message: MessageEnum.TOKEN_INVALID });
-              break;
-            case "TOKEN_MISSING":
-              res.status(400).json({ message: MessageEnum.TOKEN_MISSING });
-              break;
-            default:
-              res.status(500).json({ message: "server error" });
-          }
-        }
-      };
-
-
-      logout = async (req: Request, res: Response): Promise<void> => {
+  logout = async (req: Request, res: Response): Promise<void> => {
     try {
       res.clearCookie("AdminJwt", {
         httpOnly: true,

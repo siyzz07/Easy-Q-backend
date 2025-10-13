@@ -1,4 +1,3 @@
-
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IAdminRepo } from "../../interface/repositoryInterface/adminRepoInterface";
 import { IAdminAuthServiceInterface } from "../../interface/serviceInterface/adminServiceInterface";
@@ -6,7 +5,11 @@ import { IAdmin } from "../../types/adminTypes";
 import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, refreshToken } from "../../utils/jwt";
 import { emit } from "node:process";
-import Jwt, { JsonWebTokenError, JwtPayload, TokenExpiredError } from "jsonwebtoken";
+import Jwt, {
+  JsonWebTokenError,
+  JwtPayload,
+  TokenExpiredError,
+} from "jsonwebtoken";
 import { IJwtPayload } from "../../types/common-types";
 
 export class AuthService implements IAdminAuthServiceInterface {
@@ -27,7 +30,9 @@ export class AuthService implements IAdminAuthServiceInterface {
       if (!adminExist) {
         throw new Error(MessageEnum.ADMIN_NOT_FOUND);
       }
-      const adminData: any = await this._adminRepository.adminDataByEmail(email);
+      const adminData: any = await this._adminRepository.adminDataByEmail(
+        email
+      );
 
       const mathcPassword = await comparePassword(password, adminData.password);
 
@@ -36,13 +41,10 @@ export class AuthService implements IAdminAuthServiceInterface {
       }
 
       if (adminData) {
-
-
-         const payload:IJwtPayload={
-             userId:adminData._id,
-             role:'Admin'
-         }
-
+        const payload: IJwtPayload = {
+          userId: adminData._id,
+          role: "Admin",
+        };
 
         const AccessToken: string = accessToken(payload);
         const RefreshToken: string = refreshToken(payload);
@@ -62,33 +64,33 @@ export class AuthService implements IAdminAuthServiceInterface {
     }
   };
 
-  
-
   updateToken = async (refreshToken: string): Promise<string> => {
-        if (!refreshToken) {
-          throw new Error("TOKEN_MISSING");
-        }
-    
-        try {
-         
-          const decoded = Jwt.verify(
-            refreshToken,
-            process.env.JWT_REFRESH_TOKEN_KEY!
-          ) as JwtPayload;
-    
-          console.log(decoded);
-          const AccessToken = accessToken(decoded.userId)
-         
-          return AccessToken
-          
-        } catch (error) {
-          if (error instanceof TokenExpiredError) {
-            throw new Error("TOKEN_EXPIRED");
-          } else if (error instanceof JsonWebTokenError) {
-            throw new Error("TOKEN_INVALID");
-          } else {
-            throw new Error("SERVER_ERROR");
-          }
-        }
+    if (!refreshToken) {
+      throw new Error("TOKEN_MISSING");
+    }
+
+    try {
+      const decoded = Jwt.verify(
+        refreshToken,
+        process.env.JWT_REFRESH_TOKEN_KEY!
+      ) as JwtPayload;
+
+      const payload: IJwtPayload = {
+        userId: decoded.userId,
+        role: "Admin",
       };
+
+      const AccessToken = accessToken(payload);
+
+      return AccessToken;
+    } catch (error) {
+      if (error instanceof TokenExpiredError) {
+        throw new Error("TOKEN_EXPIRED");
+      } else if (error instanceof JsonWebTokenError) {
+        throw new Error("TOKEN_INVALID");
+      } else {
+        throw new Error("SERVER_ERROR");
+      }
+    }
+  };
 }

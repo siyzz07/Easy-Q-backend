@@ -6,6 +6,13 @@ export enum MessageEnum {
   CUSTOMER_REGISTERED = "Customer registered successfully",
   CUSTOMER_NOT_FOUND = "Customer not found",
   CUSTOMER_LOGIN_SUCCESS = "Customer logged in successfully",
+  CUSTOMER_DATA_FETCH_SUCCESS ='Customer data fetch successfully',
+  CUSTOMER_DATA_UPDATION_SUCCESS ='Customer data updated successfully',
+  CUSTOMER_DATA_FETCH_FAILED ='Customer data fetching failed',
+  CUSTOMER_ALL_DATA_FETCH_SUCCESS ='Customers datas fetch successfully',
+  CUSTOMER_BLOCKED ='Customer blocked by admin',
+
+  
  
   
   EMAIL_SEND_SUCCESS = 'Email send successfully',
@@ -28,6 +35,7 @@ export enum MessageEnum {
   LOGOOUT_SUCCESS = 'Logut success',
   SERVER_ERROR = 'Internal server error',
   PASSWROD_CAHNGE_SUCCESS ='Password change successfully',
+  ACCOUNT_BLOCKED="Your account is blocked",
   
   
   
@@ -38,9 +46,12 @@ export enum MessageEnum {
   VENDOR_UPDATED = "Vendor updated successfully",
   VENDOR_DELETED = "Vendor deleted successfully",
   VENDOR_REGISTERED = "Vendor registered successfully",
+  VENDOR_BLOCKED = "Vendor blocked by admin",
+  VENDOR_DATA_UPDATION_SUCCESS ='Vendor data updated successfully',
   LOGIN_SUCCESS = "Vendor logged in successfully",
   UNAUTHORIZED = "You are not authorized to perform this action",
   PLAN_EXPIRED = "Vendor plan has expired",
+  VENDOR__DATA_FETCH_SUCCESS ='Vendor data fetch successfully',
   
 
   
@@ -68,9 +79,22 @@ export enum MessageEnum {
 
 
   // --------------------------------------------------------------------------Shop
-
+  
   SHOP_DATA_FETCH_SUCCESS = "Shops fetched successfully",
   SHOP_DATA_ADDED_SUCCESS = "Shop data added successful",
   SHOP_DATA_ADDED_FAILED = 'Something went wrong ,Cannot added shop data',
+
+  // --------------------------------------------------------------------------Shop
+  ADDRESS_ADDED_SUCCESS = "Address added successfully",
+  ADDRESS_FETCH_SUCCESS = "Address fetch successfully",
+  ADDRESS_EXISTS = "Address already exists",
+  ADDRESS_UPDATED_SUCCESS = "Address updated successfully",
+  ADDRESS_UPDATED_FAILED = "Uneble to update address",
+  ADDRESS_NOT_FOUND = "Address not found",
+  ADDRESS_DELETED_SUCCESS = "Address deleted successfully",
+  ADDRESS_DELETED_FAILED = "Unable to delete address",
+  ADDRESS_INVALID = "Invalid address data",
+  ADDRESS_EDIT_SUCCESS = "Address editing success",
+  ADDRESS_EDIT_FAILED = "Invalid address data",
 }
 

@@ -25,13 +25,13 @@ if (!JWT_REFRESH_TOKEN) {
 
 
 export const generateJwtToken = (payload: object) => {
-  return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: '1m' });
+  return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: '1h' });
 };
 
 
 
 export const accessToken = (payload:IJwtPayload) =>{
-  return jwt.sign(payload,JWT_ACCESS_TOKEN,{expiresIn:"15m"})
+  return jwt.sign(payload,JWT_ACCESS_TOKEN,{expiresIn:"1m"})
 }
 
 

@@ -1,5 +1,7 @@
+import { MessageEnum } from "../../enums/messagesEnum";
 import { ICustomerRepo } from "../../interface/repositoryInterface/customerInterface";
 import { ICustomerServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
+import { ICustomer } from "../../types/customerType";
 import { IVendor } from "../../types/vendorType";
 
 
@@ -29,6 +31,23 @@ export class CustomerService implements ICustomerServiceInterface{
   }
 };
 
+
+getCustomerData = async(id: string): Promise<ICustomer | void> =>{
+  try{
+
+     let response:ICustomer|null = await this._customerRepository.customerDataById(id)
+     if(response){
+      return response
+     }else{
+      throw new Error(MessageEnum.CUSTOMER_DATA_FETCH_FAILED)
+     }
+
+  }catch(error:unknown){
+      if(error){
+        throw error
+      }
+  }
+}
 
 
 

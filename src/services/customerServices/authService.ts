@@ -6,8 +6,13 @@ import { ICustomer } from "../../types/customerType";
 import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, generateJwtToken, refreshToken } from "../../utils/jwt";
 import { sendEmail } from "../../utils/nodeMailer";
-import Jwt, { JsonWebTokenError, JwtPayload, TokenExpiredError } from "jsonwebtoken";
+import Jwt, {
+  JsonWebTokenError,
+  JwtPayload,
+  TokenExpiredError,
+} from "jsonwebtoken";
 import { IJwtPayload } from "../../types/common-types";
+import { userInfo } from "os";
 
 class AuthService implements ICustomerInterface {
   private _customerRepository: ICustomerRepo;
@@ -74,6 +79,7 @@ class AuthService implements ICustomerInterface {
     }
   };
 
+  //-----------------------------------------------login customer
   customerLoginService = async (data: {
     email: string;
     password: string;
@@ -94,27 +100,29 @@ class AuthService implements ICustomerInterface {
         await this._customerRepository.customerDataByEmail(email);
 
       if (customerData) {
-        const passwordMatch = await comparePassword(
-          password,
-          customerData.password
-        );
+        if (customerData.isActive) {
+          const passwordMatch = await comparePassword(
+            password,
+            customerData.password
+          );
 
-        if (!passwordMatch) {
-          throw new Error(MessageEnum.INVALID_CREDENTIALS);
-          return;
+          if (!passwordMatch) {
+            throw new Error(MessageEnum.INVALID_CREDENTIALS);
+            return;
+          }
+
+          const payload: IJwtPayload = {
+            userId: customerData._id,
+            role: "Customer",
+          };
+
+          const AccessToken: string = accessToken(payload);
+          const RefreshToken: string = refreshToken(payload);
+
+          return { accessToken: AccessToken, refreshToken: RefreshToken };
+        } else {
+          throw new Error(MessageEnum.CUSTOMER_BLOCKED);
         }
-
-
-        const payload:IJwtPayload = {
-          userId:customerData._id,
-          role:'Customer'
-        }
-
-        const AccessToken: string = accessToken(payload);
-        const RefreshToken: string = refreshToken(payload);
-
-        
-        return { accessToken: AccessToken, refreshToken: RefreshToken };
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -126,39 +134,43 @@ class AuthService implements ICustomerInterface {
   };
 
   updateToken = async (refreshToken: string): Promise<string> => {
-      if (!refreshToken) {
-        throw new Error("TOKEN_MISSING");
-      }
-  
-      try {
-       
-        const decoded = Jwt.verify(
-          refreshToken,
-          process.env.JWT_REFRESH_TOKEN_KEY!
-        ) as JwtPayload;
-  
-        console.log(decoded);
-        const AccessToken = accessToken(decoded.userId)
-       
-        return AccessToken
-        
-      } catch (error) {
-        if (error instanceof TokenExpiredError) {
-          throw new Error("TOKEN_EXPIRED");
-        } else if (error instanceof JsonWebTokenError) {
-          throw new Error("TOKEN_INVALID");
-        } else {
-          throw new Error("SERVER_ERROR");
-        }
-      }
-    };
+    console.log("refreshToken :>> ", refreshToken);
 
+    if (!refreshToken) {
+      console.log("service refresh token missing");
+      throw new Error("TOKEN_MISSING");
+    }
 
-    // ------------------- reset password email verify -------------
-    resetPasswordEmailVerify = async(email: string): Promise<boolean | void> =>{
-       try {
-        
-      let exist = await this._customerRepository.checkCustomerExist(email)
+    try {
+      const decoded = Jwt.verify(
+        refreshToken,
+        process.env.JWT_REFRESH_TOKEN_KEY!
+      ) as JwtPayload;
+
+      const payload: IJwtPayload = {
+        userId: decoded.userId,
+        role: "Customer",
+      };
+      const AccessToken = await accessToken(payload);
+      console.log("new acccess token created");
+
+      return AccessToken;
+    } catch (error: unknown) {
+      console.log("referesh otken service error");
+      if (error instanceof TokenExpiredError) {
+        throw new Error("TOKEN_EXPIRED");
+      } else if (error instanceof JsonWebTokenError) {
+        throw new Error("TOKEN_INVALID");
+      } else {
+        throw new Error("SERVER_ERROR");
+      }
+    }
+  };
+
+  // ------------------- reset password email verify -------------
+  resetPasswordEmailVerify = async (email: string): Promise<boolean | void> => {
+    try {
+      let exist = await this._customerRepository.checkCustomerExist(email);
 
       if (!exist) {
         throw new Error(MessageEnum.CUSTOMER_NOT_FOUND);
@@ -174,21 +186,21 @@ class AuthService implements ICustomerInterface {
         throw error;
       }
     }
-    }
+  };
 
-    //---------------------------------------------------- reset customer password
-    resetPassowrd = async (data: {
+  //---------------------------------------------------- reset customer password
+  resetPassowrd = async (data: {
     email: string;
     password: string;
   }): Promise<void> => {
     try {
       const { email, password } = { ...data };
 
-      let emailExist = await this._customerRepository.checkCustomerExist(email)
+      let emailExist = await this._customerRepository.checkCustomerExist(email);
       let hashedPassword = await hashPassword(password);
 
       if (emailExist) {
-        await this._customerRepository.resetPassword(email,hashedPassword)
+        await this._customerRepository.resetPassword(email, hashedPassword);
         return;
       } else {
         throw new Error(MessageEnum.CUSTOMER_NOT_FOUND);
