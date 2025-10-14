@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { IVendorShopServiceInterface } from "../../interface/serviceInterface/vendorServiceInterface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { log } from "node:console";
+
 
 class VendorShopController {
   private _vendorShopService: IVendorShopServiceInterface;
@@ -14,7 +14,7 @@ class VendorShopController {
   addShopData = async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId, latitude, longitude, ...data } = { ...req.body };
-      console.log(userId, data);
+
 
       const cordinates = {
         lat: latitude,

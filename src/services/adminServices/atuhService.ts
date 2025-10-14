@@ -2,9 +2,9 @@ import { MessageEnum } from "../../enums/messagesEnum";
 import { IAdminRepo } from "../../interface/repositoryInterface/adminRepoInterface";
 import { IAdminAuthServiceInterface } from "../../interface/serviceInterface/adminServiceInterface";
 import { IAdmin } from "../../types/adminTypes";
-import { comparePassword, hashPassword } from "../../utils/hash";
+import { comparePassword} from "../../utils/hash";
 import { accessToken, refreshToken } from "../../utils/jwt";
-import { emit } from "node:process";
+
 import Jwt, {
   JsonWebTokenError,
   JwtPayload,

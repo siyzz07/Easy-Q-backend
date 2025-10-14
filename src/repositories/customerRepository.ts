@@ -1,12 +1,10 @@
-import { Document } from "mongoose";
+
 import { ICustomer } from "../types/customerType";
 import { ICustomerRepo } from "../interface/repositoryInterface/customerInterface";
 import customer from "../models/customerModel";
 import BaseRepository from "./baseRepository";
-import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
 import vendorModel from "../models/vendorModel";
 import { IVendor } from "../types/vendorType";
-import { log } from "node:console";
 
 export class CustomerRepository
   extends BaseRepository<any>
@@ -35,23 +33,43 @@ export class CustomerRepository
     const customer = await this.findByEmail(email);
     return customer;
   }
-  
+
   //---------------------------------------------------------------------get custemer data  take by id
   async customerDataById(id: string): Promise<ICustomer | null> {
     const customer = await this.findById(id);
     return customer;
   }
 
-
   //---------------------------------------------------------------------get all vendors/shops data
   async getVendorsData(): Promise<IVendor[] | null> {
     const vendorData = await this._vendorMode.find().lean();
     return vendorData;
   }
-  
+
   //---------------------------------------------------------------------reset custoemr passwod
   async resetPassword(email: string, hashedPassword: string): Promise<void> {
     await this.updatePassword(email, hashedPassword);
     return;
+  }
+  //---------------------------------------------------------------------updata custome profile
+  async editProfile(data: {
+    userId: string;
+    name: string;
+    email: string;
+    phone: string;
+  }): Promise<boolean> {
+    const { userId, name, email, phone } = data;
+
+    const result = await this._customerModel.findByIdAndUpdate(
+      userId,
+      {
+        $set: { name, email, phone },
+      },
+      { new: true }
+    );
+
+   
+
+    return !!result;
   }
 }

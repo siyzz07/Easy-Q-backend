@@ -1,4 +1,4 @@
-import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
+
 import { ICustomerAddressRepositoryInterface } from "../interface/repositoryInterface/customerInterface";
 import addressModel from "../models/addressModel";
 import { IAddress, ICustomerAddress } from "../types/customerType";
@@ -15,8 +15,8 @@ export class CustomerAddresRepository
   }
 
   //-----------------------------------------------------------------chek user have address collection
-  async checkUserAddressExist(customerId: string): Promise<Boolean> {
-    let response = await this.findByCustomer(customerId);
+  async checkUserAddressExist(customerId: string): Promise<boolean> {
+    const response = await this.findByCustomer(customerId);
 
     if (response) {
       return true;
@@ -47,7 +47,7 @@ export class CustomerAddresRepository
   //-----------------------------------------------------------------get all address of the user
 
   async getAllAddress(custoemrId: string): Promise<ICustomerAddress | null> {
-    let address = await this.findByCustomer(custoemrId);
+    const address = await this.findByCustomer(custoemrId);
     if (address) {
       return address;
     } else {
@@ -75,7 +75,7 @@ export class CustomerAddresRepository
 }
   //-----------------------------------------------------------------delet customer address
   async deletCustomerAddress(customerId: string, id: string): Promise<boolean> {
-    let result = await this._addressModel.updateOne(
+    const result = await this._addressModel.updateOne(
       { customerId },
       { $pull: { address: { _id: id } } }
     );

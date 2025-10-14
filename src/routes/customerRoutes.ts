@@ -25,12 +25,13 @@ customerRoute.get('/shops-data',verifyToken,customerBlockAuth,customerController
 customerRoute.get('/profile/customer-data',verifyToken,customerBlockAuth,customerControllerInstance.getCustomerData)
 
 
-//---------------------------------------------------------------------- address Route
+//----------------------------------------------------------------------profile ,resetpasssword in profile and address Route
 customerRoute.post('/profile/add-address',verifyToken,customerBlockAuth,AddressControllerInstance.addNewAddresss)
 customerRoute.get('/profile/get-address',verifyToken,customerBlockAuth,AddressControllerInstance.getAddress)
 customerRoute.post('/profile/delete-address',verifyToken,customerBlockAuth,AddressControllerInstance.deleteAddress)
 customerRoute.post('/profile/edit-address',verifyToken,customerBlockAuth,AddressControllerInstance.editAddress)
-
+customerRoute.post('/profile/edit-profile',verifyToken,customerBlockAuth,customerControllerInstance.editProfile)
+customerRoute.post('/profile/change-password',verifyToken,customerBlockAuth,customerControllerInstance.changePassword)
 
 
 export default customerRoute

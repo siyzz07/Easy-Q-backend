@@ -1,4 +1,4 @@
-import { log } from "console";
+
 import { MessageEnum } from "../../enums/messagesEnum";
 import { ICustomerRepo } from "../../interface/repositoryInterface/customerInterface";
 import { ICustomerInterface } from "../../interface/serviceInterface/customerServiceInterface";
@@ -12,7 +12,7 @@ import Jwt, {
   TokenExpiredError,
 } from "jsonwebtoken";
 import { IJwtPayload } from "../../types/common-types";
-import { userInfo } from "os";
+
 
 class AuthService implements ICustomerInterface {
   private _customerRepository: ICustomerRepo;
@@ -24,7 +24,7 @@ class AuthService implements ICustomerInterface {
   //----------------------------------------------------------------------------------------verify user email
   verifyEmail = async (values: ICustomer): Promise<void> => {
     try {
-      const { email, ...payload } = { ...values };
+      const { email } = { ...values };
 
       const exist = await this._customerRepository.checkCustomerExist(email);
 
@@ -44,38 +44,31 @@ class AuthService implements ICustomerInterface {
   };
 
   addCustomer = async (values: ICustomer): Promise<boolean> => {
-    try {
-      const { password, email, name, phone } = { ...values };
+    const { password, email, name, phone } = { ...values };
 
-      const exist = await this._customerRepository.checkCustomerExist(email);
+    const exist = await this._customerRepository.checkCustomerExist(email);
 
-      if (!exist) {
-        const hashedPassword = await hashPassword(password);
+    if (!exist) {
+      const hashedPassword = await hashPassword(password);
 
-        const data = {
-          name,
-          phone,
-          email,
-          isVerified: true,
-          isActive: true,
-          password: hashedPassword,
-        };
+      const data = {
+        name,
+        phone,
+        email,
+        isVerified: true,
+        isActive: true,
+        password: hashedPassword,
+      };
 
-        const response = await this._customerRepository.addNewCustomer(data);
+      const response = await this._customerRepository.addNewCustomer(data);
 
-        if (response) {
-          return true;
-        } else {
-          return false;
-        }
+      if (response) {
+        return true;
       } else {
-        throw new Error(MessageEnum.CUSTOMER_ALREADY_EXISTS);
+        return false;
       }
-    } catch (error: any) {
-      // console.log("error in addCustomerService");
-      // console.log(error.message);
-
-      throw error;
+    } else {
+      throw new Error(MessageEnum.CUSTOMER_ALREADY_EXISTS);
     }
   };
 
@@ -170,12 +163,12 @@ class AuthService implements ICustomerInterface {
   // ------------------- reset password email verify -------------
   resetPasswordEmailVerify = async (email: string): Promise<boolean | void> => {
     try {
-      let exist = await this._customerRepository.checkCustomerExist(email);
+      const exist = await this._customerRepository.checkCustomerExist(email);
 
       if (!exist) {
         throw new Error(MessageEnum.CUSTOMER_NOT_FOUND);
       }
-      let token = generateJwtToken({ email });
+      const token = generateJwtToken({ email });
       await sendEmail(
         email,
         `${process.env.CUSTOMER_FORGOT_PASSWORD}?token=${token}`
@@ -196,8 +189,10 @@ class AuthService implements ICustomerInterface {
     try {
       const { email, password } = { ...data };
 
-      let emailExist = await this._customerRepository.checkCustomerExist(email);
-      let hashedPassword = await hashPassword(password);
+      const emailExist = await this._customerRepository.checkCustomerExist(
+        email
+      );
+      const hashedPassword = await hashPassword(password);
 
       if (emailExist) {
         await this._customerRepository.resetPassword(email, hashedPassword);

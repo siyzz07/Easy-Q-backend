@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { ICustomerServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { json } from "body-parser";
+
 
 export class CustomerController {
   private _customerService: ICustomerServiceInterface;
@@ -11,6 +11,7 @@ export class CustomerController {
     this._customerService = customerservice;
   }
 
+  //--------------------------------------------------------------------------get vendors data
   getShopsData = async (req: Request, res: Response): Promise<void> => {
     try {
       const shops = await this._customerService.getVendorsData();
@@ -40,18 +41,17 @@ export class CustomerController {
     }
   };
 
+  //--------------------------------------------------------------------------get customer data
   getCustomerData = async (req: Request, res: Response): Promise<void> => {
     try {
-      let id = req.body.userId;
-      console.log(id);
-      let response = await this._customerService.getCustomerData(id);
+       const id = req.body.userId;
+      
+      const response = await this._customerService.getCustomerData(id);
       if (response) {
-        res
-          .status(StatusCodeEnum.OK)
-          .json({
-            message: MessageEnum.CUSTOMER_DATA_FETCH_SUCCESS,
-            data: response,
-          });
+        res.status(StatusCodeEnum.OK).json({
+          message: MessageEnum.CUSTOMER_DATA_FETCH_SUCCESS,
+          data: response,
+        });
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -59,6 +59,49 @@ export class CustomerController {
           res
             .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
             .json({ message: MessageEnum.SERVER_ERROR });
+        }
+      }
+    }
+  };
+
+  //------------------------------------------------- upadte profile
+  editProfile = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const data: { name: string; email: string; phone: string; userId: string } =
+        req.body;
+
+      const result = await this._customerService.editProfile(data);
+      if (result) {
+        res
+          .status(StatusCodeEnum.OK)
+          .json({ message: MessageEnum.CUSTOMER_PROFILE_UPDATED });
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res
+          .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+          .json({ message: MessageEnum.SERVER_ERROR });
+      }
+      console.log("error to update customer profile", error);
+    }
+  };
+
+
+  //-------------------------------------------------chage password in profile
+  changePassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const result = await this._customerService.updatePasswordInProfile(req.body);
+      if (result) {
+        res
+          .status(StatusCodeEnum.OK)
+          .json({ message: MessageEnum.PASSWROD_CAHNGE_SUCCESS });
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message) {
+          res
+            .status(StatusCodeEnum.BAD_REQUEST)
+            .json({ message: error.message });
         }
       }
     }

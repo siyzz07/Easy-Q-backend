@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { ICustomerAddressServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { json } from "body-parser";
 
 export class CustomerAddressContorller {
   private _addressService: ICustomerAddressServiceInterface;
@@ -14,8 +13,8 @@ export class CustomerAddressContorller {
   //---------------------------------------------------------------------get all address
   getAddress = async (req: Request, res: Response): Promise<void> => {
     try {
-      let custoemrId = req.body.userId;
-      let response = await this._addressService.getAddress(custoemrId);
+      const custoemrId = req.body.userId;
+      const response = await this._addressService.getAddress(custoemrId);
 
       res
         .status(StatusCodeEnum.OK)
@@ -57,7 +56,7 @@ export class CustomerAddressContorller {
   //---------------------------------------------------------------------delete address
   deleteAddress = async (req: Request, res: Response): Promise<void> => {
     try {
-      let response = await this._addressService.deletCustomerAddress(
+      const response = await this._addressService.deletCustomerAddress(
         req.body.userId,
         req.body.addressId
       );
@@ -78,7 +77,7 @@ export class CustomerAddressContorller {
   //---------------------------------------------------------------------delete address
   editAddress = async (req: Request, res: Response): Promise<void> => {
     try {
-      let result = await this._addressService.editCustomerAddress(req.body);
+      const result = await this._addressService.editCustomerAddress(req.body);
 
       if (result) {
         res

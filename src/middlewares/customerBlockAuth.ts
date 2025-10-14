@@ -27,6 +27,6 @@ export const customerBlockAuth = async (
     next();
   } catch (error) {
     console.error("Error in customerBlockAuth:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: MessageEnum.SERVER_ERROR });
   }
 };

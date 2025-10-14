@@ -69,7 +69,7 @@ export class AdminAtuhController {
           res.status(400).json({ message: MessageEnum.TOKEN_MISSING });
           break;
         default:
-          res.status(500).json({ message: "server error" });
+          res.status(500).json({ message:MessageEnum.SERVER_ERROR });
       }
     }
   };

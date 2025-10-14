@@ -1,4 +1,4 @@
-import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
+
 import { IVendorRepo } from "../interface/repositoryInterface/vendorRepoInterface";
 import vendorModel from "../models/vendorModel";
 import { IVendor } from "../types/vendorType";

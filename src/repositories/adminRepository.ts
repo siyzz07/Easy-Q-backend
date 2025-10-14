@@ -1,5 +1,4 @@
 import { IAdminRepo } from "../interface/repositoryInterface/adminRepoInterface";
-import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
 import adminModel from "../models/adminModel";
 import customerModel from "../models/customerModel";
 import vendorModel from "../models/vendorModel";
@@ -30,11 +29,11 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
   }
 
   async addAdmin(data: IAdmin): Promise<void> {
-    const add = await this.create(data);
+     await this.create(data);
   }
 
   async getCusomersData(): Promise<ICustomer[] | []> {
-    let result = await this._CustomerModel.find().lean();
+    const result = await this._CustomerModel.find().lean();
     if (result) {
       return result;
     } else {
@@ -54,7 +53,7 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
 
 //------------------------------------------------------- get vendors data
 async getVendorData(): Promise<IVendor[] | []> {
-  let result = await this._VendorModel.find().lean();
+  const result = await this._VendorModel.find().lean();
   if (result) {
     return result;
   } else {

@@ -4,7 +4,6 @@ import cors from 'cors'
 
 import vendorRoute from './routes/vendorRoutes'
 import cookieParser from "cookie-parser";
-import multer from "multer";
 import adminRoute from './routes/adminRoutes'
 
 const app = express()

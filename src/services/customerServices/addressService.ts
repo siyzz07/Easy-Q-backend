@@ -1,7 +1,7 @@
-import { log } from "console";
+
 import { ICustomerAddressRepositoryInterface } from "../../interface/repositoryInterface/customerInterface";
 import { ICustomerAddressServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
-import { IAddress, ICustomerAddressData } from "../../types/customerType";
+import { IAddress } from "../../types/customerType";
 import { MessageEnum } from "../../enums/messagesEnum";
 
 export class CustomerAddressService
@@ -19,11 +19,11 @@ export class CustomerAddressService
       const { userId, ...payload } = { ...data };
 
       if (userId) {
-        let exist = await this._addressRepository.checkUserAddressExist(userId);
+        const exist = await this._addressRepository.checkUserAddressExist(userId);
 
         if (exist) {
           payload.address = payload.address.toLocaleLowerCase();
-          let addressExist = await this._addressRepository.checkAddressDuplicat(
+          const addressExist = await this._addressRepository.checkAddressDuplicat(
             userId,
             payload.address
           );
@@ -49,12 +49,12 @@ export class CustomerAddressService
 
   //--------------------------------------------------------------get customer address
   getAddress = async (customerId: string): Promise<IAddress[] | []> => {
-    let exist = await this._addressRepository.checkUserAddressExist(customerId);
+    const exist = await this._addressRepository.checkUserAddressExist(customerId);
 
     if (!exist) {
       return [];
     } else {
-      let address = await this._addressRepository.getAllAddress(customerId);
+      const address = await this._addressRepository.getAllAddress(customerId);
       if (address) {
         return address?.address;
       } else {
@@ -69,7 +69,7 @@ export class CustomerAddressService
     id: string
   ): Promise<string | void> => {
     try {
-      let response = await this._addressRepository.deletCustomerAddress(
+      const response = await this._addressRepository.deletCustomerAddress(
         custoemrId,
         id
       );
@@ -93,7 +93,7 @@ export class CustomerAddressService
         userId = data.userId;
         const { _id, ...payload } = { ...data };
         payload.address = payload.address.toLocaleLowerCase();
-        let existCheck = await this._addressRepository.checkAddressDuplicat(
+        const existCheck = await this._addressRepository.checkAddressDuplicat(
           userId,
           payload.address,
           _id
@@ -106,7 +106,7 @@ export class CustomerAddressService
           if (_id) {
            
             
-            let result = await this._addressRepository.editCustomerAddress(
+            const result = await this._addressRepository.editCustomerAddress(
               userId,
               _id,
               payload

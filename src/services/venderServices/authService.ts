@@ -26,14 +26,14 @@ export class VendorAuthService implements IVendorInterface {
     password: string;
   }): Promise<void> => {
     try {
-      const { email, password, phone, shopName } = data;
+      const { email } = data;
 
       const exist = await this._vendorRepository.checkVendorExist(email);
 
       if (exist) {
         throw new Error(MessageEnum.VENDOR_EXISTS);
       } else {
-        let token = generateJwtToken(data);
+        const token = generateJwtToken(data);
 
         await sendEmail(
           email,
@@ -64,7 +64,7 @@ export class VendorAuthService implements IVendorInterface {
     try {
       const { shopName, email, phone, password } = data;
 
-      let exist = await this._vendorRepository.checkVendorExist(email);
+      const exist = await this._vendorRepository.checkVendorExist(email);
 
       if (!exist) {
         const hashedPassword = await hashPassword(password);
@@ -119,7 +119,7 @@ export class VendorAuthService implements IVendorInterface {
       if (!checkVendorExist) {
         throw new Error(MessageEnum.VENDOR_NOT_FOUND);
       } else {
-        let vendorData = await this._vendorRepository.vendorData(email);
+        const vendorData = await this._vendorRepository.vendorData(email);
 
         if(!vendorData.isActive){
           throw new Error(MessageEnum.VENDOR_BLOCKED)
@@ -128,20 +128,20 @@ export class VendorAuthService implements IVendorInterface {
 
 
 
-        let passwordMatch = await comparePassword(
+        const passwordMatch = await comparePassword(
           password,
           vendorData.password
         );
         if (!passwordMatch) {
           throw new Error(MessageEnum.INVALID_CREDENTIALS);
         } else {
-          let payload: IJwtPayload = {
+          const payload: IJwtPayload = {
             userId: vendorData._id,
             role: "Vendor",
           };
 
-          let AccessToken = accessToken(payload);
-          let RefreshToken = refreshToken(payload);
+          const AccessToken = accessToken(payload);
+          const RefreshToken = refreshToken(payload);
 
           return {
             accessToken: AccessToken,
@@ -200,12 +200,12 @@ export class VendorAuthService implements IVendorInterface {
 
   resetPasswordEmailVerify = async (email: string): Promise<boolean | void> => {
     try {
-      let exist = await this._vendorRepository.checkVendorExist(email);
+      const exist = await this._vendorRepository.checkVendorExist(email);
 
       if (!exist) {
         throw new Error(MessageEnum.VENDOR_NOT_FOUND);
       }
-      let token = generateJwtToken({ email });
+      const token = generateJwtToken({ email });
       await sendEmail(
         email,
         `${process.env.VENDOR_FORGOT_PASSWORD}?token=${token}`
@@ -226,8 +226,8 @@ export class VendorAuthService implements IVendorInterface {
     try {
       const { email, password } = { ...data };
 
-      let emailExist = await this._vendorRepository.checkVendorExist(email);
-      let hashedPassword = await hashPassword(password);
+      const emailExist = await this._vendorRepository.checkVendorExist(email);
+      const hashedPassword = await hashPassword(password);
 
       if (emailExist) {
         await this._vendorRepository.resetPassword(email, hashedPassword);

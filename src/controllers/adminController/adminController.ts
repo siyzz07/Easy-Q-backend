@@ -13,7 +13,7 @@ export class AdminController {
   //---------------------------------------------------------- get all customer data
   getUserDatas = async (req: Request, res: Response): Promise<void> => {
     try {
-      let data = await this._adminService.getCustomersDatas();
+      const data = await this._adminService.getCustomersDatas();
 
       res.status(StatusCodeEnum.OK).json({
         message: MessageEnum.CUSTOMER_ALL_DATA_FETCH_SUCCESS,
@@ -49,7 +49,7 @@ export class AdminController {
   //----------------------------------------------------------get vendors data
   geVendorsDatas = async (req: Request, res: Response): Promise<void> => {
     try {
-      let data = await this._adminService.getVendorsDatas();
+      const data = await this._adminService.getVendorsDatas();
       res.status(StatusCodeEnum.OK).json({
         message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS,
         data: data,

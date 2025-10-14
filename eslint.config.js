@@ -9,7 +9,7 @@ export default defineConfig([
   ...tseslint.configs.recommended,
   {
     files: ["**/*.{ts,js}"],
-    ignores: ["node_modules/**", "dist/**", "build/**", ".env"], // ← replace .eslintignore
+    ignores: ["node_modules/**", "dist/**", "build/**", ".env"], 
     languageOptions: {
       globals: globals.node,
       parserOptions: {

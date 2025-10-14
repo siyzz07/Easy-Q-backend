@@ -1,4 +1,4 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { IVendorInterface } from "../../interface/serviceInterface/vendorServiceInterface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
@@ -13,7 +13,7 @@ export class AuthController {
   verifyEmail = async (req: Request, res: Response): Promise<void> => {
     try {
       const data = req.body;
-      const response = await this._authService.verifyEmail(data);
+       await this._authService.verifyEmail(data);
 
       res.status(StatusCodeEnum.OK).json(MessageEnum.VENDOR_REGISTERED);
     } catch (error: unknown) {
@@ -23,6 +23,8 @@ export class AuthController {
             .status(StatusCodeEnum.UNAUTHORIZED)
             .json(MessageEnum.VENDOR_EXISTS);
         } else {
+          console.log('error to verify email',error);
+          
         }
       } else {
         console.log(MessageEnum.SERVER_ERROR);

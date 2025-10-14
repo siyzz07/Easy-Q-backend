@@ -11,6 +11,8 @@ export enum MessageEnum {
   CUSTOMER_DATA_FETCH_FAILED ='Customer data fetching failed',
   CUSTOMER_ALL_DATA_FETCH_SUCCESS ='Customers datas fetch successfully',
   CUSTOMER_BLOCKED ='Customer blocked by admin',
+  CUSTOMER_PROFILE_UPDATED ='Customer profile updated',
+  
 
   
  
@@ -31,10 +33,12 @@ export enum MessageEnum {
 
   
   INVALID_CREDENTIALS = "Invalid email or password",
+  INVALID_PASSWORD = "Invalid password",
   MISSING_FIELDS = "Required fields are missing",
   LOGOOUT_SUCCESS = 'Logut success',
   SERVER_ERROR = 'Internal server error',
   PASSWROD_CAHNGE_SUCCESS ='Password change successfully',
+  PASSWROD_CAHNGE_FAILED ='Unable to change password',
   ACCOUNT_BLOCKED="Your account is blocked",
   
   
