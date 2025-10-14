@@ -1,8 +1,7 @@
 import { CustomerAddressContorller } from "../controllers/customerController/addressController";
 import CustomerAuth from "../controllers/customerController/authController";
 import { CustomerController } from "../controllers/customerController/customerController";
-import { CustomerAddresRepository } from "../repositories/AddressRepository";
-// import { CustomerAddresRepository } from "../repositories/addressRepository";
+import { CustomerAddresRepository } from "../repositories/customerAddressRepository";;
 import { CustomerRepository } from "../repositories/customerRepository";
 import { CustomerAddressService } from "../services/customerServices/addressService";
 import AuthService from "../services/customerServices/authService";
