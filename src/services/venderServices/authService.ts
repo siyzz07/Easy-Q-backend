@@ -28,11 +28,22 @@ export class VendorAuthService implements IVendorInterface {
     try {
       const { email } = data;
 
+      let vendorDataVerified = false;
       const exist = await this._vendorRepository.checkVendorExist(email);
 
       if (exist) {
+        const vendorData = await this._vendorRepository.vendorData(email);
+
+        vendorDataVerified =
+          vendorData.isVerified === "pending" ||vendorData.isVerified === "verified";
+      }
+      if (exist && vendorDataVerified) {
         throw new Error(MessageEnum.VENDOR_EXISTS);
       } else {
+
+          if(exist){
+             await this._vendorRepository.deleteVendor(email)
+          }
         const token = generateJwtToken(data);
 
         await sendEmail(
@@ -42,6 +53,7 @@ export class VendorAuthService implements IVendorInterface {
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
+        console.log(error.message);
         if (error.message === MessageEnum.VENDOR_EXISTS) {
           throw error;
         } else {
@@ -60,9 +72,10 @@ export class VendorAuthService implements IVendorInterface {
     phone: string;
     email: string;
     password: string;
+    proofImage: string;
   }): Promise<any> => {
     try {
-      const { shopName, email, phone, password } = data;
+      const { shopName, email, phone, password, proofImage } = data;
 
       const exist = await this._vendorRepository.checkVendorExist(email);
 
@@ -75,6 +88,7 @@ export class VendorAuthService implements IVendorInterface {
           email,
           isActive: true,
           password: hashedPassword,
+          proofImage: proofImage,
         };
 
         const response = await this._vendorRepository.addNewVendor(vendorData);
@@ -120,34 +134,42 @@ export class VendorAuthService implements IVendorInterface {
         throw new Error(MessageEnum.VENDOR_NOT_FOUND);
       } else {
         const vendorData = await this._vendorRepository.vendorData(email);
+        console.log(vendorData.isVerified == "rejected");
 
-        if(!vendorData.isActive){
-          throw new Error(MessageEnum.VENDOR_BLOCKED)
-          return 
-        }
+        if (vendorData.isVerified == "pending") {
+          throw new Error(MessageEnum.VENDOR_UNDER_VERIFICATION);
+          return;
+        } else if (vendorData.isVerified == "rejected") {
+          console.log("one tho");
 
-
-
-        const passwordMatch = await comparePassword(
-          password,
-          vendorData.password
-        );
-        if (!passwordMatch) {
-          throw new Error(MessageEnum.INVALID_CREDENTIALS);
+          throw new Error(MessageEnum.VENDOR_VERIFICATION_REJECTED);
         } else {
-          const payload: IJwtPayload = {
-            userId: vendorData._id,
-            role: "Vendor",
-          };
+          if (!vendorData.isActive) {
+            throw new Error(MessageEnum.VENDOR_BLOCKED);
+            return;
+          }
 
-          const AccessToken = accessToken(payload);
-          const RefreshToken = refreshToken(payload);
+          const passwordMatch = await comparePassword(
+            password,
+            vendorData.password
+          );
+          if (!passwordMatch) {
+            throw new Error(MessageEnum.INVALID_CREDENTIALS);
+          } else {
+            const payload: IJwtPayload = {
+              userId: vendorData._id,
+              role: "Vendor",
+            };
 
-          return {
-            accessToken: AccessToken,
-            refreshToken: RefreshToken,
-            vendorData: vendorData,
-          };
+            const AccessToken = accessToken(payload);
+            const RefreshToken = refreshToken(payload);
+
+            return {
+              accessToken: AccessToken,
+              refreshToken: RefreshToken,
+              vendorData: vendorData,
+            };
+          }
         }
       }
     } catch (error: unknown) {
@@ -156,10 +178,15 @@ export class VendorAuthService implements IVendorInterface {
           throw error;
         } else if (error.message === MessageEnum.INVALID_CREDENTIALS) {
           throw error;
-        }else if(error.message === MessageEnum.VENDOR_BLOCKED){
-            throw error
+        } else if (error.message === MessageEnum.VENDOR_BLOCKED) {
+          throw error;
+        } else if (error.message === MessageEnum.VENDOR_UNDER_VERIFICATION) {
+          throw error;
+        } else if (error.message === MessageEnum.VENDOR_VERIFICATION_REJECTED) {
+          throw error;
         }
       } else {
+        throw error;
         console.log("vendor Login unknown error");
       }
     }

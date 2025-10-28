@@ -127,7 +127,7 @@ class AuthService implements ICustomerInterface {
   };
 
   updateToken = async (refreshToken: string): Promise<string> => {
-    console.log("refreshToken :>> ", refreshToken);
+   
 
     if (!refreshToken) {
       console.log("service refresh token missing");
@@ -145,7 +145,7 @@ class AuthService implements ICustomerInterface {
         role: "Customer",
       };
       const AccessToken = await accessToken(payload);
-      console.log("new acccess token created");
+   
 
       return AccessToken;
     } catch (error: unknown) {

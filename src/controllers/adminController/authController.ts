@@ -10,6 +10,12 @@ export class AdminAtuhController {
     this._atuhService = authService;
   }
 
+
+  /**
+   * 
+   * admin login
+   * 
+   */
   loginAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
       const data = req.body;
@@ -26,6 +32,7 @@ export class AdminAtuhController {
           accesstoken: response.accessToken,
         });
       }
+
     } catch (error) {
       if (error instanceof Error) {
         if (error.message === MessageEnum.ADMIN_NOT_FOUND) {
@@ -43,6 +50,11 @@ export class AdminAtuhController {
     }
   };
 
+   /**
+   * 
+   * admin refresh token
+   * 
+   */
   refreshToken = async (req: Request, res: Response): Promise<void> => {
     try {
       const refreshToken = req.cookies.AdminJwt;
@@ -73,6 +85,12 @@ export class AdminAtuhController {
       }
     }
   };
+
+ /**
+   * 
+   * admin logout
+   * 
+   */
 
   logout = async (req: Request, res: Response): Promise<void> => {
     try {

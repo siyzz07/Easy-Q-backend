@@ -1,7 +1,8 @@
 import express from 'express'
 import customerRoute from './routes/customerRoutes'
 import cors from 'cors'
-
+import morgan from "morgan";
+import logger from "./utils/logger";
 import vendorRoute from './routes/vendorRoutes'
 import cookieParser from "cookie-parser";
 import adminRoute from './routes/adminRoutes'
@@ -19,6 +20,14 @@ app.use(cors({
 }))
 
 
+
+app.use(
+  morgan("combined", {
+    stream: {
+      write: (message) => logger.info(message.trim()),
+    },
+  })
+);
 
 
 

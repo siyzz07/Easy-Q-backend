@@ -27,7 +27,7 @@ export class CustomerAddresRepository
 
   //-----------------------------------------------------------------add address for existing customer
   async addAddress(id: string, payload: IAddress): Promise<void> {
-    console.log(payload);
+    
 
     await this._addressModel
       .updateOne({ customerId: id }, { $push: { address: payload } })
@@ -79,7 +79,7 @@ export class CustomerAddresRepository
       { customerId },
       { $pull: { address: { _id: id } } }
     );
-    console.log("result :>> ", result);
+ 
     return result.modifiedCount > 0;
   }
 

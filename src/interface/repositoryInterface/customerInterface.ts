@@ -1,5 +1,5 @@
 import { IAddress, ICustomer, ICustomerAddress } from "../../types/customerType"
-import { IVendor } from "../../types/vendorType"
+import { IService, IVendor } from "../../types/vendorType"
 
 
 
@@ -12,6 +12,8 @@ export interface ICustomerRepo{
     resetPassword (email:string,passowrd:string):Promise<void>
     getVendorsData() :Promise<IVendor[]|null>
     editProfile(data:{userId:string;name:string;email:string;phone:string}):Promise<boolean>
+    getEachVendorData(_id:string):Promise<IVendor|null>
+    getEachvendorServices(_shopId:string):Promise<IService[]|[]>
 
 }
 

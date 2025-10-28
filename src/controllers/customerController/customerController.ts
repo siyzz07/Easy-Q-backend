@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { ICustomerServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
 import { MessageEnum } from "../../enums/messagesEnum";
-
+import { log } from "console";
 
 export class CustomerController {
   private _customerService: ICustomerServiceInterface;
@@ -44,8 +44,8 @@ export class CustomerController {
   //--------------------------------------------------------------------------get customer data
   getCustomerData = async (req: Request, res: Response): Promise<void> => {
     try {
-       const id = req.body.userId;
-      
+      const id = req.body.userId;
+
       const response = await this._customerService.getCustomerData(id);
       if (response) {
         res.status(StatusCodeEnum.OK).json({
@@ -67,8 +67,12 @@ export class CustomerController {
   //------------------------------------------------- upadte profile
   editProfile = async (req: Request, res: Response): Promise<void> => {
     try {
-      const data: { name: string; email: string; phone: string; userId: string } =
-        req.body;
+      const data: {
+        name: string;
+        email: string;
+        phone: string;
+        userId: string;
+      } = req.body;
 
       const result = await this._customerService.editProfile(data);
       if (result) {
@@ -86,11 +90,12 @@ export class CustomerController {
     }
   };
 
-
   //-------------------------------------------------chage password in profile
   changePassword = async (req: Request, res: Response): Promise<void> => {
     try {
-      const result = await this._customerService.updatePasswordInProfile(req.body);
+      const result = await this._customerService.updatePasswordInProfile(
+        req.body
+      );
       if (result) {
         res
           .status(StatusCodeEnum.OK)
@@ -106,4 +111,54 @@ export class CustomerController {
       }
     }
   };
+
+  //-------------------------------------------------get Each  shopdata
+  shopDataEach = async (req: Request, res: Response): Promise<void> => {
+    try {
+      let id = req.params.id;
+
+      let result = await this._customerService.getEachVendorData(id);
+      if (result) {
+        res
+          .status(StatusCodeEnum.OK)
+          .json({ message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS ,data:result});
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        if (error.message == MessageEnum.VENDOR__DATA_FETCH_FAILED) {
+          res
+            .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
+        } else {
+          res
+            .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+            .json({ message: error.message });
+        }
+      }
+    }
+  };
+
+  //-------------------------------------------------get Each shop service
+  getShopServices = async (req:Request,res:Response) :Promise<void> =>{
+    try{
+
+        let shopId = req.params.shopId
+     let result = await this._customerService.getEachVendorServices(shopId)
+     if(result){
+      res
+        .status(StatusCodeEnum.OK)
+        .json({message:MessageEnum.SERVICE_FETCH_SUCCESS,data:result})
+     }
+     
+      
+    }catch(error:unknown){
+
+        if(error instanceof Error){
+          res.status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+          .json({message:MessageEnum.SERVER_ERROR})
+        }
+        console.log('error to fect the service type of a vendor');
+        
+    }
+  }  
 }

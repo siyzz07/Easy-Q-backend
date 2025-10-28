@@ -21,9 +21,11 @@ customerRoute.post('/reset-password/verify',authContollerInstance.resetPasswrodV
 customerRoute.post ('/logout',authContollerInstance.logout)
 
 
+//---------------------------------------------------------------------- shops
 customerRoute.get('/shops-data',verifyToken,customerBlockAuth,customerControllerInstance.getShopsData)
 customerRoute.get('/profile/customer-data',verifyToken,customerBlockAuth,customerControllerInstance.getCustomerData)
-
+customerRoute.get('/shop-data/:id',verifyToken,customerBlockAuth,customerControllerInstance.shopDataEach)
+customerRoute.get('/shop-data/services/:shopId',verifyToken,customerBlockAuth,customerControllerInstance.getShopServices)
 
 //----------------------------------------------------------------------profile ,resetpasssword in profile and address Route
 customerRoute.post('/profile/add-address',verifyToken,customerBlockAuth,AddressControllerInstance.addNewAddresss)

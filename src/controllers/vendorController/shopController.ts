@@ -3,7 +3,6 @@ import { IVendorShopServiceInterface } from "../../interface/serviceInterface/ve
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 
-
 class VendorShopController {
   private _vendorShopService: IVendorShopServiceInterface;
 
@@ -14,8 +13,6 @@ class VendorShopController {
   addShopData = async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId, latitude, longitude, ...data } = { ...req.body };
-
-
       const cordinates = {
         lat: latitude,
         lon: longitude,
@@ -40,6 +37,7 @@ class VendorShopController {
     }
   };
 
+  //-----------------------------------------------------------------------get the shop data///
   getShopData = async (req: Request, res: Response): Promise<void> => {
     try {
       const id = req.body.userId;
@@ -47,6 +45,24 @@ class VendorShopController {
       const data = await this._vendorShopService.getShopData(id);
       res.status(StatusCodeEnum.OK).json({ data: data });
     } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+
+  //----------------------------------------------------------------------- get the shop service type
+  getShopServiceType = async (req: Request, res: Response): Promise<void> => {
+    try {
+
+      let result = await this._vendorShopService.getShopTypes();
+  
+      if (result) {
+        res
+          .status(StatusCodeEnum.OK)
+          .json({ message: MessageEnum.SERVICE_FETCH_SUCCESS,data:result });
+      }
+    } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message);
       }

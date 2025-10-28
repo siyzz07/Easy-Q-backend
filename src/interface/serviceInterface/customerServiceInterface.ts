@@ -1,6 +1,8 @@
 import { IAddress, ICustomer} from "../../types/customerType";
-import { IVendor } from "../../types/vendorType";
+import { IService, IVendor } from "../../types/vendorType";
 
+
+//----------------------------------------customer auth
 export interface ICustomerInterface {
     addCustomer(data:ICustomer): Promise<boolean>;
     verifyEmail(data:ICustomer):Promise<void>
@@ -8,6 +10,7 @@ export interface ICustomerInterface {
     updateToken (token:string):Promise<string>
     resetPasswordEmailVerify(email:string):Promise<boolean|void>
     resetPassowrd(data:{email:string,password:string}):Promise<void>
+    
     
 }
 
@@ -19,6 +22,8 @@ export interface ICustomerServiceInterface{
     getCustomerData (id:string):Promise<ICustomer|void>
     editProfile(data:{userId:string;name:string;email:string;phone:string}):Promise<boolean|void>
     updatePasswordInProfile(data:{currentPassword:string;userId:string;password:string}):Promise<boolean|void>
+    getEachVendorData (data:string):Promise<IVendor|void>
+    getEachVendorServices(data:string):Promise<IService[]|[]>
 }
 
 

@@ -56,6 +56,11 @@ export enum MessageEnum {
   UNAUTHORIZED = "You are not authorized to perform this action",
   PLAN_EXPIRED = "Vendor plan has expired",
   VENDOR__DATA_FETCH_SUCCESS ='Vendor data fetch successfully',
+  VENDOR__DATA_FETCH_FAILED ='Error to fetch vedor data',
+  VENDOR_UNDER_VERIFICATION = "Your account is under verification. Please wait for admin approval.",
+  VENDOR_VERIFICATION_REJECTED = "Your account verification was rejected by admin. Please register again with valid data.",
+  VENDOR_VRIFIED = "Vendor vierified",
+  VENDOR_DENIED = "Vendor verification rejected",
   
 
   
@@ -100,5 +105,37 @@ export enum MessageEnum {
   ADDRESS_INVALID = "Invalid address data",
   ADDRESS_EDIT_SUCCESS = "Address editing success",
   ADDRESS_EDIT_FAILED = "Invalid address data",
+
+
+  // --------------------------------------------------------------------------service by admin
+  SERVICE_ADD_SUCCESS = "Service added successfully.",
+  SERVICE_FETCH_SUCCESS = "Service fetch successfully.",
+  SERVICE_EDIT_SUCCESS = "Service edited successfully.",
+  SERVICE_ADD_FAILD = "Failed to add service. Please try again.",
+  SERVICE_ALREADY_EXIST = "Service already exists.",
+  
+  // --------------------------------------------------------------------------staff
+  STAFF_ADD_SUCCESS = "Staff added successfully.",
+  STAFF_ADD_FAILED = "Failed to add staff.",
+  STAFF_ALREADY_EXISTS = "Staff with this name already exists.",
+  STAFF_NOT_FOUND = "Staff not found.",
+  STAFF_FETCH_SUCCESS = "Staff data fetched successfully.",
+  STAFF_FETCH_FAILED = "Failed to fectch staff data.",
+  STAFF_UPDATE_SUCCESS = "Staff updated successfully.",
+  STAFF_UPDATE_FAILED = "Failed to update staff.",
+  STAFF_STATUS_UPDATED = "Staff status updated successfully.",
+
+
+   // --------------------------------------------------------------------------service by vendor
+  VENDOR_SERVICE_ADD_SUCCESS = "Service added successfully.",
+  VENDOR_SERVICE_FETCH_SUCCESS = "Service fetch successfully.",
+  VENDOR_SERVICE_ADD_FAILD = "Failed to add service. Please try again.",
+  VENDOR_SERVICE_ALREADY_EXIST = "Service already exists.",
+  VENDOR_SERVICE_EDIT_SUCCESS = "Service edited successfully.",
+ 
 }
+
+
+ 
+  
 

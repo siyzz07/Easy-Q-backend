@@ -10,21 +10,19 @@ export class AuthController {
     this._authService = authSrevice;
   }
 
+  //-------------------------------------------------------------------verify the registered users by mail
   verifyEmail = async (req: Request, res: Response): Promise<void> => {
     try {
       const data = req.body;
-       await this._authService.verifyEmail(data);
+      await this._authService.verifyEmail(data);
 
       res.status(StatusCodeEnum.OK).json(MessageEnum.VENDOR_REGISTERED);
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message == MessageEnum.VENDOR_EXISTS) {
-          res
-            .status(StatusCodeEnum.UNAUTHORIZED)
-            .json(MessageEnum.VENDOR_EXISTS);
+          res.status(StatusCodeEnum.CONFLICT).json(MessageEnum.VENDOR_EXISTS);
         } else {
-          console.log('error to verify email',error);
-          
+          console.log("error to verify email", error);
         }
       } else {
         console.log(MessageEnum.SERVER_ERROR);
@@ -32,19 +30,17 @@ export class AuthController {
     }
   };
 
+  //-------------------------------------------------------------------add new verified vendor
   addNewVendor = async (req: Request, res: Response): Promise<void> => {
     try {
       const data = req.body;
 
       await this._authService.addNewVendor(data);
-
       res.status(StatusCodeEnum.OK).json(MessageEnum.VENDOR_CREATED);
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message == MessageEnum.VENDOR_EXISTS) {
-          res
-            .status(StatusCodeEnum.UNAUTHORIZED)
-            .json(MessageEnum.VENDOR_EXISTS);
+          res.status(StatusCodeEnum.CONFLICT).json(MessageEnum.VENDOR_EXISTS);
         } else {
           res
             .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
@@ -74,7 +70,7 @@ export class AuthController {
         accesstoken: response.accessToken,
         data: response.vendorData,
       });
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.message === MessageEnum.VENDOR_NOT_FOUND) {
           res
@@ -86,6 +82,18 @@ export class AuthController {
             .json(MessageEnum.INVALID_CREDENTIALS);
         } else if (error.message === MessageEnum.VENDOR_BLOCKED) {
           res.status(StatusCodeEnum.NOT_FOUND).json(MessageEnum.VENDOR_BLOCKED);
+        } else if (error.message == MessageEnum.VENDOR_UNDER_VERIFICATION) {
+          res
+            .status(StatusCodeEnum.BAD_REQUEST)
+            .json(MessageEnum.VENDOR_UNDER_VERIFICATION);
+        } else if (error.message == MessageEnum.VENDOR_VERIFICATION_REJECTED) {
+          res
+            .status(StatusCodeEnum.BAD_REQUEST)
+            .json(MessageEnum.VENDOR_VERIFICATION_REJECTED);
+        } else {
+          res
+            .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
+            .json(MessageEnum.SERVER_ERROR);
         }
       } else {
         console.log("error unknown , vendor login error");

@@ -5,3 +5,11 @@ export interface IAdmin {
    email:string,
    password:string
 }
+
+
+export interface IServiceType{
+   _id?:string;
+   serviceName:string;
+   description:string;
+   isActive:boolean
+}

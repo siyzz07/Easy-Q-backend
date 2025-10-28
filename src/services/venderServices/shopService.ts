@@ -1,6 +1,7 @@
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IVendorRepo } from "../../interface/repositoryInterface/vendorRepoInterface";
 import { IVendorShopServiceInterface } from "../../interface/serviceInterface/vendorServiceInterface";
+import { IServiceType } from "../../types/adminTypes";
 import { IShopData, IVendor } from "../../types/vendorType";
 
 class VendorShopService implements IVendorShopServiceInterface {
@@ -10,6 +11,8 @@ class VendorShopService implements IVendorShopServiceInterface {
     this._vendorRepo = vendorRepo;
   }
 
+
+  //----------------------------------------- add shop extra data
   addShopData = async (
     data: IShopData,
     vendorId: string,
@@ -21,9 +24,6 @@ class VendorShopService implements IVendorShopServiceInterface {
         cordinates,
         hasShop:true
       };
-
-      console.log('updateData :>> ', updateData);
-
       const vendorData = await this._vendorRepo.vendorDatabyId(vendorId);
       if (vendorData) {
         const response = await this._vendorRepo.findByIdAndUpdate(
@@ -48,12 +48,24 @@ class VendorShopService implements IVendorShopServiceInterface {
   };
 
 
+   //----------------------------------------- add shop data
   getShopData = async (id: string): Promise<IVendor> =>{
     
      const data = await this._vendorRepo.vendorDatabyId(id)
      return data
 
   }
+
+   //----------------------------------------- add shop extra data
+   getShopTypes = async(): Promise<IServiceType[] | []> => {
+
+     const data = await this._vendorRepo.vendorTypeData()
+     if(data){
+      return data
+     }else{
+      return []
+     }
+   }
 }
 
 export default VendorShopService;

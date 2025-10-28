@@ -16,12 +16,14 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
     super(adminModel);
   }
 
+  //------------------------------------------------------- chech the admin exist or not
   async checkAdminExist(email: string): Promise<boolean> {
     const admin = await this.findByEmail(email);
-
+    
     return !!admin;
   }
-
+  
+  //------------------------------------------------------- take amin data
   async adminDataByEmail(email: string): Promise<IAdmin> {
     const adminData = await this.findByEmail(email);
 
@@ -41,7 +43,7 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
     }
   }
 
-  //----------------------- block customer by admin
+  //---------------------------------------------------- block customer by admin
   async blockCustomer(_id: string): Promise<boolean> {
     const updated = await this._CustomerModel
       .findByIdAndUpdate(_id, [{ $set: { isActive: { $not: "$isActive" } } }], {
@@ -62,17 +64,38 @@ async getVendorData(): Promise<IVendor[] | []> {
 }
 
 //-------------------------------------------------------block vendor data
- 
+
 async blockVendor(_id: string): Promise<boolean> {
   const updated = await this._VendorModel
-      .findByIdAndUpdate(_id, [{ $set: { isActive: { $not: "$isActive" } } }], {
-        new: true,
-      })
-      .lean();
-    return !!updated;
+  .findByIdAndUpdate(_id, [{ $set: { isActive: { $not: "$isActive" } } }], {
+    new: true,
+  })
+  .lean();
+  return !!updated;
 }
 
 
+//-------------------------------------------------------verify vendor
+async verifyVendor(_id: string): Promise<boolean> {
+  const update = await this._VendorModel.findByIdAndUpdate(
+    _id,
+    { $set: { isVerified: "verified" } },
+    { new: true } 
+  ).lean();
+
+  return !!update;
+}
+
+//-------------------------------------------------------reject vendor
+async rejectVendor(_id: string): Promise<boolean> {
+    const update = await this._VendorModel.findByIdAndUpdate(
+    _id,
+    { $set: { isVerified: "rejected" } },
+    { new: true } 
+  ).lean();
+
+  return !!update;
+}
 
 
 }

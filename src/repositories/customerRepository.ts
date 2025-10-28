@@ -4,14 +4,16 @@ import { ICustomerRepo } from "../interface/repositoryInterface/customerInterfac
 import customer from "../models/customerModel";
 import BaseRepository from "./baseRepository";
 import vendorModel from "../models/vendorModel";
-import { IVendor } from "../types/vendorType";
+import { IService, IVendor } from "../types/vendorType";
+import Service from "../models/Service";
 
 export class CustomerRepository
   extends BaseRepository<any>
   implements ICustomerRepo
 {
   private _customerModel = customer;
-  private _vendorMode = vendorModel;
+  private _vendorModel = vendorModel;
+  private _VendorServiceModel =Service
 
   constructor() {
     super(customer);
@@ -42,7 +44,7 @@ export class CustomerRepository
 
   //---------------------------------------------------------------------get all vendors/shops data
   async getVendorsData(): Promise<IVendor[] | null> {
-    const vendorData = await this._vendorMode.find().lean();
+    const vendorData = await this._vendorModel.find().lean();
     return vendorData;
   }
 
@@ -72,4 +74,15 @@ export class CustomerRepository
 
     return !!result;
   }
-}
+
+    //---------------------------------------------------------------------get each vendor data
+    async getEachVendorData(_id: string): Promise<IVendor | null> {
+      let result = await this._vendorModel.findById(_id).populate('shopType')
+      return result
+    }
+    //---------------------------------------------------------------------get each vendor services
+    async getEachvendorServices(_shopId: string): Promise<IService[] | []> {
+        let result = await this._VendorServiceModel.find({shopId:_shopId})
+        return result
+    }
+  }

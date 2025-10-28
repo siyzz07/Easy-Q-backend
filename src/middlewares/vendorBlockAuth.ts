@@ -24,7 +24,6 @@ export const vendorBlockAuth = async (
         .json({ message:MessageEnum.ACCOUNT_BLOCKED });
     }
 
-   
     next();
   } catch (error) {
     console.error("Error in customerBlockAuth:", error);

@@ -1,8 +1,9 @@
+import { log } from "console";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { ICustomerRepo } from "../../interface/repositoryInterface/customerInterface";
 import { ICustomerServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
 import { ICustomer } from "../../types/customerType";
-import { IVendor } from "../../types/vendorType";
+import { IService, IVendor } from "../../types/vendorType";
 import { comparePassword, hashPassword } from "../../utils/hash";
 
 export class CustomerService implements ICustomerServiceInterface {
@@ -74,7 +75,7 @@ export class CustomerService implements ICustomerServiceInterface {
       const customerPassword = customer.password
 
       const checkCorrectPassword = await comparePassword(currentPassword,customerPassword)
-      console.log('checkCorrectPa :>> ', checkCorrectPassword);
+     
       
       if(!checkCorrectPassword){
         throw new Error(MessageEnum.INVALID_PASSWORD)
@@ -86,5 +87,24 @@ export class CustomerService implements ICustomerServiceInterface {
 
 
 
+  }
+
+  //---------------------------------------------------------------- get each vendor data
+  getEachVendorData = async (data: string): Promise<IVendor | void>  => {
+    
+    console.log(data );
+    
+    let result = await this._customerRepository.getEachVendorData(data)
+    if(result){
+      return result
+    }else{
+      throw new Error(MessageEnum.VENDOR__DATA_FETCH_FAILED)
+    }
+    
+  }
+  //---------------------------------------------------------------- get each vendor services
+  getEachVendorServices = async (data: string): Promise<IService[] | []> =>{
+    let result = await this._customerRepository.getEachvendorServices(data)
+    return result
   }
 }

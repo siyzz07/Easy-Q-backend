@@ -12,7 +12,7 @@ const dbConfig = async (): Promise<void> => {
     } else {
       console.log(`db connection error ${error}`);
     }
-  }
+  } 
 };
 
 export default dbConfig;

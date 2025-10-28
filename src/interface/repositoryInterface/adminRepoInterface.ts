@@ -1,4 +1,4 @@
-import { IAdmin } from "../../types/adminTypes"
+import { IAdmin, IServiceType } from "../../types/adminTypes"
 import { ICustomer } from "../../types/customerType"
 import { IVendor } from "../../types/vendorType"
 
@@ -13,5 +13,18 @@ export interface IAdminRepo {
     blockCustomer(_id:string):Promise<boolean>
     getVendorData():Promise<IVendor[]|[]>
     blockVendor(_id:string):Promise<boolean>
+    rejectVendor(_id:string):Promise<boolean>
+    verifyVendor(_id:string):Promise<boolean>
 
+}
+
+
+
+//----------------------------------------------------------service repository interface the service that given by adimin for each vendro
+export interface IServiceTypesRepositoryInterface{
+        addServiceType (data:{serviceName:String;description:String,isActive:boolean}):Promise<boolean>
+        getServices():Promise<IServiceType[]|[]>
+        editServiceType(_id:string,data: { serviceName: String; description: String; }): Promise<boolean>
+        
+    
 }
