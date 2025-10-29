@@ -44,7 +44,7 @@ export class CustomerRepository
 
   //---------------------------------------------------------------------get all vendors/shops data
   async getVendorsData(): Promise<IVendor[] | null> {
-    const vendorData = await this._vendorModel.find().lean();
+    const vendorData = await this._vendorModel.find({isActive:true}).lean();
     return vendorData;
   }
 

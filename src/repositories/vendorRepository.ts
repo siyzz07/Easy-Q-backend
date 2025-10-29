@@ -1,9 +1,11 @@
 
 import { IVendorRepo } from "../interface/repositoryInterface/vendorRepoInterface";
+import Service from "../models/Service";
 import ServiceTypesModel from "../models/ServiceTypesModel";
+import staffModel from "../models/staffModel";
 import vendorModel from "../models/vendorModel";
 import { IServiceType } from "../types/adminTypes";
-import { IVendor } from "../types/vendorType";
+import { IService, IStaff, IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
 export class VendorRepository
@@ -12,6 +14,8 @@ export class VendorRepository
 {
   private _vendorModel = vendorModel;
   private _ServiceTypeModel = ServiceTypesModel
+  private _Service= Service
+  private _Staff = staffModel
 
   constructor() {
     super(vendorModel);
@@ -66,6 +70,16 @@ export class VendorRepository
     return result
   }
 
-  //------------------------------------------ 
+  //------------------------------------------ get staff data
+  async  getStaffData(shopId: string): Promise<IStaff[] | []> {
+      let result = await this._Staff.find({shopId}).lean()
+      return result
+    }
+    //------------------------------------------ get vendor service data
+
+    async getServiceData(shopId: string): Promise<IService[] | []> {
+      let result = await this._Service.find({shopId}).lean()
+      return result
+    }
 
 }

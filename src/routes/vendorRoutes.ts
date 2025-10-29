@@ -20,7 +20,8 @@ vendorRoute.post('/auth/refresh-token',vendorAuthControllerInstance.refreshToken
 vendorRoute.post('/reset-password/verify',vendorAuthControllerInstance.resestPasswordEmailVerify)
 vendorRoute.post('/reset-password',emailVerifyTokenMIddleware,vendorAuthControllerInstance.resetPassword)
 
-
+//---------------------------------------------- dashboard
+vendorRoute.get('/dashboard/data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.vendorDashboard)
 
 vendorRoute.post('/shop-data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.addShopData)
 vendorRoute.get('/shop-data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.getShopData)

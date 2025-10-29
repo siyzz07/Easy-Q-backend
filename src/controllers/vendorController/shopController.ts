@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { IVendorShopServiceInterface } from "../../interface/serviceInterface/vendorServiceInterface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
@@ -68,6 +68,24 @@ class VendorShopController {
       }
     }
   };
+
+    //----------------------------------------------------------------------- dashboard
+  vendorDashboard = async (req:Request,res:Response,next:NextFunction):Promise<void> =>{
+    try{
+
+
+      let result = await this._vendorShopService.getDashboard(req.body.userId)
+
+      if(result){
+        res
+          .status(StatusCodeEnum.OK)
+          .json({message:MessageEnum.SUCCEESS,data:result})
+
+      }
+    }catch(error){
+      throw(error)
+    }
+  }
 }
 
 export default VendorShopController;

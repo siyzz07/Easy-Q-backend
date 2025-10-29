@@ -11,6 +11,8 @@ export interface IVendorRepo {
     resetPassword (email:string,passowrd:string):Promise<void>
     vendorTypeData():Promise<IServiceType[]|null>
     deleteVendor (email:string):Promise<null>
+    getStaffData(shopId:string):Promise<IStaff[]|[]>
+    getServiceData(shopId:string):Promise<IService[]|[]>
 }
 
 
@@ -30,4 +32,5 @@ export interface IServiceRepositoryInterface{
     addService(data:IService):Promise<boolean>
     getService(shopId:string):Promise<IService[]|[]>
     editService(_id:string,data:IService):Promise<boolean>
+    
 }

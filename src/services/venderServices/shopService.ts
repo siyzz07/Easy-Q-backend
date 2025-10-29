@@ -2,7 +2,7 @@ import { MessageEnum } from "../../enums/messagesEnum";
 import { IVendorRepo } from "../../interface/repositoryInterface/vendorRepoInterface";
 import { IVendorShopServiceInterface } from "../../interface/serviceInterface/vendorServiceInterface";
 import { IServiceType } from "../../types/adminTypes";
-import { IShopData, IVendor } from "../../types/vendorType";
+import { IService, IShopData, IStaff, IVendor } from "../../types/vendorType";
 
 class VendorShopService implements IVendorShopServiceInterface {
   private _vendorRepo: IVendorRepo;
@@ -66,6 +66,51 @@ class VendorShopService implements IVendorShopServiceInterface {
       return []
      }
    }
+
+
+  //----------------------------------------- vendor dashboard
+  getDashboard = async (data: string): Promise<any> => {
+    const shopId= data
+
+    let staffData = await this._vendorRepo.getStaffData(shopId)
+    let serviceData = await this._vendorRepo.getServiceData(shopId)
+
+    let totalStaff = staffData.length
+    let availableStaff = staffData.reduce((acc:number,data:IStaff)=>{
+        if(data.isActive ){
+          acc+=1
+        }
+        return acc
+    },0)
+
+    let totalUnavailableStaff =staffData.reduce((acc:number,data:IStaff)=>{
+        if(!data.isActive ){
+          acc+=1
+        }
+        return acc
+    },0)
+
+
+    let totalService = serviceData.length
+    let totalAvailableService = serviceData.reduce((acc:number,data:IService) =>{
+      if(data.isActive){
+        acc+=1
+      }
+      return acc
+    },0)
+
+    let totalUnavailableService = serviceData.reduce((acc:number,data:IService) =>{
+      if(!data.isActive){
+        acc+=1
+      }
+      return acc
+    },0)
+    
+
+    return {totalStaff,availableStaff,totalUnavailableStaff,totalService,totalAvailableService,totalUnavailableService}
+
+  }
+
 }
 
 export default VendorShopService;

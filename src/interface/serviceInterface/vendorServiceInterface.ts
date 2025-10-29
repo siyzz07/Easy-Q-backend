@@ -2,6 +2,7 @@ import { IServiceType } from "../../types/adminTypes";
 import { IService, IShopData, IStaff, IStaffAdd, IVendor } from "../../types/vendorType";
 
 
+// ------------------------- vendor auth
 export interface IVendorInterface{
     addNewVendor(data:{shopName:string;phone:string;email:string,password:string,proofImage:string}):Promise<boolean>
     verifyEmail(data:{shopName:string;phone:string;email:string,password:string}):Promise<void>
@@ -17,6 +18,7 @@ export interface IVendorShopServiceInterface{
  addShopData (data:IShopData,vendorId:string,cordiantes:object) :Promise<any>
  getShopData (id:string):Promise<IVendor>
  getShopTypes () :Promise<IServiceType[]|[]>
+ getDashboard (data:string) :Promise<any>
     
 }
 

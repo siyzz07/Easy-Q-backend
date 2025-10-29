@@ -40,7 +40,7 @@ export enum MessageEnum {
   PASSWROD_CAHNGE_SUCCESS ='Password change successfully',
   PASSWROD_CAHNGE_FAILED ='Unable to change password',
   ACCOUNT_BLOCKED="Your account is blocked",
-  
+  SUCCEESS ="success",
   
   
   // --------------------------------------------------------------------------vendor
