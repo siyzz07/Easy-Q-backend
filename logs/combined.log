@@ -3624,3 +3624,667 @@
 [2025-10-29 00:49:42] INFO: ::1 - - [28/Oct/2025:19:19:42 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
 [2025-10-29 00:49:42] INFO: ::1 - - [28/Oct/2025:19:19:42 +0000] "GET /api/vendor/staff HTTP/1.1" 200 666 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
 [2025-10-29 00:50:17] INFO: ::1 - - [28/Oct/2025:19:20:17 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 200 51 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:00] INFO: ::1 - - [28/Oct/2025:19:31:00 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:16] INFO: ::1 - - [28/Oct/2025:19:31:16 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:20] INFO: ::1 - - [28/Oct/2025:19:31:20 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:20] INFO: ::1 - - [28/Oct/2025:19:31:20 +0000] "GET /api/vendor/staff HTTP/1.1" 200 672 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:23] INFO: ::1 - - [28/Oct/2025:19:31:23 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:26] INFO: ::1 - - [28/Oct/2025:19:31:26 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:26] INFO: ::1 - - [28/Oct/2025:19:31:26 +0000] "GET /api/vendor/staff HTTP/1.1" 200 672 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:30] INFO: ::1 - - [28/Oct/2025:19:31:30 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:34] INFO: ::1 - - [28/Oct/2025:19:31:34 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:34] INFO: ::1 - - [28/Oct/2025:19:31:34 +0000] "GET /api/vendor/staff HTTP/1.1" 200 672 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:37] INFO: ::1 - - [28/Oct/2025:19:31:37 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:37] INFO: ::1 - - [28/Oct/2025:19:31:37 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:37] INFO: ::1 - - [28/Oct/2025:19:31:37 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:37] INFO: ::1 - - [28/Oct/2025:19:31:37 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:42] INFO: ::1 - - [28/Oct/2025:19:31:42 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:49] INFO: ::1 - - [28/Oct/2025:19:31:49 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:50] INFO: ::1 - - [28/Oct/2025:19:31:50 +0000] "GET /api/vendor/staff HTTP/1.1" 200 669 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:52] INFO: ::1 - - [28/Oct/2025:19:31:52 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:55] INFO: ::1 - - [28/Oct/2025:19:31:55 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:01:55] INFO: ::1 - - [28/Oct/2025:19:31:55 +0000] "GET /api/vendor/staff HTTP/1.1" 200 670 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:06] INFO: ::1 - - [28/Oct/2025:19:32:06 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:06] INFO: ::1 - - [28/Oct/2025:19:32:06 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:06] INFO: ::1 - - [28/Oct/2025:19:32:06 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:09] INFO: ::1 - - [28/Oct/2025:19:32:09 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:09] INFO: ::1 - - [28/Oct/2025:19:32:09 +0000] "GET /api/vendor/staff HTTP/1.1" 200 670 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:41] INFO: ::1 - - [28/Oct/2025:19:32:41 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:44] INFO: ::1 - - [28/Oct/2025:19:32:44 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:44] INFO: ::1 - - [28/Oct/2025:19:32:44 +0000] "GET /api/vendor/staff HTTP/1.1" 200 670 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:55] INFO: ::1 - - [28/Oct/2025:19:32:55 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:58] INFO: ::1 - - [28/Oct/2025:19:32:58 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:02:58] INFO: ::1 - - [28/Oct/2025:19:32:58 +0000] "GET /api/vendor/staff HTTP/1.1" 200 670 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:04:03] INFO: ::1 - - [28/Oct/2025:19:34:03 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:04:03] INFO: ::1 - - [28/Oct/2025:19:34:03 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:04:03] INFO: ::1 - - [28/Oct/2025:19:34:03 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:04:04] INFO: ::1 - - [28/Oct/2025:19:34:04 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:04:07] INFO: ::1 - - [28/Oct/2025:19:34:07 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:04:13] INFO: ::1 - - [28/Oct/2025:19:34:13 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:04:13] INFO: ::1 - - [28/Oct/2025:19:34:13 +0000] "GET /api/vendor/staff HTTP/1.1" 200 674 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:31] INFO: ::1 - - [28/Oct/2025:19:35:31 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:31] INFO: ::1 - - [28/Oct/2025:19:35:31 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:31] INFO: ::1 - - [28/Oct/2025:19:35:31 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:34] INFO: ::1 - - [28/Oct/2025:19:35:34 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:34] INFO: ::1 - - [28/Oct/2025:19:35:34 +0000] "GET /api/vendor/staff HTTP/1.1" 200 671 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:40] INFO: ::1 - - [28/Oct/2025:19:35:40 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:44] INFO: ::1 - - [28/Oct/2025:19:35:44 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:05:44] INFO: ::1 - - [28/Oct/2025:19:35:44 +0000] "GET /api/vendor/staff HTTP/1.1" 200 670 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:30] INFO: ::1 - - [28/Oct/2025:19:36:30 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:36] INFO: ::1 - - [28/Oct/2025:19:36:36 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:36] INFO: ::1 - - [28/Oct/2025:19:36:36 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:36] INFO: ::1 - - [28/Oct/2025:19:36:36 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:36] INFO: ::1 - - [28/Oct/2025:19:36:36 +0000] "GET /api/vendor/staff HTTP/1.1" 200 670 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:40] INFO: ::1 - - [28/Oct/2025:19:36:40 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:40] INFO: ::1 - - [28/Oct/2025:19:36:40 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:40] INFO: ::1 - - [28/Oct/2025:19:36:40 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:40] INFO: ::1 - - [28/Oct/2025:19:36:40 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:48] INFO: ::1 - - [28/Oct/2025:19:36:48 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:51] INFO: ::1 - - [28/Oct/2025:19:36:51 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:06:51] INFO: ::1 - - [28/Oct/2025:19:36:51 +0000] "GET /api/vendor/staff HTTP/1.1" 200 671 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:07:02] INFO: ::1 - - [28/Oct/2025:19:37:02 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:07:05] INFO: ::1 - - [28/Oct/2025:19:37:05 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:07:05] INFO: ::1 - - [28/Oct/2025:19:37:05 +0000] "GET /api/vendor/staff HTTP/1.1" 200 670 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:07:13] INFO: ::1 - - [28/Oct/2025:19:37:13 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:07:17] INFO: ::1 - - [28/Oct/2025:19:37:17 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 01:07:17] INFO: ::1 - - [28/Oct/2025:19:37:17 +0000] "GET /api/vendor/staff HTTP/1.1" 200 669 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/staff HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/staff HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:07:57] INFO: ::1 - - [29/Oct/2025:03:37:57 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:09] INFO: ::1 - - [29/Oct/2025:03:38:09 +0000] "GET /api/admin/service/get-services HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:09] INFO: ::1 - - [29/Oct/2025:03:38:09 +0000] "GET /api/admin/service/get-services HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:09] INFO: ::1 - - [29/Oct/2025:03:38:09 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:09] INFO: ::1 - - [29/Oct/2025:03:38:09 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:09] INFO: ::1 - - [29/Oct/2025:03:38:09 +0000] "GET /api/admin/service/get-services HTTP/1.1" 200 51 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:09] INFO: ::1 - - [29/Oct/2025:03:38:09 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 404 28 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 404 28 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 404 28 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:14] INFO: ::1 - - [29/Oct/2025:03:38:14 +0000] "GET /api/customer/shop-data/services/6900d47c82faa4bcdb00ecb1 HTTP/1.1" 404 28 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:21] INFO: ::1 - - [29/Oct/2025:03:38:21 +0000] "GET /api/customer/shops-data HTTP/1.1" 404 28 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:21] INFO: ::1 - - [29/Oct/2025:03:38:21 +0000] "GET /api/customer/shops-data HTTP/1.1" 404 28 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:34] INFO: ::1 - - [29/Oct/2025:03:38:34 +0000] "GET /api/vendor/shop-data HTTP/1.1" 404 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:08:45] INFO: ::1 - - [29/Oct/2025:03:38:45 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:11:28] INFO: ::1 - - [29/Oct/2025:03:41:28 +0000] "POST /api/admin/service/add-service HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:11:28] INFO: ::1 - - [29/Oct/2025:03:41:28 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:11:29] INFO: ::1 - - [29/Oct/2025:03:41:29 +0000] "POST /api/admin/service/add-service HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:11:29] INFO: ::1 - - [29/Oct/2025:03:41:29 +0000] "GET /api/admin/service/get-services HTTP/1.1" 200 231 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:11:33] INFO: ::1 - - [29/Oct/2025:03:41:33 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:11:35] INFO: ::1 - - [29/Oct/2025:03:41:35 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:11:36] INFO: ::1 - - [29/Oct/2025:03:41:36 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:09] INFO: ::1 - - [29/Oct/2025:03:42:09 +0000] "POST /api/admin/service/add-service HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:09] INFO: ::1 - - [29/Oct/2025:03:42:09 +0000] "GET /api/admin/service/get-services HTTP/1.1" 200 410 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:15] INFO: ::1 - - [29/Oct/2025:03:42:15 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:18] INFO: ::1 - - [29/Oct/2025:03:42:18 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:21] INFO: ::1 - - [29/Oct/2025:03:42:21 +0000] "GET /api/admin/service/get-services HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:38] INFO: ::1 - - [29/Oct/2025:03:42:38 +0000] "POST /api/admin/service/add-service HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:38] INFO: ::1 - - [29/Oct/2025:03:42:38 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:38] INFO: ::1 - - [29/Oct/2025:03:42:38 +0000] "POST /api/admin/service/add-service HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:12:38] INFO: ::1 - - [29/Oct/2025:03:42:38 +0000] "GET /api/admin/service/get-services HTTP/1.1" 200 611 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:13:55] INFO: ::1 - - [29/Oct/2025:03:43:55 +0000] "POST /api/vendor/auth/verify-email HTTP/1.1" 200 32 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:14:28] INFO: ::1 - - [29/Oct/2025:03:44:28 +0000] "POST /api/vendor/auth/add-vendor HTTP/1.1" 200 29 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:14:59] INFO: ::1 - - [29/Oct/2025:03:44:59 +0000] "POST /api/vendor/auth/login HTTP/1.1" 400 69 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:05] INFO: ::1 - - [29/Oct/2025:03:45:05 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:05] INFO: ::1 - - [29/Oct/2025:03:45:05 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:05] INFO: ::1 - - [29/Oct/2025:03:45:05 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:05] INFO: ::1 - - [29/Oct/2025:03:45:05 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:05] INFO: ::1 - - [29/Oct/2025:03:45:05 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 200 509 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:05] INFO: ::1 - - [29/Oct/2025:03:45:05 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:14] INFO: ::1 - - [29/Oct/2025:03:45:14 +0000] "POST /api/admin/data/verified-vendor HTTP/1.1" 200 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:14] INFO: ::1 - - [29/Oct/2025:03:45:14 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 200 54 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:20] INFO: ::1 - - [29/Oct/2025:03:45:20 +0000] "POST /api/vendor/auth/login HTTP/1.1" 200 721 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:21] INFO: ::1 - - [29/Oct/2025:03:45:21 +0000] "GET /api/vendor/shop-data HTTP/1.1" 200 465 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:21] INFO: ::1 - - [29/Oct/2025:03:45:21 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:21] INFO: ::1 - - [29/Oct/2025:03:45:21 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:21] INFO: ::1 - - [29/Oct/2025:03:45:21 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:21] INFO: ::1 - - [29/Oct/2025:03:45:21 +0000] "GET /api/vendor/shop-type HTTP/1.1" 200 611 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:15:21] INFO: ::1 - - [29/Oct/2025:03:45:21 +0000] "GET /api/vendor/shop-type HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "POST /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "POST /api/vendor/shop-data HTTP/1.1" 200 40 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "GET /api/vendor/shop-data HTTP/1.1" 200 825 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "GET /api/vendor/shop-type HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "GET /api/vendor/shop-type HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:26] INFO: ::1 - - [29/Oct/2025:03:46:26 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:35] INFO: ::1 - - [29/Oct/2025:03:46:35 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 51 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:35] INFO: ::1 - - [29/Oct/2025:03:46:35 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:36] INFO: ::1 - - [29/Oct/2025:03:46:36 +0000] "GET /api/vendor/staff HTTP/1.1" 200 56 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:36] INFO: ::1 - - [29/Oct/2025:03:46:36 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:39] INFO: ::1 - - [29/Oct/2025:03:46:39 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:39] INFO: ::1 - - [29/Oct/2025:03:46:39 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:39] INFO: ::1 - - [29/Oct/2025:03:46:39 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:39] INFO: ::1 - - [29/Oct/2025:03:46:39 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:41] INFO: ::1 - - [29/Oct/2025:03:46:41 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:41] INFO: ::1 - - [29/Oct/2025:03:46:41 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:16:44] INFO: ::1 - - [29/Oct/2025:03:46:44 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:17:36] INFO: ::1 - - [29/Oct/2025:03:47:36 +0000] "POST /api/vendor/staff/add-staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:17:36] INFO: ::1 - - [29/Oct/2025:03:47:36 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:17:36] INFO: ::1 - - [29/Oct/2025:03:47:36 +0000] "POST /api/vendor/staff/add-staff HTTP/1.1" 200 39 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:17:36] INFO: ::1 - - [29/Oct/2025:03:47:36 +0000] "GET /api/vendor/staff HTTP/1.1" 200 360 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:17:38] INFO: ::1 - - [29/Oct/2025:03:47:38 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:09] INFO: ::1 - - [29/Oct/2025:03:48:09 +0000] "POST /api/vendor/staff/add-staff HTTP/1.1" 200 39 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:09] INFO: ::1 - - [29/Oct/2025:03:48:09 +0000] "GET /api/vendor/staff HTTP/1.1" 200 665 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:14] INFO: ::1 - - [29/Oct/2025:03:48:14 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:14] INFO: ::1 - - [29/Oct/2025:03:48:14 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:14] INFO: ::1 - - [29/Oct/2025:03:48:14 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:14] INFO: ::1 - - [29/Oct/2025:03:48:14 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:15] INFO: ::1 - - [29/Oct/2025:03:48:15 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:15] INFO: ::1 - - [29/Oct/2025:03:48:15 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:15] INFO: ::1 - - [29/Oct/2025:03:48:15 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:57] INFO: ::1 - - [29/Oct/2025:03:48:57 +0000] "POST /api/vendor/service/add-service HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:57] INFO: ::1 - - [29/Oct/2025:03:48:57 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:57] INFO: ::1 - - [29/Oct/2025:03:48:57 +0000] "POST /api/vendor/service/add-service HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:18:57] INFO: ::1 - - [29/Oct/2025:03:48:57 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 478 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:19:05] INFO: ::1 - - [29/Oct/2025:03:49:05 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:19:05] INFO: ::1 - - [29/Oct/2025:03:49:05 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:19:05] INFO: ::1 - - [29/Oct/2025:03:49:05 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:19:08] INFO: ::1 - - [29/Oct/2025:03:49:08 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:19:50] INFO: ::1 - - [29/Oct/2025:03:49:50 +0000] "POST /api/customer/auth/signup HTTP/1.1" 200 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:05] INFO: ::1 - - [29/Oct/2025:03:50:05 +0000] "POST /api/customer/auth/verify-email HTTP/1.1" 200 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:22] INFO: ::1 - - [29/Oct/2025:03:50:22 +0000] "POST /api/customer/auth/login HTTP/1.1" 200 262 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:22] INFO: ::1 - - [29/Oct/2025:03:50:22 +0000] "GET /api/customer/shops-data HTTP/1.1" 200 881 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:22] INFO: ::1 - - [29/Oct/2025:03:50:22 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:27] INFO: ::1 - - [29/Oct/2025:03:50:27 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 200 478 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:27] INFO: ::1 - - [29/Oct/2025:03:50:27 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 200 1022 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:27] INFO: ::1 - - [29/Oct/2025:03:50:27 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:20:27] INFO: ::1 - - [29/Oct/2025:03:50:27 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:05] INFO: ::1 - - [29/Oct/2025:03:51:05 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:05] INFO: ::1 - - [29/Oct/2025:03:51:05 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:08] INFO: ::1 - - [29/Oct/2025:03:51:08 +0000] "GET /api/customer/profile/customer-data HTTP/1.1" 200 351 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:08] INFO: ::1 - - [29/Oct/2025:03:51:08 +0000] "GET /api/customer/profile/customer-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:12] INFO: ::1 - - [29/Oct/2025:03:51:12 +0000] "GET /api/customer/profile/get-address HTTP/1.1" 200 50 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:12] INFO: ::1 - - [29/Oct/2025:03:51:12 +0000] "GET /api/customer/profile/get-address HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:18] INFO: ::1 - - [29/Oct/2025:03:51:18 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:18] INFO: ::1 - - [29/Oct/2025:03:51:18 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:21:24] INFO: ::1 - - [29/Oct/2025:03:51:24 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:00] INFO: ::1 - - [29/Oct/2025:03:52:00 +0000] "POST /api/vendor/service/add-service HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:00] INFO: ::1 - - [29/Oct/2025:03:52:00 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 898 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:10] INFO: ::1 - - [29/Oct/2025:03:52:10 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:10] INFO: ::1 - - [29/Oct/2025:03:52:10 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:10] INFO: ::1 - - [29/Oct/2025:03:52:10 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:14] INFO: ::1 - - [29/Oct/2025:03:52:14 +0000] "PUT /api/vendor/service/edit-service HTTP/1.1" 200 42 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:15] INFO: ::1 - - [29/Oct/2025:03:52:15 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 899 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 200 899 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:19] INFO: ::1 - - [29/Oct/2025:03:52:19 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:29] INFO: ::1 - - [29/Oct/2025:03:52:29 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:32] INFO: ::1 - - [29/Oct/2025:03:52:32 +0000] "PUT /api/vendor/service/edit-service HTTP/1.1" 200 42 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:32] INFO: ::1 - - [29/Oct/2025:03:52:32 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 898 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:50] INFO: ::1 - - [29/Oct/2025:03:52:50 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:50] INFO: ::1 - - [29/Oct/2025:03:52:50 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:52] INFO: ::1 - - [29/Oct/2025:03:52:52 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:55] INFO: ::1 - - [29/Oct/2025:03:52:55 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:59] INFO: ::1 - - [29/Oct/2025:03:52:59 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:59] INFO: ::1 - - [29/Oct/2025:03:52:59 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:59] INFO: ::1 - - [29/Oct/2025:03:52:59 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:22:59] INFO: ::1 - - [29/Oct/2025:03:52:59 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:01] INFO: ::1 - - [29/Oct/2025:03:53:01 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:01] INFO: ::1 - - [29/Oct/2025:03:53:01 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:10] INFO: ::1 - - [29/Oct/2025:03:53:10 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:10] INFO: ::1 - - [29/Oct/2025:03:53:10 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:10] INFO: ::1 - - [29/Oct/2025:03:53:10 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:10] INFO: ::1 - - [29/Oct/2025:03:53:10 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:12] INFO: ::1 - - [29/Oct/2025:03:53:12 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:12] INFO: ::1 - - [29/Oct/2025:03:53:12 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:23:15] INFO: ::1 - - [29/Oct/2025:03:53:15 +0000] "POST /api/vendor/logout HTTP/1.1" 200 27 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:24:06] INFO: ::1 - - [29/Oct/2025:03:54:06 +0000] "POST /api/vendor/auth/verify-email HTTP/1.1" 200 32 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:24:12] INFO: ::1 - - [29/Oct/2025:03:54:12 +0000] "POST /api/customer/auth/verify-email HTTP/1.1" - - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:24:29] INFO: ::1 - - [29/Oct/2025:03:54:29 +0000] "POST /api/vendor/auth/add-vendor HTTP/1.1" 200 29 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:24:49] INFO: ::1 - - [29/Oct/2025:03:54:49 +0000] "POST /api/vendor/auth/login HTTP/1.1" 400 69 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:15] INFO: ::1 - - [29/Oct/2025:03:55:15 +0000] "POST /api/vendor/auth/verify-email HTTP/1.1" 409 23 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:22] INFO: ::1 - - [29/Oct/2025:03:55:22 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:22] INFO: ::1 - - [29/Oct/2025:03:55:22 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:22] INFO: ::1 - - [29/Oct/2025:03:55:22 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:22] INFO: ::1 - - [29/Oct/2025:03:55:22 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:22] INFO: ::1 - - [29/Oct/2025:03:55:22 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 200 513 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:22] INFO: ::1 - - [29/Oct/2025:03:55:22 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:25] INFO: ::1 - - [29/Oct/2025:03:55:25 +0000] "POST /api/admin/data/reject-vendor HTTP/1.1" 200 42 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:25] INFO: ::1 - - [29/Oct/2025:03:55:25 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 200 54 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:25:37] INFO: ::1 - - [29/Oct/2025:03:55:37 +0000] "POST /api/vendor/auth/login HTTP/1.1" 400 89 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:18] INFO: ::1 - - [29/Oct/2025:03:56:18 +0000] "POST /api/vendor/auth/verify-email HTTP/1.1" 200 32 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:31] INFO: ::1 - - [29/Oct/2025:03:56:31 +0000] "POST /api/vendor/auth/add-vendor HTTP/1.1" 200 29 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:41] INFO: ::1 - - [29/Oct/2025:03:56:41 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:41] INFO: ::1 - - [29/Oct/2025:03:56:41 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:41] INFO: ::1 - - [29/Oct/2025:03:56:41 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:41] INFO: ::1 - - [29/Oct/2025:03:56:41 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:41] INFO: ::1 - - [29/Oct/2025:03:56:41 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 200 513 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:41] INFO: ::1 - - [29/Oct/2025:03:56:41 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:42] INFO: ::1 - - [29/Oct/2025:03:56:42 +0000] "POST /api/admin/data/verified-vendor HTTP/1.1" 200 30 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:26:42] INFO: ::1 - - [29/Oct/2025:03:56:42 +0000] "GET /api/admin/data/vendors-request HTTP/1.1" 200 54 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:05] INFO: ::1 - - [29/Oct/2025:03:57:05 +0000] "POST /api/vendor/auth/login HTTP/1.1" 200 725 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:05] INFO: ::1 - - [29/Oct/2025:03:57:05 +0000] "GET /api/vendor/shop-data HTTP/1.1" 200 469 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:05] INFO: ::1 - - [29/Oct/2025:03:57:05 +0000] "GET /api/vendor/shop-type HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:05] INFO: ::1 - - [29/Oct/2025:03:57:05 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:05] INFO: ::1 - - [29/Oct/2025:03:57:05 +0000] "GET /api/vendor/shop-type HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:05] INFO: ::1 - - [29/Oct/2025:03:57:05 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:05] INFO: ::1 - - [29/Oct/2025:03:57:05 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:57] INFO: ::1 - - [29/Oct/2025:03:57:57 +0000] "POST /api/vendor/shop-data HTTP/1.1" 200 40 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:58] INFO: ::1 - - [29/Oct/2025:03:57:58 +0000] "GET /api/vendor/shop-data HTTP/1.1" 200 828 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:58] INFO: ::1 - - [29/Oct/2025:03:57:58 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:58] INFO: ::1 - - [29/Oct/2025:03:57:58 +0000] "GET /api/vendor/shop-type HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:58] INFO: ::1 - - [29/Oct/2025:03:57:58 +0000] "GET /api/vendor/shop-type HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:58] INFO: ::1 - - [29/Oct/2025:03:57:58 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:27:58] INFO: ::1 - - [29/Oct/2025:03:57:58 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:01] INFO: ::1 - - [29/Oct/2025:03:58:01 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 51 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:01] INFO: ::1 - - [29/Oct/2025:03:58:01 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:02] INFO: ::1 - - [29/Oct/2025:03:58:02 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:02] INFO: ::1 - - [29/Oct/2025:03:58:02 +0000] "GET /api/vendor/staff HTTP/1.1" 200 56 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:02] INFO: ::1 - - [29/Oct/2025:03:58:02 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:10] INFO: ::1 - - [29/Oct/2025:03:58:10 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:10] INFO: ::1 - - [29/Oct/2025:03:58:10 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:10] INFO: ::1 - - [29/Oct/2025:03:58:10 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:12] INFO: ::1 - - [29/Oct/2025:03:58:12 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:12] INFO: ::1 - - [29/Oct/2025:03:58:12 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:13] INFO: ::1 - - [29/Oct/2025:03:58:13 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:45] INFO: ::1 - - [29/Oct/2025:03:58:45 +0000] "POST /api/vendor/staff/add-staff HTTP/1.1" 200 39 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:45] INFO: ::1 - - [29/Oct/2025:03:58:45 +0000] "GET /api/vendor/staff HTTP/1.1" 200 360 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:47] INFO: ::1 - - [29/Oct/2025:03:58:47 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:47] INFO: ::1 - - [29/Oct/2025:03:58:47 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:47] INFO: ::1 - - [29/Oct/2025:03:58:47 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:47] INFO: ::1 - - [29/Oct/2025:03:58:47 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:49] INFO: ::1 - - [29/Oct/2025:03:58:49 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:49] INFO: ::1 - - [29/Oct/2025:03:58:49 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:28:49] INFO: ::1 - - [29/Oct/2025:03:58:49 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:35] INFO: ::1 - - [29/Oct/2025:03:59:35 +0000] "POST /api/vendor/service/add-service HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:35] INFO: ::1 - - [29/Oct/2025:03:59:35 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:35] INFO: ::1 - - [29/Oct/2025:03:59:35 +0000] "POST /api/vendor/service/add-service HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:35] INFO: ::1 - - [29/Oct/2025:03:59:35 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 445 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:36] INFO: ::1 - - [29/Oct/2025:03:59:36 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:36] INFO: ::1 - - [29/Oct/2025:03:59:36 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:41] INFO: ::1 - - [29/Oct/2025:03:59:41 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:41] INFO: ::1 - - [29/Oct/2025:03:59:41 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:42] INFO: ::1 - - [29/Oct/2025:03:59:42 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:42] INFO: ::1 - - [29/Oct/2025:03:59:42 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:42] INFO: ::1 - - [29/Oct/2025:03:59:42 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:53] INFO: ::1 - - [29/Oct/2025:03:59:53 +0000] "PUT /api/vendor/service/edit-service HTTP/1.1" 200 42 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:29:53] INFO: ::1 - - [29/Oct/2025:03:59:53 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 446 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:04] INFO: ::1 - - [29/Oct/2025:04:00:04 +0000] "GET /api/customer/shops-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:04] INFO: ::1 - - [29/Oct/2025:04:00:04 +0000] "GET /api/customer/shops-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:04] INFO: ::1 - - [29/Oct/2025:04:00:04 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:04] INFO: ::1 - - [29/Oct/2025:04:00:04 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:04] INFO: ::1 - - [29/Oct/2025:04:00:04 +0000] "GET /api/customer/shops-data HTTP/1.1" 200 1701 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:04] INFO: ::1 - - [29/Oct/2025:04:00:04 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:06] INFO: ::1 - - [29/Oct/2025:04:00:06 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 200 446 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:06] INFO: ::1 - - [29/Oct/2025:04:00:06 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 200 1023 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:06] INFO: ::1 - - [29/Oct/2025:04:00:06 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:30:06] INFO: ::1 - - [29/Oct/2025:04:00:06 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:19] INFO: ::1 - - [29/Oct/2025:04:01:19 +0000] "GET /api/customer/shops-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:19] INFO: ::1 - - [29/Oct/2025:04:01:19 +0000] "GET /api/customer/shops-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:19] INFO: ::1 - - [29/Oct/2025:04:01:19 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:19] INFO: ::1 - - [29/Oct/2025:04:01:19 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:19] INFO: ::1 - - [29/Oct/2025:04:01:19 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:19] INFO: ::1 - - [29/Oct/2025:04:01:19 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:57] INFO: ::1 - - [29/Oct/2025:04:01:57 +0000] "GET /api/admin/admin-dashboard HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:57] INFO: ::1 - - [29/Oct/2025:04:01:57 +0000] "GET /api/admin/admin-dashboard HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:57] INFO: ::1 - - [29/Oct/2025:04:01:57 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:57] INFO: ::1 - - [29/Oct/2025:04:01:57 +0000] "POST /api/admin/auth/refresh-token HTTP/1.1" 200 214 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:57] INFO: ::1 - - [29/Oct/2025:04:01:57 +0000] "GET /api/admin/admin-dashboard HTTP/1.1" 200 95 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:31:57] INFO: ::1 - - [29/Oct/2025:04:01:57 +0000] "GET /api/admin/admin-dashboard HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:35:27] INFO: ::1 - - [29/Oct/2025:04:05:27 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:48:44] INFO: ::1 - - [29/Oct/2025:04:18:44 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:48:44] INFO: ::1 - - [29/Oct/2025:04:18:44 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:48:44] INFO: ::1 - - [29/Oct/2025:04:18:44 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:48:44] INFO: ::1 - - [29/Oct/2025:04:18:44 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:48:44] INFO: ::1 - - [29/Oct/2025:04:18:44 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:48:44] INFO: ::1 - - [29/Oct/2025:04:18:44 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:04] INFO: ::1 - - [29/Oct/2025:04:19:04 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 200 51 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:04] INFO: ::1 - - [29/Oct/2025:04:19:04 +0000] "GET /api/vendor/service/get-service HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:05] INFO: ::1 - - [29/Oct/2025:04:19:05 +0000] "GET /api/vendor/staff HTTP/1.1" 200 56 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:05] INFO: ::1 - - [29/Oct/2025:04:19:05 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:30] INFO: ::1 - - [29/Oct/2025:04:19:30 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:30] INFO: ::1 - - [29/Oct/2025:04:19:30 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:30] INFO: ::1 - - [29/Oct/2025:04:19:30 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:49:30] INFO: ::1 - - [29/Oct/2025:04:19:30 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:59:35] INFO: ::1 - - [29/Oct/2025:04:29:35 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:59:35] INFO: ::1 - - [29/Oct/2025:04:29:35 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:59:35] INFO: ::1 - - [29/Oct/2025:04:29:35 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:59:35] INFO: ::1 - - [29/Oct/2025:04:29:35 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:59:35] INFO: ::1 - - [29/Oct/2025:04:29:35 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:59:35] INFO: ::1 - - [29/Oct/2025:04:29:35 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 09:59:37] INFO: ::1 - - [29/Oct/2025:04:29:37 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:00:03] INFO: ::1 - - [29/Oct/2025:04:30:03 +0000] "POST /api/vendor/staff/add-staff HTTP/1.1" 200 39 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:00:03] INFO: ::1 - - [29/Oct/2025:04:30:03 +0000] "GET /api/vendor/staff HTTP/1.1" 200 360 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/staff HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/shop-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "POST /api/vendor/auth/refresh-token HTTP/1.1" 200 215 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/staff HTTP/1.1" 200 56 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/shop-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:20] INFO: ::1 - - [29/Oct/2025:04:32:20 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:45] INFO: ::1 - - [29/Oct/2025:04:32:45 +0000] "POST /api/vendor/staff/add-staff HTTP/1.1" 200 39 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:02:45] INFO: ::1 - - [29/Oct/2025:04:32:45 +0000] "GET /api/vendor/staff HTTP/1.1" 200 383 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:03:00] INFO: ::1 - - [29/Oct/2025:04:33:00 +0000] "GET /api/vendor/staff HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:03:09] INFO: ::1 - - [29/Oct/2025:04:33:09 +0000] "PUT /api/vendor/staff/edit-staff HTTP/1.1" 200 41 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:03:09] INFO: ::1 - - [29/Oct/2025:04:33:09 +0000] "GET /api/vendor/staff HTTP/1.1" 200 383 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:12] INFO: ::1 - - [29/Oct/2025:04:58:12 +0000] "GET /api/customer/shops-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:12] INFO: ::1 - - [29/Oct/2025:04:58:12 +0000] "GET /api/customer/shops-data HTTP/1.1" 401 34 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:12] INFO: ::1 - - [29/Oct/2025:04:58:12 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:12] INFO: ::1 - - [29/Oct/2025:04:58:12 +0000] "POST /api/customer/auth/refresh-token HTTP/1.1" 200 218 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:12] INFO: ::1 - - [29/Oct/2025:04:58:12 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:12] INFO: ::1 - - [29/Oct/2025:04:58:12 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:16] INFO: ::1 - - [29/Oct/2025:04:58:16 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 200 51 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:16] INFO: ::1 - - [29/Oct/2025:04:58:16 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:16] INFO: ::1 - - [29/Oct/2025:04:58:16 +0000] "GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:16] INFO: ::1 - - [29/Oct/2025:04:58:16 +0000] "GET /api/customer/shop-data/69018d9c3f2e11db63beb02e HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:18] INFO: ::1 - - [29/Oct/2025:04:58:18 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:18] INFO: ::1 - - [29/Oct/2025:04:58:18 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:19] INFO: ::1 - - [29/Oct/2025:04:58:19 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 200 51 "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:19] INFO: ::1 - - [29/Oct/2025:04:58:19 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:19] INFO: ::1 - - [29/Oct/2025:04:58:19 +0000] "GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:19] INFO: ::1 - - [29/Oct/2025:04:58:19 +0000] "GET /api/customer/shop-data/6901906f3f2e11db63beb114 HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:20] INFO: ::1 - - [29/Oct/2025:04:58:20 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:28:20] INFO: ::1 - - [29/Oct/2025:04:58:20 +0000] "GET /api/customer/shops-data HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"
+[2025-10-29 10:36:09] INFO: GET /api/admin/admin-dashboard 401 34 - 26.125 ms
+[2025-10-29 10:36:09] INFO: GET /api/admin/admin-dashboard 401 34 - 1.420 ms
+[2025-10-29 10:36:09] INFO: POST /api/admin/auth/refresh-token 200 214 - 4.526 ms
+[2025-10-29 10:36:09] INFO: POST /api/admin/auth/refresh-token 200 214 - 2.571 ms
+[2025-10-29 10:36:09] INFO: GET /api/admin/admin-dashboard 304 - - 56.359 ms
+[2025-10-29 10:36:09] INFO: GET /api/admin/admin-dashboard 304 - - 12.417 ms
+[2025-10-29 10:36:10] INFO: POST /api/admin/logout 200 27 - 1.884 ms
+[2025-10-29 10:36:17] INFO: POST /api/admin/auth/login 404 29 - 24.869 ms
+[2025-10-29 10:36:18] INFO: POST /api/admin/auth/login 404 29 - 4.811 ms
+[2025-10-29 10:36:53] INFO: POST /api/admin/auth/login 404 29 - 8.065 ms
+[2025-10-29 10:36:59] INFO: POST /api/admin/auth/login 401 33 - 142.125 ms
+[2025-10-29 10:36:59] INFO: POST /api/admin/auth/refresh-token 400 35 - 0.441 ms
+[2025-10-29 10:37:11] INFO: POST /api/admin/auth/login 401 33 - 132.789 ms
+[2025-10-29 10:37:11] INFO: POST /api/admin/auth/refresh-token 400 35 - 0.276 ms
+[2025-10-29 10:37:25] INFO: POST /api/admin/auth/login 401 33 - 133.742 ms
+[2025-10-29 10:37:25] INFO: POST /api/admin/auth/refresh-token 400 35 - 0.249 ms
+[2025-10-29 10:37:56] INFO: POST /api/admin/auth/login 404 33 - 164.760 ms
+[2025-10-29 10:37:56] INFO: POST /api/admin/auth/login 404 33 - 155.995 ms
+[2025-10-29 10:38:02] INFO: POST /api/admin/auth/login 404 33 - 139.684 ms
+[2025-10-29 10:41:00] INFO: GET /api/customer/profile/customer-data 401 34 - 26.672 ms
+[2025-10-29 10:41:01] INFO: GET /api/customer/profile/customer-data 401 34 - 1.629 ms
+[2025-10-29 10:41:01] INFO: POST /api/customer/auth/refresh-token 200 218 - 4.268 ms
+[2025-10-29 10:41:01] INFO: POST /api/customer/auth/refresh-token 200 218 - 2.295 ms
+[2025-10-29 10:41:01] INFO: GET /api/customer/profile/customer-data 304 - - 74.750 ms
+[2025-10-29 10:41:01] INFO: GET /api/customer/profile/customer-data 304 - - 11.102 ms
+[2025-10-29 10:41:02] INFO: POST /api/customer/logout 200 27 - 1.507 ms
+[2025-10-29 10:41:13] INFO: POST /api/admin/auth/login 200 256 - 164.474 ms
+[2025-10-29 10:41:13] INFO: GET /api/admin/admin-dashboard 304 - - 15.664 ms
+[2025-10-29 10:41:13] INFO: GET /api/admin/admin-dashboard 304 - - 8.671 ms
+[2025-10-29 10:41:15] INFO: GET /api/admin/data/customers 200 355 - 6.630 ms
+[2025-10-29 10:41:15] INFO: GET /api/admin/data/customers 304 - - 3.721 ms
+[2025-10-29 10:41:16] INFO: POST /api/admin/data/block-customer 200 49 - 62.051 ms
+[2025-10-29 10:41:16] INFO: GET /api/admin/data/customers 200 356 - 3.329 ms
+[2025-10-29 10:41:43] INFO: POST /api/customer/auth/login 400 39 - 9.180 ms
+[2025-10-29 10:41:48] INFO: POST /api/customer/auth/login 400 39 - 6.400 ms
+[2025-10-29 10:41:51] INFO: POST /api/admin/data/block-customer 200 49 - 3.678 ms
+[2025-10-29 10:41:51] INFO: GET /api/admin/data/customers 200 355 - 4.052 ms
+[2025-10-29 10:41:53] INFO: POST /api/customer/auth/login 400 39 - 134.107 ms
+[2025-10-29 10:42:54] INFO: POST /api/customer/auth/signup 409 37 - 5.122 ms
+[2025-10-29 10:47:35] INFO: POST /api/vendor/auth/login 404 30 - 49.182 ms
+[2025-10-29 10:47:45] INFO: POST /api/vendor/auth/login 200 1081 - 163.225 ms
+[2025-10-29 10:47:45] INFO: GET /api/vendor/shop-data 200 825 - 17.386 ms
+[2025-10-29 10:47:45] INFO: GET /api/vendor/shop-data 304 - - 9.701 ms
+[2025-10-29 10:47:45] INFO: GET /api/vendor/shop-data 304 - - 10.887 ms
+[2025-10-29 10:47:45] INFO: GET /api/vendor/shop-data 304 - - 12.045 ms
+[2025-10-29 10:47:48] INFO: POST /api/vendor/logout 200 27 - 2.216 ms
+[2025-10-29 10:47:54] INFO: POST /api/vendor/auth/login 404 39 - 141.941 ms
+[2025-10-29 10:51:40] INFO: GET /api/admin/data/customers 401 34 - 66.319 ms
+[2025-10-29 10:51:40] INFO: GET /api/admin/data/customers 401 34 - 3.760 ms
+[2025-10-29 10:51:41] INFO: GET /api/vendor/staff 401 34 - 2.173 ms
+[2025-10-29 10:51:41] INFO: GET /api/vendor/shop-data 401 34 - 1.263 ms
+[2025-10-29 10:51:41] INFO: GET /api/vendor/staff 401 34 - 1.379 ms
+[2025-10-29 10:51:41] INFO: GET /api/vendor/shop-data 401 34 - 1.503 ms
+[2025-10-29 10:51:41] INFO: POST /api/admin/auth/refresh-token 200 214 - 9.957 ms
+[2025-10-29 10:51:41] INFO: POST /api/admin/auth/refresh-token 200 214 - 3.743 ms
+[2025-10-29 10:51:41] INFO: GET /api/admin/data/customers 304 - - 38.824 ms
+[2025-10-29 10:51:41] INFO: GET /api/admin/data/customers 304 - - 6.121 ms
+[2025-10-29 10:51:41] INFO: POST /api/vendor/auth/refresh-token 400 35 - 0.694 ms
+[2025-10-29 10:51:41] INFO: POST /api/vendor/auth/refresh-token 400 35 - 0.414 ms
+[2025-10-29 10:51:41] INFO: POST /api/vendor/auth/refresh-token 400 35 - 0.459 ms
+[2025-10-29 10:51:41] INFO: POST /api/vendor/auth/refresh-token 400 35 - 0.856 ms
+[2025-10-29 10:51:46] INFO: GET /api/admin/data/customers 304 - - 5.257 ms
+[2025-10-29 10:51:46] INFO: GET /api/admin/data/customers 304 - - 6.827 ms
+[2025-10-29 10:51:53] INFO: GET /api/admin/data/customers 304 - - 8.261 ms
+[2025-10-29 10:51:53] INFO: GET /api/admin/data/customers 304 - - 4.845 ms
+[2025-10-29 10:52:06] INFO: GET /api/admin/data/customers 304 - - 4.450 ms
+[2025-10-29 10:52:06] INFO: GET /api/admin/data/customers 304 - - 7.521 ms
+[2025-10-29 10:54:45] INFO: POST /api/vendor/auth/verify-email 409 35 - 62.965 ms
+[2025-10-29 10:57:21] INFO: POST /api/customer/reset-password/verify 404 32 - 29.339 ms
+[2025-10-29 10:57:23] INFO: POST /api/customer/reset-password/verify 404 32 - 4.593 ms
+[2025-10-29 12:06:45] INFO: GET /api/admin/data/customers 401 34 - 16.730 ms
+[2025-10-29 12:06:45] INFO: GET /api/admin/data/customers 401 34 - 0.915 ms
+[2025-10-29 12:06:45] INFO: POST /api/admin/logout 200 27 - 0.995 ms
+[2025-10-29 12:06:45] INFO: POST /api/admin/auth/refresh-token 200 214 - 2.689 ms
+[2025-10-29 12:06:45] INFO: POST /api/admin/auth/refresh-token 400 35 - 0.333 ms
+[2025-10-29 12:06:45] INFO: GET /api/admin/data/customers - - - - ms
+[2025-10-29 12:06:50] INFO: POST /api/admin/auth/login 404 29 - 14.282 ms
+[2025-10-29 12:08:29] INFO: POST /api/admin/auth/login 404 527 - 16.333 ms
+[2025-10-29 12:08:41] INFO: POST /api/admin/auth/login 404 527 - 3.694 ms
+[2025-10-29 12:11:56] INFO: POST /api/admin/auth/login 404 527 - 19.949 ms
+[2025-10-29 12:13:35] INFO: POST /api/admin/auth/login 404 527 - 16.048 ms
+[2025-10-29 12:14:05] INFO: POST /api/admin/auth/login 404 527 - 16.696 ms
+[2025-10-29 12:17:00] ERROR: User not found. - POST /api/admin/auth/login
+[2025-10-29 12:17:00] INFO: POST /api/admin/auth/login 404 45 - 18.710 ms
+[2025-10-29 12:17:31] ERROR: User not found. - POST /api/admin/auth/login
+[2025-10-29 12:17:31] INFO: POST /api/admin/auth/login 404 45 - 16.806 ms
+[2025-10-29 12:23:17] ERROR: Incorrect password. - POST /api/admin/auth/login
+[2025-10-29 12:23:17] INFO: POST /api/admin/auth/login 404 49 - 112.827 ms
+[2025-10-29 12:23:24] INFO: POST /api/admin/auth/login 200 256 - 85.587 ms
+[2025-10-29 12:23:24] INFO: GET /api/admin/admin-dashboard 304 - - 12.856 ms
+[2025-10-29 12:23:24] INFO: GET /api/admin/admin-dashboard 304 - - 6.263 ms
+[2025-10-29 12:23:25] INFO: GET /api/admin/data/vendors-request 304 - - 3.934 ms
+[2025-10-29 12:23:25] INFO: GET /api/admin/data/vendors-request 304 - - 3.404 ms
+[2025-10-29 12:23:29] INFO: GET /api/admin/data/vendors-request 304 - - 2.622 ms
+[2025-10-29 12:23:29] INFO: GET /api/admin/data/vendors-request 304 - - 2.996 ms
+[2025-10-29 12:23:30] INFO: GET /api/admin/service/get-services 304 - - 13.082 ms
+[2025-10-29 12:23:30] INFO: GET /api/admin/service/get-services 304 - - 3.449 ms
+[2025-10-29 12:23:33] INFO: GET /api/admin/service/get-services 304 - - 3.483 ms
+[2025-10-29 12:23:38] INFO: POST /api/admin/service/add-service 200 41 - 17.090 ms
+[2025-10-29 12:23:38] INFO: GET /api/admin/service/get-services 200 720 - 3.741 ms
+[2025-10-29 12:32:37] INFO: POST /api/customer/auth/login 404 32 - 13.172 ms
+[2025-10-29 12:32:45] INFO: POST /api/customer/auth/login 200 262 - 79.367 ms
+[2025-10-29 12:32:46] INFO: GET /api/customer/shops-data 304 - - 13.942 ms
+[2025-10-29 12:32:46] INFO: GET /api/customer/shops-data 304 - - 5.443 ms
+[2025-10-29 12:32:47] INFO: GET /api/customer/profile/customer-data 200 351 - 5.758 ms
+[2025-10-29 12:32:47] INFO: GET /api/customer/profile/customer-data 304 - - 4.111 ms
+[2025-10-29 12:32:49] INFO: GET /api/customer/profile/get-address 304 - - 6.700 ms
+[2025-10-29 12:32:49] INFO: GET /api/customer/profile/get-address 304 - - 5.826 ms
+[2025-10-29 12:32:50] INFO: GET /api/customer/profile/get-address 304 - - 5.296 ms
+[2025-10-29 12:33:17] INFO: POST /api/customer/profile/add-address 200 40 - 22.216 ms
+[2025-10-29 12:33:17] INFO: GET /api/customer/profile/get-address 200 266 - 5.042 ms
+[2025-10-29 12:33:21] INFO: GET /api/customer/profile/get-address 304 - - 8.203 ms
+[2025-10-29 12:33:26] INFO: POST /api/customer/profile/edit-address 200 37 - 20.699 ms
+[2025-10-29 12:33:26] INFO: GET /api/customer/profile/get-address 200 267 - 4.989 ms
+[2025-10-29 12:33:28] INFO: GET /api/customer/profile/get-address 304 - - 5.897 ms
+[2025-10-29 12:33:34] INFO: GET /api/customer/profile/get-address 304 - - 4.638 ms
+[2025-10-29 12:33:35] INFO: GET /api/customer/profile/get-address 304 - - 4.876 ms
+[2025-10-29 12:33:51] INFO: POST /api/customer/profile/add-address 401 34 - 0.866 ms
+[2025-10-29 12:33:51] INFO: POST /api/customer/auth/refresh-token 200 218 - 1.472 ms
+[2025-10-29 12:33:51] ERROR: Address already exists - POST /api/customer/profile/add-address
+[2025-10-29 12:33:51] INFO: POST /api/customer/profile/add-address 409 52 - 16.246 ms
+[2025-10-29 12:33:51] INFO: GET /api/customer/profile/get-address 304 - - 7.557 ms
+[2025-10-29 12:38:44] INFO: GET /api/customer/shops-data 401 34 - 6.075 ms
+[2025-10-29 12:38:44] INFO: GET /api/customer/shops-data 401 34 - 1.102 ms
+[2025-10-29 12:38:44] INFO: POST /api/customer/auth/refresh-token 200 218 - 4.096 ms
+[2025-10-29 12:38:44] INFO: POST /api/customer/auth/refresh-token 200 218 - 1.666 ms
+[2025-10-29 12:38:44] INFO: GET /api/customer/shops-data 304 - - 22.088 ms
+[2025-10-29 12:38:44] INFO: GET /api/customer/shops-data 304 - - 7.504 ms
+[2025-10-29 12:38:45] INFO: GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e 304 - - 20.920 ms
+[2025-10-29 12:38:45] INFO: GET /api/customer/shop-data/69018d9c3f2e11db63beb02e 304 - - 30.704 ms
+[2025-10-29 12:38:45] INFO: GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e 304 - - 10.960 ms
+[2025-10-29 12:38:45] INFO: GET /api/customer/shop-data/69018d9c3f2e11db63beb02e 304 - - 11.574 ms
+[2025-10-29 12:38:50] INFO: GET /api/customer/shops-data 304 - - 5.481 ms
+[2025-10-29 12:38:50] INFO: GET /api/customer/shops-data 304 - - 6.262 ms
+[2025-10-29 12:38:51] INFO: GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 304 - - 7.410 ms
+[2025-10-29 12:38:51] INFO: GET /api/customer/shop-data/6901906f3f2e11db63beb114 304 - - 12.327 ms
+[2025-10-29 12:38:51] INFO: GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 304 - - 9.018 ms
+[2025-10-29 12:38:51] INFO: GET /api/customer/shop-data/6901906f3f2e11db63beb114 304 - - 13.960 ms
+[2025-10-29 12:38:58] INFO: GET /api/customer/profile/customer-data 304 - - 5.308 ms
+[2025-10-29 12:38:58] INFO: GET /api/customer/profile/customer-data 304 - - 6.316 ms
+[2025-10-29 12:39:01] INFO: GET /api/customer/shops-data 304 - - 4.769 ms
+[2025-10-29 12:39:01] INFO: GET /api/customer/shops-data 304 - - 4.802 ms
+[2025-10-29 12:39:02] INFO: GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e 304 - - 7.799 ms
+[2025-10-29 12:39:02] INFO: GET /api/customer/shop-data/69018d9c3f2e11db63beb02e 304 - - 13.386 ms
+[2025-10-29 12:39:02] INFO: GET /api/customer/shop-data/services/69018d9c3f2e11db63beb02e 304 - - 10.496 ms
+[2025-10-29 12:39:02] INFO: GET /api/customer/shop-data/69018d9c3f2e11db63beb02e 304 - - 12.141 ms
+[2025-10-29 12:39:44] INFO: GET /api/customer/profile/customer-data 401 34 - 0.953 ms
+[2025-10-29 12:39:44] INFO: GET /api/customer/profile/customer-data 401 34 - 0.701 ms
+[2025-10-29 12:39:44] INFO: POST /api/customer/auth/refresh-token 200 218 - 1.425 ms
+[2025-10-29 12:39:44] INFO: POST /api/customer/auth/refresh-token 200 218 - 1.026 ms
+[2025-10-29 12:39:44] INFO: GET /api/customer/profile/customer-data 304 - - 3.157 ms
+[2025-10-29 12:39:45] INFO: GET /api/customer/profile/customer-data 304 - - 4.905 ms
+[2025-10-29 12:40:01] INFO: POST /api/vendor/auth/login 200 1084 - 76.235 ms
+[2025-10-29 12:40:01] INFO: GET /api/vendor/shop-data 200 828 - 7.424 ms
+[2025-10-29 12:40:01] INFO: GET /api/vendor/shop-data 304 - - 7.920 ms
+[2025-10-29 12:40:01] INFO: GET /api/vendor/shop-data 304 - - 5.520 ms
+[2025-10-29 12:40:01] INFO: GET /api/vendor/shop-data 304 - - 6.337 ms
+[2025-10-29 12:40:03] INFO: GET /api/vendor/service/get-service 304 - - 12.386 ms
+[2025-10-29 12:40:03] INFO: GET /api/vendor/service/get-service 304 - - 6.438 ms
+[2025-10-29 12:40:05] INFO: GET /api/vendor/staff 304 - - 8.156 ms
+[2025-10-29 12:40:05] INFO: GET /api/vendor/staff 304 - - 5.827 ms
+[2025-10-29 12:40:08] INFO: GET /api/vendor/staff 304 - - 3.828 ms
+[2025-10-29 12:40:34] INFO: POST /api/vendor/staff/add-staff 200 39 - 24.775 ms
+[2025-10-29 12:40:34] INFO: GET /api/vendor/staff 200 711 - 4.269 ms
+[2025-10-29 12:40:37] INFO: GET /api/vendor/staff 304 - - 6.586 ms
+[2025-10-29 12:40:39] INFO: PUT /api/vendor/staff/edit-staff 200 41 - 19.699 ms
+[2025-10-29 12:40:39] INFO: GET /api/vendor/staff 200 712 - 3.815 ms
+[2025-10-29 12:40:41] INFO: GET /api/vendor/staff 304 - - 5.845 ms
+[2025-10-29 12:40:43] INFO: PUT /api/vendor/staff/edit-staff 200 41 - 9.630 ms
+[2025-10-29 12:40:43] INFO: GET /api/vendor/staff 200 711 - 5.833 ms
+[2025-10-29 12:40:47] INFO: GET /api/vendor/service/get-service 304 - - 7.967 ms
+[2025-10-29 12:40:47] INFO: GET /api/vendor/shop-data 304 - - 8.199 ms
+[2025-10-29 12:40:47] INFO: GET /api/vendor/service/get-service 304 - - 11.140 ms
+[2025-10-29 12:40:47] INFO: GET /api/vendor/shop-data 304 - - 8.728 ms
+[2025-10-29 12:40:48] INFO: GET /api/vendor/service/get-service 304 - - 7.762 ms
+[2025-10-29 12:40:48] INFO: GET /api/vendor/staff 304 - - 6.902 ms
+[2025-10-29 12:40:48] INFO: GET /api/vendor/staff 304 - - 8.745 ms
+[2025-10-29 12:40:51] INFO: GET /api/vendor/service/get-service 304 - - 3.761 ms
+[2025-10-29 12:40:52] INFO: GET /api/vendor/shop-data 304 - - 4.923 ms
+[2025-10-29 12:40:52] INFO: GET /api/vendor/shop-data 304 - - 4.493 ms
+[2025-10-29 12:40:53] INFO: GET /api/vendor/service/get-service 304 - - 5.985 ms
+[2025-10-29 12:40:53] INFO: GET /api/vendor/service/get-service 304 - - 4.554 ms
+[2025-10-29 12:40:54] INFO: GET /api/vendor/service/get-service 304 - - 5.640 ms
+[2025-10-29 12:40:54] INFO: GET /api/vendor/staff 304 - - 5.877 ms
+[2025-10-29 12:40:54] INFO: GET /api/vendor/staff 304 - - 5.116 ms
+[2025-10-29 12:41:33] INFO: POST /api/vendor/service/add-service 401 34 - 0.521 ms
+[2025-10-29 12:41:33] INFO: POST /api/vendor/auth/refresh-token 200 215 - 0.767 ms
+[2025-10-29 12:41:33] INFO: POST /api/vendor/service/add-service 200 41 - 6.926 ms
+[2025-10-29 12:41:33] INFO: GET /api/vendor/service/get-service 200 397 - 6.003 ms
+[2025-10-29 12:41:40] INFO: GET /api/customer/shops-data 401 34 - 0.721 ms
+[2025-10-29 12:41:40] INFO: GET /api/customer/shops-data 401 34 - 0.495 ms
+[2025-10-29 12:41:40] INFO: POST /api/customer/auth/refresh-token 200 218 - 1.159 ms
+[2025-10-29 12:41:40] INFO: POST /api/customer/auth/refresh-token 200 218 - 1.031 ms
+[2025-10-29 12:41:40] INFO: GET /api/customer/shops-data 304 - - 4.373 ms
+[2025-10-29 12:41:40] INFO: GET /api/customer/shops-data 304 - - 6.660 ms
+[2025-10-29 12:41:41] INFO: GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 200 397 - 7.202 ms
+[2025-10-29 12:41:41] INFO: GET /api/customer/shop-data/6901906f3f2e11db63beb114 304 - - 10.622 ms
+[2025-10-29 12:41:41] INFO: GET /api/customer/shop-data/services/6901906f3f2e11db63beb114 304 - - 10.877 ms
+[2025-10-29 12:41:41] INFO: GET /api/customer/shop-data/6901906f3f2e11db63beb114 304 - - 14.023 ms
+[2025-10-29 12:41:52] INFO: GET /api/customer/shops-data 304 - - 4.239 ms
+[2025-10-29 12:41:52] INFO: GET /api/customer/shops-data 304 - - 5.619 ms
+[2025-10-29 12:42:50] INFO: GET /api/customer/profile/customer-data 401 34 - 1.179 ms
+[2025-10-29 12:42:50] INFO: GET /api/customer/profile/customer-data 401 34 - 0.965 ms
+[2025-10-29 12:42:50] INFO: POST /api/customer/auth/refresh-token 200 218 - 3.174 ms
+[2025-10-29 12:42:50] INFO: POST /api/customer/auth/refresh-token 200 218 - 3.514 ms
+[2025-10-29 12:42:50] INFO: GET /api/customer/profile/customer-data 304 - - 7.696 ms
+[2025-10-29 12:42:50] INFO: GET /api/customer/profile/customer-data 304 - - 16.031 ms
+[2025-10-29 12:42:53] INFO: GET /api/customer/profile/get-address 304 - - 16.799 ms
+[2025-10-29 12:42:53] INFO: GET /api/customer/profile/get-address 304 - - 13.829 ms
+[2025-10-29 12:42:56] INFO: GET /api/customer/profile/customer-data 304 - - 10.334 ms
+[2025-10-29 12:42:56] INFO: GET /api/customer/profile/customer-data 304 - - 7.110 ms
+[2025-10-29 12:43:02] INFO: GET /api/customer/shops-data 304 - - 7.706 ms
+[2025-10-29 12:43:02] INFO: GET /api/customer/shops-data 304 - - 8.663 ms

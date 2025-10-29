@@ -12,7 +12,6 @@ export class StaffService implements IStaffServiceInterface {
     this._StaffRepository = staffReopository;
   }
 
-
   // ---------------------------------- add new Staff
   addNewStaff = async (
     userId: string,
@@ -25,7 +24,7 @@ export class StaffService implements IStaffServiceInterface {
       closingTime,
       breakStartTime,
     } = { ...data };
-    
+
     let shopData: IStaff = {
       shopId: userId,
       staffName,
@@ -34,21 +33,21 @@ export class StaffService implements IStaffServiceInterface {
       closingTime,
       breakStartTime,
       isActive: true,
+      bookingTimes:openingTime,
       bookingBlocks: [],
     };
 
-    
-     let staffExist = await  this._StaffRepository.getSingleStaff(userId,staffName)
-     
-     if(staffExist){
+    let staffExist = await this._StaffRepository.getSingleStaff(
+      userId,
+      staffName
+    );
 
-      throw new Error(MessageEnum.STAFF_ALREADY_EXISTS)
-     }
-      
+    if (staffExist) {
+      throw new Error(MessageEnum.STAFF_ALREADY_EXISTS);
+    }
 
-    
     let result = await this._StaffRepository.addStaff(shopData);
-    
+
     if (result) {
       return true;
     } else {
@@ -56,46 +55,45 @@ export class StaffService implements IStaffServiceInterface {
     }
   };
 
-
   // ---------------------------------- get staffs
-  getStaffService = async (shopId:string):Promise<IStaff[]|[]> =>{
-
-      let data = await this._StaffRepository.getStaff(shopId)
-      if(data){
-        return data
-      }else{
-        return []
-      }
-
-
-
-  }
+  getStaffService = async (shopId: string): Promise<IStaff[] | []> => {
+    let data = await this._StaffRepository.getStaff(shopId);
+    if (data) {
+      return data;
+    } else {
+      return [];
+    }
+  };
 
   //  ---------------------------------- edit Staff
-  editStaff = async (data: IStaff):Promise<boolean|void> => {
+  editStaff = async (data: IStaff): Promise<boolean | void> => {
+    const { userId, _id, staffName, ...payload } = { ...data };
+    console.log(payload);
 
-    const {userId,_id,staffName,...payload} = {...data}
-console.log(payload);
+    let exist = await this._StaffRepository.duplicateStaffFind(
+      userId as string,
+      staffName,
+      _id
+    );
 
-    let exist = await this._StaffRepository.duplicateStaffFind(userId as string,staffName,_id)
+    if (exist.length) {
+      throw new Error(MessageEnum.STAFF_ALREADY_EXISTS);
+    } else {
+      let values = {
+        ...payload,
+        staffName,
+      };
 
-
-    
-    if(exist.length){
-      throw new Error(MessageEnum.STAFF_ALREADY_EXISTS)
-    }else{
-
-      let values={
-        ...payload,staffName
-      }
-
-        let result = await this._StaffRepository.editStaff(userId as string,_id as string,values)
-      if(result){
-        return result
-      }else{
-        return false
+      let result = await this._StaffRepository.editStaff(
+        userId as string,
+        _id as string,
+        values
+      );
+      if (result) {
+        return result;
+      } else {
+        return false;
       }
     }
-    
-  }
+  };
 }

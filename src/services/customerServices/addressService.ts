@@ -3,6 +3,8 @@ import { ICustomerAddressRepositoryInterface } from "../../interface/repositoryI
 import { ICustomerAddressServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
 import { IAddress } from "../../types/customerType";
 import { MessageEnum } from "../../enums/messagesEnum";
+import { ErrorResponse } from "../../utils/errorResponse";
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 export class CustomerAddressService
   implements ICustomerAddressServiceInterface
@@ -15,7 +17,7 @@ export class CustomerAddressService
 
   //--------------------------------------------------------------add customer address
   addAddress = async (data: IAddress): Promise<void> => {
-    try {
+
       const { userId, ...payload } = { ...data };
 
       if (userId) {
@@ -29,7 +31,8 @@ export class CustomerAddressService
           );
 
           if (addressExist) {
-            throw new Error(MessageEnum.ADDRESS_EXISTS);
+            // throw new Error(MessageEnum.ADDRESS_EXISTS);
+            throw new ErrorResponse(MessageEnum.ADDRESS_EXISTS,StatusCodeEnum.CONFLICT)
           } else {
             await this._addressRepository.addAddress(userId, payload);
           }
@@ -40,11 +43,6 @@ export class CustomerAddressService
           return;
         }
       }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
   };
 
   //--------------------------------------------------------------get customer address
@@ -68,7 +66,6 @@ export class CustomerAddressService
     custoemrId: string,
     id: string
   ): Promise<string | void> => {
-    try {
       const response = await this._addressRepository.deletCustomerAddress(
         custoemrId,
         id
@@ -77,13 +74,10 @@ export class CustomerAddressService
       if (response) {
         return MessageEnum.ADDRESS_DELETED_SUCCESS;
       } else {
-        throw new Error(MessageEnum.ADDRESS_DELETED_FAILED);
+        // throw new Error(MessageEnum.ADDRESS_DELETED_FAILED);
+        throw new ErrorResponse(MessageEnum.ADDRESS_DELETED_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
       }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    
   };
   //--------------------------------------------------------------edit customer address
   editCustomerAddress = async (data: IAddress): Promise<boolean | void> => {

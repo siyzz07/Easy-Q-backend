@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { IAdminAuthServiceInterface } from "../../interface/serviceInterface/adminServiceInterface";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
@@ -16,7 +16,7 @@ export class AdminAtuhController {
    * admin login
    * 
    */
-  loginAdmin = async (req: Request, res: Response): Promise<void> => {
+  loginAdmin = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
       const data = req.body;
 
@@ -34,19 +34,7 @@ export class AdminAtuhController {
       }
 
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message === MessageEnum.ADMIN_NOT_FOUND) {
-          res
-            .status(StatusCodeEnum.NOT_FOUND)
-            .json(MessageEnum.ADMIN_NOT_FOUND);
-        } else if (error.message === MessageEnum.ADMIN_PASSWORD_INCORRECT) {
-          res
-            .status(StatusCodeEnum.UNAUTHORIZED)
-            .json(MessageEnum.ADMIN_PASSWORD_INCORRECT);
-        } else {
-          console.log("error in login admin ", error.message);
-        }
-      }
+      next(error)
     }
   };
 

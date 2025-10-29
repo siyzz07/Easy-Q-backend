@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { IShopTypeServiceInterface } from "../../interface/serviceInterface/adminServiceInterface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
@@ -14,7 +14,7 @@ export class ServiceTypeController {
 
 
   //--------------------------------------------------------------------------add new service type controller
-  addServiceType = async (req: Request, res: Response): Promise<void> => {
+  addServiceType = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
       let result = await this._ServiceTypeService.addServiceType(req.body);
 
@@ -24,19 +24,7 @@ export class ServiceTypeController {
           .json({ message: MessageEnum.SERVICE_ADD_SUCCESS });
       }
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        switch (error.message) {
-          case MessageEnum.SERVICE_ALREADY_EXIST:
-            res
-              .status(StatusCodeEnum.CONFLICT)
-              .json({ message: error.message });
-            break;
-          default:
-            res
-              .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-              .json({ message: MessageEnum.SERVER_ERROR });
-        }
-      }
+        next(error)
     }
   };
 

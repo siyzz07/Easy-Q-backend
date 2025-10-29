@@ -1,0 +1,4 @@
+[2025-10-29 12:17:00] ERROR: User not found. - POST /api/admin/auth/login
+[2025-10-29 12:17:31] ERROR: User not found. - POST /api/admin/auth/login
+[2025-10-29 12:23:17] ERROR: Incorrect password. - POST /api/admin/auth/login
+[2025-10-29 12:33:51] ERROR: Address already exists - POST /api/customer/profile/add-address

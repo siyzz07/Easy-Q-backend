@@ -1,7 +1,9 @@
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IServiceTypesRepositoryInterface } from "../../interface/repositoryInterface/adminRepoInterface";
 import { IShopTypeServiceInterface } from "../../interface/serviceInterface/adminServiceInterface";
 import { IServiceType } from "../../types/adminTypes";
+import { ErrorResponse } from "../../utils/errorResponse";
 
 export class ServiceTypesService implements IShopTypeServiceInterface {
   private _ServiceTypeRepository: IServiceTypesRepositoryInterface;
@@ -18,7 +20,7 @@ export class ServiceTypesService implements IShopTypeServiceInterface {
   }): Promise<boolean | void> => {
     const { serviceName, description } = data;
 
-    // check it exist or not if not add that service
+    
 
     const result = await this._ServiceTypeRepository.addServiceType({
       serviceName,
@@ -29,7 +31,8 @@ export class ServiceTypesService implements IShopTypeServiceInterface {
     if (result) {
       return true;
     } else {
-      throw new Error(MessageEnum.SERVICE_ADD_FAILD);
+      // throw new Error(MessageEnum.SERVICE_ADD_FAILD);
+      throw new ErrorResponse(MessageEnum.SERVICE_ADD_FAILD,StatusCodeEnum.INTERNAL_SERVER_ERROR)
     }
   };
 
@@ -60,6 +63,6 @@ export class ServiceTypesService implements IShopTypeServiceInterface {
       return true;
     }
 
-    throw new Error(MessageEnum.SERVER_ERROR);
+    throw new ErrorResponse(MessageEnum.SERVER_ERROR,StatusCodeEnum.INTERNAL_SERVER_ERROR);
   };
 }

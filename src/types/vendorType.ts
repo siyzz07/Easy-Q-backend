@@ -51,7 +51,8 @@ export interface IStaff {
   breakEndTime: string;
   isActive?: boolean;
   bookingBlocks?: string[];
-  userId?:string
+  userId?:string;
+  bookingTimes?:string
 }
 
 export interface IStaffAdd{

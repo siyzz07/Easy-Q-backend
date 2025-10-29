@@ -22,7 +22,7 @@ class CustomerAuth {
       if (error.message == MessageEnum.CUSTOMER_ALREADY_EXISTS) {
         res
           .status(StatusCodeEnum.CONFLICT)
-          .json(MessageEnum.CUSTOMER_ALREADY_EXISTS);
+          .json({message:MessageEnum.CUSTOMER_ALREADY_EXISTS});
       }
     }
   };
@@ -38,13 +38,13 @@ class CustomerAuth {
       } else {
         res
           .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-          .json(MessageEnum.EMAIL_VERIFY_SUCCESS);
+          .json({message:MessageEnum.EMAIL_VERIFY_SUCCESS});
       }
     } catch (error: any) {
       if (error.message == MessageEnum.CUSTOMER_ALREADY_EXISTS) {
         res
           .status(StatusCodeEnum.CONFLICT)
-          .json(MessageEnum.CUSTOMER_ALREADY_EXISTS);
+          .json({message:MessageEnum.CUSTOMER_ALREADY_EXISTS});
       }
     }
   };
@@ -72,15 +72,15 @@ class CustomerAuth {
         if (error.message == MessageEnum.CUSTOMER_NOT_FOUND) {
           res
             .status(StatusCodeEnum.NOT_FOUND)
-            .json(MessageEnum.CUSTOMER_NOT_FOUND);
+            .json({message:MessageEnum.CUSTOMER_NOT_FOUND});
         } else if (error.message === MessageEnum.INVALID_CREDENTIALS) {
           res
             .status(StatusCodeEnum.BAD_REQUEST)
-            .json(MessageEnum.INVALID_CREDENTIALS);
+            .json({message:MessageEnum.INVALID_CREDENTIALS});
         } else if (error.message === MessageEnum.CUSTOMER_BLOCKED) {
           res
             .status(StatusCodeEnum.BAD_REQUEST)
-            .json(MessageEnum.CUSTOMER_BLOCKED);
+            .json({message:MessageEnum.CUSTOMER_BLOCKED});
         } else {
           console.log("customer login Error", error.message);
         }
@@ -189,7 +189,7 @@ class CustomerAuth {
         } else {
           res
             .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-            .json(MessageEnum.SERVER_ERROR);
+            .json({message:MessageEnum.SERVER_ERROR});
         }
       }
     }

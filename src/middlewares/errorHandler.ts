@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import logger from "../utils/logger";
 import { MessageEnum } from "../enums/messagesEnum";
+import { StatusCodeEnum } from "../enums/httpStatusCodeEnum";
 
 
 interface CustomError extends Error {
@@ -19,9 +20,10 @@ export const errorHandler = (
  
 
 
-  const statusCode = err.statusCode || 500;
+  const statusCode = err.statusCode || StatusCodeEnum.INTERNAL_SERVER_ERROR;
   const message = err.message || MessageEnum.SERVER_ERROR;
-
+  console.log('statusCode', statusCode)
+  console.log('message', message)
   res.status(statusCode).json({
     success: false,
     message,

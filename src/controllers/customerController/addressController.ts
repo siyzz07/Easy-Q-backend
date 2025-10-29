@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { ICustomerAddressServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
@@ -11,7 +11,7 @@ export class CustomerAddressContorller {
   }
 
   //---------------------------------------------------------------------get all address
-  getAddress = async (req: Request, res: Response): Promise<void> => {
+  getAddress = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
       const custoemrId = req.body.userId;
       const response = await this._addressService.getAddress(custoemrId);
@@ -20,16 +20,12 @@ export class CustomerAddressContorller {
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.ADDRESS_FETCH_SUCCESS, data: response });
     } catch (error: unknown) {
-      console.log(error);
-
-      res
-        .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-        .json({ message: MessageEnum.SERVER_ERROR });
+      next(error)
     }
   };
 
   //---------------------------------------------------------------------add address
-  addNewAddresss = async (req: Request, res: Response): Promise<void> => {
+  addNewAddresss = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
       await this._addressService.addAddress(req.body);
 
@@ -37,24 +33,12 @@ export class CustomerAddressContorller {
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.ADDRESS_ADDED_SUCCESS });
     } catch (error: unknown) {
-      console.log(error);
-
-      if (error instanceof Error) {
-        if (error.message === MessageEnum.ADDRESS_EXISTS) {
-          res
-            .status(StatusCodeEnum.CONFLICT)
-            .json({ message: MessageEnum.ADDRESS_EXISTS });
-        } else {
-          res
-            .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-            .json({ message: MessageEnum.SERVER_ERROR });
-        }
-      }
+      next(error)
     }
   };
 
   //---------------------------------------------------------------------delete address
-  deleteAddress = async (req: Request, res: Response): Promise<void> => {
+  deleteAddress = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
       const response = await this._addressService.deletCustomerAddress(
         req.body.userId,
@@ -66,11 +50,7 @@ export class CustomerAddressContorller {
           .json({ message: MessageEnum.ADDRESS_DELETED_SUCCESS });
       }
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        res
-          .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-          .json({ message: MessageEnum.SERVER_ERROR });
-      }
+     next(error)
     }
   };
 

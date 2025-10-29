@@ -11,6 +11,9 @@ import Jwt, {
   TokenExpiredError,
 } from "jsonwebtoken";
 import { IJwtPayload } from "../../types/common-types";
+import { ErrorResponse } from "../../utils/errorResponse";
+import { error } from "console";
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 export class AuthService implements IAdminAuthServiceInterface {
   private _adminRepository: IAdminRepo;
@@ -19,50 +22,44 @@ export class AuthService implements IAdminAuthServiceInterface {
     this._adminRepository = adminRepo;
   }
 
-  loginAdmin = async (
-    data: IAdmin
-  ): Promise<{ accessToken: string; refreshToken: string } | void> => {
-    try {
-      const { email, password } = data;
 
-      const adminExist = await this._adminRepository.checkAdminExist(email);
+  //----------------------------------------- admin login
+    loginAdmin = async (
+      data: IAdmin
+    ): Promise<{ accessToken: string; refreshToken: string } | void> => {
+      
+        const { email, password } = data;
 
-      if (!adminExist) {
-        throw new Error(MessageEnum.ADMIN_NOT_FOUND);
-      }
-      const adminData: any = await this._adminRepository.adminDataByEmail(
-        email
-      );
+        const adminExist = await this._adminRepository.checkAdminExist(email);
 
-      const mathcPassword = await comparePassword(password, adminData.password);
-
-      if (!mathcPassword) {
-        throw new Error(MessageEnum.ADMIN_PASSWORD_INCORRECT);
-      }
-
-      if (adminData) {
-        const payload: IJwtPayload = {
-          userId: adminData._id,
-          role: "Admin",
-        };
-
-        const AccessToken: string = accessToken(payload);
-        const RefreshToken: string = refreshToken(payload);
-
-        return { accessToken: AccessToken, refreshToken: RefreshToken };
-      }
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        if (error.message === MessageEnum.ADMIN_NOT_FOUND) {
-          throw error;
-        } else if (error.message === MessageEnum.ADMIN_PASSWORD_INCORRECT) {
-          throw error;
-        } else {
-          console.log("admin login error ", error.message);
+        if (!adminExist) {
+          throw new ErrorResponse(MessageEnum.ADMIN_NOT_FOUND,StatusCodeEnum.NOT_FOUND);
+          
         }
-      }
-    }
-  };
+        const adminData: any = await this._adminRepository.adminDataByEmail(
+          email
+        );
+
+        const mathcPassword = await comparePassword(password, adminData.password);
+
+        if (!mathcPassword) {
+          throw new ErrorResponse(MessageEnum.ADMIN_PASSWORD_INCORRECT,StatusCodeEnum.NOT_FOUND);
+        }
+
+        if (adminData) {
+          const payload: IJwtPayload = {
+            userId: adminData._id,
+            role: "Admin",
+          };
+
+          const AccessToken: string = accessToken(payload);
+          const RefreshToken: string = refreshToken(payload);
+
+          return { accessToken: AccessToken, refreshToken: RefreshToken };
+        }
+   
+      
+    };
 
   updateToken = async (refreshToken: string): Promise<string> => {
     if (!refreshToken) {

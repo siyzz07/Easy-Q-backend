@@ -36,6 +36,11 @@ const staffSchema = new Schema<IStaff>(
       type: Boolean,
       
     },
+    
+    bookingTimes:{
+      type:String,
+    },
+
     bookingBlocks: {
       type: [String],
       default: [],
