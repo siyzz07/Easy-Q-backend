@@ -13,8 +13,8 @@ export class VendorServiceService implements IServiceInterface {
 
   //-----------------------------------------------------------------------add new service for the shop
   addNewService = async (data: IService): Promise<boolean | void> => {
-    let id = data.userId;
-    let serviceData: IService = {
+    const id = data.userId;
+    const serviceData: IService = {
       serviceName: data.serviceName,
       shopId: new mongoose.Types.ObjectId(id),
       duration: data.duration,
@@ -25,7 +25,7 @@ export class VendorServiceService implements IServiceInterface {
       availableStaff: data.availableStaff,
     };
     
-    let result = await this._ServiceRpository.addService(serviceData);
+    const result = await this._ServiceRpository.addService(serviceData);
     
     if (result) {
       return true;
@@ -39,7 +39,7 @@ export class VendorServiceService implements IServiceInterface {
   getAllService = async (shopId: string): Promise<IService[] | []> =>{
     
     
-    let result = await this._ServiceRpository.getService(shopId)
+    const result = await this._ServiceRpository.getService(shopId)
     return result
     
   }
@@ -49,7 +49,7 @@ export class VendorServiceService implements IServiceInterface {
      
     const{_id,userId,...payload} = {...data}
    
-      let result = await this._ServiceRpository.editService(_id as string,payload)
+      const result = await this._ServiceRpository.editService(_id as string,payload)
       if(result){
         return true
       }

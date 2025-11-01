@@ -115,9 +115,9 @@ export class CustomerController {
   //-------------------------------------------------get Each  shopdata
   shopDataEach = async (req: Request, res: Response): Promise<void> => {
     try {
-      let id = req.params.id;
+      const id = req.params.id;
 
-      let result = await this._customerService.getEachVendorData(id);
+      const result = await this._customerService.getEachVendorData(id);
       if (result) {
         res
           .status(StatusCodeEnum.OK)
@@ -142,8 +142,8 @@ export class CustomerController {
   getShopServices = async (req:Request,res:Response) :Promise<void> =>{
     try{
 
-        let shopId = req.params.shopId
-     let result = await this._customerService.getEachVendorServices(shopId)
+        const shopId = req.params.shopId
+     const result = await this._customerService.getEachVendorServices(shopId)
      if(result){
       res
         .status(StatusCodeEnum.OK)

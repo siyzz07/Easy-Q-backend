@@ -43,6 +43,10 @@ export class CustomerRepository
   }
 
   //---------------------------------------------------------------------get all vendors/shops data
+  //---------------------------------------------------------------------get all vendors/shops data
+  //---------------------------------------------------------------------get all vendors/shops data
+  //---------------------------------------------------------------------get all vendors/shops data
+  //---------------------------------------------------------------------get all vendors/shops data
   async getVendorsData(): Promise<IVendor[] | null> {
     const vendorData = await this._vendorModel.find({isActive:true}).lean();
     return vendorData;
@@ -76,13 +80,21 @@ export class CustomerRepository
   }
 
     //---------------------------------------------------------------------get each vendor data
+    //---------------------------------------------------------------------get each vendor data
+    //---------------------------------------------------------------------get each vendor data
+    //---------------------------------------------------------------------get each vendor data
+    //---------------------------------------------------------------------get each vendor data
     async getEachVendorData(_id: string): Promise<IVendor | null> {
-      let result = await this._vendorModel.findById(_id).populate('shopType')
+      const result = await this._vendorModel.findById(_id).populate('shopType')
       return result
     }
     //---------------------------------------------------------------------get each vendor services
+    //---------------------------------------------------------------------get each vendor services
+    //---------------------------------------------------------------------get each vendor services
+    //---------------------------------------------------------------------get each vendor services
+    //---------------------------------------------------------------------get each vendor services
     async getEachvendorServices(_shopId: string): Promise<IService[] | []> {
-        let result = await this._VendorServiceModel.find({shopId:_shopId})
+        const result = await this._VendorServiceModel.find({shopId:_shopId})
         return result
     }
   }

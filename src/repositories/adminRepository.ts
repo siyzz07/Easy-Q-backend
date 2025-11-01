@@ -34,6 +34,14 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
      await this.create(data);
   }
 
+
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
   async getCusomersData(): Promise<ICustomer[] | []> {
     const result = await this._CustomerModel.find().lean();
     if (result) {
@@ -43,6 +51,12 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
     }
   }
 
+
+  //---------------------------------------------------- block customer by admin
+  //---------------------------------------------------- block customer by admin
+  //---------------------------------------------------- block customer by admin
+  //---------------------------------------------------- block customer by admin
+  //---------------------------------------------------- block customer by admin
   //---------------------------------------------------- block customer by admin
   async blockCustomer(_id: string): Promise<boolean> {
     const updated = await this._CustomerModel
@@ -54,6 +68,13 @@ export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
   }
 
 //------------------------------------------------------- get vendors data
+//------------------------------------------------------- get vendors data
+//------------------------------------------------------- get vendors data
+//------------------------------------------------------- get vendors data
+//------------------------------------------------------- get vendors data
+//------------------------------------------------------- get vendors data
+//------------------------------------------------------- get vendors data
+//------------------------------------------------------- get vendors data
 async getVendorData(): Promise<IVendor[] | []> {
   const result = await this._VendorModel.find().lean();
   if (result) {
@@ -63,6 +84,14 @@ async getVendorData(): Promise<IVendor[] | []> {
   }
 }
 
+//-------------------------------------------------------block vendor data
+//-------------------------------------------------------block vendor data
+//-------------------------------------------------------block vendor data
+//-------------------------------------------------------block vendor data
+//-------------------------------------------------------block vendor data
+//-------------------------------------------------------block vendor data
+//-------------------------------------------------------block vendor data
+//-------------------------------------------------------block vendor data
 //-------------------------------------------------------block vendor data
 
 async blockVendor(_id: string): Promise<boolean> {
@@ -76,6 +105,12 @@ async blockVendor(_id: string): Promise<boolean> {
 
 
 //-------------------------------------------------------verify vendor
+//-------------------------------------------------------verify vendor
+//-------------------------------------------------------verify vendor
+//-------------------------------------------------------verify vendor
+//-------------------------------------------------------verify vendor
+//-------------------------------------------------------verify vendor
+//-------------------------------------------------------verify vendor
 async verifyVendor(_id: string): Promise<boolean> {
   const update = await this._VendorModel.findByIdAndUpdate(
     _id,
@@ -86,6 +121,12 @@ async verifyVendor(_id: string): Promise<boolean> {
   return !!update;
 }
 
+//-------------------------------------------------------reject vendor
+//-------------------------------------------------------reject vendor
+//-------------------------------------------------------reject vendor
+//-------------------------------------------------------reject vendor
+//-------------------------------------------------------reject vendor
+//-------------------------------------------------------reject vendor
 //-------------------------------------------------------reject vendor
 async rejectVendor(_id: string): Promise<boolean> {
     const update = await this._VendorModel.findByIdAndUpdate(

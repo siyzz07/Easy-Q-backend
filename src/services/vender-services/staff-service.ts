@@ -25,7 +25,7 @@ export class StaffService implements IStaffServiceInterface {
       breakStartTime,
     } = { ...data };
 
-    let shopData: IStaff = {
+    const shopData: IStaff = {
       shopId: userId,
       staffName,
       openingTime,
@@ -37,7 +37,7 @@ export class StaffService implements IStaffServiceInterface {
       bookingBlocks: [],
     };
 
-    let staffExist = await this._StaffRepository.getSingleStaff(
+    const staffExist = await this._StaffRepository.getSingleStaff(
       userId,
       staffName
     );
@@ -46,7 +46,7 @@ export class StaffService implements IStaffServiceInterface {
       throw new Error(MessageEnum.STAFF_ALREADY_EXISTS);
     }
 
-    let result = await this._StaffRepository.addStaff(shopData);
+    const result = await this._StaffRepository.addStaff(shopData);
 
     if (result) {
       return true;
@@ -57,7 +57,7 @@ export class StaffService implements IStaffServiceInterface {
 
   // ---------------------------------- get staffs
   getStaffService = async (shopId: string): Promise<IStaff[] | []> => {
-    let data = await this._StaffRepository.getStaff(shopId);
+    const data = await this._StaffRepository.getStaff(shopId);
     if (data) {
       return data;
     } else {
@@ -70,7 +70,7 @@ export class StaffService implements IStaffServiceInterface {
     const { userId, _id, staffName, ...payload } = { ...data };
     console.log(payload);
 
-    let exist = await this._StaffRepository.duplicateStaffFind(
+    const exist = await this._StaffRepository.duplicateStaffFind(
       userId as string,
       staffName,
       _id
@@ -79,12 +79,12 @@ export class StaffService implements IStaffServiceInterface {
     if (exist.length) {
       throw new Error(MessageEnum.STAFF_ALREADY_EXISTS);
     } else {
-      let values = {
+      const values = {
         ...payload,
         staffName,
       };
 
-      let result = await this._StaffRepository.editStaff(
+      const result = await this._StaffRepository.editStaff(
         userId as string,
         _id as string,
         values

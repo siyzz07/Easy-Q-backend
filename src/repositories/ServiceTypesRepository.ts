@@ -17,8 +17,8 @@ export class ServiceTypes
 
   //--------------------------------------------------------------- add new Service
   async addServiceType(data: {
-    serviceName: String;
-    description: String;
+    serviceName: string;
+    description: string;
     isActive: boolean;
   }): Promise<boolean> {
     const addServiece = await this.create(data);
@@ -31,7 +31,7 @@ export class ServiceTypes
 
   //---------------------------------------------------------------- get all service
   async getServices(): Promise<IServiceType[] | []> {
-    let result = await this.findAll();
+    const result = await this.findAll();
     if (result) {
       return result;
     } else {
@@ -42,9 +42,9 @@ export class ServiceTypes
   //---------------------------------------------------------------- edit  service
   async editServiceType(
     _id: string,
-    data: { serviceName: String; description: String }
+    data: { serviceName: string; description: string }
   ): Promise<boolean> {
-    let result = await this.update(_id, data);
+    const result = await this.update(_id, data);
 
     if (result) {
       return true;

@@ -83,7 +83,7 @@ export class AdminController {
   //----------------------------------------------------------get vendors request for approvel
   getVendorsRequest = async (req: Request, res: Response): Promise<void> => {
     try {
-      let result = await this._adminService.getVendorsVerification();
+      const result = await this._adminService.getVendorsVerification();
       res.status(StatusCodeEnum.OK).json({
         message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS,
         data: result,
@@ -94,7 +94,7 @@ export class AdminController {
   //----------------------------------------------------------reject the vendor requst
   rejectVendorRequest = async (req: Request, res: Response): Promise<void> => {
     try {
-      let result = await this._adminService.rejectVendorRequst(req.body.id);
+      const result = await this._adminService.rejectVendorRequst(req.body.id);
       res
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.VENDOR_DENIED });
@@ -104,7 +104,7 @@ export class AdminController {
   //----------------------------------------------------------Accept the vendor requst
   acceptVendorRequest = async (req: Request, res: Response): Promise<void> => {
     try {
-      let result = await this._adminService.verifyVendorRequst(req.body.id);
+      const result = await this._adminService.verifyVendorRequst(req.body.id);
       res
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.VENDOR_VRIFIED });

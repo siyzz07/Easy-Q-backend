@@ -16,7 +16,7 @@ export class StaffRepository
 
   //-----------------------------------------------------add new staff
   async addStaff(data: IStaff): Promise<boolean> {
-    let result = await this.create(data);
+    const result = await this.create(data);
 
     if (result) {
       return true;
@@ -27,7 +27,7 @@ export class StaffRepository
 
   //-----------------------------------------------------get the shop staffs
   async getStaff(shopId: string): Promise<IStaff[] | []> {
-    let result = await this.findManyByCondition({ shopId: shopId });
+    const result = await this.findManyByCondition({ shopId: shopId });
     if (result) {
       return result;
     } else {
@@ -47,7 +47,7 @@ export class StaffRepository
     if (staffName) query.staffName = staffName;
     if (staffId) query.staffId = staffId;
 
-    let result = await this.findOneByCondiition(query);
+    const result = await this.findOneByCondiition(query);
   
       
     return result
@@ -66,7 +66,7 @@ export class StaffRepository
   //-----------------------------------------------------edit Staff
   async editStaff(shopId: string,_id:string, data: IStaff): Promise<boolean | void> {
 
-    let result = await this._StaffModel.findOneAndUpdate({_id},{$set:data},{new:true})
+    const result = await this._StaffModel.findOneAndUpdate({_id},{$set:data},{new:true})
     console.log("------",result);
     return !!result
     

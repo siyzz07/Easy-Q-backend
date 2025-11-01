@@ -4,6 +4,7 @@ import { emailVerifyTokenMIddleware } from "../middlewares/emailTokenVerify";
 import { verifyToken } from "../middlewares/authTokenVerify";
 import { vendorBlockAuth } from "../middlewares/vendorBlockAuth";
 import { VendorServiceController } from "../controllers/vendorController/serviceController";
+import { authControllerInstance } from "../di/authDi";
 
 
 
@@ -12,17 +13,20 @@ const vendorRoute = express.Router()
 
 
 
+//---------------------------------------------- Auth
 
-vendorRoute.post('/auth/verify-email',vendorAuthControllerInstance.verifyEmail)
-vendorRoute.post('/auth/add-vendor',emailVerifyTokenMIddleware,vendorAuthControllerInstance.addNewVendor)
-vendorRoute.post('/auth/login',vendorAuthControllerInstance.login)
-vendorRoute.post('/auth/refresh-token',vendorAuthControllerInstance.refreshToken)
-vendorRoute.post('/reset-password/verify',vendorAuthControllerInstance.resestPasswordEmailVerify)
-vendorRoute.post('/reset-password',emailVerifyTokenMIddleware,vendorAuthControllerInstance.resetPassword)
+vendorRoute.post('/auth/verify-email',authControllerInstance.verifyEmail)
+vendorRoute.post('/auth/add-vendor',emailVerifyTokenMIddleware,authControllerInstance.addNewEntity)
+vendorRoute.post('/auth/login',authControllerInstance.login)
+vendorRoute.post('/reset-password/verify',authControllerInstance.resetPasswordEmailVerify)
+vendorRoute.post('/reset-password',emailVerifyTokenMIddleware,authControllerInstance.resetPassword)
+vendorRoute.post('/auth/refresh-token',authControllerInstance.refreshToken)
+vendorRoute.post('/logout',verifyToken,authControllerInstance.logout)
+
+
 
 //---------------------------------------------- dashboard
 vendorRoute.get('/dashboard/data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.vendorDashboard)
-
 vendorRoute.post('/shop-data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.addShopData)
 vendorRoute.get('/shop-data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.getShopData)
 vendorRoute.get('/shop-type',verifyToken,vendorBlockAuth,vendorShopControllerInstance.getShopServiceType)
@@ -38,7 +42,7 @@ vendorRoute.post('/service/add-service',verifyToken,vendorBlockAuth,vendorServic
 vendorRoute.get('/service/get-service',verifyToken,vendorBlockAuth,vendorServiceControllerInstance.getSerivces)
 vendorRoute.put('/service/edit-service',verifyToken,vendorBlockAuth,vendorServiceControllerInstance.editService)
 
-vendorRoute.post('/logout',verifyToken,vendorAuthControllerInstance.logout)
+
 
 export default vendorRoute;
 

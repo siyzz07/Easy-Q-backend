@@ -39,7 +39,7 @@ export class ServiceTypesService implements IShopTypeServiceInterface {
   //--------------------------------------------------------- get service types
 
   getServices = async (): Promise<IServiceType[] | []> => {
-    let result = await this._ServiceTypeRepository.getServices();
+    const result = await this._ServiceTypeRepository.getServices();
     return result;
   };
 
@@ -54,7 +54,7 @@ export class ServiceTypesService implements IShopTypeServiceInterface {
       serviceName: data.serviceName,
       description: data.description,
     };
-    let result = await this._ServiceTypeRepository.editServiceType(
+    const result = await this._ServiceTypeRepository.editServiceType(
       _id,
       payload
     );

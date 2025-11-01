@@ -94,7 +94,7 @@ export class CustomerService implements ICustomerServiceInterface {
     
     console.log(data );
     
-    let result = await this._customerRepository.getEachVendorData(data)
+    const result = await this._customerRepository.getEachVendorData(data)
     if(result){
       return result
     }else{
@@ -104,7 +104,7 @@ export class CustomerService implements ICustomerServiceInterface {
   }
   //---------------------------------------------------------------- get each vendor services
   getEachVendorServices = async (data: string): Promise<IService[] | []> =>{
-    let result = await this._customerRepository.getEachvendorServices(data)
+    const result = await this._customerRepository.getEachvendorServices(data)
     return result
   }
 }

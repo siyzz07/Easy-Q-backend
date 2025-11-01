@@ -15,7 +15,7 @@ export class ServiceRepository
 
   //-------------------------------------------------------- add new Serivce
   async addService(data: IService): Promise<boolean> {
-    let result = await this.create(data);
+    const result = await this.create(data);
     if (result) {
       return true;
     } else {
@@ -25,13 +25,13 @@ export class ServiceRepository
 
   //-------------------------------------------------------- get all Serivce
   async getService(shopId: string): Promise<IService[] | []> {
-    let result = await this.findManyByCondition({ shopId: shopId });
+    const result = await this.findManyByCondition({ shopId: shopId });
     return result;
   }
 
   //-------------------------------------------------------- edit service
   async editService(_id: string, data: IService): Promise<boolean> {
-    let result = await this.update(_id,data)
+    const result = await this.update(_id,data)
     if (result) {
       return true;
     } else {

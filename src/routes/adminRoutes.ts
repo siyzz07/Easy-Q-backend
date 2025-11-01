@@ -1,12 +1,30 @@
 import express from "express";
 import { adminController, adminControllerInstance, serviceTypesControllerInstence } from "../di/adminDi";
 import { verifyToken } from "../middlewares/authTokenVerify";
+import { authContollerInstance } from "../di/customerDi";
+import { authControllerInstance } from "../di/authDi";
 
 const adminRoute = express.Router();
 
-adminRoute.post("/auth/login", adminControllerInstance.loginAdmin);
-adminRoute.post("/auth/refresh-token", adminControllerInstance.refreshToken);
-adminRoute.post("/logout", adminControllerInstance.logout);
+
+
+//------------------------------------------------ Auth
+
+adminRoute.post("/auth/login",authControllerInstance.login);
+adminRoute.post("/auth/refresh-token", authControllerInstance.refreshToken);
+adminRoute.post("/logout",authControllerInstance.logout);
+//----------------------------------------------------------------------------
+
+
+// adminRoute.post("/auth/login", adminControllerInstance.loginAdmin);
+// adminRoute.post("/auth/refresh-token", adminControllerInstance.refreshToken);
+// adminRoute.post("/logout", adminControllerInstance.logout);
+
+
+
+
+
+
 
 //----------------------------------------------------- customer data
 adminRoute.get("/data/customers", verifyToken, adminController.getUserDatas);

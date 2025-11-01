@@ -3,7 +3,7 @@ import { IService, IStaff, IVendor } from "../../types/vendorType";
 
 
 export interface IVendorRepo {
-    addNewVendor(data:{shopName:string;email:string;phone:string;password:string,isActive:boolean}):Promise<boolean>
+    addNewVendor(data:IVendor):Promise<boolean>
     checkVendorExist(email:string):Promise<boolean>
     vendorData(email:string):Promise<IVendor|any>
     vendorDatabyId(id:string) :Promise<IVendor|any>

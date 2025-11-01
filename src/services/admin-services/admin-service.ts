@@ -39,7 +39,7 @@ export class AdminService implements IAdminServiceInterface {
     const result = await this.getVendorsDatas();
 
     if (result) {
-      let data = result.filter(
+      const data = result.filter(
         (value: IVendor) => value.isVerified == "pending"
       );
       return data;
@@ -62,17 +62,17 @@ export class AdminService implements IAdminServiceInterface {
 
   //--------------------------------------------------handle dashboard data
   dashboard = async (): Promise<any> => {
-    let vendorsData = await this._adminRepository.getVendorData();
-    let customerData = await this._adminRepository.getCusomersData();
+    const vendorsData = await this._adminRepository.getVendorData();
+    const customerData = await this._adminRepository.getCusomersData();
 
-    let pendingVendors = vendorsData.reduce((acc: number, vendor: IVendor) => {
+    const pendingVendors = vendorsData.reduce((acc: number, vendor: IVendor) => {
       if (vendor.isVerified === "pending") {
         acc += 1;
       }
       return acc;
     }, 0);
 
-    let verifiedVendors =  vendorsData.reduce((acc: number, vendor: IVendor) => {
+    const verifiedVendors =  vendorsData.reduce((acc: number, vendor: IVendor) => {
       if (vendor.isVerified === "verified") {
         acc += 1;
       }
@@ -80,15 +80,15 @@ export class AdminService implements IAdminServiceInterface {
     }, 0);
 
 
-    let rejectedVendors =  vendorsData.reduce((acc: number, vendor: IVendor) => {
+    const rejectedVendors =  vendorsData.reduce((acc: number, vendor: IVendor) => {
       if (vendor.isVerified === "rejected") {
         acc += 1;
       }
       return acc;
     }, 0);
 
-    let totalVednors = verifiedVendors+pendingVendors
-    let totalCutomers = customerData.length
+    const totalVednors = verifiedVendors+pendingVendors
+    const totalCutomers = customerData.length
 
     return ({totalCutomers,totalVednors,pendingVendors,verifiedVendors,rejectedVendors})
     

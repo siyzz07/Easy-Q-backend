@@ -72,18 +72,18 @@ class VendorShopService implements IVendorShopServiceInterface {
   getDashboard = async (data: string): Promise<any> => {
     const shopId= data
 
-    let staffData = await this._vendorRepo.getStaffData(shopId)
-    let serviceData = await this._vendorRepo.getServiceData(shopId)
+    const staffData = await this._vendorRepo.getStaffData(shopId)
+    const serviceData = await this._vendorRepo.getServiceData(shopId)
 
-    let totalStaff = staffData.length
-    let availableStaff = staffData.reduce((acc:number,data:IStaff)=>{
+    const totalStaff = staffData.length
+    const availableStaff = staffData.reduce((acc:number,data:IStaff)=>{
         if(data.isActive ){
           acc+=1
         }
         return acc
     },0)
 
-    let totalUnavailableStaff =staffData.reduce((acc:number,data:IStaff)=>{
+    const totalUnavailableStaff =staffData.reduce((acc:number,data:IStaff)=>{
         if(!data.isActive ){
           acc+=1
         }
@@ -91,15 +91,15 @@ class VendorShopService implements IVendorShopServiceInterface {
     },0)
 
 
-    let totalService = serviceData.length
-    let totalAvailableService = serviceData.reduce((acc:number,data:IService) =>{
+    const totalService = serviceData.length
+    const totalAvailableService = serviceData.reduce((acc:number,data:IService) =>{
       if(data.isActive){
         acc+=1
       }
       return acc
     },0)
 
-    let totalUnavailableService = serviceData.reduce((acc:number,data:IService) =>{
+    const totalUnavailableService = serviceData.reduce((acc:number,data:IService) =>{
       if(!data.isActive){
         acc+=1
       }

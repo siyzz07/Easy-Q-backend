@@ -11,6 +11,7 @@ export const emailVerifyTokenMIddleware = (
   next: NextFunction
 ) => {
   try {
+
     const { token, ...data } = req.body as {
       token: string;
       [key: string]: any;
@@ -22,14 +23,19 @@ export const emailVerifyTokenMIddleware = (
 
     const decoded = Jwt.verify(token, JWT_SECRET_KEY);
 
+    
     if (typeof decoded === "string") {
       throw new Error(MessageEnum.EMAIL_TOKEN_INVALID);
     }
 
-    req.body = { ...data, ...decoded };
+    const { iat, exp, ...decodedData } = decoded
+
+    
+    req.body = { ...data, ...decodedData };
     next();
   } catch (error: any) {
     if (error.message == MessageEnum.EMAIL_TOKEN_MISSING) {
+      console.log("8");
       res
         .status(StatusCodeEnum.BAD_REQUEST)
         .json(MessageEnum.EMAIL_TOKEN_MISSING);

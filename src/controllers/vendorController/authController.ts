@@ -184,7 +184,7 @@ export class AuthController {
       const { email, password }: { email: string; password: string } = req.body;
 
       await this._authService.resetPassowrd({ email, password });
-
+ 
       res
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.PASSWROD_CAHNGE_SUCCESS });

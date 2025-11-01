@@ -5,9 +5,9 @@ import { ServiceTypeController } from "../controllers/adminController/serviceTyp
 import { AdminRepository } from "../repositories/adminRepository";
 import { ServiceTypes } from "../repositories/ServiceTypesRepository";
 
-import { AdminService } from "../services/adminServices/adminService";
-import { AuthService } from "../services/adminServices/atuhService";
-import { ServiceTypesService } from "../services/adminServices/sverviceTypesVendorService";
+import { AdminService } from "../services/admin-services/admin-service";
+import { AuthService } from "../services/admin-services/atuh-service";
+import { ServiceTypesService } from "../services/admin-services/svervice-types-vendor-service";
 
 
 

@@ -55,7 +55,7 @@ class VendorShopController {
   getShopServiceType = async (req: Request, res: Response): Promise<void> => {
     try {
 
-      let result = await this._vendorShopService.getShopTypes();
+      const result = await this._vendorShopService.getShopTypes();
   
       if (result) {
         res
@@ -74,7 +74,7 @@ class VendorShopController {
     try{
 
 
-      let result = await this._vendorShopService.getDashboard(req.body.userId)
+      const result = await this._vendorShopService.getDashboard(req.body.userId)
 
       if(result){
         res

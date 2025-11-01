@@ -16,7 +16,7 @@ export class ServiceTypeController {
   //--------------------------------------------------------------------------add new service type controller
   addServiceType = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
-      let result = await this._ServiceTypeService.addServiceType(req.body);
+      const result = await this._ServiceTypeService.addServiceType(req.body);
 
       if (result) {
         res
@@ -33,7 +33,7 @@ export class ServiceTypeController {
     try {
       
       
-      let result = await this._ServiceTypeService.getServices()
+      const result = await this._ServiceTypeService.getServices()
       
       res
       .status(StatusCodeEnum.OK)
@@ -51,7 +51,7 @@ export class ServiceTypeController {
   editServiceType = async (req:Request,res:Response) :Promise<void> =>{
     try{
         console.log( req.body);
-        let result = await this._ServiceTypeService.editServiceType(req.body)
+        const result = await this._ServiceTypeService.editServiceType(req.body)
         console.log('ppp',result);
         
         if( result){

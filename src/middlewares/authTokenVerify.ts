@@ -16,6 +16,8 @@ export const verifyToken = (
       process.env.JWT_ACCESS_TOKEN_KEY!
     ) as JwtPayload;
 
+
+    
     req.body = { ...req.body, userId: decoded.userId };
 
     next();

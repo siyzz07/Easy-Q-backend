@@ -3,11 +3,11 @@ import { AuthController } from "../controllers/vendorController/authController";
 import VendorShopController from "../controllers/vendorController/shopController";
 import { StaffRepository } from "../repositories/staffsRepository";
 import { VendorRepository } from "../repositories/vendorRepository";
-import { StaffService } from "../services/venderServices/staffService";
-import { VendorAuthService } from "../services/venderServices/authService";
-import VendorShopService from "../services/venderServices/shopService";
+import { StaffService } from "../services/vender-services/staff-service";
+import { VendorAuthService } from "../services/vender-services/auth-service";
+import VendorShopService from "../services/vender-services/shop-service";
 import { ServiceRepository } from "../repositories/serviceRepository";
-import { VendorServiceService } from "../services/venderServices/serviceService";
+import { VendorServiceService } from "../services/vender-services/service-service";
 import { VendorServiceController } from "../controllers/vendorController/serviceController";
 
 

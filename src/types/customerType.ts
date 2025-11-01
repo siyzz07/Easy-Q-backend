@@ -12,6 +12,7 @@ export interface ICustomer {
   createAt?: Date;
   updatedAt?: Date;
   _id?:string
+  role?:string
 }
 
 

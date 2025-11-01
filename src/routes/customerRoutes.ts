@@ -4,21 +4,40 @@ import { AddressControllerInstance, authContollerInstance, customerControllerIns
 import { emailVerifyTokenMIddleware } from '../middlewares/emailTokenVerify'
 import { verifyToken } from '../middlewares/authTokenVerify'
 import { customerBlockAuth } from '../middlewares/customerBlockAuth'
+import { authControllerInstance } from '../di/authDi'
 
 
 const customerRoute = express.Router()
 
+//------------------------------------------------------ Auth
+customerRoute.post('/auth/signup',authControllerInstance.verifyEmail)
+customerRoute.post('/auth/verify-email',emailVerifyTokenMIddleware,authControllerInstance.addNewEntity)
+customerRoute.post('/auth/login',authControllerInstance.login )
+customerRoute.post('/reset-password/verify',authControllerInstance.resetPasswordEmailVerify)
+customerRoute.post('/reset-password',emailVerifyTokenMIddleware,authControllerInstance.resetPassword)
+customerRoute.post('/auth/refresh-token',authControllerInstance.refreshToken)
+customerRoute.post ('/logout',verifyToken,authControllerInstance.logout)
+
+//-------------------------------------------------------------------------------------------
+
+
+
+// customerRoute.post('/auth/signup',authContollerInstance.addCustomer)
+// customerRoute.post('/auth/verify-email',emailVerifyTokenMIddleware,authContollerInstance.addVerifiedCustomer)
+// customerRoute.post('/auth/login', authContollerInstance.customerLogin)
+// customerRoute.post('/reset-password/verify',authContollerInstance.resetPasswrodVerifyMail)
+// customerRoute.post('/reset-password',emailVerifyTokenMIddleware,authContollerInstance.resetPassword)
+// customerRoute.post('/auth/refresh-token',authContollerInstance.refreshToken)
+// customerRoute.post ('/logout',authContollerInstance.logout)
 
 
 
 
-customerRoute.post('/auth/signup',authContollerInstance.addCustomer)
-customerRoute.post('/auth/verify-email',emailVerifyTokenMIddleware,authContollerInstance.addVerifiedCustomer)
-customerRoute.post('/auth/login', authContollerInstance.customerLogin)
-customerRoute.post('/auth/refresh-token',authContollerInstance.refreshToken)
-customerRoute.post('/reset-password',emailVerifyTokenMIddleware,authContollerInstance.resetPassword)
-customerRoute.post('/reset-password/verify',authContollerInstance.resetPasswrodVerifyMail)
-customerRoute.post ('/logout',authContollerInstance.logout)
+
+
+
+
+
 
 
 //---------------------------------------------------------------------- shops

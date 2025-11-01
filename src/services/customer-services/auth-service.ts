@@ -24,8 +24,12 @@ class AuthService implements ICustomerInterface {
   //----------------------------------------------------------------------------------------verify user email
   verifyEmail = async (values: ICustomer): Promise<void> => {
     try {
+
+      console.log(values);
+      
       const { email } = { ...values };
 
+    
       const exist = await this._customerRepository.checkCustomerExist(email);
 
       if (exist) {
@@ -43,6 +47,11 @@ class AuthService implements ICustomerInterface {
     }
   };
 
+
+
+
+
+  
   addCustomer = async (values: ICustomer): Promise<boolean> => {
     const { password, email, name, phone } = { ...values };
 
@@ -160,6 +169,8 @@ class AuthService implements ICustomerInterface {
     }
   };
 
+
+  
   // ------------------- reset password email verify -------------
   resetPasswordEmailVerify = async (email: string): Promise<boolean | void> => {
     try {

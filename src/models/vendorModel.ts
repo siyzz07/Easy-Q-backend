@@ -43,6 +43,7 @@ const vendorSchema = new Schema<IVendor>(
     },
     isActive: {
       type: Boolean,
+      default:true
     },
     images: {
       type: [String],

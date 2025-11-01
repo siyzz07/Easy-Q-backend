@@ -12,6 +12,7 @@ export enum MessageEnum {
   CUSTOMER_ALL_DATA_FETCH_SUCCESS ='Customers datas fetch successfully',
   CUSTOMER_BLOCKED ='Customer blocked by admin',
   CUSTOMER_PROFILE_UPDATED ='Customer profile updated',
+  CUSTOMER_ADD_ERROR='Error to add customer please try again latter',
   
 
   
@@ -41,11 +42,18 @@ export enum MessageEnum {
   PASSWROD_CAHNGE_FAILED ='Unable to change password',
   ACCOUNT_BLOCKED="Your account is blocked",
   SUCCEESS ="success",
-  
-  
+
+  REGISTER_SUCCESS ='Register success pleas verify your email',
+  ROLE_NOT_FOUND="Entity role not found",
+  ENTITY_ADDEDD_SUCCESSFULY = 'Registration has been successfully completed.',
+  LOGIN_SUCCESSFLLY = ' login successfully',
+  REFRESH_TOKEN_MISSING = 'Refresh token missing',
+
+
   // --------------------------------------------------------------------------vendor
   VENDOR_EXISTS = "Vendor already exists",
   VENDOR_NOT_FOUND = "Vendor not found",
+  VENDOR_ADD_ERROR='Error to add vendor please try again latter',
   VENDOR_CREATED = "Vendor created successfully",
   VENDOR_UPDATED = "Vendor updated successfully",
   VENDOR_DELETED = "Vendor deleted successfully",
@@ -83,7 +91,7 @@ export enum MessageEnum {
   
   ADMIN_LOGIN_SUCCESS = "Admin logged in successfully.",
   ADMIN_LOGIN_FAILED = "Invalid email or password.",
-  ADMIN_NOT_FOUND = "User not found.",
+  ADMIN_NOT_FOUND = "Admin not found.",
   ADMIN_PASSWORD_INCORRECT = "Incorrect password.",
 
 

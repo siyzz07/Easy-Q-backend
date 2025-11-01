@@ -43,7 +43,7 @@ export class StaffController {
    //----------------------------------------------- get all staff data
   getStaffsController = async (req: Request, res: Response): Promise<void> => {
     try {
-      let result = await this._StaffServices.getStaffService(req.body.userId);
+      const result = await this._StaffServices.getStaffService(req.body.userId);
 
       if (result) {
         res
@@ -65,7 +65,7 @@ export class StaffController {
   editStaff = async (req:Request,res:Response):Promise<void> =>{
     try{
 
-        let result = await this._StaffServices.editStaff(req.body)
+        const result = await this._StaffServices.editStaff(req.body)
         if(result){
           res
             .status(StatusCodeEnum.OK)

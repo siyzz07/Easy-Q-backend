@@ -3,9 +3,9 @@ import CustomerAuth from "../controllers/customerController/authController";
 import { CustomerController } from "../controllers/customerController/customerController";
 import { CustomerAddresRepository } from "../repositories/customerAddressRepository";;
 import { CustomerRepository } from "../repositories/customerRepository";
-import { CustomerAddressService } from "../services/customerServices/addressService";
-import AuthService from "../services/customerServices/authService";
-import { CustomerService } from "../services/customerServices/customerService";
+import { CustomerAddressService } from "../services/customer-services/address-service";
+import AuthService from "../services/customer-services/auth-service";
+import { CustomerService } from "../services/customer-services/customer-service";
 
 
 const customerRepositoryInstance = new CustomerRepository()

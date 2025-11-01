@@ -31,7 +31,7 @@ export class VendorServiceController {
   // ------------------------------- get the services of the shop
   getSerivces = async (req: Request, res: Response): Promise<void> => {
     try {
-      let result = await this._Service.getAllService(req.body.userId);
+      const result = await this._Service.getAllService(req.body.userId);
       res
         .status(StatusCodeEnum.OK)
         .json({
@@ -51,7 +51,7 @@ export class VendorServiceController {
   editService = async (req:Request,res:Response) :Promise<void> =>{
     try{
 
-      let result = await this._Service.editService(req.body)
+      const result = await this._Service.editService(req.body)
       if(result){
         res
           .status(StatusCodeEnum.OK)

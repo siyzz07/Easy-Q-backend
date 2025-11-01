@@ -27,6 +27,7 @@ export interface IVendor {
   updatedAt?: Date;
   hasShop?: boolean;
   isVerified?:"pending" | "verified" | "rejected"; 
+  role?:string
   
 }
 

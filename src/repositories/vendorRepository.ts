@@ -21,26 +21,33 @@ export class VendorRepository
     super(vendorModel);
   }
 
+
+  //--------------- add new vendor
   async addNewVendor(data: IVendor): Promise<boolean> {
     const vendor = await this.create(data);
     return !!vendor;
   }
 
+  //--------------- check vendro exitst
   async checkVendorExist(email: string): Promise<boolean> {
     const vendor = await this.findByEmail(email);
     return !!vendor;
   }
 
+  //--------------- get vendor data
   async vendorData(email: string): Promise<void> {
     const vendor = this.findByEmail(email);
     return vendor;
   }
 
+  //--------------- get vendor data by id
   async vendorDatabyId(id: string): Promise<IVendor | any> {
     const vendor = this.findById(id);
     return vendor;
   }
 
+
+  //--------------- find and update
   async findByIdAndUpdate(id: string, data: object): Promise<any> {
     
     const vendor = await vendorModel.findByIdAndUpdate(
@@ -64,21 +71,35 @@ export class VendorRepository
   }
   
   //------------------------------------------ get vendorservice types
+  //------------------------------------------ get vendorservice types
+  //------------------------------------------ get vendorservice types
+  //------------------------------------------ get vendorservice types
+  //------------------------------------------ get vendorservice types
   async vendorTypeData(): Promise<IServiceType[] | null> {
     
-    let result = await this._ServiceTypeModel.find()
+    const result = await this._ServiceTypeModel.find()
     return result
   }
 
   //------------------------------------------ get staff data
+  //------------------------------------------ get staff data
+  //------------------------------------------ get staff data
+  //------------------------------------------ get staff data
+  //------------------------------------------ get staff data
   async  getStaffData(shopId: string): Promise<IStaff[] | []> {
-      let result = await this._Staff.find({shopId}).lean()
+      const result = await this._Staff.find({shopId}).lean()
       return result
     }
-    //------------------------------------------ get vendor service data
 
+
+
+  //------------------------------------------ get vendor service data
+  //------------------------------------------ get vendor service data
+  //------------------------------------------ get vendor service data
+  //------------------------------------------ get vendor service data
+  //------------------------------------------ get vendor service data
     async getServiceData(shopId: string): Promise<IService[] | []> {
-      let result = await this._Service.find({shopId}).lean()
+      const result = await this._Service.find({shopId}).lean()
       return result
     }
 
