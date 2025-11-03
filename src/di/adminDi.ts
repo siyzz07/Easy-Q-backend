@@ -1,34 +1,35 @@
 
-import { AdminController } from "../controllers/adminController/adminController";
-import { AdminAtuhController } from "../controllers/adminController/authController";
-import { ServiceTypeController } from "../controllers/adminController/serviceTypeController";
+
+import { AdminController } from "../controllers/admin/admin-controller";
+import { ServiceTypeController } from "../controllers/service-types/service-types-controller";
 import { AdminRepository } from "../repositories/adminRepository";
+import { CustomerRepository } from "../repositories/customerRepository";
 import { ServiceTypes } from "../repositories/ServiceTypesRepository";
+import { VendorRepository } from "../repositories/vendorRepository";
 
 import { AdminService } from "../services/admin-services/admin-service";
-import { AuthService } from "../services/admin-services/atuh-service";
-import { ServiceTypesService } from "../services/admin-services/svervice-types-vendor-service";
+
+import { ServiceTypesService } from '../services/admin-services/svervice-types-vendor-service'
 
 
 
 
 
-//---------------------------------------------------------------- admin auth 
-const adminRepositoryInstace = new AdminRepository()
-const adminServiceInstance = new AuthService(adminRepositoryInstace)
-const adminControllerInstance = new AdminAtuhController(adminServiceInstance)
+const adminRepositoryInstance = new AdminRepository()
+const serviceTypesRepositoryInstance = new ServiceTypes()
+const customerRepositoryInstance = new CustomerRepository()
+const vendorRepositoryInstance = new VendorRepository()
 
 
 
 //---------------------------------------------------------------- admin serice liek get vendors get customer updata and etc..
-const adminService = new AdminService(adminRepositoryInstace)
+const adminService = new AdminService(adminRepositoryInstance,customerRepositoryInstance,vendorRepositoryInstance)
 const adminController = new AdminController(adminService)
 
 
 
 //---------------------------------------------------------------- service types for vendor 
-const serviceTypesRepositoryInstace = new ServiceTypes()
-const serviceTypesServiceInstance = new ServiceTypesService(serviceTypesRepositoryInstace)
+const serviceTypesServiceInstance = new ServiceTypesService(serviceTypesRepositoryInstance)
 const serviceTypesControllerInstence = new ServiceTypeController(serviceTypesServiceInstance)
 
 
@@ -36,4 +37,4 @@ const serviceTypesControllerInstence = new ServiceTypeController(serviceTypesSer
 
 
 
-export {adminControllerInstance,adminController,serviceTypesControllerInstence}
+export {adminController,serviceTypesControllerInstence}

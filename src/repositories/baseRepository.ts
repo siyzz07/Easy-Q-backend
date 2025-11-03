@@ -1,6 +1,7 @@
 import { Document, Model, FilterQuery, UpdateQuery, FlattenMaps } from "mongoose";
-import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
+
 import { ICustomerAddress } from "../types/customerType";
+import { IBaseRepositoryInterface } from "../interface/common-interface/base-resposiotry-interface";
 
 class BaseRepository<T extends Document>
   implements IBaseRepositoryInterface<T>

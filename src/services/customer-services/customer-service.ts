@@ -1,54 +1,35 @@
 import { log } from "console";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { ICustomerRepo } from "../../interface/repositoryInterface/customerInterface";
-import { ICustomerServiceInterface } from "../../interface/serviceInterface/customerServiceInterface";
+
 import { ICustomer } from "../../types/customerType";
 import { IService, IVendor } from "../../types/vendorType";
 import { comparePassword, hashPassword } from "../../utils/hash";
+import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
+import { ICustomerServiceInterface } from "../../interface/customer-interface/customer-service-interface";
+import { ErrorResponse } from "../../utils/errorResponse";
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
+import logger from "../../utils/logger";
 
 export class CustomerService implements ICustomerServiceInterface {
-  private _customerRepository: ICustomerRepo;
+  private _customerRepository: ICustomerRepo
 
   constructor(customerRepo: ICustomerRepo) {
     this._customerRepository = customerRepo;
   }
 
-  //----------------------------------------------------------------get vendors data
-  getVendorsData = async (): Promise<IVendor[] | null> => {
-    try {
-      const response = await this._customerRepository.getVendorsData();
-      
-      if (!response || response.length === 0) {
-        return null;
-      }
-      
-      return response;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log("Get vendors data error:", error.message);
-      }
-      return null;
-    }
-  };
-  
-  //----------------------------------------------------------------get customer data
+
+  //----------------------------------------get customer data
   getCustomerData = async (id: string): Promise<ICustomer | void> => {
-    try {
       const response: ICustomer | null =
       await this._customerRepository.customerDataById(id);
       if (response) {
         return response;
       } else {
-        throw new Error(MessageEnum.CUSTOMER_DATA_FETCH_FAILED);
+        throw new ErrorResponse(MessageEnum.CUSTOMER_DATA_FETCH_FAILED,StatusCodeEnum.NOT_FOUND)
       }
-    } catch (error: unknown) {
-      if (error) {
-        throw error;
-      }
-    }
   };
   
-  //----------------------------------------------------------------edit profile
+  //----------------------------------------edit profile
   editProfile = async (data: {
     userId: string;
     name: string;
@@ -60,16 +41,19 @@ export class CustomerService implements ICustomerServiceInterface {
     if (result) {
       return true;
     } else {
-      throw new Error(MessageEnum.SERVER_ERROR)
+      logger.error('failed to edit customer profile ')
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR,StatusCodeEnum.INTERNAL_SERVER_ERROR)
     }
   };
-  //----------------------------------------------------------------reset password in profile
+
+
+  //----------------------------------------reset password in profile
   updatePasswordInProfile = async (data: { currentPassword: string; userId: string; password: string; }): Promise<boolean | void> =>{
     
       const {userId,password,currentPassword} =data
       const customer = await this._customerRepository.customerDataById(userId)
       if(!customer){
-        throw new Error(MessageEnum.CUSTOMER_NOT_FOUND)
+        throw new ErrorResponse(MessageEnum.CUSTOMER_NOT_FOUND,StatusCodeEnum.NOT_FOUND)
       }
 
       const customerPassword = customer.password
@@ -78,7 +62,7 @@ export class CustomerService implements ICustomerServiceInterface {
      
       
       if(!checkCorrectPassword){
-        throw new Error(MessageEnum.INVALID_PASSWORD)
+        throw new ErrorResponse(MessageEnum.INVALID_PASSWORD,StatusCodeEnum.BAD_REQUEST)
       }
       
       const hashedPassword = await hashPassword(password)
@@ -89,22 +73,19 @@ export class CustomerService implements ICustomerServiceInterface {
 
   }
 
-  //---------------------------------------------------------------- get each vendor data
-  getEachVendorData = async (data: string): Promise<IVendor | void>  => {
-    
-    console.log(data );
-    
-    const result = await this._customerRepository.getEachVendorData(data)
-    if(result){
-      return result
-    }else{
-      throw new Error(MessageEnum.VENDOR__DATA_FETCH_FAILED)
-    }
-    
-  }
-  //---------------------------------------------------------------- get each vendor services
-  getEachVendorServices = async (data: string): Promise<IService[] | []> =>{
-    const result = await this._customerRepository.getEachvendorServices(data)
-    return result
-  }
+  //=======================================================================
+
+
+  //---------------------------------------- get all cutomer data
+   getCustomersDatas = async (): Promise<ICustomer[] | []> => {
+    const result = await this._customerRepository.getCusomersData();
+    return result;
+  };
+
+  //---------------------------------------- block customer by admin
+  blockCustomer = async (customerId: string): Promise<boolean | void> => {
+    const result = await this._customerRepository.blockCustomer(customerId);
+
+    return result;
+  };
 }

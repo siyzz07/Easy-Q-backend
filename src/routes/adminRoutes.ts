@@ -1,52 +1,64 @@
 import express from "express";
-import { adminController, adminControllerInstance, serviceTypesControllerInstence } from "../di/adminDi";
+import { adminController, serviceTypesControllerInstence } from "../di/adminDi";
 import { verifyToken } from "../middlewares/authTokenVerify";
-import { authContollerInstance } from "../di/customerDi";
 import { authControllerInstance } from "../di/authDi";
+import { customerControllerInstance } from "../di/customerDi";
+import { vendorControllerInstance } from "../di/vendorDi";
 
 const adminRoute = express.Router();
 
 
 
-//------------------------------------------------ Auth
-
+/*
+ * 
+ * Auth 
+ * 
+ */
 adminRoute.post("/auth/login",authControllerInstance.login);
 adminRoute.post("/auth/refresh-token", authControllerInstance.refreshToken);
 adminRoute.post("/logout",authControllerInstance.logout);
-//----------------------------------------------------------------------------
+
+/**
+ * 
+ * Customer
+ * 
+ */
+adminRoute.get("/data/customers", verifyToken, customerControllerInstance.getUserDatas);
+adminRoute.post("/data/block-customer",verifyToken,customerControllerInstance.blockCustomer);
 
 
-// adminRoute.post("/auth/login", adminControllerInstance.loginAdmin);
-// adminRoute.post("/auth/refresh-token", adminControllerInstance.refreshToken);
-// adminRoute.post("/logout", adminControllerInstance.logout);
+/**
+ * 
+ * Vendor
+ * 
+ */
+adminRoute.get("/data/vendors", verifyToken,vendorControllerInstance.geVendorsDatas);
+adminRoute.post("/data/block-vendor", verifyToken, vendorControllerInstance.blockVendor);
+adminRoute.get('/data/vendors-request',verifyToken,vendorControllerInstance.getVendorsRequest)
+adminRoute.post('/data/verified-vendor',verifyToken,vendorControllerInstance.acceptVendorRequest)
+adminRoute.post('/data/reject-vendor',verifyToken,vendorControllerInstance.rejectVendorRequest)
 
-
-
-
-
-
-
-//----------------------------------------------------- customer data
-adminRoute.get("/data/customers", verifyToken, adminController.getUserDatas);
-adminRoute.post("/data/block-customer",verifyToken,adminController.blockCustomer
-);
-
-//----------------------------------------------------- vendors data
-adminRoute.get("/data/vendors", verifyToken, adminController.geVendorsDatas);
-adminRoute.post("/data/block-vendor", verifyToken, adminController.blockVendor);
-
-//----------------------------------------------------- vendors verification
-adminRoute.get('/data/vendors-request',verifyToken,adminController.getVendorsRequest)
-adminRoute.post('/data/verified-vendor',verifyToken,adminController.acceptVendorRequest)
-adminRoute.post('/data/reject-vendor',verifyToken,adminController.rejectVendorRequest)
-
-//----------------------------------------------------- dashboard
+/**
+ * 
+ * Dashboard
+ * 
+ */
 adminRoute.get('/admin-dashboard',verifyToken,adminController.dashboardData)
 
-//----------------------------------------------------- services
+/**
+ * 
+ * Service Types
+ * 
+*/
 adminRoute.post("/service/add-service",verifyToken,serviceTypesControllerInstence.addServiceType)
 adminRoute.get('/service/get-services',verifyToken,serviceTypesControllerInstence.getServiceTypes)
 adminRoute.put('/service/edit-service',verifyToken,serviceTypesControllerInstence.editServiceType)
+
+
+
+
+
+
 
 
 

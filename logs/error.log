@@ -48,3 +48,31 @@
 [2025-11-01 16:16:44] ERROR: Invalid email or password - POST /api/customer/auth/login
 [2025-11-01 16:58:54] ERROR: Invalid email or password - POST /api/vendor/auth/login
 [2025-11-01 20:02:34] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-02 16:48:27] ERROR: Admin not found. - POST /api/admin/auth/login
+[2025-11-02 16:48:58] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-02 22:32:05] ERROR: error to logout entity
+[2025-11-02 22:32:05] ERROR: Cannot read properties of undefined (reading 'role') - POST /api/admin/logout
+[2025-11-02 22:32:06] ERROR: error to logout entity
+[2025-11-02 22:32:06] ERROR: Cannot read properties of undefined (reading 'role') - POST /api/admin/logout
+[2025-11-02 22:32:14] ERROR: logger_1.default.warning is not a function - POST /api/admin/auth/refresh-token
+[2025-11-02 22:32:14] ERROR: logger_1.default.warning is not a function - POST /api/admin/auth/refresh-token
+[2025-11-03 10:11:00] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-03 10:20:59] ERROR: logger_1.default.warning is not a function - POST /api/customer/auth/refresh-token
+[2025-11-03 10:20:59] ERROR: logger_1.default.warning is not a function - POST /api/customer/auth/refresh-token
+[2025-11-03 11:13:06] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:36:57] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-03 15:57:09] ERROR: Modifiers operate on fields but we found type array instead. For example: {$mod: {<field>: ...}} not {$set: [ null, null ]} - POST /api/vendor/staff/block-dates
+[2025-11-03 16:04:52] ERROR: Modifiers operate on fields but we found type array instead. For example: {$mod: {<field>: ...}} not {$set: [ null, null ]} - POST /api/vendor/staff/block-dates
+[2025-11-03 19:59:00] ERROR: Your account is under verification. Please wait for admin approval. - POST /api/vendor/auth/login
+[2025-11-03 19:59:27] ERROR: Incorrect password. - POST /api/admin/auth/login
+[2025-11-03 22:07:47] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:13:52] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:14:39] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:15:15] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:15:39] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop

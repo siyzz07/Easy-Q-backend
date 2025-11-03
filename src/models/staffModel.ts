@@ -1,8 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IStaff } from "../types/vendorType";
 
-
-
 const staffSchema = new Schema<IStaff>(
   {
     shopId: {
@@ -13,40 +11,39 @@ const staffSchema = new Schema<IStaff>(
     staffName: {
       type: String,
       required: true,
-     
     },
     openingTime: {
       type: String,
-      
-    },
-    
-    closingTime: {
-      type: String,
-      
-    },
-    breakStartTime: {
-      type: String,
-      
-    },
-    breakEndTime: {
-      type: String,
-      
-    },
-    isActive: {
-      type: Boolean,
-      
-    },
-    
-    bookingTimes:{
-      type:String,
     },
 
-    bookingBlocks: {
-      type: [String],
+    closingTime: {
+      type: String,
+    },
+
+    breaks: [
+      {
+        breakStartTime: {
+          type: String,
+        },
+        breakEndTime: {
+          type: String,
+        },
+      },
+    ],
+    isActive: {
+      type: Boolean,
+    },
+
+    bookingTimes: {
+      type: String,
+    },
+
+    blockedDates: {
+      type: [Date],
       default: [],
     },
   },
   { timestamps: true }
 );
 
-export default model<IStaff>('Staff',staffSchema)
+export default model<IStaff>("Staff", staffSchema);

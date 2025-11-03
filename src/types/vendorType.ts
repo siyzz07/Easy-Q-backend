@@ -1,4 +1,5 @@
 import mongoose, { ObjectId } from "mongoose";
+import { Schema, Document, Types } from "mongoose";
 
 interface IZone {
   lat: string;
@@ -8,6 +9,7 @@ interface IZone {
 export interface IVendor {
   shopName?: string;
   proofImage?:string;
+  // userId?:string;
   email?: string;
   phone?: string;
   password?: string;
@@ -17,7 +19,7 @@ export interface IVendor {
   shopType?: string;
   openAt?: string;
   closeAt?: string;
-  workingDays?: string;
+  workingDays?: string[];
   cordinates?: IZone;
   ProfileImage?: string;
   images?: string[];
@@ -38,7 +40,13 @@ export interface IShopData {
   openAt: any;
   closeAt: any;
   profileImage: any;
-  workingDays: string;
+  workingDays: string[]|string;
+}
+
+
+interface IBreakTime{
+  breakStartTime:string;
+  breakEndTime:string
 }
 
 
@@ -48,10 +56,9 @@ export interface IStaff {
   staffName: string;
   openingTime: string;
   closingTime: string;
-  breakStartTime: string;
-  breakEndTime: string;
+  breaks:IBreakTime[]
   isActive?: boolean;
-  bookingBlocks?: string[];
+  blockedDates?: [];
   userId?:string;
   bookingTimes?:string
 }
@@ -60,8 +67,7 @@ export interface IStaffAdd{
   staffName:string;
   openingTime:string;
   closingTime:string;
-  breakStartTime:string,
-  breakEndTime:string
+  breaks:IBreakTime[]
 }
 
 
@@ -76,4 +82,14 @@ export interface IService {
   price:string
   isActive:boolean;
   availableStaff:mongoose.Types.ObjectId[]
+}
+
+
+
+export interface IReview extends Document {
+  customerId: Types.ObjectId;
+  vendorId: Types.ObjectId;
+  rating: string;
+  createdAt?: Date;
+  comment:string
 }

@@ -36,7 +36,9 @@ const vendorSchema = new Schema<IVendor>(
       type:String
     },
     workingDays: {
-      type: String,
+      type:[String],
+      default:[]
+
     },
     ProfileImage: {
       type: String,

@@ -1,9 +1,11 @@
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IServiceTypesRepositoryInterface } from "../../interface/repositoryInterface/adminRepoInterface";
-import { IStaffRepositoryInterface } from "../../interface/repositoryInterface/vendorRepoInterface";
-import { IShopTypeServiceInterface } from "../../interface/serviceInterface/adminServiceInterface";
-import { IStaffServiceInterface } from "../../interface/serviceInterface/vendorServiceInterface";
+
+import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
+import { IStaffServiceInterface } from "../../interface/staff-interface/staff-service-interface";
 import { IStaff, IStaffAdd } from "../../types/vendorType";
+import { ErrorResponse } from "../../utils/errorResponse";
+import logger from "../../utils/logger";
 
 export class StaffService implements IStaffServiceInterface {
   private _StaffRepository: IStaffRepositoryInterface;
@@ -20,21 +22,19 @@ export class StaffService implements IStaffServiceInterface {
     const {
       staffName,
       openingTime,
-      breakEndTime,
       closingTime,
-      breakStartTime,
+      breaks
     } = { ...data };
 
     const shopData: IStaff = {
       shopId: userId,
       staffName,
       openingTime,
-      breakEndTime,
       closingTime,
-      breakStartTime,
+      breaks,
       isActive: true,
       bookingTimes:openingTime,
-      bookingBlocks: [],
+      blockedDates:[],
     };
 
     const staffExist = await this._StaffRepository.getSingleStaff(
@@ -43,7 +43,7 @@ export class StaffService implements IStaffServiceInterface {
     );
 
     if (staffExist) {
-      throw new Error(MessageEnum.STAFF_ALREADY_EXISTS);
+      throw new ErrorResponse(MessageEnum.STAFF_ALREADY_EXISTS,StatusCodeEnum.CONFLICT)
     }
 
     const result = await this._StaffRepository.addStaff(shopData);
@@ -51,7 +51,7 @@ export class StaffService implements IStaffServiceInterface {
     if (result) {
       return true;
     } else {
-      throw new Error(MessageEnum.STAFF_ADD_FAILED);
+      throw new ErrorResponse(MessageEnum.STAFF_ADD_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
     }
   };
 
@@ -77,7 +77,7 @@ export class StaffService implements IStaffServiceInterface {
     );
 
     if (exist.length) {
-      throw new Error(MessageEnum.STAFF_ALREADY_EXISTS);
+      throw new ErrorResponse(MessageEnum.STAFF_ALREADY_EXISTS,StatusCodeEnum.CONFLICT)
     } else {
       const values = {
         ...payload,
@@ -96,4 +96,22 @@ export class StaffService implements IStaffServiceInterface {
       }
     }
   };
+
+
+  //  ---------------------------------- edit staff bookin blok dates
+  editStaffBlockDate = async (data: { _id: string; blockedDates:any; userId: string; }): Promise<boolean | void> =>{
+
+    const{_id,blockedDates,userId} = data
+    
+    let result = await this._StaffRepository.editStaff(userId,_id,{blockedDates})
+     
+    if(result){
+      return true
+    }else{
+      logger.error('error to edit the staff booking blokc dates')
+      throw new ErrorResponse(MessageEnum.STAFF_UPDATE_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+    }
+
+
+  }
 }

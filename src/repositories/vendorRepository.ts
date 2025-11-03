@@ -1,5 +1,6 @@
 
-import { IVendorRepo } from "../interface/repositoryInterface/vendorRepoInterface";
+
+import { IVendorRepo } from "../interface/vendor-interface/vendor-respository-interface";
 import Service from "../models/Service";
 import ServiceTypesModel from "../models/ServiceTypesModel";
 import staffModel from "../models/staffModel";
@@ -69,37 +70,73 @@ export class VendorRepository
     await this._vendorModel.deleteOne({email})
     return null
   }
-  
-  //------------------------------------------ get vendorservice types
-  //------------------------------------------ get vendorservice types
-  //------------------------------------------ get vendorservice types
-  //------------------------------------------ get vendorservice types
-  //------------------------------------------ get vendorservice types
-  async vendorTypeData(): Promise<IServiceType[] | null> {
-    
-    const result = await this._ServiceTypeModel.find()
-    return result
+ 
+
+
+
+    //========================================================
+    async rejectVendor(_id: string): Promise<boolean> {
+    const update = await this._vendorModel.findByIdAndUpdate(
+    _id,
+    { $set: { isVerified: "rejected" } },
+    { new: true } 
+  ).lean();
+
+  return !!update;
+}
+
+
+
+async verifyVendor(_id: string): Promise<boolean> {
+  const update = await this._vendorModel.findByIdAndUpdate(
+    _id,
+    { $set: { isVerified: "verified" } },
+    { new: true } 
+  ).lean();
+
+  return !!update;
+}
+
+
+
+
+
+
+  async blockVendor(_id: string): Promise<boolean> {
+  const updated = await this._vendorModel
+  .findByIdAndUpdate(_id, [{ $set: { isActive: { $not: "$isActive" } } }], {
+    new: true,
+  })
+  .lean();
+  return !!updated;
+}
+
+
+
+
+
+
+
+async getVendorData(): Promise<IVendor[] | []> {
+  const result = await this._vendorModel.find().lean();
+  if (result) {
+    return result;
+  } else {
+    return [];
+  }
+}
+
+
+
+ async getVendorsData(): Promise<IVendor[] | null> {
+    const vendorData = await this._vendorModel.find({isActive:true}).lean();
+    return vendorData;
   }
 
-  //------------------------------------------ get staff data
-  //------------------------------------------ get staff data
-  //------------------------------------------ get staff data
-  //------------------------------------------ get staff data
-  //------------------------------------------ get staff data
-  async  getStaffData(shopId: string): Promise<IStaff[] | []> {
-      const result = await this._Staff.find({shopId}).lean()
-      return result
-    }
 
 
-
-  //------------------------------------------ get vendor service data
-  //------------------------------------------ get vendor service data
-  //------------------------------------------ get vendor service data
-  //------------------------------------------ get vendor service data
-  //------------------------------------------ get vendor service data
-    async getServiceData(shopId: string): Promise<IService[] | []> {
-      const result = await this._Service.find({shopId}).lean()
+   async getEachVendorData(_id: string): Promise<IVendor | null> {
+      const result = await this._vendorModel.findById(_id).populate('shopType')
       return result
     }
 

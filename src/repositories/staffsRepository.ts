@@ -1,5 +1,4 @@
-import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
-import { IStaffRepositoryInterface } from "../interface/repositoryInterface/vendorRepoInterface";
+import { IStaffRepositoryInterface } from "../interface/staff-interface/staff-repository-interface";
 import staffModel from "../models/staffModel";
 import { IStaff } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
@@ -67,9 +66,14 @@ export class StaffRepository
   async editStaff(shopId: string,_id:string, data: IStaff): Promise<boolean | void> {
 
     const result = await this._StaffModel.findOneAndUpdate({_id},{$set:data},{new:true})
-    console.log("------",result);
     return !!result
     
 
   }
+
+
+   async  getStaffData(shopId: string): Promise<IStaff[] | []> {
+      const result = await this._StaffModel.find({shopId}).lean()
+      return result
+    }
 }

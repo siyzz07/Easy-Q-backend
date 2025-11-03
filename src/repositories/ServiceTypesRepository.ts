@@ -1,6 +1,7 @@
 // in this repo is for the services types that have given by amdin in each vendor and its for the types of the shop like what type of service they provide
 
-import { IServiceTypesRepositoryInterface } from "../interface/repositoryInterface/adminRepoInterface";
+
+import { IServiceTypesRepositoryInterface } from "../interface/service-types-interface/service-type-repository-interface";
 import ServiceTypesModel from "../models/ServiceTypesModel";
 import { IServiceType } from "../types/adminTypes";
 import BaseRepository from "./baseRepository";
@@ -51,5 +52,11 @@ export class ServiceTypes
     } else {
       return false;
     }
+  }
+
+   async vendorTypeData(): Promise<IServiceType[] | null> {
+    
+    const result = await this._ServiceTypeModel.find()
+    return result
   }
 }

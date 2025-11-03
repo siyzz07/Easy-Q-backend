@@ -1,4 +1,4 @@
-import { IServiceRepositoryInterface } from "../interface/repositoryInterface/vendorRepoInterface";
+import { IServiceRepositoryInterface } from "../interface/service-interface/service-repository-interface";
 import Service from "../models/Service";
 import { IService } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
@@ -38,4 +38,19 @@ export class ServiceRepository
       return false;
     }
   }
+
+
+
+  //===================================================
+  async getEachvendorServices(_shopId: string): Promise<IService[] | []> {
+        const result = await this._ServiceModel.find({shopId:_shopId})
+        return result
+    }
+
+
+     async getServiceData(shopId: string): Promise<IService[] | []> {
+      const result = await this._ServiceModel.find({shopId}).lean()
+      return result
+    }
+
 }

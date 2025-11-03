@@ -1,9 +1,7 @@
 import { log } from "console";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IAdminRepo } from "../../interface/repositoryInterface/adminRepoInterface";
-import { ICustomerRepo } from "../../interface/repositoryInterface/customerInterface";
-import { IVendorRepo } from "../../interface/repositoryInterface/vendorRepoInterface";
+
 import { AuthServiceInterface } from "../../interface/auth-interface/auth-serivce-interface";
 import { IAdmin } from "../../types/adminTypes";
 import { IJwtPayload, ILogin } from "../../types/common-types";
@@ -20,6 +18,9 @@ import Jwt, {
   JwtPayload,
   TokenExpiredError,
 } from "jsonwebtoken";
+import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
+import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
+import { IAdminRepo } from "../../interface/admin-interface/admin-repository-interface";
 
 export class AuthService implements AuthServiceInterface {
   private _vendorRepository: IVendorRepo;
@@ -429,77 +430,68 @@ export class AuthService implements AuthServiceInterface {
    *  updata access token
    *
    */
- updateAccessToken = async (
-  token: any,
-  role: string
-): Promise<string> => {
-  let refreshToken: string | undefined;
-  let entity: string;
+  updateAccessToken = async (token: any, role: string): Promise<string> => {
+    let refreshToken: string | undefined;
+    let entity: string;
 
-  
-  switch (role.toLowerCase()) {
-    case "customer":
-      refreshToken = token?.CustomerJwt;
-      entity = "Customer";
-      break;
+    switch (role.toLowerCase()) {
+      case "customer":
+        refreshToken = token?.CustomerJwt;
+        entity = "Customer";
+        break;
 
-    case "vendor":
-      refreshToken = token?.VendorJwt;
-      entity = "Vendor";
-      break;
+      case "vendor":
+        refreshToken = token?.VendorJwt;
+        entity = "Vendor";
+        break;
 
-    case "admin":
-      refreshToken = token?.AdminJwt;
-      entity = "Admin";
-      break;
+      case "admin":
+        refreshToken = token?.AdminJwt;
+        entity = "Admin";
+        break;
 
-    default:
+      default:
+        throw new ErrorResponse(
+          MessageEnum.ROLE_NOT_FOUND,
+          StatusCodeEnum.BAD_REQUEST
+        );
+    }
+
+    if (!refreshToken) {
+      logger.warning("Refresh token missing");
       throw new ErrorResponse(
-        MessageEnum.ROLE_NOT_FOUND,
+        MessageEnum.REFRESH_TOKEN_MISSING,
         StatusCodeEnum.BAD_REQUEST
       );
-  }
+    }
 
- 
-  if (!refreshToken) {
-    logger.warning("Refresh token missing");
-    throw new ErrorResponse(
-      MessageEnum.REFRESH_TOKEN_MISSING,
-      StatusCodeEnum.BAD_REQUEST
-    );
-  }
+    let decoded: JwtPayload;
+    try {
+      decoded = Jwt.verify(
+        refreshToken,
+        process.env.JWT_REFRESH_TOKEN_KEY!
+      ) as JwtPayload;
+    } catch (error: any) {
+      logger.error(`Token verification failed: ${error.message}`);
+      throw new ErrorResponse(
+        MessageEnum.TOKEN_INVALID,
+        StatusCodeEnum.UNAUTHORIZED
+      );
+    }
 
-  
-  let decoded: JwtPayload;
-  try {
-    decoded = Jwt.verify(
-      refreshToken,
-      process.env.JWT_REFRESH_TOKEN_KEY!
-    ) as JwtPayload;
-  } catch (error: any) {
-    logger.error(`Token verification failed: ${error.message}`);
-    throw new ErrorResponse(
-      MessageEnum.TOKEN_INVALID,
-      StatusCodeEnum.UNAUTHORIZED
-    );
-  }
+    if (!decoded?.userId) {
+      throw new ErrorResponse(
+        MessageEnum.TOKEN_INVALID,
+        StatusCodeEnum.UNAUTHORIZED
+      );
+    }
 
- 
-  if (!decoded?.userId) {
-    throw new ErrorResponse(
-      MessageEnum.TOKEN_INVALID,
-      StatusCodeEnum.UNAUTHORIZED
-    );
-  }
+    const payload: IJwtPayload = {
+      userId: decoded.userId,
+      role: entity,
+    };
 
-  
-  const payload: IJwtPayload = {
-    userId: decoded.userId,
-    role: entity,
+    const newAccessToken = accessToken(payload);
+    return newAccessToken;
   };
-
-  const newAccessToken = accessToken(payload);
-  return newAccessToken;
-};
-
 }

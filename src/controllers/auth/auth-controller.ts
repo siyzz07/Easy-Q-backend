@@ -1,23 +1,3 @@
-// -----vendor
-// login✅
-// signup✅
-// reset password✅
-// refresh token✅
-// logout✅
-// -----customer
-// login✅
-// signup✅
-// resetPassword✅
-// logout✅
-// refresh tokenk✅
-// -----admin
-// login✅
-// logout✅
-// refresh token✅
-
-
-
-
 
 import { NextFunction, Request, response, Response } from "express";
 import { AuthServiceInterface } from "../../interface/auth-interface/auth-serivce-interface";

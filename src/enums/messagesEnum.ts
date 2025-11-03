@@ -60,6 +60,7 @@ export enum MessageEnum {
   VENDOR_REGISTERED = "Vendor registered successfully",
   VENDOR_BLOCKED = "Vendor blocked by admin",
   VENDOR_DATA_UPDATION_SUCCESS ='Vendor data updated successfully',
+  VENDOR_DATA_UPDATION_FAILED ='Failed to update vendor data ',
   LOGIN_SUCCESS = "Vendor logged in successfully",
   UNAUTHORIZED = "You are not authorized to perform this action",
   PLAN_EXPIRED = "Vendor plan has expired",

@@ -1,5 +1,5 @@
 
-import { ICustomerAddressRepositoryInterface } from "../interface/repositoryInterface/customerInterface";
+import { ICustomerAddressRepositoryInterface } from "../interface/address-interface/address-repository-interface";
 import addressModel from "../models/addressModel";
 import { IAddress, ICustomerAddress } from "../types/customerType";
 import BaseRepository from "./baseRepository";

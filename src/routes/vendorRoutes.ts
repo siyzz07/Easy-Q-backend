@@ -1,9 +1,8 @@
 import express from "express";
-import { staffControllerInstance, vendorAuthControllerInstance, vendorServiceControllerInstance, vendorShopControllerInstance } from "../di/vendorDi";
+import { staffControllerInstance, vendorServiceControllerInstance, vendorControllerInstance } from "../di/vendorDi";
 import { emailVerifyTokenMIddleware } from "../middlewares/emailTokenVerify";
 import { verifyToken } from "../middlewares/authTokenVerify";
 import { vendorBlockAuth } from "../middlewares/vendorBlockAuth";
-import { VendorServiceController } from "../controllers/vendorController/serviceController";
 import { authControllerInstance } from "../di/authDi";
 
 
@@ -25,17 +24,24 @@ vendorRoute.post('/logout',verifyToken,authControllerInstance.logout)
 
 
 
+
+
+//----------------------------------------------  vendor
+vendorRoute.get('/shop-type',verifyToken,vendorBlockAuth,vendorControllerInstance.getShopServiceType)
+vendorRoute.get('/shop-data',verifyToken,vendorBlockAuth,vendorControllerInstance.getShopData)
+vendorRoute.post('/shop-data',verifyToken,vendorBlockAuth,vendorControllerInstance.addShopData)
+vendorRoute.put('/shop/edit-shop',verifyToken,vendorBlockAuth,vendorControllerInstance.updateVendor)
+
+
 //---------------------------------------------- dashboard
-vendorRoute.get('/dashboard/data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.vendorDashboard)
-vendorRoute.post('/shop-data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.addShopData)
-vendorRoute.get('/shop-data',verifyToken,vendorBlockAuth,vendorShopControllerInstance.getShopData)
-vendorRoute.get('/shop-type',verifyToken,vendorBlockAuth,vendorShopControllerInstance.getShopServiceType)
+vendorRoute.get('/dashboard/data',verifyToken,vendorBlockAuth,vendorControllerInstance.vendorDashboard)
 
 
 //---------------------------------------------- staff Routes
 vendorRoute.post('/staff/add-staff',verifyToken,vendorBlockAuth,staffControllerInstance.addStaff)
 vendorRoute.get('/staff',verifyToken,vendorBlockAuth,staffControllerInstance.getStaffsController)
 vendorRoute.put('/staff/edit-staff',verifyToken,vendorBlockAuth,staffControllerInstance.editStaff)
+vendorRoute.post('/staff/block-dates',verifyToken,vendorBlockAuth,staffControllerInstance.staffBlockedDate)
 
 //---------------------------------------------- service Routes
 vendorRoute.post('/service/add-service',verifyToken,vendorBlockAuth,vendorServiceControllerInstance.addNewService)
