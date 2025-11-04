@@ -1,6 +1,6 @@
 import { IServiceRepositoryInterface } from "../interface/service-interface/service-repository-interface";
 import Service from "../models/Service";
-import { IService } from "../types/vendorType";
+import { IService, IServiceData } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
 export class ServiceRepository
@@ -38,15 +38,22 @@ export class ServiceRepository
       return false;
     }
   }
-
+ //-------------------------------------------------------- get selected service
+ getSelectedService(_id: string): Promise<IService> {
+   let result = this.findById(_id)
+   return result
+ }
 
 
   //===================================================
-  async getEachvendorServices(_shopId: string): Promise<IService[] | []> {
-        const result = await this._ServiceModel.find({shopId:_shopId}).populate('availableStaff')
-        return result
-    }
+ async getEachvendorServices(_shopId: string): Promise<IServiceData[]> {
+  const result = await this._ServiceModel
+    .find({ shopId: _shopId })
+    .populate('availableStaff')
+    .lean();
 
+  return result as unknown as IServiceData[];
+}
 
      async getServiceData(shopId: string): Promise<IService[] | []> {
       const result = await this._ServiceModel.find({shopId}).lean()

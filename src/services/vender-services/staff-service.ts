@@ -33,7 +33,6 @@ export class StaffService implements IStaffServiceInterface {
       closingTime,
       breaks,
       isActive: true,
-      bookingTimes:openingTime,
       blockedDates:[],
     };
 

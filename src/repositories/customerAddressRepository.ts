@@ -1,4 +1,5 @@
 
+import { query } from "winston";
 import { ICustomerAddressRepositoryInterface } from "../interface/address-interface/address-repository-interface";
 import addressModel from "../models/addressModel";
 import { IAddress, ICustomerAddress } from "../types/customerType";
@@ -108,4 +109,17 @@ export class CustomerAddresRepository
 
   return updated !== null;
 }
+
+//-----------------------------------------------------------------get selected address
+async getSelectedAddress(customerId: string, addressId: string): Promise<IAddress> {
+  
+  let query = {
+  customerId: customerId,};
+
+  let result = await this.findOneByCondiition(query)
+  return result
+
+}
+
+
 }

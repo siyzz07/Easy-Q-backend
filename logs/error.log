@@ -77,3 +77,4 @@
 [2025-11-03 22:15:15] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
 [2025-11-03 22:15:39] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
 [2025-11-03 22:30:19] ERROR: Customer not found - POST /api/customer/auth/login
+[2025-11-04 10:15:27] ERROR: Address already exists - POST /api/customer/profile/add-address

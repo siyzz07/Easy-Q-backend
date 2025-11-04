@@ -119,6 +119,7 @@ export enum MessageEnum {
   // --------------------------------------------------------------------------service by admin
   SERVICE_ADD_SUCCESS = "Service added successfully.",
   SERVICE_FETCH_SUCCESS = "Service fetch successfully.",
+  SERVICE_FETCH_FAILED = "Failde to fetch service.",
   SERVICE_EDIT_SUCCESS = "Service edited successfully.",
   SERVICE_ADD_FAILD = "Failed to add service. Please try again.",
   SERVICE_ALREADY_EXIST = "Service already exists.",
@@ -141,6 +142,10 @@ export enum MessageEnum {
   VENDOR_SERVICE_ADD_FAILD = "Failed to add service. Please try again.",
   VENDOR_SERVICE_ALREADY_EXIST = "Service already exists.",
   VENDOR_SERVICE_EDIT_SUCCESS = "Service edited successfully.",
+
+    // --------------------------------------------------------------------------Booking
+  BOOKING_CREATED_SUCCESS = "Booking created successfully.",
+  BOOKING_CREATION_FAILED = "Failed to create booking.",
  
 }
 

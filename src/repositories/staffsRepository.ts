@@ -1,3 +1,4 @@
+import { UpdateQuery } from "mongoose";
 import { IStaffRepositoryInterface } from "../interface/staff-interface/staff-repository-interface";
 import staffModel from "../models/staffModel";
 import { IStaff } from "../types/vendorType";
@@ -64,13 +65,30 @@ export class StaffRepository
 }
   //-----------------------------------------------------edit Staff
   async editStaff(shopId: string,_id:string, data: IStaff): Promise<boolean | void> {
-
+    
     const result = await this._StaffModel.findOneAndUpdate({_id},{$set:data},{new:true})
     return !!result
     
+    
+  }
+  //-----------------------------------------------------edit Staff
+   async getStaffById(id: string): Promise<IStaff> {
+
+    const result = await this.findById(id)
+    return result
+
 
   }
 
+
+
+
+   async updateStaff(id: string, data: UpdateQuery<IStaff>): Promise<IStaff | null> {
+    
+    let result = await this.update(id,data)
+    return result
+  }
+  
 
    async  getStaffData(shopId: string): Promise<IStaff[] | []> {
       const result = await this._StaffModel.find({shopId}).lean()

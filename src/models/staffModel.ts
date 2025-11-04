@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IStaff } from "../types/vendorType";
 
 const staffSchema = new Schema<IStaff>(
@@ -14,28 +14,25 @@ const staffSchema = new Schema<IStaff>(
     },
     openingTime: {
       type: String,
+      required: true,
     },
-
     closingTime: {
       type: String,
     },
-
     breaks: [
       {
-        breakStartTime: {
-          type: String,
-        },
-        breakEndTime: {
-          type: String,
-        },
+        breakStartTime: String,
+        breakEndTime: String,
       },
     ],
     isActive: {
       type: Boolean,
+      default: true,
     },
-
     bookingTimes: {
-      type: String,
+      type: Map,
+      of: [String],
+      default: {},
     },
 
     blockedDates: {

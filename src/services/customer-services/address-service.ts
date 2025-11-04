@@ -4,6 +4,7 @@ import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { ICustomerAddressRepositoryInterface } from "../../interface/address-interface/address-repository-interface";
 import { ICustomerAddressServiceInterface } from "../../interface/address-interface/address-service-interface";
+import logger from "../../utils/logger";
 
 export class CustomerAddressService
   implements ICustomerAddressServiceInterface
@@ -131,5 +132,34 @@ export class CustomerAddressService
         }
       }
     }
+  };
+
+  //--------------------------------------------------------------get Each address
+  getEachAddress = async (
+    customerId: string,
+    addressId: string
+  ): Promise<IAddress | void> => {
+    let result = await this._addressRepository.getAllAddress(customerId);
+
+    if (!result) {
+      logger.error("error to fetch selected address");
+      throw new ErrorResponse(
+        MessageEnum.ADDRESS_NOT_FOUND,
+        StatusCodeEnum.NOT_FOUND
+      );
+    }
+    const address = result?.address?.find(
+      (addr: IAddress) => addr._id?.toString() === addressId
+      
+    );
+
+    if(!address){
+      logger.error("error to fetch selected address");
+      throw new ErrorResponse(
+        MessageEnum.ADDRESS_NOT_FOUND,
+        StatusCodeEnum.NOT_FOUND
+      );
+    }
+    return address
   };
 }

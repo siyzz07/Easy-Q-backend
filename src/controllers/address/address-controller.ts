@@ -11,7 +11,11 @@ export class CustomerAddressContorller {
   }
 
   //---------------------------------------------------------------------get all address
-  getAddress = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+  getAddress = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
       const custoemrId = req.body.userId;
       const response = await this._addressService.getAddress(custoemrId);
@@ -20,12 +24,16 @@ export class CustomerAddressContorller {
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.ADDRESS_FETCH_SUCCESS, data: response });
     } catch (error: unknown) {
-      next(error)
+      next(error);
     }
   };
 
   //---------------------------------------------------------------------add address
-  addNewAddresss = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+  addNewAddresss = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
       await this._addressService.addAddress(req.body);
 
@@ -33,12 +41,16 @@ export class CustomerAddressContorller {
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.ADDRESS_ADDED_SUCCESS });
     } catch (error: unknown) {
-      next(error)
+      next(error);
     }
   };
 
   //---------------------------------------------------------------------delete address
-  deleteAddress = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+  deleteAddress = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
       const response = await this._addressService.deletCustomerAddress(
         req.body.userId,
@@ -50,12 +62,16 @@ export class CustomerAddressContorller {
           .json({ message: MessageEnum.ADDRESS_DELETED_SUCCESS });
       }
     } catch (error: unknown) {
-     next(error)
+      next(error);
     }
   };
 
-  //---------------------------------------------------------------------delete address
-  editAddress = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+  //---------------------------------------------------------------------edit  address
+  editAddress = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
       const result = await this._addressService.editCustomerAddress(req.body);
 
@@ -65,7 +81,28 @@ export class CustomerAddressContorller {
           .json({ message: MessageEnum.ADDRESS_EDIT_SUCCESS });
       }
     } catch (error: unknown) {
-      next(error)
+      next(error);
+    }
+  };
+  //--------------------------------------------------------------------- get each data
+  eachAddressData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      let { _id } = req.query;
+
+      let result = await this._addressService.getEachAddress(
+        req.body.userId,
+        _id as string
+      );
+
+      res
+        .status(StatusCodeEnum.OK)
+        .json({ message: MessageEnum.ADDRESS_FETCH_SUCCESS, data: result });
+    } catch (error: unknown) {
+      next(error);
     }
   };
 }

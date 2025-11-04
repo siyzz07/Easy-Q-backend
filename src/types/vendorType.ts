@@ -81,9 +81,22 @@ export interface IService {
   duration:string;
   price:string
   isActive:boolean;
-  availableStaff:mongoose.Types.ObjectId[]
+  availableStaff:mongoose.Types.ObjectId[] 
 }
 
+
+export interface IServiceData {
+  _id?:string;
+  userId?:string
+  shopId:mongoose.Types.ObjectId;
+  image:string;
+  serviceName:string;
+  description:string;
+  duration:string;
+  price:string
+  isActive:boolean;
+  availableStaff:IStaff[]|[]
+}
 
 
 export interface IReview extends Document {

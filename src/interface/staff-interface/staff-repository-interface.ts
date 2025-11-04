@@ -1,4 +1,5 @@
 
+import { UpdateQuery } from "mongoose";
 import { IStaff} from "../../types/vendorType";
 
 
@@ -9,7 +10,8 @@ export interface IStaffRepositoryInterface {
     getSingleStaff(shopId:string,staffName?:string,staffId?:string):Promise<IStaff|null>
     editStaff(shopId:string,_id:string,data:any):Promise <boolean|void>
     duplicateStaffFind(shopId:string,staffName:string,staffId?:string):Promise <IStaff[]|[]>
-  
+    getStaffById(id:string):Promise<IStaff>
+    updateStaff(id: string, data: UpdateQuery<IStaff>): Promise<IStaff | null>
 
 
     //=========================================================

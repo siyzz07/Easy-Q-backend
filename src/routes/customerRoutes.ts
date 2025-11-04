@@ -1,11 +1,12 @@
 import express from 'express'
 
-import { AddressControllerInstance, customerControllerInstance } from '../di/customerDi'
+import { AddressControllerInstance, BookingControllerInstance, customerControllerInstance } from '../di/customerDi'
 import { emailVerifyTokenMIddleware } from '../middlewares/emailTokenVerify'
 import { verifyToken } from '../middlewares/authTokenVerify'
 import { customerBlockAuth } from '../middlewares/customerBlockAuth'
 import { authControllerInstance } from '../di/authDi'
 import { vendorControllerInstance, vendorServiceControllerInstance } from '../di/vendorDi'
+import { BookingController } from '../controllers/booking/booking-controller'
 
 
 const customerRoute = express.Router()
@@ -38,6 +39,7 @@ customerRoute.get('/shop-data/:id',verifyToken,customerBlockAuth,vendorControlle
  * 
  */
 customerRoute.get('/shop-data/services/:shopId',verifyToken,customerBlockAuth,vendorServiceControllerInstance.getShopServices)
+customerRoute.get('/service/get-service',verifyToken,customerBlockAuth,vendorServiceControllerInstance.getSelectedService)
 
 /**
  * 
@@ -57,7 +59,15 @@ customerRoute.get('/profile/get-address',verifyToken,customerBlockAuth,AddressCo
 customerRoute.post('/profile/delete-address',verifyToken,customerBlockAuth,AddressControllerInstance.deleteAddress)
 customerRoute.post('/profile/edit-address',verifyToken,customerBlockAuth,AddressControllerInstance.editAddress)
 customerRoute.post('/profile/add-address',verifyToken,customerBlockAuth,AddressControllerInstance.addNewAddresss)
+customerRoute.get('/profile/get-each-address',verifyToken,customerBlockAuth,AddressControllerInstance.eachAddressData)
 
+/**
+ * 
+ *  booking
+ * 
+ */
+customerRoute.post('/booking/add-booking',verifyToken,customerBlockAuth,BookingControllerInstance.addNewBooking)
+// customerRoute.get('/booking/get-checkout-data',verifyToken,customerBlockAuth,BookingController.g)
 
 
 
