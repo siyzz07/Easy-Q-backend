@@ -62,7 +62,7 @@ export class VendorServiceService implements IServiceInterface {
 
   //-------------------------------------DD
   getEachVendorServices = async (data: string): Promise<IService[] | []> => {
-    const result = await this._ServiceRpository.getEachvendorServices(data);
+    const result = await this._ServiceRpository.getEachvendorServices(data)
     return result;
   };
 }

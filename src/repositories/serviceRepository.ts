@@ -43,7 +43,7 @@ export class ServiceRepository
 
   //===================================================
   async getEachvendorServices(_shopId: string): Promise<IService[] | []> {
-        const result = await this._ServiceModel.find({shopId:_shopId})
+        const result = await this._ServiceModel.find({shopId:_shopId}).populate('availableStaff')
         return result
     }
 
