@@ -1,3 +1,6 @@
+import mongoose, { ObjectId } from "mongoose";
+import { Schema, Document, Types } from "mongoose";
+
 interface IZone {
   lat: string;
   lon: string;
@@ -5,24 +8,29 @@ interface IZone {
 
 export interface IVendor {
   shopName?: string;
+  proofImage?:string;
+  // userId?:string;
   email?: string;
   phone?: string;
   password?: string;
   country?: string;
   state?: string;
   city?: string;
-  type?: string;
+  shopType?: string;
   openAt?: string;
   closeAt?: string;
-  workingDays?: string;
+  workingDays?: string[];
   cordinates?: IZone;
-  profileImage?: string;
+  ProfileImage?: string;
   images?: string[];
   isActive?: boolean;
   planExpreData?: Date;
   createAt?: Date;
   updatedAt?: Date;
-  hasShop?:boolean
+  hasShop?: boolean;
+  isVerified?:"pending" | "verified" | "rejected"; 
+  role?:string
+  
 }
 
 export interface IShopData {
@@ -32,7 +40,69 @@ export interface IShopData {
   openAt: any;
   closeAt: any;
   profileImage: any;
-  workingDays: string;
- 
+  workingDays: string[]|string;
 }
 
+
+interface IBreakTime{
+  breakStartTime:string;
+  breakEndTime:string
+}
+
+
+export interface IStaff {
+  _id?: string;
+  shopId: ObjectId |string;
+  staffName: string;
+  openingTime: string;
+  closingTime: string;
+  breaks:IBreakTime[]
+  isActive?: boolean;
+  blockedDates?: [];
+  userId?:string;
+  bookingTimes?:string
+}
+
+export interface IStaffAdd{
+  staffName:string;
+  openingTime:string;
+  closingTime:string;
+  breaks:IBreakTime[]
+}
+
+
+export interface IService {
+  _id?:string;
+  userId?:string
+  shopId:mongoose.Types.ObjectId;
+  image:string;
+  serviceName:string;
+  description:string;
+  duration:string;
+  price:string
+  isActive:boolean;
+  availableStaff:mongoose.Types.ObjectId[] 
+}
+
+
+export interface IServiceData {
+  _id?:string;
+  userId?:string
+  shopId:mongoose.Types.ObjectId;
+  image:string;
+  serviceName:string;
+  description:string;
+  duration:string;
+  price:string
+  isActive:boolean;
+  availableStaff:IStaff[]|[]
+}
+
+
+export interface IReview extends Document {
+  customerId: Types.ObjectId;
+  vendorId: Types.ObjectId;
+  rating: string;
+  createdAt?: Date;
+  comment:string
+}

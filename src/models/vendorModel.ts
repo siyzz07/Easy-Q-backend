@@ -1,7 +1,7 @@
-import { model, Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 import { IVendor } from "../types/vendorType";
 
-const vendorShecma = new Schema<IVendor>(
+const vendorSchema = new Schema<IVendor>(
   {
     shopName: {
       type: String,
@@ -13,11 +13,15 @@ const vendorShecma = new Schema<IVendor>(
     phone: {
       type: String,
     },
+    proofImage:{
+          type: String,
+    },
     password: {
       type: String,
     },
-    type: {
-      type: String,
+    shopType: {
+      type: mongoose.Types.ObjectId,
+      ref:'ServiceTypes'
     },
     openAt: {
       type: String,
@@ -32,13 +36,16 @@ const vendorShecma = new Schema<IVendor>(
       type:String
     },
     workingDays: {
-      type: String,
+      type:[String],
+      default:[]
+
     },
-    profileImage: {
+    ProfileImage: {
       type: String,
     },
     isActive: {
       type: Boolean,
+      default:true
     },
     images: {
       type: [String],
@@ -54,8 +61,13 @@ const vendorShecma = new Schema<IVendor>(
     planExpreData: {
       type: Date,
     },
+    isVerified:{
+      type: String,
+      enum: ["pending", "verified", "rejected"],
+      default: "pending",  
+    }
   },
   { timestamps: true }
 );
 
-export default model<IVendor>("Vendor", vendorShecma);
+export default model<IVendor>("Vendor", vendorSchema);

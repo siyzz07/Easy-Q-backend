@@ -1,17 +1,18 @@
 import express from 'express'
 import customerRoute from './routes/customerRoutes'
 import cors from 'cors'
-import { log } from 'node:console'
+import morgan from "morgan";
+import logger from "./utils/logger";
 import vendorRoute from './routes/vendorRoutes'
 import cookieParser from "cookie-parser";
-import multer from "multer";
 import adminRoute from './routes/adminRoutes'
+import { errorHandler } from './middlewares/errorHandler';
+import { ErrorResponse } from './utils/errorResponse';
 
 const app = express()
 
 
 app.use(express.json())
-const upload = multer({ storage: multer.memoryStorage() });
 app.use(cookieParser());
 
 app.use(cors({
@@ -23,12 +24,22 @@ app.use(cors({
 
 
 
+app.use(
+  morgan("tiny", {
+    stream: {
+      write: (message) => logger.info(message.trim()),
+    },
+  })
+);
+
+
 
 
 app.use('/api/customer',customerRoute)
 app.use('/api/vendor',vendorRoute)
 app.use('/api/admin',adminRoute)
 
+app.use(errorHandler)
 
 
 export default app

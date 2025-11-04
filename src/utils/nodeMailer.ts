@@ -18,40 +18,6 @@ const transporter = nodemailer.createTransport({
 
 
 
-// export const sendEmail = async (to: string, subject: string, otp?: string) => {
-//   try {
- 
-//     const htmlContent = `
-//       <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.5;">
-//         <header style="background-color: #007bff; padding: 10px; color: #fff; text-align: center;">
-//           <h2>EasyQ</h2>
-//         </header>
-
-//         <main style="padding: 20px;">
-//           <h3>${subject}</h3>
-//           ${otp ? `<p>Your OTP code is:</p><h2 style="color: #007bff;">${otp}</h2>` : ""}
-//           <p>This is an automated email, please do not reply.</p>
-//         </main>
-
-//         <footer style="background-color: #f1f1f1; padding: 10px; text-align: center; font-size: 12px; color: #666;">
-//           &copy; ${new Date().getFullYear()} EasyQ. All rights reserved.
-//         </footer>
-//       </div>
-//     `;
-
-//     const info = await transporter.sendMail({
-//       from: `"EasyQ OTP" <${process.env.EMAIL_USER}>`,
-//       to,
-//       subject,
-//       html: htmlContent,
-//     });
-
-     
-//   } catch (error) {
-//     console.error("Error sending email:", error);
-//     throw error;
-//   }
-// };
 
 export const sendEmail = async (to: string, verifyUrl: string) => {
   try {

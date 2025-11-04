@@ -1,41 +1,39 @@
-import { IAdminRepo } from "../interface/repositoryInterface/adminRepoInterface";
-import { IBaseRepositoryInterface } from "../interface/repositoryInterface/baseInterface";
+
+import { IAdminRepo } from "../interface/admin-interface/admin-repository-interface";
 import adminModel from "../models/adminModel";
+import customerModel from "../models/customerModel";
+import vendorModel from "../models/vendorModel";
 import { IAdmin } from "../types/adminTypes";
+import { ICustomer } from "../types/customerType";
+import { IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
+export class AdminRepository extends BaseRepository<any> implements IAdminRepo {
+  private _adminModel = adminModel;
+  private _CustomerModel = customerModel;
+  private _VendorModel = vendorModel;
 
-export class AdminRepository extends BaseRepository<any> implements IAdminRepo{
+  constructor() {
+    super(adminModel);
+  }
 
-   private _adminModel = adminModel
+  //------------------------------------------------------- chech the admin exist or not
+  async checkAdminExist(email: string): Promise<boolean> {
+    const admin = await this.findByEmail(email);
+    
+    return !!admin;
+  }
+  
+  //------------------------------------------------------- take amin data
+  async adminDataByEmail(email: string): Promise<IAdmin> {
+    const adminData = await this.findByEmail(email);
 
-   constructor(){
-      super(adminModel)
-   }
+    return adminData;
+  }
 
-
-    async  checkAdminExist(email: string): Promise<boolean> {
-        
-     const admin = await this.findByEmail(email)
-
-     return !!admin
-
-   }
-
-
-   async adminDataByEmail(email: string): Promise<IAdmin> {
-
-       const adminData = await this.findByEmail(email)
-      
-       return adminData
-
-   }
-
-   async addAdmin(data:IAdmin):Promise<void>{
-
-     let add = await this.create(data)
-
-   }
+  async addAdmin(data: IAdmin): Promise<void> {
+     await this.create(data);
+  }
 
 
 }

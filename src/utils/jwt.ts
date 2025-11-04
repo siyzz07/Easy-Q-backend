@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { IJwtPayload } from "../types/common-types";
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 const JWT_ACCESS_TOKEN:string|undefined = process.env.JWT_ACCESS_TOKEN_KEY
@@ -29,12 +30,12 @@ export const generateJwtToken = (payload: object) => {
 
 
 
-export const accessToken = (userId:string) =>{
-  return jwt.sign({userId},JWT_ACCESS_TOKEN,{expiresIn:"15m"})
+export const accessToken = (payload:IJwtPayload) =>{
+  return jwt.sign(payload,JWT_ACCESS_TOKEN,{expiresIn:"1m"})
 }
 
 
 
-export const refreshToken = (userId:string) =>{
-  return jwt.sign({userId},JWT_REFRESH_TOKEN,{expiresIn:"7d"})
+export const refreshToken = (payload:IJwtPayload) =>{
+  return jwt.sign(payload,JWT_REFRESH_TOKEN,{expiresIn:"7d"})
 }

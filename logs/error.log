@@ -1,0 +1,80 @@
+[2025-10-29 12:17:00] ERROR: User not found. - POST /api/admin/auth/login
+[2025-10-29 12:17:31] ERROR: User not found. - POST /api/admin/auth/login
+[2025-10-29 12:23:17] ERROR: Incorrect password. - POST /api/admin/auth/login
+[2025-10-29 12:33:51] ERROR: Address already exists - POST /api/customer/profile/add-address
+[2025-10-29 15:41:30] ERROR: User not found. - POST /api/admin/auth/login
+[2025-10-31 16:12:07] ERROR: Customer already exists - POST /api/customer/auth/signup
+[2025-10-31 16:17:39] ERROR: Entity role not found
+[2025-10-31 16:18:16] ERROR: Entity role not found
+[2025-10-31 16:20:34] ERROR: Vendor already exists - POST /api/vendor/auth/verify-email
+[2025-10-31 16:21:17] ERROR: Vendor already exists - POST /api/vendor/auth/verify-email
+[2025-10-31 16:21:59] ERROR: Vendor already exists - POST /api/vendor/auth/verify-email
+[2025-10-31 17:33:47] ERROR: E11000 duplicate key error collection: easy-Q.customers index: email_1 dup key: { email: "shibinsiyad.kdpm@gmail.com" } - POST /api/customer/auth/verify-email
+[2025-10-31 17:35:50] ERROR: E11000 duplicate key error collection: easy-Q.customers index: email_1 dup key: { email: "shibinsiyad.kdpm@gmail.com" } - POST /api/customer/auth/verify-email
+[2025-10-31 19:03:08] ERROR: E11000 duplicate key error collection: easy-Q.customers index: email_1 dup key: { email: "shibinsiyad.kdpm@gmail.com" } - POST /api/customer/auth/verify-email
+[2025-10-31 19:06:39] ERROR: E11000 duplicate key error collection: easy-Q.customers index: email_1 dup key: { email: "shibinsiyad.kdpm@gmail.com" } - POST /api/customer/auth/verify-email
+[2025-10-31 19:09:57] ERROR: Customer already exists - POST /api/customer/auth/signup
+[2025-10-31 19:10:39] ERROR: E11000 duplicate key error collection: easy-Q.customers index: email_1 dup key: { email: "shibinsiyad.kdpm@gmail.com" } - POST /api/customer/auth/verify-email
+[2025-10-31 19:16:26] ERROR: E11000 duplicate key error collection: easy-Q.customers index: email_1 dup key: { email: "shibinsiyad.kdpm@gmail.com" } - POST /api/customer/auth/verify-email
+[2025-10-31 19:17:19] ERROR: Customer already exists - POST /api/customer/auth/signup
+[2025-10-31 19:22:20] ERROR: Vendor already exists - POST /api/vendor/auth/verify-email
+[2025-10-31 20:39:11] ERROR: Invalid email or password - POST /api/customer/auth/login
+[2025-10-31 20:39:58] ERROR: Customer not found - POST /api/customer/auth/login
+[2025-11-01 09:18:52] ERROR: Invalid email or password - POST /api/customer/auth/login
+[2025-11-01 09:18:59] ERROR: Customer not found - POST /api/customer/auth/login
+[2025-11-01 09:20:34] ERROR: Your account is under verification. Please wait for admin approval. - POST /api/vendor/auth/login
+[2025-11-01 09:22:54] ERROR: User not found. - POST /api/admin/auth/login
+[2025-11-01 09:24:35] ERROR: User not found. - POST /api/admin/auth/login
+[2025-11-01 09:25:11] ERROR: User not found. - POST /api/admin/auth/login
+[2025-11-01 09:27:33] ERROR: User not found. - POST /api/admin/auth/login
+[2025-11-01 09:28:48] ERROR: User not found. - POST /api/admin/auth/login
+[2025-11-01 09:29:58] ERROR: Admin not found. - POST /api/admin/auth/login
+[2025-11-01 09:30:22] ERROR: Incorrect password. - POST /api/admin/auth/login
+[2025-11-01 09:34:44] ERROR: Vendor not found - POST /api/vendor/auth/login
+[2025-11-01 09:34:48] ERROR: Your account is under verification. Please wait for admin approval. - POST /api/vendor/auth/login
+[2025-11-01 09:35:10] ERROR: Vendor not found - POST /api/vendor/auth/login
+[2025-11-01 10:22:41] ERROR: Customer not found - POST /api/customer/reset-password/verify
+[2025-11-01 10:23:19] ERROR: Customer not found - POST /api/customer/reset-password/verify
+[2025-11-01 10:24:02] ERROR: Customer not found - POST /api/customer/reset-password/verify
+[2025-11-01 10:29:27] ERROR: Entity role not found
+[2025-11-01 10:29:27] ERROR: error to send mail for send verify email
+[2025-11-01 10:35:37] ERROR: Entity role not found
+[2025-11-01 10:35:37] ERROR: error to send mail for send verify email
+[2025-11-01 10:36:31] ERROR: Vendor not found - POST /api/vendor/reset-password/verify
+[2025-11-01 10:37:10] ERROR: Vendor not found - POST /api/vendor/reset-password/verify
+[2025-11-01 11:50:31] ERROR: Customer not found - POST /api/customer/reset-password/verify
+[2025-11-01 11:51:21] ERROR: Invalid email or password - POST /api/customer/auth/login
+[2025-11-01 11:52:53] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-01 16:16:44] ERROR: Invalid email or password - POST /api/customer/auth/login
+[2025-11-01 16:58:54] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-01 20:02:34] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-02 16:48:27] ERROR: Admin not found. - POST /api/admin/auth/login
+[2025-11-02 16:48:58] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-02 22:32:05] ERROR: error to logout entity
+[2025-11-02 22:32:05] ERROR: Cannot read properties of undefined (reading 'role') - POST /api/admin/logout
+[2025-11-02 22:32:06] ERROR: error to logout entity
+[2025-11-02 22:32:06] ERROR: Cannot read properties of undefined (reading 'role') - POST /api/admin/logout
+[2025-11-02 22:32:14] ERROR: logger_1.default.warning is not a function - POST /api/admin/auth/refresh-token
+[2025-11-02 22:32:14] ERROR: logger_1.default.warning is not a function - POST /api/admin/auth/refresh-token
+[2025-11-03 10:11:00] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-03 10:20:59] ERROR: logger_1.default.warning is not a function - POST /api/customer/auth/refresh-token
+[2025-11-03 10:20:59] ERROR: logger_1.default.warning is not a function - POST /api/customer/auth/refresh-token
+[2025-11-03 11:13:06] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:32:16] ERROR: logger_1.default.warning is not a function - POST /api/vendor/auth/refresh-token
+[2025-11-03 14:36:57] ERROR: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-03 15:57:09] ERROR: Modifiers operate on fields but we found type array instead. For example: {$mod: {<field>: ...}} not {$set: [ null, null ]} - POST /api/vendor/staff/block-dates
+[2025-11-03 16:04:52] ERROR: Modifiers operate on fields but we found type array instead. For example: {$mod: {<field>: ...}} not {$set: [ null, null ]} - POST /api/vendor/staff/block-dates
+[2025-11-03 19:59:00] ERROR: Your account is under verification. Please wait for admin approval. - POST /api/vendor/auth/login
+[2025-11-03 19:59:27] ERROR: Incorrect password. - POST /api/admin/auth/login
+[2025-11-03 22:07:47] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:13:52] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:14:39] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:15:15] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:15:39] ERROR: Cannot read properties of null (reading 'split') - PUT /api/vendor/shop/edit-shop
+[2025-11-03 22:30:19] ERROR: Customer not found - POST /api/customer/auth/login
+[2025-11-04 10:15:27] ERROR: Address already exists - POST /api/customer/profile/add-address

@@ -1,20 +1,49 @@
-import { AuthController } from "../controllers/vendorController/authController";
-import VendorShopController from "../controllers/vendorController/shopController";
+import { StaffRepository } from "../repositories/staffsRepository";
 import { VendorRepository } from "../repositories/vendorRepository";
-import { VendorAuthService } from "../services/venderServices/authService";
-import VendorShopService from "../services/venderServices/shopService";
+import { StaffService } from "../services/vender-services/staff-service";
+import VendorService from "../services/vender-services/vendor-service";
+import { ServiceRepository } from "../repositories/serviceRepository";
+import { VendorServiceService } from "../services/vender-services/service-service";
+import { StaffController } from "../controllers/staff/staff-controller";
+import { VendorServiceController } from "../controllers/service/service-controller";
+import VendorController from "../controllers/vendor/vendor-controller";
+import { ServiceTypes } from "../repositories/ServiceTypesRepository";
 
 
-
-
+/**
+ *  
+ */
+//----------------------------------------------------------- vendor auth
 const vendorRepositoryInstance = new VendorRepository()
+const staffRepositoryInstance = new StaffRepository()
+const serviceTypesRepositoryInstance = new ServiceTypes()
+const serviceRepositoryInstance = new ServiceRepository()
+/**
+ *  
+ */
+//----------------------------------------------------------- vendor shop like get shop dat updatad data etc...
+const vendorShopServiceInstance = new VendorService(vendorRepositoryInstance,staffRepositoryInstance,serviceTypesRepositoryInstance,serviceRepositoryInstance)
+const vendorControllerInstance = new VendorController(vendorShopServiceInstance)
+/**
+ * 
+ */
+//----------------------------------------------------------- staff
+const staffReopositoryInstance = new StaffRepository()
+const staffServiceInstance = new StaffService(staffReopositoryInstance)
+const staffControllerInstance = new StaffController(staffServiceInstance)
+/**
+ * 
+ */
+//------------------------------------------------------------ Service
+const vendorServiceRepositoryInstance = new ServiceRepository()
+const vendorServiceServiceInstance = new VendorServiceService(vendorServiceRepositoryInstance)
+const vendorServiceControllerInstance = new VendorServiceController(vendorServiceServiceInstance)
 
-const vendorAuthServiceInstance = new VendorAuthService(vendorRepositoryInstance)
-const vendorAuthControllerInstance = new AuthController(vendorAuthServiceInstance)
 
 
 
-const vendorShopServiceInstance = new VendorShopService(vendorRepositoryInstance)
-const vendorShopControllerInstance = new VendorShopController(vendorShopServiceInstance)
-
-export {vendorAuthControllerInstance,vendorShopControllerInstance}
+export {
+    vendorControllerInstance,
+    staffControllerInstance,
+    vendorServiceControllerInstance
+}

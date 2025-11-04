@@ -20,9 +20,11 @@ const customerSchema = new Schema<ICustomer>(
     },
     isVerified: {
       type: Boolean,
+      default:true
     },
     isActive: {
       type: Boolean,
+      default:true
     },
     password:{
       type:String
