@@ -140,4 +140,12 @@ async getVendorData(): Promise<IVendor[] | []> {
       return result
     }
 
+
+
+    //----------------------- vendor shop image
+    // async addImage(image: string): Promise<boolean> {
+
+    //   let result = await this._vendorModel.updateOn e
+    // }
+
 }

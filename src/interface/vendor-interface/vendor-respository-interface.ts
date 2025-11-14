@@ -21,5 +21,7 @@ export interface IVendorRepo {
     getVendorsData() :Promise<IVendor[]|null> //-------------------------------------------------DD
     getEachVendorData(_id:string):Promise<IVendor|null>//-------------------------------------------------
     
+
+    // addImage (image:string):Promise<boolean>
     
 }
