@@ -11,17 +11,27 @@ class VendorController {
     this._vendorShopService = vendorService;
   }
 
-
-//---------------------------------------- add shop data (state ,city , location ,woring days ....)
-  addShopData = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+  //---------------------------------------- add shop data (state ,city , location ,woring days ....)
+  addShopData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
-      const { userId, latitude, longitude,workingDays ,...data } = { ...req.body };
+      const { userId, latitude, longitude, workingDays, ...data } = {
+        ...req.body,
+      };
       const cordinates = {
         lat: latitude,
         lon: longitude,
       };
-     
-      await this._vendorShopService.addShopData(data, userId, cordinates,workingDays);
+
+      await this._vendorShopService.addShopData(
+        data,
+        userId,
+        cordinates,
+        workingDays
+      );
 
       res
         .status(StatusCodeEnum.OK)
@@ -42,7 +52,11 @@ class VendorController {
   };
 
   //-----------------------------------------------------------------------get the shop data
-  getShopData = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+  getShopData = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
       const id = req.body.userId;
 
@@ -62,15 +76,18 @@ class VendorController {
   //----------------------------------------------------------------------- get the shop service type
   //----------------------------------------------------------------------- get the shop service type
   //----------------------------------------------------------------------- get the shop service type
-  getShopServiceType = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+  getShopServiceType = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
     try {
-
       const result = await this._vendorShopService.getShopTypes();
-  
+
       if (result) {
         res
           .status(StatusCodeEnum.OK)
-          .json({ message: MessageEnum.SERVICE_FETCH_SUCCESS,data:result });
+          .json({ message: MessageEnum.SERVICE_FETCH_SUCCESS, data: result });
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -79,44 +96,51 @@ class VendorController {
     }
   };
 
-//----------------------------------------------------------------------- update vendor
- updateVendor = async(req:Request,res:Response,next:NextFunction):Promise<void> =>{
-  try{
-    const { userId,workingDays ,...data } = { ...req.body };
-    console.log(req.body);
+  //----------------------------------------------------------------------- update vendor
+  updateVendor = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const { userId, workingDays, ...data } = { ...req.body };
+      console.log(req.body);
 
-    
-   let result = await this._vendorShopService.updateVendor(userId,workingDays,data)
-      if(result){
+      let result = await this._vendorShopService.updateVendor(
+        userId,
+        workingDays,
+        data
+      );
+      if (result) {
         res
           .status(StatusCodeEnum.OK)
-          .json({message:MessageEnum.VENDOR_DATA_UPDATION_SUCCESS})
+          .json({ message: MessageEnum.VENDOR_DATA_UPDATION_SUCCESS });
       }
-  }catch(error:unknown){
-    next(error)
-  } 
- }
-
-
-
-
-    //----------------------------------------------------------------------- dashboard
-  vendorDashboard = async (req:Request,res:Response,next:NextFunction):Promise<void> =>{
-    try{
-
-
-      const result = await this._vendorShopService.getDashboard(req.body.userId)
-
-      if(result){
-        res
-          .status(StatusCodeEnum.OK)
-          .json({message:MessageEnum.SUCCEESS,data:result})
-
-      }
-    }catch(error){
-      throw(error)
+    } catch (error: unknown) {
+      next(error);
     }
-  }
+  };
+
+  //----------------------------------------------------------------------- dashboard
+  vendorDashboard = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const result = await this._vendorShopService.getDashboard(
+        req.body.userId
+      );
+
+      if (result) {
+        res
+          .status(StatusCodeEnum.OK)
+          .json({ message: MessageEnum.SUCCEESS, data: result });
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
 
   //=========================================================
   geVendorsDatas = async (
@@ -141,8 +165,7 @@ class VendorController {
     }
   };
 
-
-   blockVendor = async (
+  blockVendor = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -160,9 +183,7 @@ class VendorController {
     }
   };
 
-
-
-   getVendorsRequest = async (
+  getVendorsRequest = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -176,40 +197,38 @@ class VendorController {
     } catch (error: unknown) {}
   };
 
-
-
-   rejectVendorRequest = async (
+  rejectVendorRequest = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
-      const result = await this._vendorShopService.rejectVendorRequst(req.body.id);
+      const result = await this._vendorShopService.rejectVendorRequst(
+        req.body.id
+      );
       res
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.VENDOR_DENIED });
     } catch (error: unknown) {}
   };
 
-
-
-
-   acceptVendorRequest = async (
+  acceptVendorRequest = async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
     try {
-      const result = await this._vendorShopService.verifyVendorRequst(req.body.id);
+      const result = await this._vendorShopService.verifyVendorRequst(
+        req.body.id
+      );
       res
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.VENDOR_VRIFIED });
     } catch (error: unknown) {}
   };
 
-
   //==================================================================
-   getShopsData = async (req: Request, res: Response): Promise<void> => {
+  getShopsData = async (req: Request, res: Response): Promise<void> => {
     try {
       const shops = await this._vendorShopService.getVendorsData();
       const activeShops = (shops || []).filter((shop) => shop.hasShop === true);
@@ -238,17 +257,42 @@ class VendorController {
     }
   };
 
-//--------------------------  add shopp images --------------------------
-addShopImages = async (req:Request,res:Response):Promise<void> =>{
+  //--------------------------  add shopp images --------------------------
+  addShopImages = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      let result = await this._vendorShopService.addShopImages(req.body);
+      if (result) {
+        res
+          .status(StatusCodeEnum.OK)
+          .json({ message: MessageEnum.VENDOR_SHOP_IMAGE_ADDED_SUCCESS });
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
 
-try{
+  //--------------------------  remove shopp images --------------------------
+  removeShopImage = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
 
-
-
-}catch(error){
-
-}}
-
+      let result = await this._vendorShopService.removeImage(req.body)
+      if(result){
+        res
+        .status(StatusCodeEnum.OK)
+        .json({message:MessageEnum.VENDOR_SHOP_IMAGE_DELETED_SUCCESS})
+      }
+    } catch (error) {
+      next(error)
+    }
+  };
 
   shopDataEach = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -256,9 +300,10 @@ try{
 
       const result = await this._vendorShopService.getEachVendorData(id);
       if (result) {
-        res
-          .status(StatusCodeEnum.OK)
-          .json({ message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS ,data:result});
+        res.status(StatusCodeEnum.OK).json({
+          message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS,
+          data: result,
+        });
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -274,7 +319,6 @@ try{
       }
     }
   };
-
 }
 
 export default VendorController;

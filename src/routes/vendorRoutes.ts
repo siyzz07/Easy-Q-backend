@@ -31,7 +31,8 @@ vendorRoute.get('/shop-type',verifyToken,vendorBlockAuth,vendorControllerInstanc
 vendorRoute.get('/shop-data',verifyToken,vendorBlockAuth,vendorControllerInstance.getShopData)
 vendorRoute.post('/shop-data',verifyToken,vendorBlockAuth,vendorControllerInstance.addShopData)
 vendorRoute.put('/shop/edit-shop',verifyToken,vendorBlockAuth,vendorControllerInstance.updateVendor)
-
+vendorRoute.put('/shop/image',verifyToken,vendorBlockAuth,vendorControllerInstance.addShopImages)
+vendorRoute.put('/shop/delete-image',verifyToken,vendorBlockAuth,vendorControllerInstance.removeShopImage)
 
 //---------------------------------------------- dashboard
 vendorRoute.get('/dashboard/data',verifyToken,vendorBlockAuth,vendorControllerInstance.vendorDashboard)

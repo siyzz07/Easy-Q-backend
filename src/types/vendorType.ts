@@ -6,6 +6,11 @@ interface IZone {
   lon: string;
 }
 
+export interface IImage {
+    url: string;
+    publicId: string;
+  }
+
 export interface IVendor {
   shopName?: string;
   proofImage?:string;
@@ -22,7 +27,7 @@ export interface IVendor {
   workingDays?: string[];
   cordinates?: IZone;
   ProfileImage?: string;
-  images?: string[];
+  images?:IImage[];
   isActive?: boolean;
   planExpreData?: Date;
   createAt?: Date;

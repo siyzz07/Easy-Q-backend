@@ -70,6 +70,9 @@ export enum MessageEnum {
   VENDOR_VERIFICATION_REJECTED = "Your account verification was rejected by admin. Please register again with valid data.",
   VENDOR_VRIFIED = "Vendor vierified",
   VENDOR_DENIED = "Vendor verification rejected",
+  VENDOR_SHOP_IMAGE_ADDED_SUCCESS = 'Image added successfully',
+  VENDOR_SHOP_IMAGE_DELETED_SUCCESS = 'Image deleted successfully',
+  VENDOR_SHOP_IMAGE_DELETED_FAILED = 'Unable to delete image',
   
 
   

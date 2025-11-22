@@ -86,3 +86,22 @@
 [2025-11-13 10:57:49] ERROR: Your account is under verification. Please wait for admin approval. - POST /api/vendor/auth/login
 [2025-11-13 10:57:53] ERROR: Your account is under verification. Please wait for admin approval. - POST /api/vendor/auth/login
 [2025-11-13 10:58:03] ERROR: Your account is under verification. Please wait for admin approval. - POST /api/vendor/auth/login
+[2025-11-14 17:58:21] ERROR: Cast to ObjectId failed for value "69156c193822cdfa6600000" (type string) at path "shopId" for model "Service" - GET /api/customer/shop-data/services/69156c193822cdfa6600000
+[2025-11-14 17:58:21] ERROR: Cast to ObjectId failed for value "69156c193822cdfa6600000" (type string) at path "shopId" for model "Service" - GET /api/customer/shop-data/services/69156c193822cdfa6600000
+[2025-11-14 17:58:34] ERROR: Cast to ObjectId failed for value "69156c193822cdfa6p[pppb27ec3f" (type string) at path "shopId" for model "Service" - GET /api/customer/shop-data/services/69156c193822cdfa6p[pppb27ec3f
+[2025-11-14 17:58:34] ERROR: Cast to ObjectId failed for value "69156c193822cdfa6p[pppb27ec3f" (type string) at path "shopId" for model "Service" - GET /api/customer/shop-data/services/69156c193822cdfa6p[pppb27ec3f
+[2025-11-16 17:35:25] ERROR: error to remove shop image
+[2025-11-16 17:35:25] ERROR: Unable to delete image - PUT /api/vendor/shop/delete-image
+[2025-11-16 17:35:50] ERROR: error to remove shop image
+[2025-11-16 17:35:50] ERROR: Unable to delete image - PUT /api/vendor/shop/delete-image
+[2025-11-16 17:48:17] error: error to remove shop image
+[2025-11-16 17:48:17] error: Unable to delete image - PUT /api/vendor/shop/delete-image
+[2025-11-19 12:50:32] error: connect ECONNREFUSED 127.0.0.1:27017 - POST /api/customer/auth/login
+[2025-11-19 12:50:33] error: connect ECONNREFUSED 127.0.0.1:27017 - POST /api/customer/auth/login
+[2025-11-19 12:51:02] error: connect ECONNREFUSED 127.0.0.1:27017 - POST /api/customer/auth/login
+[2025-11-19 12:51:29] error: Operation `customers.findOne()` buffering timed out after 10000ms - POST /api/customer/auth/login
+[2025-11-19 12:51:33] error: Operation `customers.findOne()` buffering timed out after 10000ms - POST /api/customer/auth/login
+[2025-11-22 11:13:05] error: Operation `customers.findOne()` buffering timed out after 10000ms - POST /api/customer/auth/login
+[2025-11-22 11:13:34] error: Operation `customers.findOne()` buffering timed out after 10000ms - POST /api/customer/auth/login
+[2025-11-22 11:13:40] error: Operation `customers.findOne()` buffering timed out after 10000ms - POST /api/customer/auth/login
+[2025-11-22 11:21:21] error: Invalid email or password - POST /api/customer/auth/login
