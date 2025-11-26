@@ -14,7 +14,16 @@ export interface ILogin{
 }
 
 
+export interface ITimeCheck{
+  staffId:string;
+  timePreffer:string;
+  date:string;
+  userId:string;
+  serviceId:string;
+  addressId:string;
+  shopId:string
 
+}
 
 
 export interface IBooking {

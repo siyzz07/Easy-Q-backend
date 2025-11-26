@@ -105,3 +105,23 @@
 [2025-11-22 11:13:34] error: Operation `customers.findOne()` buffering timed out after 10000ms - POST /api/customer/auth/login
 [2025-11-22 11:13:40] error: Operation `customers.findOne()` buffering timed out after 10000ms - POST /api/customer/auth/login
 [2025-11-22 11:21:21] error: Invalid email or password - POST /api/customer/auth/login
+[2025-11-23 18:15:12] error: Admin not found. - POST /api/admin/auth/login
+[2025-11-23 18:49:01] error: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-23 18:49:10] error: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-24 10:56:58] error: Failed to remove vendor from favorite list
+[2025-11-24 10:56:58] error: Failed to remove vendor from favorite list - POST /api/customer/favorite
+[2025-11-24 12:10:59] error: Cannot populate path `Vendors` because it is not in your schema. Set the `strictPopulate` option to false to override. - GET /api/customer/favorite/shopes
+[2025-11-24 12:11:01] error: Cannot populate path `Vendors` because it is not in your schema. Set the `strictPopulate` option to false to override. - GET /api/customer/favorite/shopes
+[2025-11-24 12:11:23] error: Cannot populate path `Vendors` because it is not in your schema. Set the `strictPopulate` option to false to override. - GET /api/customer/favorite/shopes
+[2025-11-24 12:11:23] error: Cannot populate path `Vendors` because it is not in your schema. Set the `strictPopulate` option to false to override. - GET /api/customer/favorite/shopes
+[2025-11-24 12:12:27] error: Cannot populate path `Vendors` because it is not in your schema. Set the `strictPopulate` option to false to override. - GET /api/customer/favorite/shopes
+[2025-11-24 12:12:27] error: Cannot populate path `Vendors` because it is not in your schema. Set the `strictPopulate` option to false to override. - GET /api/customer/favorite/shopes
+[2025-11-24 15:28:40] error: Invalid email or password - POST /api/vendor/auth/login
+[2025-11-26 11:36:56] error: bookingTimes.get is not a function - POST /api/customer/booking/check-time
+[2025-11-26 11:37:23] error: bookingTimes.get is not a function - POST /api/customer/booking/check-time
+[2025-11-26 11:38:09] error: bookingTimes.get is not a function - POST /api/customer/booking/check-time
+[2025-11-26 11:45:06] error: bookingTimes.get is not a function - POST /api/customer/booking/check-time
+[2025-11-26 11:46:54] error: bookingTimes.get is not a function - POST /api/customer/booking/check-time
+[2025-11-26 11:48:34] error: bookingTimes.get is not a function - POST /api/customer/booking/check-time
+[2025-11-26 11:49:49] error: bookingTimes.get is not a function - POST /api/customer/booking/check-time
+[2025-11-26 12:52:48] error: logger_1.default.warning is not a function - POST /api/customer/booking/check-time

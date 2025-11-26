@@ -1,5 +1,5 @@
-import { IBooking } from '../../types/common-types'
-import { BookingResponseDTO } from "../../dto/booking-dto/booking-dto";
+import { IBooking, ITimeCheck } from '../../types/common-types'
+import { BookingResponseDTO, checkTimeDto } from "../../dto/booking-dto/booking-dto";
 
 export const BookingMapper = {
    toDTO(booking: IBooking): BookingResponseDTO {
@@ -18,6 +18,20 @@ export const BookingMapper = {
       paymentStatus: booking.paymentStatus,
       createdAt: booking.createdAt?.toISOString() || "",
       updatedAt: booking.updatedAt?.toISOString() || "",
+    };
+  }
+};
+
+export const checkTimeReqMapper = {
+  toDto(data: ITimeCheck): checkTimeDto {
+    return {
+      staffId: data.staffId,
+      timePreffer: data.timePreffer,
+      date: data.date,
+      serviceId:data.serviceId,
+      customerId:data.userId,
+      shopId:data.shopId,
+      addressId:data.addressId
     };
   }
 };
