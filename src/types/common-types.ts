@@ -42,6 +42,7 @@ export interface IBooking {
   paymentStatus: string;
   createdAt?: Date;
   updatedAt?: Date;
+  expireAt?:Date|null
 }
 
 

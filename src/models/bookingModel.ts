@@ -1,7 +1,6 @@
 // models/BookingModel.ts
 import mongoose, { Schema } from "mongoose";
 import { IBooking } from "../types/common-types";
-
 const bookingSchema = new Schema<IBooking>(
   {
     customerId: {
@@ -52,13 +51,19 @@ const bookingSchema = new Schema<IBooking>(
     },
     paymentStatus: {
       type: String,
-      enum: ["pending", "paid", "failed", "refunded"],
-      default: "pending",
+      enum: ["paid", "failed", "refunded"],
     },
+    expireAt: {
+      type: Date,
+      default: null,
+    }
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
+
+
+bookingSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
 
 export const BookingModel = mongoose.model<IBooking>("Booking", bookingSchema);
