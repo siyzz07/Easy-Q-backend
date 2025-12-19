@@ -25,4 +25,21 @@ export class BookingRepository extends BaseRepository<any> implements IBookingRo
 
     }
 
+//----------------------------------- get booked data based on condition
+ async getBookedDatasByCondition(data: object): Promise<IBooking[]> {
+
+    let result = await this.findManyByCondition(data)
+    return result
+
+}
+//----------------------------------- get each booking data by id
+  async getEachBookingDataById(_id: string): Promise<IBooking | void> {
+      let result = await this.findById(_id)
+      return result
+  }
+//----------------------------------- update booking
+  async updateBooking(id: string, data: Partial<IBooking>): Promise<IBooking|void> {
+      let result = await this.update(id,data)
+      return result
+  }
 }

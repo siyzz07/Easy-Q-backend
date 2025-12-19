@@ -27,7 +27,11 @@ const bookingSchema = new Schema<IBooking>(
       type: Schema.Types.ObjectId,
       ref: "Staff",
     },
-    bookingTime: {
+    bookingTimeStart: {
+      type: String,
+      required: true,
+    },
+     bookingTimeEnd: {
       type: String,
       required: true,
     },
@@ -41,17 +45,16 @@ const bookingSchema = new Schema<IBooking>(
       default: "pending",
     },
     totalAmount: {
-      type: Number,
+      type: String,
       required: true,
     },
     paymentMethod: {
       type: String,
-      enum: ["razorpay", "COD", "payAtShop"],
-      required: true,
+      enum: ["razorpay", "payAtShop",'wallet'],
     },
     paymentStatus: {
       type: String,
-      enum: ["paid", "failed", "refunded"],
+      enum: ["pending","paid", "failed", "refunded"],
     },
     expireAt: {
       type: Date,

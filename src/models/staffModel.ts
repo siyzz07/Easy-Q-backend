@@ -29,12 +29,6 @@ const staffSchema = new Schema<IStaff>(
       type: Boolean,
       default: true,
     },
-    bookingTimes: {
-      type: Map,
-      of: [String],
-      default: {},
-    },
-
     blockedDates: {
       type: [Date],
       default: [],

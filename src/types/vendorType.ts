@@ -65,7 +65,6 @@ export interface IStaff {
   isActive?: boolean;
   blockedDates?: [];
   userId?:string;
-  bookingTimes?:string
 }
 
 export interface IStaffAdd{

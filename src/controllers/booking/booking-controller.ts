@@ -28,10 +28,7 @@ export class BookingController {
   ): Promise<void> => {
     try{
 
-      console.log('req.body :>> ', req.body);
-
       let result = await this._BookingService.addNewbooking(req.body)
-      
       if(result){
         res
           .status(StatusCodeEnum.CREATED)
@@ -52,10 +49,14 @@ export class BookingController {
     try{
 
       let result = await this._BookingService.checkTimeAvailable(checkTimeReqMapper.toDto(req.body))
+      console.log(result)
       if(result){
-
+          res 
+            .status(StatusCodeEnum.OK)
+            .json({success:true , message:MessageEnum.BOOKING_CREATED_SUCCESS,bookingId:result })
       }else{
         res
+          .status(StatusCodeEnum.OK)
           .json({success:false , message:MessageEnum.BOOKING_PREFFER_TIME_SLOT_NOT_AVAILABLE})
       }
 

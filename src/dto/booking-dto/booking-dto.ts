@@ -5,10 +5,11 @@ export interface BookingResponseDTO {
   serviceId: string;
   customerAddressId: string;
   staffId?: string;
-  bookingTime: string;
+  bookingTimeStart: string;
+  bookingTimeEnd: string;
   bookingDate: string;
   status: string;
-  totalAmount: number;
+  totalAmount: string;
   paymentMethod: string;
   paymentStatus: string;
   createdAt: string;
@@ -17,14 +18,8 @@ export interface BookingResponseDTO {
 
 
 export interface CreateBookingDTO {
-    userId?:string;
-  customerId: string;
-  shopId: string;
-  serviceId: string;
-  customerAddressId: string;
-  staffId: string;
-  bookingDate: string;
-  bookingTime: string;
+  userId?:string;
+  bookingId:string
   totalAmount: number;
   paymentMethod: string;
 }

@@ -13,107 +13,69 @@ import {
   checkTimeDto,
 } from "../../dto/booking-dto/booking-dto";
 import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
-import mongoose from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 import { throwDeprecation } from "process";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
 import { ICacheService } from "../../interface/cache-interface/cache-service-interface";
+import { IBooking } from "../../types/common-types";
+import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
 
 export class BookingService implements IBookingServiceInterface {
   private _BookingRepository: IBookingRopsitoryInterface;
   private _ServiceRepository: IServiceRepositoryInterface;
   private _StaffRepository: IStaffRepositoryInterface;
-  private _Cache_service: ICacheService;
+  private _NotificationSerivce:INotificationServiceInterface
+  // private _Cache_service: ICacheService;
 
   constructor(
     bookingService: IBookingRopsitoryInterface,
     serviceRepository: IServiceRepositoryInterface,
     staffRepository: IStaffRepositoryInterface,
-    cacheService: ICacheService
+    notificationService :INotificationServiceInterface,
+    // cacheService: ICacheService
+    
   ) {
     this._BookingRepository = bookingService;
     this._ServiceRepository = serviceRepository;
     this._StaffRepository = staffRepository;
-    this._Cache_service = cacheService;
+    this._NotificationSerivce = notificationService
+    // this._Cache_service = cacheService;
   }
 
   // ------------------------------- add new  booking ----------------------
   addNewbooking = async (
     data: CreateBookingDTO
   ): Promise<BookingResponseDTO | void> => {
-    const { userId, ...payload } = data;
+    const { userId,paymentMethod,bookingId,totalAmount } = data;
 
-    const staffData = await this._StaffRepository.getStaffById(
-      payload.staffId!.toString()
-    );
-    const serviceData = await this._ServiceRepository.getSelectedService(
-      payload.serviceId!.toString()
-    );
+      const existBooking = await this._BookingRepository.getEachBookingDataById(bookingId)
 
-    if (!staffData || !serviceData) {
-      throw new ErrorResponse(
-        MessageEnum.SERVER_ERROR,
-        StatusCodeEnum.INTERNAL_SERVER_ERROR
-      );
-    }
-    const serviceDuration = serviceData.duration;
-    const bookingDateKey = new Date(payload.bookingDate).toLocaleDateString(
-      "en-CA"
-    );
+      if(!existBooking){
 
-    const bookingTimes: any = staffData.bookingTimes;
-    let slots = bookingTimes.get(bookingDateKey) || [];
+        }else{
 
-    let startTime;
-    if (slots.length) {
-      const lastSlot = slots[slots.length - 1];
-      startTime = lastSlot;
-    } else {
-      startTime = staffData.openingTime;
-    }
+          const query={
+            paymentMethod,
+            paymentStatus:'pending',
+            expireAt:null
+          }
 
-    const start = parse(startTime, "HH:mm", new Date());
-    const end = addMinutes(start, Number(serviceDuration));
-    const endTime = format(end, "HH:mm");
+          let result = await this._BookingRepository.updateBooking(bookingId,query)
 
-    slots.push(endTime);
-    bookingTimes.set(bookingDateKey, slots);
+          if(result){
+            this._NotificationSerivce.sendBookingNotificationToVendor(result)
+            return BookingMapper.toDTO(result)
+          }else{
+            
+          }
+        }
 
-    if (!staffData?._id) {
-      throw new ErrorResponse(
-        MessageEnum.SERVER_ERROR,
-        StatusCodeEnum.INTERNAL_SERVER_ERROR
-      );
-    }
-
-    staffData.bookingTimes = bookingTimes;
-    await this._StaffRepository.updateStaff(staffData._id.toString(), {
-      bookingTimes,
-    });
-
-    const bookingData = {
-      customerId: new mongoose.Types.ObjectId(payload.customerId),
-      shopId: new mongoose.Types.ObjectId(payload.shopId),
-      serviceId: new mongoose.Types.ObjectId(payload.serviceId),
-      customerAddressId: new mongoose.Types.ObjectId(payload.customerAddressId),
-      staffId: new mongoose.Types.ObjectId(payload.staffId),
-      bookingDate: bookingDateKey,
-      bookingTime: startTime,
-      totalAmount: payload.totalAmount,
-      paymentMethod: payload.paymentMethod,
-      status: "pending",
-      paymentStatus: "pending",
-    };
-
-    const result = await this._BookingRepository.addNewBooking(bookingData);
-
-    if (result) {
-      return BookingMapper.toDTO(result);
-    } else {
-    }
+    
   };
 
   // ------------------------------- check the prifered time is available ----------------------
+
   checkTimeAvailable = async (
     data: checkTimeDto
   ): Promise<boolean | string> => {
@@ -126,82 +88,73 @@ export class BookingService implements IBookingServiceInterface {
       addressId,
       shopId,
     } = data;
+
     let staffData = await this._StaffRepository.getStaffById(staffId);
     const serviceData = await this._ServiceRepository.getSelectedService(
       serviceId
     );
 
+
     const serviceDuration = Number(serviceData.duration);
-
-    let bookingTimes: any = staffData.bookingTimes;
     const bookingDateKey = new Date(date).toLocaleDateString("en-CA");
-    let slots = bookingTimes.get(bookingDateKey) || [];
+
+    const bookedDatas = await this._BookingRepository.getBookedDatasByCondition(
+      { staffId: staffId, bookingDate: bookingDateKey }
+    );
 
 
+    let availableTime = await this.sortAndFindAvailableTime(
+      bookedDatas,
+      staffData,
+      serviceDuration,
+      timePreffer
+    );
 
-    let timePrefferInSlot = slots.includes(timePreffer);
-
-    if (slots.length == 0 || !timePrefferInSlot) {
-      slots = this.defaultSlotSet(staffData, slots);
-
-      bookingTimes.set(bookingDateKey, slots);
-      if (staffData._id) {
-        let data = await this._StaffRepository.updateStaff(
-          staffData._id.toString(),
-          { bookingTimes }
-        );
-        if (data) {
-          staffData = await this._StaffRepository.getStaffById(staffId);
-          bookingTimes = staffData.bookingTimes;
-          slots = bookingTimes.get(bookingDateKey);
-        }
-      }
-    }
-
-      const redisStaffkey = staffId+bookingDateKey
-
-
-        let availableTime = await this.findAvailableTime(slots,serviceDuration,timePreffer,redisStaffkey)
-
-    if (availableTime.availableMinuts< serviceDuration) {
+    if(!availableTime){
       logger.warn("time not available on the preffered time gap");
       return false;
-    } else {
-     const customerTime =  availableTime.customerTime 
-     let key = staffId + bookingDateKey;
-     let exist = await this._Cache_service.get(key)
-     let expireTime = this.getExpireSeconds(bookingDateKey);
-      if(exist){
-
-      }else{
-
-      }
     }
 
-    return true;
+    const TTL = this.calculateTTL(bookingDateKey,availableTime.startTime)
+
+
+        const bookingData = {
+      customerId: new Types.ObjectId(customerId),
+      shopId: new Types.ObjectId(shopId),
+      serviceId: new Types.ObjectId(serviceId),
+      customerAddressId: new Types.ObjectId(addressId),
+      staffId: new Types.ObjectId(staffId),
+      bookingDate: bookingDateKey,
+      bookingTimeStart: availableTime.startTime,
+      bookingTimeEnd: availableTime.endTime,
+      totalAmount: serviceData.price,
+      status: "pending",
+      paymentStatus: "pending",
+      expireAt: new Date(Date.now() + TTL * 60 * 1000)
+    };
+
+
+    console.log('one')
+    const result = await this._BookingRepository.addNewBooking(bookingData);
+    
+    
+    if(result){
+       console.log('two')
+      return result._id as string
+     }
+     return false
+
+    
+
   };
 
   /**
    * Sort an array of HH:mm times in ascending order
    */
-  private sortTimes(times: string[]): string[] {
-    return times.sort((a, b) => a.localeCompare(b));
-  }
-
-  /**
-   * add default bookings times like start time end time break time
-   */
-
-  private defaultSlotSet(staffData: IStaff, slots: string[]): string[] {
-    let defaultSlot = [
-      staffData.openingTime,
-      ...staffData.breaks.flatMap((b) => [b.breakStartTime, b.breakEndTime]),
-      staffData.closingTime,
-    ];
-
-    slots = [...slots, ...defaultSlot];
-    slots = this.sortTimes([...new Set(slots)]);
-    return slots;
+  private sortTimes(
+    times: { start: string; end: string; type: string }[]
+  ): { start: string; end: string; type: string }[] {
+    return times.sort((a, b) => a.start.localeCompare(b.start));
   }
 
   /**
@@ -218,63 +171,121 @@ export class BookingService implements IBookingServiceInterface {
   }
 
   /**
-   * booking cache expire time calculaion
+   * booking  expire time calculaion
    */
-  private getExpireSeconds(dateString: string) {
-    const [year, month, day] = dateString.split("-").map(Number);
-    const bookingDate = new Date(year, month - 1, day);
-    const nextDayMidnight = new Date(year, month - 1, day + 1, 0, 0, 0);
-    const now = new Date();
-    const seconds = Math.floor(
-      (nextDayMidnight.getTime() - now.getTime()) / 1000
-    );
-    return seconds > 0 ? seconds : 1;
+private calculateTTL(bookingDate: string, bookingTime: string): number {
+  const now = new Date();
+
+ 
+ const [year, month, day] = bookingDate.split("-").map(Number);
+ const [hours, minutes] = bookingTime.split(":").map(Number);
+ const booking = new Date(year, month - 1, day, hours, minutes, 0, 0);
+ const diffMs = booking.getTime() - now.getTime();
+ const diffMinutes = Math.floor(diffMs / (1000 * 60));
+ if (diffMinutes <= 0) {
+   return 1;
   }
-
- /**
-   * find available times and chech is have booking time 
-   */
-
- private async findAvailableTime (slot:string[],duration:number,prefferTime:string,rediskey:string){
-
-
-        let cachedBookings =await this.removeExpiredBookings(rediskey)
-        let cachedTimes = cachedBookings.map((value:{id:string ,time:string,expireAt:number})=> value.time)
-          let bookings =[
-            ...slot,
-            ...cachedTimes
-          ]
-        let sorted = this.sortTimes(bookings)
-
-        const timePrefferIndex = sorted.indexOf(prefferTime);
-
-        let availableTimeGap =  await this.diffMinutes(sorted[timePrefferIndex-1],sorted[timePrefferIndex])
-
-        return {availableMinuts:availableTimeGap,customerTime:sorted[timePrefferIndex-1]}
-
-
-
-        // const timePrefferIndex = slots.indexOf(timePreffer);
-
-
- }
-
- /**
-   * get the vailed times without taking the expired ones
-   */
-
- private async removeExpiredBookings(redisKey: string) {
-  let cached = await this._Cache_service.get< {id:string ,time:string,expireAt:number}[]>(redisKey);
-  if (!cached) return [];
-  const now = Math.floor(Date.now() / 1000);
-  const valid = cached.filter((b: {id:string ,time:string,expireAt:number}) => b.expireAt > now);
-  return valid;
+  return Math.min(diffMinutes, 20);
 }
+
+
+  /**
+   * sort times and find the available time
+   */
+
+  private async sortAndFindAvailableTime(
+    bookedDatas: IBooking[],
+    staffData: IStaff,
+    serviceDuration: number,
+    prefferTime: string
+  ):Promise<{ startTime: string; endTime: string } | false>  {
+    let staffOpen = {
+      start: staffData.openingTime,
+      end: staffData.openingTime,
+      type: "checkpoint",
+    };
+
+    let staffClose = {
+      start: staffData.closingTime,
+      end: staffData.closingTime,
+      type: "checkpoint",
+    };
+
+    const breaks = staffData.breaks.map((b) => ({
+      start: b.breakStartTime,
+      end: b.breakEndTime,
+      type: "checkpoint",
+    }));
+
+    const bookings = bookedDatas.map((b) => ({
+      start: b.bookingTimeStart,
+      end: b.bookingTimeEnd,
+      type: "booking",
+    }));
+
+    const staffBookings = [staffOpen, ...breaks, ...bookings, staffClose];
+
+    const staffBookingsSroted = await this.sortTimes(staffBookings);
+    const availableTime =  await this.findAvailabletime(
+      staffBookingsSroted,
+      serviceDuration,
+      prefferTime
+    );
+
+    if(availableTime){
+        return availableTime
+    }else{
+      return false
+    }
+  }
 
   /**
    * add booking to the cache
    */
-  private  setBookingToCache (key:string,expireTime:number){
+  private async findAvailabletime(
+  timeLine: { start: string; end: string; type: string }[],
+  serviceDuration: number,
+  preferredTime: string
+): Promise<{ startTime: string; endTime: string } | false> {
 
+  let indexes: number[] = [];
+
+  function add(index: number) {
+    indexes.push(index);
+    if (indexes.length > 2) indexes.shift();
   }
+
+  timeLine.some((item, index) => {
+    if (item.type === "checkpoint") add(index);
+    return item.start === preferredTime;
+  });
+
+  if (indexes.length < 2) return false;
+
+  const [startIdx, endIdx] = indexes;
+
+  for (let i = startIdx; i < endIdx; i++) {
+    const freeTime = this.diffMinutes(timeLine[i].end, timeLine[i + 1].start);
+
+    if (freeTime >= serviceDuration) {
+      const startTime = timeLine[i].end;
+      const endTime = this.findEndTime(startTime, serviceDuration);
+      return { startTime, endTime };
+    }
+  }
+
+  return false;
 }
+
+   /**
+   * find service end time
+   */
+
+  private findEndTime(time:string, minutes:number) {
+  const date = new Date(`2000-01-01T${time}:00`);
+  date.setMinutes(date.getMinutes() + minutes);
+  return date.toTimeString().slice(0, 5); 
+}
+}
+
+
