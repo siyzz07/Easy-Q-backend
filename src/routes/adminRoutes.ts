@@ -46,7 +46,7 @@ adminRoute.post('/data/reject-vendor',verifyToken,vendorControllerInstance.rejec
 adminRoute.get('/admin-dashboard',verifyToken,adminController.dashboardData)
 
 /**
- * 
+ *  
  * Service Types
  * 
 */

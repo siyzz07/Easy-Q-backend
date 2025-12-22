@@ -10,13 +10,8 @@ export const socketAuth = (
   next: (err?: ExtendedError) => void
 ) => {
   try {
-    console.log('1');
-    
     const token = socket.handshake.auth?.token;
-    console.log('2');
-    
     if (!token) {
-      console.log('3');
       return next(
         new ErrorResponse(
           MessageEnum.UNAUTHORIZED,

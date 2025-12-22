@@ -37,11 +37,11 @@ dbConfig();
 
 const server = http.createServer(app);
 
-const PORT: string = process.env.PORT || "7000";
+const PORT: string = process.env.PORT || "7001";
 
 initSocket(server)
- 
-// ❗ START THE SAME SERVER
+
+
 server.listen(PORT, () => {
   console.log(`HTTP + Socket.IO Server running on port ${PORT}`);
 });
