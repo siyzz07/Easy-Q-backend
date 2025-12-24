@@ -12,7 +12,7 @@ const notificationSchema = new Schema<INotification>(
 
     recipientType: {
       type: String,
-      enum: ["User", "Vendor"],
+      enum: ["Customer", "Vendor"],
       required: true,
     },
 

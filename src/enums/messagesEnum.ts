@@ -149,7 +149,7 @@ export enum MessageEnum {
   // --------------------------------------------------------------------------Booking
   BOOKING_CREATED_SUCCESS = "Booking created successfully.",
   BOOKING_CREATION_FAILED = "Failed to create booking.",
-  BOOKING_PREFFER_TIME_SLOT_NOT_AVAILABLE = 'Preferred time unavailable. Select a different time, staff, or date.',
+  BOOKING_PREFFER_TIME_SLOT_NOT_AVAILABLE = 'No slots are available within the customer’s preferred time range.. Select a different time, staff, or date.',
 
 
 

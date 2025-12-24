@@ -26,16 +26,15 @@ export class SocketManager implements ISocketManager {
   }
 
   private registerCoreEvents() {
-    // 1️⃣ Attach the AUTH MIDDLEWARE (MUST BE BEFORE connection event)
     this.io.use(socketAuth);
 
     
-    // 2️⃣ Connection handler
+
     this.io.on("connection", (socket: Socket) => {
       const userId = socket.data.userId
       socket.join(userId)
       console.log(`Client connected: ${socket.id}`);
-      console.log("UserId:", socket.data.userId); // <-- you now have userId here 🎉
+      console.log("UserId:", socket.data.userId); 
 
       // new ChatEvents(socket, this.io).register();
       // new NotificationEvents(socket, this.io).register();

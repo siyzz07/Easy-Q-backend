@@ -51,7 +51,7 @@ export interface INotification {
   _id?: string;
 
   recipient: string | mongoose.Types.ObjectId;
-  recipientType: "User" | "Vendor";
+  recipientType: "Customer" | "Vendor";
 
 
   category?: "booking" | "contract" | "message" | "system" | "payment";

@@ -29,7 +29,7 @@ const notificationRepositoryInstance = new NotificationRepository()
 */
 // ------------------ Notificaton di
 
-const notificationServiceInstance = new NotificationService(notificationRepositoryInstance,socketManagerServer)
+const notificationServiceInstance = new NotificationService(notificationRepositoryInstance)
 
 
 /**

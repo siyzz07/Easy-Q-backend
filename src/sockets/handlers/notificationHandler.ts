@@ -1,6 +1,7 @@
 
 
 import { Server } from "socket.io";
+import logger from "../../utils/logger";
 
 export interface INotificationPayload {
   title: string;
@@ -11,8 +12,25 @@ export interface INotificationPayload {
 
 
 export class socketNotificationHandler {
+
+
+  /**
+   * 
+   * booking notifiction  - Vendor
+   */
   static bookingNotificationToVendor(io:Server, userId:string, payload:INotificationPayload) {
-    console.log('notification reached');
-    io.to(userId).emit("notification:new", payload);
+    logger.info('notification sended to vendor')
+    io.to(userId).emit("notification-booking:new", payload);
   }
+
+   /**
+   * 
+   * booking notifiction  - customer
+   */
+  static bookingNotificationToCustomer(io:Server,userId:string,payload:INotificationPayload){
+    logger.info('notification sended to customer')
+    io.to(userId).emit('notification-booking:success',payload)
+  }
+
+
 }

@@ -63,8 +63,11 @@ export class BookingService implements IBookingServiceInterface {
 
           let result = await this._BookingRepository.updateBooking(bookingId,query)
 
+       
+
           if(result){
             this._NotificationSerivce.sendBookingNotificationToVendor(result)
+            this._NotificationSerivce.sendBookingNotificationToCustomer(result)
             return BookingMapper.toDTO(result)
           }else{
             
