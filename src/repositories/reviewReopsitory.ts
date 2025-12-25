@@ -1,5 +1,5 @@
 import { IReviewRepositoryInterface } from "../interface/reivew-interface/review-repository-interface";
-import Review from "../models/Review";
+import Review from "../models/ReviewModel";
 import { IReview } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 

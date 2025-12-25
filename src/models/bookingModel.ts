@@ -1,13 +1,16 @@
 // models/BookingModel.ts
 import mongoose, { Schema } from "mongoose";
 import { IBooking } from "../types/common-types";
-
 const bookingSchema = new Schema<IBooking>(
   {
     customerId: {
       type: Schema.Types.ObjectId,
       ref: "Customer",
       required: true,
+    },
+    bookingId:{
+      type:String,
+      unique:true
     },
     shopId: {
       type: Schema.Types.ObjectId,
@@ -21,14 +24,18 @@ const bookingSchema = new Schema<IBooking>(
     },
     customerAddressId: {
       type: Schema.Types.ObjectId,
-      ref: "CustomerAddress",
+      ref: "Address",
       required: true,
     },
     staffId: {
       type: Schema.Types.ObjectId,
       ref: "Staff",
     },
-    bookingTime: {
+    bookingTimeStart: {
+      type: String,
+      required: true,
+    },
+     bookingTimeEnd: {
       type: String,
       required: true,
     },
@@ -42,23 +49,28 @@ const bookingSchema = new Schema<IBooking>(
       default: "pending",
     },
     totalAmount: {
-      type: Number,
+      type: String,
       required: true,
     },
     paymentMethod: {
       type: String,
-      enum: ["razorpay", "COD", "payAtShop"],
-      required: true,
+      enum: ["razorpay", "payAtShop",'wallet'],
     },
     paymentStatus: {
       type: String,
-      enum: ["pending", "paid", "failed", "refunded"],
-      default: "pending",
+      enum: ["pending","paid", "failed", "refunded"],
     },
+    expireAt: {
+      type: Date,
+      default: null,
+    }
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
+
+
+bookingSchema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
 
 export const BookingModel = mongoose.model<IBooking>("Booking", bookingSchema);

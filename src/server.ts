@@ -1,22 +1,48 @@
 
+// import dotenv  from 'dotenv'
+// dotenv.config({debug:false})
+// import http from 'http'
+// import app from "./app";
+// import dbConfig from "./config/dbConfig";
+// import { SocketManager } from './sockets/socketManager';
+
+
+// const server = http.createServer(app)
+
+
+// const PORT:string = process.env.PORT||"7000"
+
+// new SocketManager(server)
+
+
+
+// dbConfig()
+
+
+// app.listen(PORT,()=>{
+//     console.log(`Server running or port ${PORT} ` );
+    
+// })
+
+
 import dotenv  from 'dotenv'
 dotenv.config({debug:false})
-
-
+import http from 'http'
 import app from "./app";
 import dbConfig from "./config/dbConfig";
+import { SocketManager } from './sockets/socketManager';
+import { initSocket } from './sockets/socketInstance';
+
+dbConfig();
+
+const server = http.createServer(app);
+
+const PORT: string = process.env.PORT || "7001";
+
+initSocket(server)
 
 
-
-
-
-const PORT:string = process.env.PORT||"7001"
-
-dbConfig()
-
-
-app.listen(PORT,()=>{
-    console.log(`Server running or port ${PORT} ` );
-    
-})
+server.listen(PORT, () => {
+  console.log(`HTTP + Socket.IO Server running on port ${PORT}`);
+});
 

@@ -3,7 +3,7 @@ import customer from "../models/customerModel";
 import BaseRepository from "./baseRepository";
 import vendorModel from "../models/vendorModel";
 import { IService, IVendor } from "../types/vendorType";
-import Service from "../models/Service";
+import Service from "../models/ServiceModel";
 import { ICustomerRepo } from "../interface/customer-interface/customer-repository-interface";
 
 export class CustomerRepository

@@ -6,7 +6,13 @@ interface IZone {
   lon: string;
 }
 
+export interface IImage {
+    url: string;
+    publicId: string;
+  }
+
 export interface IVendor {
+  _id?:string
   shopName?: string;
   proofImage?:string;
   // userId?:string;
@@ -22,7 +28,7 @@ export interface IVendor {
   workingDays?: string[];
   cordinates?: IZone;
   ProfileImage?: string;
-  images?: string[];
+  images?:IImage[];
   isActive?: boolean;
   planExpreData?: Date;
   createAt?: Date;
@@ -60,7 +66,6 @@ export interface IStaff {
   isActive?: boolean;
   blockedDates?: [];
   userId?:string;
-  bookingTimes?:string
 }
 
 export interface IStaffAdd{

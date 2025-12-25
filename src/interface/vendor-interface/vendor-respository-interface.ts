@@ -1,5 +1,5 @@
 import { IServiceType } from "../../types/adminTypes";
-import { IService, IStaff, IVendor } from "../../types/vendorType";
+import { IImage, IService, IStaff, IVendor } from "../../types/vendorType";
 
 
 export interface IVendorRepo {
@@ -21,5 +21,8 @@ export interface IVendorRepo {
     getVendorsData() :Promise<IVendor[]|null> //-------------------------------------------------DD
     getEachVendorData(_id:string):Promise<IVendor|null>//-------------------------------------------------
     
+
+    addImage (_id:string,image:IImage):Promise<boolean>
+    deleteShopImage(_id:string,imageId:string):Promise<boolean>
     
 }

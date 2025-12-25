@@ -9,6 +9,7 @@ import { ICustomerServiceInterface } from "../../interface/customer-interface/cu
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import logger from "../../utils/logger";
+import { sendEmail } from "../../utils/nodeMailer";
 
 export class CustomerService implements ICustomerServiceInterface {
   private _customerRepository: ICustomerRepo
@@ -36,6 +37,11 @@ export class CustomerService implements ICustomerServiceInterface {
     email: string;
     phone: string;
   }): Promise<boolean|void> => {
+
+     
+      
+      
+
     const result = await this._customerRepository.editProfile(data);
     
     if (result) {

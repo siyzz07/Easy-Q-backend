@@ -1,5 +1,5 @@
 import { IServiceRepositoryInterface } from "../interface/service-interface/service-repository-interface";
-import Service from "../models/Service";
+import Service from "../models/ServiceModel";
 import { IService, IServiceData } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 

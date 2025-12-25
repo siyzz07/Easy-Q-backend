@@ -13,46 +13,48 @@ const vendorSchema = new Schema<IVendor>(
     phone: {
       type: String,
     },
-    proofImage:{
-          type: String,
+    proofImage: {
+      type: String,
     },
     password: {
       type: String,
     },
     shopType: {
       type: mongoose.Types.ObjectId,
-      ref:'ServiceTypes'
+      ref: "ServiceTypes",
     },
     openAt: {
       type: String,
     },
     closeAt: {
-      type:String ,
+      type: String,
     },
-    state:{
-      type:String
+    state: {
+      type: String,
     },
-    city:{
-      type:String
+    city: {
+      type: String,
     },
     workingDays: {
-      type:[String],
-      default:[]
-
+      type: [String],
+      default: [],
     },
     ProfileImage: {
       type: String,
     },
     isActive: {
       type: Boolean,
-      default:true
+      default: true,
     },
-    images: {
-      type: [String],
-    },
-    hasShop:{
-      type:Boolean,
-      default:false
+    images: [
+      {
+        url: String,
+        publicId: String,
+      },
+    ],
+    hasShop: {
+      type: Boolean,
+      default: false,
     },
     cordinates: {
       lat: { type: String },
@@ -61,11 +63,11 @@ const vendorSchema = new Schema<IVendor>(
     planExpreData: {
       type: Date,
     },
-    isVerified:{
+    isVerified: {
       type: String,
       enum: ["pending", "verified", "rejected"],
-      default: "pending",  
-    }
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

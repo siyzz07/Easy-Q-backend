@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 
 
@@ -18,7 +18,7 @@ export interface ICustomer {
 
 interface ICustomerZone {
   lat: string;
-  lon: string;
+  lng: string;
 }
 
 export interface ICustomerAddressData {
@@ -55,3 +55,8 @@ export interface IAddress{
   userId?:string
 }
 
+export interface IFavorite{
+  _id?:string;
+  customerId:mongoose.Types.ObjectId
+  vendors: mongoose.Types.ObjectId[];
+}

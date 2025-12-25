@@ -7,9 +7,11 @@ import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff
 import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
 import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
 import { IServiceType } from "../../types/adminTypes";
-import { IService, IShopData, IStaff, IVendor } from "../../types/vendorType";
+import { IImage, IService, IShopData, IStaff, IVendor } from "../../types/vendorType";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
+import logger from "../../utils/logger";
+import { deleteCloudinaryImage } from "../../utils/cloudinary";
 
 class VendorService implements IVendorShopServiceInterface {
   private _vendorRepo: IVendorRepo;
@@ -144,22 +146,14 @@ class VendorService implements IVendorShopServiceInterface {
 
   updateVendor = async( _id: string,workingDays:string,data:IVendor): Promise<boolean | void> => {
     
-   console.log('1');
-   console.log("dfdddddfddf",workingDays);
    
    let days = workingDays.split(',')
-   console.log('2');
-   console.log(workingDays);
-   
-   console.log('3');
    const updateData = {
      ...data,
      workingDays:days,
     };
-    
-    console.log('4');
+
     const result = await this._vendorRepo.findByIdAndUpdate(_id as string,updateData)
-    console.log('result-------- :>> ', result);
       if(result){
         return true
       }else{
@@ -248,6 +242,42 @@ class VendorService implements IVendorShopServiceInterface {
         return null;
       }
     };
+
+
+    //---------------------------- add shop image
+    addShopImages = async (datas: { data: IImage; userId: string; }): Promise<boolean | void> => {
+       let {userId,data} = datas
+       let result = await this._vendorRepo.addImage(userId,data)
+       if(result){
+        logger.info('shop image added success')
+        return true
+       }else{
+        logger.error('shop image adding failed')
+        throw new ErrorResponse(MessageEnum.SERVER_ERROR,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+       }
+    }
+
+    //---------------------------- remove shop image
+   removeImage = async (data: { publicId: string; image_id: string; userId: string; }): Promise<boolean| void> => {
+      const {publicId,image_id,userId} = data
+        const result = await deleteCloudinaryImage(publicId)
+
+        if(result){
+
+            let response = await this._vendorRepo.deleteShopImage(userId,image_id)
+
+            if(response){
+              logger.info('image deleted successfull')
+              return true
+            }
+              logger.error('error to remove shop image')
+              throw new ErrorResponse(MessageEnum.VENDOR_SHOP_IMAGE_DELETED_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+            }else{
+              logger.error('error to remove shop image')
+              
+              throw new ErrorResponse(MessageEnum.VENDOR_SHOP_IMAGE_DELETED_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+        }
+   }
 
 }
 

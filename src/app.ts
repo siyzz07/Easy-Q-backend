@@ -8,6 +8,8 @@ import cookieParser from "cookie-parser";
 import adminRoute from './routes/adminRoutes'
 import { errorHandler } from './middlewares/errorHandler';
 import { ErrorResponse } from './utils/errorResponse';
+import authRoute from './routes/authRoutes';
+import bookingRoute from './routes/bookingRoute';
 
 const app = express()
 
@@ -20,7 +22,7 @@ app.use(cors({
     methods:["GET", "POST", "PUT", "DELETE","OPTIONS"],
     credentials:true
 }))
-
+ 
 
 
 
@@ -38,8 +40,11 @@ app.use(
 app.use('/api/customer',customerRoute)
 app.use('/api/vendor',vendorRoute)
 app.use('/api/admin',adminRoute)
+app.use('/api/auth',authRoute)
+app.use('/api/booking',bookingRoute)
 
 app.use(errorHandler)
 
 
 export default app
+

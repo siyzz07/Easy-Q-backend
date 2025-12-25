@@ -23,7 +23,7 @@ if (!JWT_REFRESH_TOKEN) {
 }
 
 
-
+// -- for signup
 export const generateJwtToken = (payload: object) => {
   return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: '1h' });
 };

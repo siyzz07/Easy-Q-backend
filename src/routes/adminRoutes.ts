@@ -9,15 +9,25 @@ const adminRoute = express.Router();
 
 
 
-/*
+
+
+
+
+/**
  * 
- * Auth 
+ * Dashboard
  * 
  */
-adminRoute.post("/auth/login",authControllerInstance.login);
-adminRoute.post("/auth/refresh-token", authControllerInstance.refreshToken);
-adminRoute.post("/logout",authControllerInstance.logout);
+adminRoute.get('/admin-dashboard',verifyToken,adminController.dashboardData)
 
+/**
+ *  
+ * Service Types
+ * 
+*/
+adminRoute.post("/service/add-service",verifyToken,serviceTypesControllerInstence.addServiceType)
+adminRoute.get('/service/get-services',verifyToken,serviceTypesControllerInstence.getServiceTypes)
+adminRoute.put('/service/edit-service',verifyToken,serviceTypesControllerInstence.editServiceType)
 /**
  * 
  * Customer
@@ -25,8 +35,6 @@ adminRoute.post("/logout",authControllerInstance.logout);
  */
 adminRoute.get("/data/customers", verifyToken, customerControllerInstance.getUserDatas);
 adminRoute.post("/data/block-customer",verifyToken,customerControllerInstance.blockCustomer);
-
-
 /**
  * 
  * Vendor
@@ -37,24 +45,6 @@ adminRoute.post("/data/block-vendor", verifyToken, vendorControllerInstance.bloc
 adminRoute.get('/data/vendors-request',verifyToken,vendorControllerInstance.getVendorsRequest)
 adminRoute.post('/data/verified-vendor',verifyToken,vendorControllerInstance.acceptVendorRequest)
 adminRoute.post('/data/reject-vendor',verifyToken,vendorControllerInstance.rejectVendorRequest)
-
-/**
- * 
- * Dashboard
- * 
- */
-adminRoute.get('/admin-dashboard',verifyToken,adminController.dashboardData)
-
-/**
- * 
- * Service Types
- * 
-*/
-adminRoute.post("/service/add-service",verifyToken,serviceTypesControllerInstence.addServiceType)
-adminRoute.get('/service/get-services',verifyToken,serviceTypesControllerInstence.getServiceTypes)
-adminRoute.put('/service/edit-service',verifyToken,serviceTypesControllerInstence.editServiceType)
-
-
 
 
 
