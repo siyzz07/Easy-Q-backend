@@ -6502,3 +6502,92 @@
 [2025-12-24 13:23:34] error: Socket authentication error: jwt expired
 [2025-12-24 13:23:34] error: Socket authentication error: jwt expired
 [2025-12-24 20:56:58] error: Socket authentication error: jwt expired
+[2025-12-24 21:06:27] error: Invalid email or password - POST /api/auth/login
+[2025-12-24 21:15:27] error: Invalid email or password - POST /api/auth/login
+[2025-12-24 21:53:36] error: Socket authentication error: jwt expired
+[2025-12-24 21:53:36] error: Socket authentication error: jwt expired
+[2025-12-24 21:53:36] error: Socket authentication error: jwt expired
+[2025-12-24 21:53:36] error: Socket authentication error: jwt expired
+[2025-12-24 21:53:36] error: Socket authentication error: jwt expired
+[2025-12-24 21:53:37] error: Socket authentication error: jwt expired
+[2025-12-24 21:53:38] error: Socket authentication error: jwt expired
+[2025-12-24 21:53:39] error: Socket authentication error: jwt expired
+[2025-12-24 21:58:44] error: Socket authentication error: jwt expired
+[2025-12-24 21:58:44] error: Socket authentication error: jwt expired
+[2025-12-24 21:58:44] error: Socket authentication error: jwt expired
+[2025-12-24 21:58:44] error: Socket authentication error: jwt expired
+[2025-12-24 21:59:57] error: Socket authentication error: jwt expired
+[2025-12-24 21:59:57] error: Socket authentication error: jwt expired
+[2025-12-24 21:59:58] error: Socket authentication error: jwt expired
+[2025-12-24 21:59:58] error: Socket authentication error: jwt expired
+[2025-12-24 21:59:58] error: Socket authentication error: jwt expired
+[2025-12-24 21:59:58] error: Socket authentication error: jwt expired
+[2025-12-24 22:23:01] error: Socket authentication error: jwt expired
+[2025-12-24 22:23:01] error: Socket authentication error: jwt expired
+[2025-12-24 22:23:06] error: Socket authentication error: jwt expired
+[2025-12-24 22:23:06] error: Socket authentication error: jwt expired
+[2025-12-24 23:05:57] error: Socket authentication error: jwt expired
+[2025-12-24 23:05:57] error: Socket authentication error: jwt expired
+[2025-12-24 23:44:44] error: Socket authentication error: jwt expired
+[2025-12-24 23:44:44] error: Socket authentication error: jwt expired
+[2025-12-24 23:45:07] error: Socket authentication error: jwt expired
+[2025-12-24 23:45:07] error: Socket authentication error: jwt expired
+[2025-12-24 23:46:07] error: Socket authentication error: jwt expired
+[2025-12-24 23:46:07] error: Socket authentication error: jwt expired
+[2025-12-24 23:46:12] error: Socket authentication error: jwt expired
+[2025-12-24 23:46:12] error: Socket authentication error: jwt expired
+[2025-12-24 23:53:45] error: Socket authentication error: jwt expired
+[2025-12-24 23:53:45] error: Socket authentication error: jwt expired
+[2025-12-25 10:00:55] error: Socket authentication error: jwt expired
+[2025-12-25 10:00:56] error: Socket authentication error: jwt expired
+[2025-12-25 10:03:49] error: Socket authentication error: jwt expired
+[2025-12-25 10:03:50] error: Socket authentication error: jwt expired
+[2025-12-25 10:04:44] error: Socket authentication error: jwt expired
+[2025-12-25 10:04:44] error: Socket authentication error: jwt expired
+[2025-12-25 10:06:02] error: Socket authentication error: jwt expired
+[2025-12-25 10:06:02] error: Socket authentication error: jwt expired
+[2025-12-25 10:07:48] error: Socket authentication error: jwt expired
+[2025-12-25 10:07:48] error: Socket authentication error: jwt expired
+[2025-12-25 10:09:29] error: Socket authentication error: jwt expired
+[2025-12-25 10:09:29] error: Socket authentication error: jwt expired
+[2025-12-25 10:12:09] error: Socket authentication error: jwt expired
+[2025-12-25 10:12:11] error: Socket authentication error: jwt expired
+[2025-12-25 10:49:09] error: Socket authentication error: jwt expired
+[2025-12-25 10:49:09] error: Socket authentication error: jwt expired
+[2025-12-25 10:51:24] error: Socket authentication error: jwt expired
+[2025-12-25 10:53:14] error: Socket authentication error: jwt expired
+[2025-12-25 10:56:37] error: Socket authentication error: jwt expired
+[2025-12-25 10:56:42] error: Socket authentication error: jwt expired
+[2025-12-25 11:03:20] error: Socket authentication error: jwt expired
+[2025-12-25 11:03:20] error: Socket authentication error: jwt expired
+[2025-12-25 11:07:59] error: Socket authentication error: jwt expired
+[2025-12-25 11:07:59] error: Socket authentication error: jwt expired
+[2025-12-25 11:09:17] error: Socket authentication error: jwt expired
+[2025-12-25 11:09:17] error: Socket authentication error: jwt expired
+[2025-12-25 11:15:57] error: Socket authentication error: jwt expired
+[2025-12-25 11:15:57] error: Socket authentication error: jwt expired
+[2025-12-25 11:19:33] error: Customer not found - POST /api/auth/login
+[2025-12-25 11:20:46] error: Customer not found - POST /api/auth/login
+[2025-12-25 11:20:52] error: Customer not found - POST /api/auth/reset-password/verify
+[2025-12-25 11:23:39] error: Your account is under verification. Please wait for admin approval. - POST /api/auth/login
+[2025-12-25 11:24:02] error: Admin not found. - POST /api/auth/login
+[2025-12-25 11:30:57] error: Customer not found - POST /api/auth/login
+[2025-12-25 11:32:04] error: Address already exists - POST /api/customer/profile/add-address
+[2025-12-25 11:35:45] error: Socket authentication error: jwt expired
+[2025-12-25 11:35:45] error: Socket authentication error: jwt expired
+[2025-12-25 11:35:47] error: Socket authentication error: jwt expired
+[2025-12-25 11:35:50] error: Socket authentication error: jwt expired
+[2025-12-25 11:48:15] error: Socket authentication error: jwt expired
+[2025-12-25 11:48:15] error: Socket authentication error: jwt expired
+[2025-12-25 11:51:02] error: Socket authentication error: jwt expired
+[2025-12-25 11:51:14] error: Socket authentication error: jwt expired
+[2025-12-25 12:08:31] error: Socket authentication error: jwt expired
+[2025-12-25 12:08:31] error: Socket authentication error: jwt expired
+[2025-12-25 12:12:53] error: Socket authentication error: jwt expired
+[2025-12-25 12:12:53] error: Socket authentication error: jwt expired
+[2025-12-25 12:18:20] error: Socket authentication error: jwt expired
+[2025-12-25 12:18:20] error: Socket authentication error: jwt expired
+[2025-12-25 12:20:50] error: Socket authentication error: jwt expired
+[2025-12-25 12:20:50] error: Socket authentication error: jwt expired
+[2025-12-25 12:25:00] error: Socket authentication error: jwt expired
+[2025-12-25 12:25:00] error: Socket authentication error: jwt expired

@@ -4,6 +4,8 @@ import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { checkTimeReqMapper } from "../../mappers/booking-mapper/booking-mapper";
 
+
+
 export class BookingController {
 
 
@@ -65,4 +67,46 @@ export class BookingController {
       next(error)
     }
   }
+
+
+  /**
+   * 
+   *  get bookings of the customer
+   * 
+   */
+
+  getCustomerBookings = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
+    try{
+      let result = await this._BookingService.customerBooking(req.body.userId)
+      if(result){ 
+        res 
+          .status(StatusCodeEnum.OK)
+          .json({success:true,message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS,data:result})
+      }
+    }catch(error){
+      next()
+    }
+  }
+
+  /**
+   * 
+   *  get selected booking data
+   * 
+   */
+  getSelectedBookingData =  async(req:Request,res:Response,next:NextFunction):Promise<void> =>{
+    try{
+      const id = req.params.id
+      const result = await this._BookingService.selectedBookingData(id)
+      if(result){
+        res
+          .status(StatusCodeEnum.OK)
+          .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_FAILED , data:result})
+      }
+
+    }catch(error:unknown){
+      next()
+    }
+  }
+  
+
 }

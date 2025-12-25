@@ -20,6 +20,9 @@ import logger from "../../utils/logger";
 import { ICacheService } from "../../interface/cache-interface/cache-service-interface";
 import { IBooking } from "../../types/common-types";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
+import { nanoid } from "nanoid";
+import { log } from "console";
+import { Logger } from "winston";
 
 export class BookingService implements IBookingServiceInterface {
   private _BookingRepository: IBookingRopsitoryInterface;
@@ -66,8 +69,8 @@ export class BookingService implements IBookingServiceInterface {
        
 
           if(result){
-            this._NotificationSerivce.sendBookingNotificationToVendor(result)
-            this._NotificationSerivce.sendBookingNotificationToCustomer(result)
+           void  this._NotificationSerivce.sendBookingNotificationToVendor(result)
+           void  this._NotificationSerivce.sendBookingNotificationToCustomer(result)
             return BookingMapper.toDTO(result)
           }else{
             
@@ -122,6 +125,7 @@ export class BookingService implements IBookingServiceInterface {
 
 
         const bookingData = {
+      bookingId:`Bk-${nanoid(10)}`,
       customerId: new Types.ObjectId(customerId),
       shopId: new Types.ObjectId(shopId),
       serviceId: new Types.ObjectId(serviceId),
@@ -150,6 +154,53 @@ export class BookingService implements IBookingServiceInterface {
     
 
   };
+
+
+
+
+  /**
+   * 
+   * 
+   * get customer boking data
+   * 
+   */
+  customerBooking = async (userId: string): Promise<IBooking[]> => {
+
+    let bookingData = await this._BookingRepository.bookingDatas({customerId:userId}) 
+    if(bookingData){
+        logger.info(MessageEnum.BOOKING_DATA_FETCH_SUCCESS)
+    }else{
+      logger.error(MessageEnum.BOOKING_DATA_FETCH_FAILED)
+    }
+    return bookingData
+
+  }
+
+  /**
+   * 
+   *  get selected booking data
+   * 
+   */
+
+  selectedBookingData = async (id:string) :Promise <IBooking[]> =>{
+
+
+    let bookingData = await this._BookingRepository.bookingDatas({_id:id})
+
+    if(bookingData){
+      return bookingData
+    }else{
+      logger.error('invalied booking Id')
+      throw new ErrorResponse(MessageEnum.BOOKING_ID_INVALIED , StatusCodeEnum.BAD_REQUEST)
+    }
+
+
+  }
+
+  
+
+
+
 
   /**
    * Sort an array of HH:mm times in ascending order

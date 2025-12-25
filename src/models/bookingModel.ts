@@ -8,6 +8,10 @@ const bookingSchema = new Schema<IBooking>(
       ref: "Customer",
       required: true,
     },
+    bookingId:{
+      type:String,
+      unique:true
+    },
     shopId: {
       type: Schema.Types.ObjectId,
       ref: "Vendor",
@@ -20,7 +24,7 @@ const bookingSchema = new Schema<IBooking>(
     },
     customerAddressId: {
       type: Schema.Types.ObjectId,
-      ref: "CustomerAddress",
+      ref: "Address",
       required: true,
     },
     staffId: {

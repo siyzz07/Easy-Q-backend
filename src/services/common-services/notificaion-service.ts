@@ -102,7 +102,7 @@ export class NotificationService implements INotificationServiceInterface {
       NotificationPayload
     );
     
-    await socketNotificationHandler.bookingNotificationToCustomer(socketManagerServer.getIo(),data.customerId.toString(),SocketPayload)
+    // await socketNotificationHandler.bookingNotificationToCustomer(socketManagerServer.getIo(),data.customerId.toString(),SocketPayload)
    }
 }
  

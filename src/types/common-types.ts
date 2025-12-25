@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { ICustomer, ICustomerAddressData } from "./customerType";
+import { IService, IServiceData, IStaff, IVendor } from "./vendorType";
 
 
 export interface IJwtPayload {
@@ -28,6 +30,7 @@ export interface ITimeCheck{
 
 export interface IBooking {
   _id?:  string
+  bookingId:string,
   customerId: mongoose.Types.ObjectId;
   userId?:string
   shopId: mongoose.Types.ObjectId;
@@ -46,6 +49,26 @@ export interface IBooking {
   expireAt?:Date|null
 }
 
+
+ export interface IBookingPopulated {
+   _id?:  string
+  bookingId:string,
+  customerId:ICustomer;
+  shopId:IVendor;
+  serviceId:IService;
+  customerAddressId:ICustomerAddressData;
+  staffId?:IStaff; 
+  bookingTimeStart: string; 
+  bookingTimeEnd: string; 
+  bookingDate: string; 
+  status:string;
+  totalAmount: string;
+  paymentMethod: string,
+  paymentStatus: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  expireAt?:Date|null
+}
 
 export interface INotification {
   _id?: string;

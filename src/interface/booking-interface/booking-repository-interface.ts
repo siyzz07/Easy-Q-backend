@@ -7,4 +7,5 @@ export interface IBookingRopsitoryInterface {
     getBookedDatasByCondition (data:object):Promise<IBooking[]>
     getEachBookingDataById (_id:string):Promise<IBooking|void>
     updateBooking (id:string , data:Partial<IBooking>):Promise<IBooking|void>
+    bookingDatas (data:object ) :Promise<IBooking[]>
 }

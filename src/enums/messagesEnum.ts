@@ -150,8 +150,9 @@ export enum MessageEnum {
   BOOKING_CREATED_SUCCESS = "Booking created successfully.",
   BOOKING_CREATION_FAILED = "Failed to create booking.",
   BOOKING_PREFFER_TIME_SLOT_NOT_AVAILABLE = 'No slots are available within the customer’s preferred time range.. Select a different time, staff, or date.',
-
-
+  BOOKING_DATA_FETCH_SUCCESS = "Booking data fetched successfully",
+  BOOKING_DATA_FETCH_FAILED ='Failed to fetch booking data',
+  BOOKING_ID_INVALIED = 'Invalied booking id',
 
      // --------------------------------------------------------------------------Favorite
     FAVORITE_ADD_SUCCESS = "Vendor added to favorite list",

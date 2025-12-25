@@ -42,4 +42,13 @@ export class BookingRepository extends BaseRepository<any> implements IBookingRo
       let result = await this.update(id,data)
       return result
   }
+
+
+  //----------------------------------- get populated data
+  async bookingDatas (data:object ) :Promise<IBooking[]>{
+
+        let result = await this._BookingModal.find(data).populate('customerId').populate('shopId').populate('serviceId').populate('customerAddressId').populate('staffId')
+        return result
+
+  }
 }

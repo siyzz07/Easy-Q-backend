@@ -12,6 +12,7 @@ export interface IImage {
   }
 
 export interface IVendor {
+  _id?:string
   shopName?: string;
   proofImage?:string;
   // userId?:string;
