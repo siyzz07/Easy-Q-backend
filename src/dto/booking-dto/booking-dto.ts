@@ -28,3 +28,14 @@ export interface CreateBookingDTO {
   totalAmount: number;
   paymentMethod: string;
 }
+
+
+export interface checkTimeDto{
+  staffId:string;
+  timePreffer:string;
+  date:string;
+  serviceId:string;
+  customerId:string;
+  addressId:string;
+  shopId:string;
+}

@@ -146,9 +146,25 @@ export enum MessageEnum {
   VENDOR_SERVICE_ALREADY_EXIST = "Service already exists.",
   VENDOR_SERVICE_EDIT_SUCCESS = "Service edited successfully.",
 
-    // --------------------------------------------------------------------------Booking
+  // --------------------------------------------------------------------------Booking
   BOOKING_CREATED_SUCCESS = "Booking created successfully.",
   BOOKING_CREATION_FAILED = "Failed to create booking.",
+  BOOKING_PREFFER_TIME_SLOT_NOT_AVAILABLE = 'Preferred time unavailable. Select a different time, staff, or date.',
+
+
+
+     // --------------------------------------------------------------------------Favorite
+    FAVORITE_ADD_SUCCESS = "Vendor added to favorite list",
+    FAVORITE_ADD_FAILED = "Failed to add vendor to favorite list",
+
+    FAVORITE_REMOVE_SUCCESS = "Vendor removed from favorite list",
+    FAVORITE_REMOVE_FAILED = "Failed to remove vendor from favorite list",
+
+    FAVORITE_UPDATE_SUCCESS = "Favorite updated successfully",
+    FAVORITE_UPDATE_FAILED = "Failed to update favorite",
+
+    FAVORITE_FETCH_SUCCESS = "Favorite fetched successfully",
+    FAVORITE_FETCH_FAILED = "Failed to fetch favorite list",
  
 }
 

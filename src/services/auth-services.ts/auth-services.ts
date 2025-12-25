@@ -382,25 +382,16 @@ export class AuthService implements AuthServiceInterface {
     }
   };
   // ----------------------------------------------- reset password
-  resetPassword = async (data: {
-    email: string;
-    password: string;
-    role: string;
-  }): Promise<void> => {
+  resetPassword = async (data: {email: string;password: string;role: string;}): Promise<void> => {
     const { email, password, role } = data;
 
     const hashedPassword = await hashPassword(password);
 
     switch (role) {
       case "customer": {
-        const emailExist = await this._customerRepository.checkCustomerExist(
-          email
-        );
+        const emailExist = await this._customerRepository.checkCustomerExist(email);
         if (!emailExist) {
-          throw new ErrorResponse(
-            MessageEnum.CUSTOMER_NOT_FOUND,
-            StatusCodeEnum.NOT_FOUND
-          );
+          throw new ErrorResponse(MessageEnum.CUSTOMER_NOT_FOUND,StatusCodeEnum.NOT_FOUND);
         }
 
         await this._customerRepository.resetPassword(email, hashedPassword);
@@ -410,10 +401,7 @@ export class AuthService implements AuthServiceInterface {
       case "vendor": {
         const emailExist = await this._vendorRepository.checkVendorExist(email);
         if (!emailExist) {
-          throw new ErrorResponse(
-            MessageEnum.VENDOR_NOT_FOUND,
-            StatusCodeEnum.NOT_FOUND
-          );
+          throw new ErrorResponse(MessageEnum.VENDOR_NOT_FOUND,StatusCodeEnum.NOT_FOUND );
         }
 
         await this._vendorRepository.resetPassword(email, hashedPassword);

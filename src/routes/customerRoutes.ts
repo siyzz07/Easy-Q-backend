@@ -1,12 +1,12 @@
 import express from 'express'
 
-import { AddressControllerInstance, BookingControllerInstance, customerControllerInstance } from '../di/customerDi'
+import { AddressControllerInstance, customerControllerInstance, favoriteControllerInstance } from '../di/customerDi'
 import { emailVerifyTokenMIddleware } from '../middlewares/emailTokenVerify'
 import { verifyToken } from '../middlewares/authTokenVerify'
 import { customerBlockAuth } from '../middlewares/customerBlockAuth'
 import { authControllerInstance } from '../di/authDi'
 import { vendorControllerInstance, vendorServiceControllerInstance } from '../di/vendorDi'
-import { BookingController } from '../controllers/booking/booking-controller'
+import { BookingControllerInstance } from '../di/commonDi'
 
 
 const customerRoute = express.Router()
@@ -67,8 +67,18 @@ customerRoute.get('/profile/get-each-address',verifyToken,customerBlockAuth,Addr
  * 
  */
 customerRoute.post('/booking/add-booking',verifyToken,customerBlockAuth,BookingControllerInstance.addNewBooking)
+customerRoute.post('/booking/check-time',verifyToken,customerBlockAuth,BookingControllerInstance.bookAvailableTime)
 // customerRoute.get('/booking/get-checkout-data',verifyToken,customerBlockAuth,BookingController.g)
 
+
+/**
+ * 
+ *  favorite 
+ * 
+ */
+customerRoute.post('/favorite',verifyToken,customerBlockAuth,favoriteControllerInstance.updateFavorite)
+customerRoute.get('/favorite',verifyToken,customerBlockAuth,favoriteControllerInstance.getFavorites)
+customerRoute.get('/favorite/shopes',verifyToken,customerBlockAuth,favoriteControllerInstance.getFavoriteShopes)
 
 
 
