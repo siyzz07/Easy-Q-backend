@@ -149,9 +149,10 @@ export enum MessageEnum {
   // --------------------------------------------------------------------------Booking
   BOOKING_CREATED_SUCCESS = "Booking created successfully.",
   BOOKING_CREATION_FAILED = "Failed to create booking.",
-  BOOKING_PREFFER_TIME_SLOT_NOT_AVAILABLE = 'Preferred time unavailable. Select a different time, staff, or date.',
-
-
+  BOOKING_PREFFER_TIME_SLOT_NOT_AVAILABLE = 'No slots are available within the customer’s preferred time range.. Select a different time, staff, or date.',
+  BOOKING_DATA_FETCH_SUCCESS = "Booking data fetched successfully",
+  BOOKING_DATA_FETCH_FAILED ='Failed to fetch booking data',
+  BOOKING_ID_INVALIED = 'Invalied booking id',
 
      // --------------------------------------------------------------------------Favorite
     FAVORITE_ADD_SUCCESS = "Vendor added to favorite list",
@@ -166,6 +167,57 @@ export enum MessageEnum {
     FAVORITE_FETCH_SUCCESS = "Favorite fetched successfully",
     FAVORITE_FETCH_FAILED = "Failed to fetch favorite list",
  
+}
+
+
+// -----------------------------
+// Booking Notification Titles
+// -----------------------------
+export enum BookingMessageTitle {
+  // Customer side
+  BOOKING_SUCCESS = "Booking Successful",
+  BOOKING_FAILED = "Booking Failed",
+  BOOKING_CONFIRMED_CUSTOMER = "Booking Confirmed",
+
+  // Vendor side
+  NEW_BOOKING_VENDOR = "New Booking Received",
+
+  // Common
+  BOOKING_UPDATED = "Booking Updated",
+  BOOKING_CANCELLED = "Booking Cancelled",
+}
+
+
+// -----------------------------
+// Booking Notification Contents
+// -----------------------------
+export enum BookingMessageContent {
+  // Customer side
+  BOOKING_SUCCESS = "Your booking has been successfully created.",
+  BOOKING_FAILED = "There was an issue creating your booking.",
+  BOOKING_CONFIRMED_CUSTOMER = "Your booking has been confirmed. Your scheduled time is:",
+
+  // Vendor side
+  NEW_BOOKING_VENDOR = "You have a new booking",
+
+  // Common
+  BOOKING_UPDATED = "Your booking details have been updated.",
+  BOOKING_CANCELLED = "This booking has been cancelled.",
+}
+
+
+export enum BookingMessageContentLong {
+  // Customer
+  BOOKING_SUCCESS = "Your booking has been successfully created. You can check details on the bookings page.",
+  BOOKING_FAILED = "There was an issue creating your booking. Please try again or contact support.",
+  BOOKING_CONFIRMED = "Your booking has been confirmed. Your scheduled time is: ",
+  
+  // Vendor
+  NEW_BOOKING_VENDOR = "A customer has placed a new booking request. Please review and confirm the booking in your dashboard.",
+  
+  // Common
+  BOOKING_UPDATED = "Your booking details have been updated. Please check the updated schedule and service information.",
+  BOOKING_CANCELLED = "This booking has been cancelled. If this was a mistake, you may create a new booking.",
 }
 
 

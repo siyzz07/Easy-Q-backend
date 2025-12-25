@@ -18,7 +18,7 @@ export interface ICustomer {
 
 interface ICustomerZone {
   lat: string;
-  lon: string;
+  lng: string;
 }
 
 export interface ICustomerAddressData {

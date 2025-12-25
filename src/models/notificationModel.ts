@@ -7,12 +7,16 @@ const notificationSchema = new Schema<INotification>(
     recipient: {
       type: Schema.Types.ObjectId,
       required: true,
+      refPath: "recipientType",
     },
 
-    sender: {
-      type: Schema.Types.ObjectId,
-      required: false,
+    recipientType: {
+      type: String,
+      enum: ["Customer", "Vendor"],
+      required: true,
     },
+
+    
 
     category: {
       type: String,
@@ -23,7 +27,8 @@ const notificationSchema = new Schema<INotification>(
     type: {
       type: String,
       enum: [
-        "booking_confirmed",
+
+        "new_booking",
         "booking_cancelled",
         "booking_completed",
         "contract_applyied",
@@ -52,16 +57,31 @@ const notificationSchema = new Schema<INotification>(
     },
 
     metaData: {
-      bookingId: { type: String },
-      serviceName: { type: String },
-      date: { type: String },
-      time: { type: String },
-      contractName: { type: String },
+      booking: {
+        id: String,
+        date: String,
+        time: String,
+      },
+      contract: {
+        id: String,
+        name: String,
+      },
+      message: {
+        chatId: String,
+        senderId: String,
+      },
+      payment: {
+        amount: Number,
+        method: String,
+        transactionId: String,
+      },
+      extra: {
+        type: Object,
+        default: {},
+      },
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export default mongoose.model<INotification>("Notification", notificationSchema);

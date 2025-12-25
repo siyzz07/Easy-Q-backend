@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { ICustomer, ICustomerAddressData } from "./customerType";
+import { IService, IServiceData, IStaff, IVendor } from "./vendorType";
 
 
 export interface IJwtPayload {
@@ -28,16 +30,18 @@ export interface ITimeCheck{
 
 export interface IBooking {
   _id?:  string
+  bookingId:string,
   customerId: mongoose.Types.ObjectId;
   userId?:string
   shopId: mongoose.Types.ObjectId;
   serviceId: mongoose.Types.ObjectId;
   customerAddressId: mongoose.Types.ObjectId;
   staffId?: mongoose.Types.ObjectId; 
-  bookingTime: any; 
+  bookingTimeStart: string; 
+  bookingTimeEnd: string; 
   bookingDate: string; 
   status:string;
-  totalAmount: number;
+  totalAmount: string;
   paymentMethod: string,
   paymentStatus: string;
   createdAt?: Date;
@@ -46,19 +50,37 @@ export interface IBooking {
 }
 
 
-export interface INotification{
-   _id?: string;
+ export interface IBookingPopulated {
+   _id?:  string
+  bookingId:string,
+  customerId:ICustomer;
+  shopId:IVendor;
+  serviceId:IService;
+  customerAddressId:ICustomerAddressData;
+  staffId?:IStaff; 
+  bookingTimeStart: string; 
+  bookingTimeEnd: string; 
+  bookingDate: string; 
+  status:string;
+  totalAmount: string;
+  paymentMethod: string,
+  paymentStatus: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  expireAt?:Date|null
+}
+
+export interface INotification {
+  _id?: string;
 
   recipient: string | mongoose.Types.ObjectId;
-  recipientType: "User" | "Vendor";
+  recipientType: "Customer" | "Vendor";
 
-  sender?: string | mongoose.Types.ObjectId;
-  senderType?: "User" | "Vendor" | "System";
 
   category?: "booking" | "contract" | "message" | "system" | "payment";
 
   type:
-    | "booking_confirmed"
+    | "new_booking"
     | "booking_cancelled"
     | "booking_completed"
     | "contract_applyied"
@@ -73,15 +95,31 @@ export interface INotification{
   isRead?: boolean;
 
   metaData?: {
-    bookingId?: string;
-    serviceName?: string;
-    date?: string;
-    time?: string;
-    contractName?: string;
+    booking?: {
+      id?: string;
+      date?: string;
+      time?: string;
+    };
+
+    contract?: {
+      id?: string;
+      name?: string;
+    };
+
+    message?: {
+      chatId?: string;
+      senderId?: string;
+    };
+
+    payment?: {
+      amount?: number;
+      method?: string;
+      transactionId?: string;
+    };
+
+    extra?: Record<string, any>;
   };
 
   createdAt: Date;
   updatedAt: Date;
-
-
 }

@@ -12,6 +12,7 @@ export interface IImage {
   }
 
 export interface IVendor {
+  _id?:string
   shopName?: string;
   proofImage?:string;
   // userId?:string;
@@ -65,7 +66,6 @@ export interface IStaff {
   isActive?: boolean;
   blockedDates?: [];
   userId?:string;
-  bookingTimes?:string
 }
 
 export interface IStaffAdd{
