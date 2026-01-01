@@ -12,6 +12,7 @@ import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import logger from "../../utils/logger";
 import { deleteCloudinaryImage } from "../../utils/cloudinary";
+import { IPaginationResponseMeta } from "../../types/common-types";
 
 class VendorService implements IVendorShopServiceInterface {
   private _vendorRepo: IVendorRepo;
@@ -226,21 +227,20 @@ class VendorService implements IVendorShopServiceInterface {
   }
 
 
-   getVendorsData = async (): Promise<IVendor[] | null> => {
-      try {
-        const response = await this._vendorRepo.getVendorsData();
+   getVendorsData = async (data:{search?:string,location?:string,page?:string,limit?:string}): Promise<{data:IVendor[],pagination: IPaginationResponseMeta}> => {
+    
+
+        const response = await this._vendorRepo.vendorsDataWithPagination(data)
         
-        if (!response || response.length === 0) {
-          return null;
+        if(response){
+          logger.info('vendor data fetch successfully')
+        }else{
+          throw new ErrorResponse (MessageEnum.VENDOR__DATA_FETCH_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
         }
-        
-        return response;
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.log("Get vendors data error:", error.message);
-        }
-        return null;
-      }
+
+        let activeShops = (response.data || [] ).filter((shop)=> shop.hasShop == true)
+        return {data:activeShops , pagination:response.pagination};
+    
     };
 
 

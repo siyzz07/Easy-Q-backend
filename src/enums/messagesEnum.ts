@@ -1,5 +1,6 @@
 export enum MessageEnum {
 
+  FORBIDDEN = "Forbidden Access denied",
 
   // --------------------------------------------------------------------------customer
   CUSTOMER_ALREADY_EXISTS = "Customer already exists",

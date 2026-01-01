@@ -165,6 +165,8 @@ export class BookingService implements IBookingServiceInterface {
    * 
    */
   customerBooking = async (userId: string): Promise<IBooking[]> => {
+    
+  
 
     let bookingData = await this._BookingRepository.bookingDatas({customerId:userId}) 
     if(bookingData){
@@ -203,7 +205,7 @@ export class BookingService implements IBookingServiceInterface {
 
 
   /**
-   * Sort an array of HH:mm times in ascending order
+   * Sort an array  times in ascending order
    */
   private sortTimes(
     times: { start: string; end: string; type: string }[]

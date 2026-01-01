@@ -1,3 +1,4 @@
+import { FilterQuery } from "mongoose";
 import { IVendorRepo } from "../interface/vendor-interface/vendor-respository-interface";
 import Service from "../models/ServiceModel";
 import ServiceTypesModel from "../models/ServiceTypesModel";
@@ -6,6 +7,7 @@ import vendorModel from "../models/vendorModel";
 import { IServiceType } from "../types/adminTypes";
 import { IImage, IService, IStaff, IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
+import { IPaginationResponseMeta } from "../types/common-types";
 
 export class VendorRepository
   extends BaseRepository<any>
@@ -130,13 +132,50 @@ export class VendorRepository
     return !!result;
   }
 
-  
   // ----------------------- delete vendor shop image
   async deleteShopImage(_id: string, imageId: string): Promise<boolean> {
-      let result = await this._vendorModel.findByIdAndUpdate(_id,{$pull:{images:{_id:imageId}}}
-        ,{new:true  }
-      )
+    let result = await this._vendorModel.findByIdAndUpdate(
+      _id,
+      { $pull: { images: { _id: imageId } } },
+      { new: true }
+    );
 
-      return !!result
+    return !!result;
+  }
+
+  //------------------------- get all vendor dat with pagination
+  async vendorsDataWithPagination(data: {
+    search?: string;
+    location?: string;
+    page?: string;
+    limit?: string;
+  }): Promise<{data:IVendor[],pagination: IPaginationResponseMeta} > {
+    const filter: FilterQuery<IVendor> = {};
+
+    if (data.search?.trim() || data.location?.trim()) {
+      filter.$or = [];
+
+      if (data.search?.trim()) {
+        filter.$or.push({
+          shopName: { $regex: data.search, $options: "i" },
+        });
+      }
+
+      if (data.location?.trim()) {
+        filter.$or.push({
+          city: { $regex: data.location, $options: "i" },
+        });
+      }
+    }
+
+   const options = {
+  page: Number(data.page) || 1,
+  limit: Number(data.limit) || 10,
+  sort: { _id: -1 } as const,
+};
+
+    let response = await this.filterWithPagination(options,filter)
+    return response
+
   }
 }

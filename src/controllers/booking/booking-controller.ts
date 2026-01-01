@@ -94,7 +94,6 @@ export class BookingController {
    * 
    */
   getSelectedBookingData =  async(req:Request,res:Response,next:NextFunction):Promise<void> =>{
-    try{
       const id = req.params.id
       const result = await this._BookingService.selectedBookingData(id)
       if(result){
@@ -102,10 +101,6 @@ export class BookingController {
           .status(StatusCodeEnum.OK)
           .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_FAILED , data:result})
       }
-
-    }catch(error:unknown){
-      next()
-    }
   }
   
 

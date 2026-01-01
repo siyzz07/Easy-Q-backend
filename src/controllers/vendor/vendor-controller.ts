@@ -230,12 +230,14 @@ class VendorController {
   //==================================================================
   getShopsData = async (req: Request, res: Response): Promise<void> => {
     try {
-      const shops = await this._vendorShopService.getVendorsData();
-      const activeShops = (shops || []).filter((shop) => shop.hasShop === true);
+
+      const result = await this._vendorShopService.getVendorsData(req.query);
+     
       res.status(StatusCodeEnum.OK).json({
         success: true,
         message: MessageEnum.SHOP_DATA_FETCH_SUCCESS,
-        data: activeShops,
+        data: result.data,
+        pagination:result.pagination
       });
     } catch (error: unknown) {
       console.error("Error fetching shops:", error);

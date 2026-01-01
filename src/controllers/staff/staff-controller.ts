@@ -34,6 +34,9 @@ export class StaffController {
    //----------------------------------------------- get all staff data
   getStaffsController = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
+
+     
+
       const result = await this._StaffServices.getStaffService(req.body.userId);
 
       if (result) {

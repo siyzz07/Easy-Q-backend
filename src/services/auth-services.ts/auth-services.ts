@@ -21,6 +21,9 @@ import Jwt, {
 import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
 import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
 import { IAdminRepo } from "../../interface/admin-interface/admin-repository-interface";
+import { RoleEnum } from "../../enums/role";
+
+
 
 export class AuthService implements AuthServiceInterface {
   private _vendorRepository: IVendorRepo;
@@ -48,7 +51,7 @@ export class AuthService implements AuthServiceInterface {
   verifyEmail = async (data: IVendor | ICustomer): Promise<void> => {
     const { role, ...payload } = { ...data };
 
-    if (role === "customer") {
+    if (role === RoleEnum.CUSTOMER.toLowerCase()) {
       //---handle customer
       let email = payload.email;
       const exist = await this._customerRepository.checkCustomerExist(
@@ -67,7 +70,7 @@ export class AuthService implements AuthServiceInterface {
           `${process.env.CUSTOMER_VERIFY_MAIL}?token=${token}`
         );
       }
-    } else if (role === "vendor") {
+    } else if (role === RoleEnum.VENDOR.toLowerCase()) {
       //--- handle vendor
       const email = payload.email;
 
@@ -112,7 +115,7 @@ export class AuthService implements AuthServiceInterface {
 
     let hashedPassword = await hashPassword(password as string);
 
-    if (role == "customer") {
+    if (role == RoleEnum.CUSTOMER.toLowerCase()) {
       //- handle customer
       let exitst = await this._customerRepository.checkCustomerExist(
         payload.email as string
@@ -136,7 +139,7 @@ export class AuthService implements AuthServiceInterface {
           );
         }
       }
-    } else if (role == "vendor") {
+    } else if (role == RoleEnum.VENDOR.toLowerCase()) {
       //- handle vendor
       let exist = await this._vendorRepository.checkVendorExist(
         payload.email as string
@@ -181,7 +184,7 @@ export class AuthService implements AuthServiceInterface {
     role: string;
   } | void> => {
     let { email, password, role } = data;
-    if (role == "customer") {
+    if (role ==RoleEnum.CUSTOMER.toLowerCase()) {
       const checkCustomer = await this._customerRepository.checkCustomerExist(
         email
       );
@@ -209,7 +212,7 @@ export class AuthService implements AuthServiceInterface {
           }
           const payload: IJwtPayload = {
             userId: customerData._id as string,
-            role: "Customer",
+            role: RoleEnum.CUSTOMER,
           };
 
           const AccessToken: string = accessToken(payload);
@@ -218,7 +221,7 @@ export class AuthService implements AuthServiceInterface {
           return {
             accessToken: AccessToken,
             refreshToken: RefreshToken,
-            role: "Customer",
+            role: RoleEnum.CUSTOMER,
           };
         } else {
           throw new ErrorResponse(
@@ -227,7 +230,7 @@ export class AuthService implements AuthServiceInterface {
           );
         }
       }
-    } else if (role == "vendor") {
+    } else if (role == RoleEnum.VENDOR.toLowerCase()) {
       const checkVendorExist = await this._vendorRepository.checkVendorExist(
         email
       );
@@ -269,7 +272,7 @@ export class AuthService implements AuthServiceInterface {
           } else {
             const payload: IJwtPayload = {
               userId: vendorData._id,
-              role: "Vendor",
+              role: RoleEnum.VENDOR,
             };
 
             const AccessToken = accessToken(payload);
@@ -279,12 +282,12 @@ export class AuthService implements AuthServiceInterface {
               accessToken: AccessToken,
               refreshToken: RefreshToken,
               entityData: vendorData,
-              role: "Vendor",
+              role: RoleEnum.VENDOR,
             };
           }
         }
       }
-    } else if (role == "admin") {
+    } else if (role == RoleEnum.ADMIN.toLowerCase()) {
       const adminExist = await this._adminRepository.checkAdminExist(email);
 
       if (!adminExist) {
@@ -308,7 +311,7 @@ export class AuthService implements AuthServiceInterface {
       if (adminData) {
         const payload: IJwtPayload = {
           userId: adminData._id,
-          role: "Admin",
+          role: RoleEnum.ADMIN,
         };
         const AccessToken: string = accessToken(payload);
         const RefreshToken: string = refreshToken(payload);
@@ -316,7 +319,7 @@ export class AuthService implements AuthServiceInterface {
         return {
           accessToken: AccessToken,
           refreshToken: RefreshToken,
-          role: "Admin",
+          role: RoleEnum.ADMIN,
         };
       }
     } else {
@@ -339,7 +342,7 @@ export class AuthService implements AuthServiceInterface {
     let baseUrl;
 
     switch (role) {
-      case "customer": {
+      case RoleEnum.CUSTOMER.toLowerCase(): {
         const exist = await this._customerRepository.checkCustomerExist(email);
         if (!exist) {
           throw new ErrorResponse(
@@ -351,7 +354,7 @@ export class AuthService implements AuthServiceInterface {
         baseUrl = process.env.CUSTOMER_FORGOT_PASSWORD;
         break;
       }
-      case "vendor": {
+      case RoleEnum.VENDOR.toLowerCase(): {
         const exist = await this._vendorRepository.checkVendorExist(email);
 
         if (!exist) {
@@ -373,7 +376,7 @@ export class AuthService implements AuthServiceInterface {
       }
     }
 
-    if (role === "customer" || role == "vendor") {
+    if (role === RoleEnum.CUSTOMER.toLowerCase() || role == RoleEnum.VENDOR.toLowerCase()) {
       const token = generateJwtToken({ email });
       await sendEmail(email, `${baseUrl}?token=${token}`);
       return true;
@@ -388,7 +391,7 @@ export class AuthService implements AuthServiceInterface {
     const hashedPassword = await hashPassword(password);
 
     switch (role) {
-      case "customer": {
+      case RoleEnum.CUSTOMER.toLowerCase(): {
         const emailExist = await this._customerRepository.checkCustomerExist(email);
         if (!emailExist) {
           throw new ErrorResponse(MessageEnum.CUSTOMER_NOT_FOUND,StatusCodeEnum.NOT_FOUND);
@@ -398,7 +401,7 @@ export class AuthService implements AuthServiceInterface {
         return;
       }
 
-      case "vendor": {
+      case RoleEnum.VENDOR.toLowerCase(): {
         const emailExist = await this._vendorRepository.checkVendorExist(email);
         if (!emailExist) {
           throw new ErrorResponse(MessageEnum.VENDOR_NOT_FOUND,StatusCodeEnum.NOT_FOUND );
@@ -422,20 +425,20 @@ export class AuthService implements AuthServiceInterface {
     let refreshToken: string | undefined;
     let entity: string;
 
-    switch (role.toLowerCase()) {
-      case "customer":
+    switch (role?.toLowerCase()) {
+      case RoleEnum.CUSTOMER.toLowerCase():
         refreshToken = token?.CustomerJwt;
-        entity = "Customer";
+        entity = RoleEnum.CUSTOMER;
         break;
 
-      case "vendor":
+      case RoleEnum.VENDOR.toLowerCase():
         refreshToken = token?.VendorJwt;
-        entity = "Vendor";
+        entity = RoleEnum.VENDOR;
         break;
 
-      case "admin":
+      case RoleEnum.ADMIN.toLowerCase():
         refreshToken = token?.AdminJwt;
-        entity = "Admin";
+        entity = RoleEnum.ADMIN;
         break;
 
       default:
