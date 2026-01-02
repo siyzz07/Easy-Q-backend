@@ -52,7 +52,7 @@ export class NotificationService implements INotificationServiceInterface {
       createdAt:new Date()
     };
 
-    let result = await this._NotificationRepository.addNewNotification(
+    const result = await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
 
@@ -98,7 +98,7 @@ export class NotificationService implements INotificationServiceInterface {
       createdAt:new Date()
     };
 
-    let result = await this._NotificationRepository.addNewNotification(
+    const result = await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
     

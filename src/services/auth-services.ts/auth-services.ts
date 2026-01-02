@@ -53,7 +53,7 @@ export class AuthService implements AuthServiceInterface {
 
     if (role === RoleEnum.CUSTOMER.toLowerCase()) {
       //---handle customer
-      let email = payload.email;
+      const email = payload.email;
       const exist = await this._customerRepository.checkCustomerExist(
         email as string
       );
@@ -111,13 +111,13 @@ export class AuthService implements AuthServiceInterface {
 
   // ----------------------------------------------- add new  verified Enitity (customer/vendor)
   addNewEntity = async (data: IVendor | ICustomer): Promise<boolean | void> => {
-    let { role, password, ...payload } = { ...data };
+    const { role, password, ...payload } = { ...data };
 
-    let hashedPassword = await hashPassword(password as string);
+    const hashedPassword = await hashPassword(password as string);
 
     if (role == RoleEnum.CUSTOMER.toLowerCase()) {
       //- handle customer
-      let exitst = await this._customerRepository.checkCustomerExist(
+      const exitst = await this._customerRepository.checkCustomerExist(
         payload.email as string
       );
       if (!exitst) {
@@ -125,7 +125,7 @@ export class AuthService implements AuthServiceInterface {
           ...payload,
           password: hashedPassword,
         };
-        let result = await this._customerRepository.addNewCustomer(
+        const result = await this._customerRepository.addNewCustomer(
           values as ICustomer
         );
 
@@ -141,7 +141,7 @@ export class AuthService implements AuthServiceInterface {
       }
     } else if (role == RoleEnum.VENDOR.toLowerCase()) {
       //- handle vendor
-      let exist = await this._vendorRepository.checkVendorExist(
+      const exist = await this._vendorRepository.checkVendorExist(
         payload.email as string
       );
       if (exist) {
@@ -150,12 +150,12 @@ export class AuthService implements AuthServiceInterface {
           StatusCodeEnum.CONFLICT
         );
       }
-      let values = {
+      const values = {
         ...payload,
         password: hashedPassword,
       };
 
-      let result = await this._vendorRepository.addNewVendor(values as IVendor);
+      const result = await this._vendorRepository.addNewVendor(values as IVendor);
       if (result) {
         return true;
       } else {
@@ -183,7 +183,7 @@ export class AuthService implements AuthServiceInterface {
     entityData?: IVendor | ICustomer;
     role: string;
   } | void> => {
-    let { email, password, role } = data;
+    const { email, password, role } = data;
     if (role ==RoleEnum.CUSTOMER.toLowerCase()) {
       const checkCustomer = await this._customerRepository.checkCustomerExist(
         email

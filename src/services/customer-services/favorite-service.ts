@@ -38,7 +38,7 @@ export class FavoriteService implements IFavoriteService {
         });
       }
 
-      let result = await this._favoriteRepository.addVendorToFavorite(
+      const result = await this._favoriteRepository.addVendorToFavorite(
         customerId,
         shopId
       );
@@ -53,7 +53,7 @@ export class FavoriteService implements IFavoriteService {
         );
       }
     } else {
-      let result = await this._favoriteRepository.removeVendorFromFavorite(
+      const result = await this._favoriteRepository.removeVendorFromFavorite(
         customerId,
         shopId
       );
@@ -85,7 +85,7 @@ export class FavoriteService implements IFavoriteService {
       logger.info(MessageEnum.FAVORITE_FETCH_SUCCESS);
       return getFavoriteResMapper.toDto(favorite);
     } else {
-      let result = await this._favoriteRepository.createFavorite({
+      const result = await this._favoriteRepository.createFavorite({
         customerId,
         list: [],
       });
@@ -100,7 +100,7 @@ export class FavoriteService implements IFavoriteService {
   }): Promise<VendorDto[]> => {
     const { userId } = data;
 
-    let favorite = await this._favoriteRepository.getFavoriteByCustomerId(
+    const favorite = await this._favoriteRepository.getFavoriteByCustomerId(
       userId
     );
 

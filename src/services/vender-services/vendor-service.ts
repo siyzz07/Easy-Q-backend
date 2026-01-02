@@ -38,7 +38,7 @@ class VendorService implements IVendorShopServiceInterface {
     try {
 
       
-    let days = workingDays.split(',')
+    const days = workingDays.split(',')
     
     
       
@@ -148,7 +148,7 @@ class VendorService implements IVendorShopServiceInterface {
   updateVendor = async( _id: string,workingDays:string,data:IVendor): Promise<boolean | void> => {
     
    
-   let days = workingDays.split(',')
+   const days = workingDays.split(',')
    const updateData = {
      ...data,
      workingDays:days,
@@ -238,7 +238,7 @@ class VendorService implements IVendorShopServiceInterface {
           throw new ErrorResponse (MessageEnum.VENDOR__DATA_FETCH_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
         }
 
-        let activeShops = (response.data || [] ).filter((shop)=> shop.hasShop == true)
+        const activeShops = (response.data || [] ).filter((shop)=> shop.hasShop == true)
         return {data:activeShops , pagination:response.pagination};
     
     };
@@ -246,8 +246,8 @@ class VendorService implements IVendorShopServiceInterface {
 
     //---------------------------- add shop image
     addShopImages = async (datas: { data: IImage; userId: string; }): Promise<boolean | void> => {
-       let {userId,data} = datas
-       let result = await this._vendorRepo.addImage(userId,data)
+       const {userId,data} = datas
+       const result = await this._vendorRepo.addImage(userId,data)
        if(result){
         logger.info('shop image added success')
         return true
@@ -264,7 +264,7 @@ class VendorService implements IVendorShopServiceInterface {
 
         if(result){
 
-            let response = await this._vendorRepo.deleteShopImage(userId,image_id)
+            const response = await this._vendorRepo.deleteShopImage(userId,image_id)
 
             if(response){
               logger.info('image deleted successfull')

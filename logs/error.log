@@ -6704,3 +6704,11 @@
 [2026-01-01 11:26:36] error: Cast to Boolean failed for value "undefined" (type string) at path "isActive" for model "Staff" - GET /api/vendor/staff/undefined
 [2026-01-01 11:26:46] error: Cast to Boolean failed for value "undefined" (type string) at path "isActive" for model "Staff" - GET /api/vendor/staff/undefined
 [2026-01-01 11:26:46] error: Cast to Boolean failed for value "undefined" (type string) at path "isActive" for model "Staff" - GET /api/vendor/staff/undefined
+[2026-01-01 11:31:19] error: Customer not found - POST /api/auth/login
+[2026-01-01 12:19:32] error: Socket authentication error: jwt expired
+[2026-01-01 12:19:32] error: Socket authentication error: jwt expired
+[2026-01-01 14:27:20] error: Socket authentication error: jwt expired
+[2026-01-01 14:27:20] error: Socket authentication error: jwt expired
+[2026-01-01 14:59:45] error: Socket authentication error: jwt expired
+[2026-01-01 14:59:47] error: Socket authentication error: jwt expired
+[2026-01-01 15:12:07] error: Socket authentication error: jwt expired

@@ -71,7 +71,7 @@ export class StaffController {
   staffBlockedDate = async (req:Request ,res:Response,next:NextFunction):Promise<void>=>{
     try{
 
-      let result = await this._StaffServices.editStaffBlockDate(req.body)
+      const result = await this._StaffServices.editStaffBlockDate(req.body)
       if(result){
         res
           .status(StatusCodeEnum.OK)

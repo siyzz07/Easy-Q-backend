@@ -33,8 +33,8 @@ export class AuthController {
   // ------------------------------------------------------  add Entity
   addNewEntity = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      let data = req.body;
-      let response = await this._authService.addNewEntity(data);
+      const data = req.body;
+      const response = await this._authService.addNewEntity(data);
       if (response) {
         res
           .status(StatusCodeEnum.OK)
@@ -54,8 +54,8 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      let data = req.body;
-      let result = await this._authService.login(data);
+      const data = req.body;
+      const result = await this._authService.login(data);
 
       if (result) {
         res.cookie(`${result.role}Jwt`, result.refreshToken, {
@@ -88,7 +88,7 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      let result = await this._authService.resetPasswordEmailVerify(req.body);
+      const result = await this._authService.resetPasswordEmailVerify(req.body);
       if (result) {
         res
           .status(StatusCodeEnum.OK)
@@ -128,9 +128,9 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      let refreshToken = req.cookies;
+      const refreshToken = req.cookies;
 
-      let accessToken = await this._authService.updateAccessToken(
+      const accessToken = await this._authService.updateAccessToken(
         refreshToken,
         req.body.role
       );
@@ -154,7 +154,7 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      let role = req.body.role;
+      const role = req.body.role;
       res.clearCookie(`${role}Jwt`, {
         httpOnly: true,
         sameSite: "none",

@@ -16,7 +16,7 @@ export class FavoriteController {
     //----------------------- add to favorite
     updateFavorite = async(req:Request,res:Response,next:NextFunction):Promise<void> =>{
         try{
-                let result = await this._favoriteService.favoriteUpdate(favoriteUpdataReqMapper.toDto(req.body))
+                const result = await this._favoriteService.favoriteUpdate(favoriteUpdataReqMapper.toDto(req.body))
                 res
                     .status(StatusCodeEnum.OK)
                     .json({message:result,success:true})
@@ -32,7 +32,7 @@ export class FavoriteController {
         try{
 
             
-            let result = await this._favoriteService.getFavorite(getFavoriteReqMapper.toDto(req.body))
+            const result = await this._favoriteService.getFavorite(getFavoriteReqMapper.toDto(req.body))
             res
                 .status(StatusCodeEnum.OK)
                 .json({success:true,Message:MessageEnum.FAVORITE_FETCH_SUCCESS,data:result})

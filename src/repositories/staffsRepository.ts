@@ -95,7 +95,7 @@ export class StaffRepository
 
    async updateStaff(id: string, data: UpdateQuery<IStaff>): Promise<IStaff | null> {
     
-    let result = await this.update(id,data)
+    const result = await this.update(id,data)
     return result
   }
   

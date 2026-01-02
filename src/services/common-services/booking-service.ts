@@ -64,7 +64,7 @@ export class BookingService implements IBookingServiceInterface {
             expireAt:null
           }
 
-          let result = await this._BookingRepository.updateBooking(bookingId,query)
+          const result = await this._BookingRepository.updateBooking(bookingId,query)
 
        
 
@@ -95,7 +95,7 @@ export class BookingService implements IBookingServiceInterface {
       shopId,
     } = data;
 
-    let staffData = await this._StaffRepository.getStaffById(staffId);
+    const staffData = await this._StaffRepository.getStaffById(staffId);
     const serviceData = await this._ServiceRepository.getSelectedService(
       serviceId
     );
@@ -109,7 +109,7 @@ export class BookingService implements IBookingServiceInterface {
     );
 
 
-    let availableTime = await this.sortAndFindAvailableTime(
+    const availableTime = await this.sortAndFindAvailableTime(
       bookedDatas,
       staffData,
       serviceDuration,
@@ -168,7 +168,7 @@ export class BookingService implements IBookingServiceInterface {
     
   
 
-    let bookingData = await this._BookingRepository.bookingDatas({customerId:userId}) 
+    const bookingData = await this._BookingRepository.bookingDatas({customerId:userId}) 
     if(bookingData){
         logger.info(MessageEnum.BOOKING_DATA_FETCH_SUCCESS)
     }else{
@@ -187,7 +187,7 @@ export class BookingService implements IBookingServiceInterface {
   selectedBookingData = async (id:string) :Promise <IBooking[]> =>{
 
 
-    let bookingData = await this._BookingRepository.bookingDatas({_id:id})
+    const bookingData = await this._BookingRepository.bookingDatas({_id:id})
 
     if(bookingData){
       return bookingData
@@ -255,13 +255,13 @@ private calculateTTL(bookingDate: string, bookingTime: string): number {
     serviceDuration: number,
     prefferTime: string
   ):Promise<{ startTime: string; endTime: string } | false>  {
-    let staffOpen = {
+    const staffOpen = {
       start: staffData.openingTime,
       end: staffData.openingTime,
       type: "checkpoint",
     };
 
-    let staffClose = {
+    const staffClose = {
       start: staffData.closingTime,
       end: staffData.closingTime,
       type: "checkpoint",
@@ -304,7 +304,7 @@ private calculateTTL(bookingDate: string, bookingTime: string): number {
   preferredTime: string
 ): Promise<{ startTime: string; endTime: string } | false> {
 
-  let indexes: number[] = [];
+  const indexes: number[] = [];
 
   function add(index: number) {
     indexes.push(index);

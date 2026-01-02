@@ -134,7 +134,7 @@ export class VendorRepository
 
   // ----------------------- delete vendor shop image
   async deleteShopImage(_id: string, imageId: string): Promise<boolean> {
-    let result = await this._vendorModel.findByIdAndUpdate(
+    const result = await this._vendorModel.findByIdAndUpdate(
       _id,
       { $pull: { images: { _id: imageId } } },
       { new: true }
@@ -174,7 +174,7 @@ export class VendorRepository
   sort: { _id: -1 } as const,
 };
 
-    let response = await this.filterWithPagination(options,filter)
+    const response = await this.filterWithPagination(options,filter)
     return response
 
   }

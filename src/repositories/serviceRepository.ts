@@ -40,7 +40,7 @@ export class ServiceRepository
   }
  //-------------------------------------------------------- get selected service
  getSelectedService(_id: string): Promise<IService> {
-   let result = this.findById(_id)
+   const result = this.findById(_id)
    return result
  }
 

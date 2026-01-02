@@ -102,7 +102,7 @@ export class StaffService implements IStaffServiceInterface {
 
     const{_id,blockedDates,userId} = data
     
-    let result = await this._StaffRepository.editStaff(userId,_id,{blockedDates})
+    const result = await this._StaffRepository.editStaff(userId,_id,{blockedDates})
      
     if(result){
       return true
