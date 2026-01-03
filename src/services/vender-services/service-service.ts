@@ -61,7 +61,7 @@ export class VendorServiceService implements IServiceInterface {
 
   //-----------------------------------------------------------------------get selected service
   getSelectedSerivce = async(_id: string): Promise<IService> => {
-    let  result = await this._ServiceRpository.getSelectedService(_id)
+    const  result = await this._ServiceRpository.getSelectedService(_id)
     if(result){
         return result
     }else{

@@ -1,4 +1,5 @@
 import { IServiceType } from "../../types/adminTypes";
+import { IPaginationResponseMeta } from "../../types/common-types";
 import { IImage, IService, IStaff, IVendor } from "../../types/vendorType";
 
 
@@ -24,5 +25,7 @@ export interface IVendorRepo {
 
     addImage (_id:string,image:IImage):Promise<boolean>
     deleteShopImage(_id:string,imageId:string):Promise<boolean>
+
+    vendorsDataWithPagination (data:{search?:string,location?:string,page?:string,limit?:string}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>
     
 }

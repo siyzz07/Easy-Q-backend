@@ -1,7 +1,18 @@
-import { Document, Model, FilterQuery, UpdateQuery, FlattenMaps } from "mongoose";
+import {
+  Document,
+  Model,
+  FilterQuery,
+  UpdateQuery,
+  FlattenMaps,
+} from "mongoose";
 
 import { ICustomerAddress } from "../types/customerType";
 import { IBaseRepositoryInterface } from "../interface/common-interface/base-resposiotry-interface";
+import {
+  IPaginationMeta,
+  IPaginationResponseMeta,
+} from "../types/common-types";
+import { options } from "joi";
 
 class BaseRepository<T extends Document>
   implements IBaseRepositoryInterface<T>
@@ -49,13 +60,43 @@ class BaseRepository<T extends Document>
     return await this._Model.find(conditions).lean().exec();
   }
 
-  async findOneByCondiition(conditions: FilterQuery<T>): Promise<any> {  
-    return await this._Model.findOne(conditions).lean().exec()
+  async findOneByCondiition(conditions: FilterQuery<T>): Promise<any> {
+    return await this._Model.findOne(conditions).lean().exec();
   }
 
-  async update(id: string, data: UpdateQuery<T>): Promise<any| null> {
-    const updated = await this._Model.findByIdAndUpdate(id, data, { new: true }).lean<T>();
+  async update(id: string, data: UpdateQuery<T>): Promise<any | null> {
+    const updated = await this._Model
+      .findByIdAndUpdate(id, data, { new: true })
+      .lean<T>();
     return updated;
+  }
+
+  //---- filter with pagination
+  async filterWithPagination(
+    options: IPaginationMeta,
+    filter: FilterQuery<T>
+  ): Promise<{ data: T[]; pagination: IPaginationResponseMeta }> {
+    const page = Math.max(options?.page || 1, 1);
+    const limit = Math.max(options?.limit || 10, 1);
+    const skip = (page - 1) * limit;
+    const sort = options?.sort ?? { _id: -1 };
+
+    const [data, total] = await Promise.all([
+      this._Model.find(filter).sort(sort ).skip(skip).limit(limit).lean<T[]>(),
+      this._Model.countDocuments(filter),
+    ]);
+
+    return {
+      data,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+        hasNextPage: page * limit < total,
+        hasPrevPage: page > 1,
+      },
+    };
   }
 }
 

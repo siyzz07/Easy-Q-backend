@@ -30,7 +30,7 @@ export class BookingController {
   ): Promise<void> => {
     try{
 
-      let result = await this._BookingService.addNewbooking(req.body)
+      const result = await this._BookingService.addNewbooking(req.body)
       if(result){
         res
           .status(StatusCodeEnum.CREATED)
@@ -50,7 +50,7 @@ export class BookingController {
   bookAvailableTime = async (req:Request ,res:Response,next:NextFunction) :Promise<void> =>{
     try{
 
-      let result = await this._BookingService.checkTimeAvailable(checkTimeReqMapper.toDto(req.body))
+      const result = await this._BookingService.checkTimeAvailable(checkTimeReqMapper.toDto(req.body))
       console.log(result)
       if(result){
           res 
@@ -77,7 +77,7 @@ export class BookingController {
 
   getCustomerBookings = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
     try{
-      let result = await this._BookingService.customerBooking(req.body.userId)
+      const result = await this._BookingService.customerBooking(req.body.userId)
       if(result){ 
         res 
           .status(StatusCodeEnum.OK)
@@ -94,7 +94,6 @@ export class BookingController {
    * 
    */
   getSelectedBookingData =  async(req:Request,res:Response,next:NextFunction):Promise<void> =>{
-    try{
       const id = req.params.id
       const result = await this._BookingService.selectedBookingData(id)
       if(result){
@@ -102,10 +101,6 @@ export class BookingController {
           .status(StatusCodeEnum.OK)
           .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_FAILED , data:result})
       }
-
-    }catch(error:unknown){
-      next()
-    }
   }
   
 

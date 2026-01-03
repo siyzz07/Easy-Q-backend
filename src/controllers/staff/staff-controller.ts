@@ -34,6 +34,9 @@ export class StaffController {
    //----------------------------------------------- get all staff data
   getStaffsController = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
+
+     
+
       const result = await this._StaffServices.getStaffService(req.body.userId);
 
       if (result) {
@@ -68,7 +71,7 @@ export class StaffController {
   staffBlockedDate = async (req:Request ,res:Response,next:NextFunction):Promise<void>=>{
     try{
 
-      let result = await this._StaffServices.editStaffBlockDate(req.body)
+      const result = await this._StaffServices.editStaffBlockDate(req.body)
       if(result){
         res
           .status(StatusCodeEnum.OK)

@@ -2,13 +2,14 @@ import express from 'express'
 
 import { AddressControllerInstance, customerControllerInstance, favoriteControllerInstance } from '../di/customerDi'
 import { emailVerifyTokenMIddleware } from '../middlewares/emailTokenVerify'
-import { verifyToken } from '../middlewares/authTokenVerify'
+import { isCustomer, verifyToken } from '../middlewares/authTokenVerify'
 import { customerBlockAuth } from '../middlewares/customerBlockAuth'
 import { authControllerInstance } from '../di/authDi'
 import { vendorControllerInstance, vendorServiceControllerInstance } from '../di/vendorDi'
 import { BookingControllerInstance } from '../di/commonDi'
 import { validate } from '../middlewares/validate'
-import { addAddressSchema, editAddressSchema } from '../validations/address-Validation'
+import { addAddressSchema, editAddressSchema } from '../validations/address-validation'
+// import { addAddressSchema, editAddressSchema } from '../validations/address-Validation'
 
 
 
@@ -50,8 +51,8 @@ customerRoute.get('/service/get-service',verifyToken,customerBlockAuth,vendorSer
  * 
  */
 customerRoute.get('/profile/customer-data',verifyToken,customerBlockAuth,customerControllerInstance.getCustomerData)
-customerRoute.post('/profile/edit-profile',verifyToken,customerBlockAuth,customerControllerInstance.editProfile)
-customerRoute.post('/profile/change-password',verifyToken,customerBlockAuth,customerControllerInstance.changePassword)
+customerRoute.post('/profile/edit-profile',verifyToken,isCustomer,customerBlockAuth,customerControllerInstance.editProfile)
+customerRoute.post('/profile/change-password',verifyToken,isCustomer,customerBlockAuth,customerControllerInstance.changePassword)
 
 /**
  * 
@@ -79,9 +80,9 @@ customerRoute.get('/profile/get-each-address',verifyToken,customerBlockAuth,Addr
  *  favorite 
  * 
  */
-customerRoute.post('/favorite',verifyToken,customerBlockAuth,favoriteControllerInstance.updateFavorite)
-customerRoute.get('/favorite',verifyToken,customerBlockAuth,favoriteControllerInstance.getFavorites)
-customerRoute.get('/favorite/shopes',verifyToken,customerBlockAuth,favoriteControllerInstance.getFavoriteShopes)
+customerRoute.post('/favorite',verifyToken,isCustomer,customerBlockAuth,favoriteControllerInstance.updateFavorite)
+customerRoute.get('/favorite',verifyToken,isCustomer,customerBlockAuth,favoriteControllerInstance.getFavorites)
+customerRoute.get('/favorite/shopes',verifyToken,isCustomer,customerBlockAuth,favoriteControllerInstance.getFavoriteShopes)
 
 
 

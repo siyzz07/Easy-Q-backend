@@ -1,0 +1,24 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.favoriteRepository = exports.addressRepository = exports.serviceTypesRepository = exports.notificationRepository = exports.vendorRepository = exports.staffRepository = exports.serviceRepository = exports.customerRepository = exports.bookingRepository = exports.adminRepository = void 0;
+const adminRepository_1 = require("../repositories/adminRepository");
+const bookingRepository_1 = require("../repositories/bookingRepository");
+const customerAddressRepository_1 = require("../repositories/customerAddressRepository");
+const customerRepository_1 = require("../repositories/customerRepository");
+const favoriteRepository_1 = require("../repositories/favoriteRepository");
+const notificationRepository_1 = require("../repositories/notificationRepository");
+const serviceRepository_1 = require("../repositories/serviceRepository");
+const ServiceTypesRepository_1 = require("../repositories/ServiceTypesRepository");
+const staffsRepository_1 = require("../repositories/staffsRepository");
+const vendorRepository_1 = require("../repositories/vendorRepository");
+// Instantiate all Rep ositories ONCE
+exports.adminRepository = new adminRepository_1.AdminRepository();
+exports.bookingRepository = new bookingRepository_1.BookingRepository();
+exports.customerRepository = new customerRepository_1.CustomerRepository();
+exports.serviceRepository = new serviceRepository_1.ServiceRepository();
+exports.staffRepository = new staffsRepository_1.StaffRepository();
+exports.vendorRepository = new vendorRepository_1.VendorRepository();
+exports.notificationRepository = new notificationRepository_1.NotificationRepository();
+exports.serviceTypesRepository = new ServiceTypesRepository_1.ServiceTypes();
+exports.addressRepository = new customerAddressRepository_1.CustomerAddresRepository();
+exports.favoriteRepository = new favoriteRepository_1.FavoriteRepository();

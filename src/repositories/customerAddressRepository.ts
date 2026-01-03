@@ -113,10 +113,10 @@ export class CustomerAddresRepository
 //-----------------------------------------------------------------get selected address
 async getSelectedAddress(customerId: string, addressId: string): Promise<IAddress> {
   
-  let query = {
+  const query = {
   customerId: customerId,};
 
-  let result = await this.findOneByCondiition(query)
+  const result = await this.findOneByCondiition(query)
   return result
 
 }

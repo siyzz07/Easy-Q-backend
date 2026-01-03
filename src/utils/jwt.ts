@@ -31,7 +31,7 @@ export const generateJwtToken = (payload: object) => {
 
 
 export const accessToken = (payload:IJwtPayload) =>{
-  return jwt.sign(payload,JWT_ACCESS_TOKEN,{expiresIn:"1m"})
+  return jwt.sign(payload,JWT_ACCESS_TOKEN,{expiresIn:"10m"})
 }
 
 

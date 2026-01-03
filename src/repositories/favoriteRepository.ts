@@ -26,7 +26,7 @@ export class FavoriteRepository extends BaseRepository<any> implements IFavorite
         const query = {
                 customerId:customerId
         }
-        let result = await this.findOneByCondiition(query)
+        const result = await this.findOneByCondiition(query)
         return result
   }
 

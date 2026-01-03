@@ -14,7 +14,7 @@ export class ReviewRepository extends BaseRepository<any> implements IReviewRepo
 
 
         async addReivew(data: IReview): Promise<boolean | void> {
-            let result = await  this.create(data)
+            const result = await  this.create(data)
         }
 
 

@@ -1,4 +1,5 @@
 import { IServiceType } from "../../types/adminTypes";
+import { IPaginationResponseMeta } from "../../types/common-types";
 import { IImage, IService, IShopData, IStaff, IStaffAdd, IVendor } from "../../types/vendorType";
 
 
@@ -17,7 +18,7 @@ export interface IVendorShopServiceInterface{
   rejectVendorRequst (_id:string):Promise<boolean|void>;//-----------
   verifyVendorRequst (_id:string):Promise<boolean|void>;//-----------
   getEachVendorData (data:string):Promise<IVendor|void>//---------------DD
-  getVendorsData ():Promise<IVendor[]|null>//-----------------
+  getVendorsData (data:{search?:string,location?:string,page?:string,limit?:string}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>//-----------------
 
   addShopImages (datas:{data:IImage,userId:string}):Promise<boolean|void>
   removeImage(data:{publicId:string,image_id:string,userId:string}):Promise<boolean|void>

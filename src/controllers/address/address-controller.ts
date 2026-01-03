@@ -91,9 +91,9 @@ export class CustomerAddressContorller {
     next: NextFunction
   ): Promise<void> => {
     try {
-      let { _id } = req.query;
+      const { _id } = req.query;
 
-      let result = await this._addressService.getEachAddress(
+      const result = await this._addressService.getEachAddress(
         req.body.userId,
         _id as string
       );
