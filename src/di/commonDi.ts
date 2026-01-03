@@ -1,4 +1,5 @@
 import { BookingController } from "../controllers/booking/booking-controller"
+import { PaymentController } from "../controllers/payment/payment-controller"
 import { BookingService } from "../services/common-services/booking-service"
 import { NotificationService } from "../services/common-services/notificaion-service"
 import { 
@@ -15,4 +16,10 @@ const notificationServiceInstance = new NotificationService(notificationReposito
 const bookingServiceInstance = new BookingService(bookingRepository, serviceRepository, staffRepository, notificationServiceInstance)
 const BookingControllerInstance = new BookingController(bookingServiceInstance)
 
-export { BookingControllerInstance, notificationServiceInstance }
+
+// ------------------ payment
+
+const paymentControllerInstance = new PaymentController()
+
+
+export { BookingControllerInstance, notificationServiceInstance,paymentControllerInstance }

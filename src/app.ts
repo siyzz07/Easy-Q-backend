@@ -11,6 +11,7 @@ import { ErrorResponse } from './utils/errorResponse';
 import authRoute from './routes/authRoutes';
 import bookingRoute from './routes/bookingRoute';
 import { morganLogger } from './middlewares/morganLogger';
+import paymentRoute from './routes/paymentRoutes';
 
 const app = express()
 
@@ -46,6 +47,7 @@ app.use('/api/vendor',vendorRoute)
 app.use('/api/admin',adminRoute)
 app.use('/api/auth',authRoute)
 app.use('/api/booking',bookingRoute)
+app.use('/api/payment',paymentRoute)
 
 app.use(errorHandler)
 
