@@ -1,4 +1,4 @@
-import { UpdateQuery } from "mongoose";
+import mongoose, { UpdateQuery } from "mongoose";
 import { IStaffRepositoryInterface } from "../interface/staff-interface/staff-repository-interface";
 import staffModel from "../models/staffModel";
 import { IStaff } from "../types/vendorType";
@@ -27,8 +27,18 @@ export class StaffRepository
 
   //-----------------------------------------------------get the shop staffs
   async getStaff(shopId: string): Promise<IStaff[] | []> {
-    const result = await this.findManyByCondition({ shopId: shopId });
+
+  let query
+   
+      query ={
+        shopId:shopId,
+        
+      }
+  
+    const result = await this.findManyByCondition(query);
     if (result) {
+
+      console.log(result)
       return result;
     } else {
       return [];
@@ -85,7 +95,7 @@ export class StaffRepository
 
    async updateStaff(id: string, data: UpdateQuery<IStaff>): Promise<IStaff | null> {
     
-    let result = await this.update(id,data)
+    const result = await this.update(id,data)
     return result
   }
   

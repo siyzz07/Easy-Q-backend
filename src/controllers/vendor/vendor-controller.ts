@@ -106,7 +106,7 @@ class VendorController {
       const { userId, workingDays, ...data } = { ...req.body };
       console.log(req.body);
 
-      let result = await this._vendorShopService.updateVendor(
+      const result = await this._vendorShopService.updateVendor(
         userId,
         workingDays,
         data
@@ -230,12 +230,14 @@ class VendorController {
   //==================================================================
   getShopsData = async (req: Request, res: Response): Promise<void> => {
     try {
-      const shops = await this._vendorShopService.getVendorsData();
-      const activeShops = (shops || []).filter((shop) => shop.hasShop === true);
+
+      const result = await this._vendorShopService.getVendorsData(req.query);
+     
       res.status(StatusCodeEnum.OK).json({
         success: true,
         message: MessageEnum.SHOP_DATA_FETCH_SUCCESS,
-        data: activeShops,
+        data: result.data,
+        pagination:result.pagination
       });
     } catch (error: unknown) {
       console.error("Error fetching shops:", error);
@@ -264,7 +266,7 @@ class VendorController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      let result = await this._vendorShopService.addShopImages(req.body);
+      const result = await this._vendorShopService.addShopImages(req.body);
       if (result) {
         res
           .status(StatusCodeEnum.OK)
@@ -283,7 +285,7 @@ class VendorController {
   ): Promise<void> => {
     try {
 
-      let result = await this._vendorShopService.removeImage(req.body)
+      const result = await this._vendorShopService.removeImage(req.body)
       if(result){
         res
         .status(StatusCodeEnum.OK)

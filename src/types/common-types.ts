@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { SortOrder } from "mongoose";
 import { ICustomer, ICustomerAddressData } from "./customerType";
 import { IService, IServiceData, IStaff, IVendor } from "./vendorType";
 
@@ -122,4 +122,20 @@ export interface INotification {
 
   createdAt: Date;
   updatedAt: Date;
+}
+
+
+export interface IPaginationMeta {
+  page?: number;
+  limit?: number;
+  sort?:  Record<string, SortOrder>;
+}
+
+export interface IPaginationResponseMeta {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
 }

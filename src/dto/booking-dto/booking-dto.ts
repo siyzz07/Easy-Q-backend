@@ -1,5 +1,5 @@
 export interface BookingResponseDTO {
-  id: string;
+  id: string;  
   bookingId:string,
   customerId: string;
   shopId: string;

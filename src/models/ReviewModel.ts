@@ -1,76 +1,25 @@
-import mongoose, { Schema, Document } from "mongoose";
-import { INotification } from "../types/common-types";
+import mongoose, { Schema } from "mongoose";
+import { IReview } from "../types/vendorType";
 
-
-const notificationSchema = new Schema<INotification>(
+const reviewSchema = new Schema<IReview>(
   {
-    recipient: {
+    customerId: {
       type: Schema.Types.ObjectId,
-      refPath: "recipientType",
+      ref: "Customer",
       required: true,
     },
-
-    recipientType: {
-      type: String,
-      enum: ["Customer", "Vendor"],
-      required: true,
-    },
-
-    sender: {
+    vendorId: {
       type: Schema.Types.ObjectId,
-      refPath: "senderType",
-      required: false,
-    },
-
-    senderType: {
-      type: String,
-      enum: ["Customer", "Vendor"],
-      default: "System",
-    },
-
-    category: {
-      type: String,
-      enum: ["booking", "contract", "message", "system", "payment"],
-      default: "system",
-    },
-
-    type: {
-      type: String,
-      enum: [
-        "booking_confirmed",
-        "booking_cancelled",
-        "booking_completed",
-        "contract_applyied",
-        "contract_signed",
-        "message",
-        "system",
-        "payment_success",
-        "payment_failed",
-      ],
+      ref: "Vendor",
       required: true,
     },
-
-    title: {
+    rating: {
       type: String,
       required: true,
     },
-
-    content: {
+    comment: {
       type: String,
       required: true,
-    },
-
-    isRead: {
-      type: Boolean,
-      default: false,
-    },
-
-    metaData: {
-      bookingId: { type: String },
-      serviceName: { type: String },
-      date: { type: String },
-      time: { type: String },
-      contractName: { type: String },
     },
   },
   {
@@ -78,4 +27,4 @@ const notificationSchema = new Schema<INotification>(
   }
 );
 
-export default mongoose.model<INotification>("Notification", notificationSchema);
+export default mongoose.model<IReview>("Review", reviewSchema);

@@ -139,7 +139,7 @@ export class CustomerAddressService
     customerId: string,
     addressId: string
   ): Promise<IAddress | void> => {
-    let result = await this._addressRepository.getAllAddress(customerId);
+    const result = await this._addressRepository.getAllAddress(customerId);
 
     if (!result) {
       logger.error("error to fetch selected address");

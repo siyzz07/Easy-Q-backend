@@ -10,6 +10,8 @@ import { errorHandler } from './middlewares/errorHandler';
 import { ErrorResponse } from './utils/errorResponse';
 import authRoute from './routes/authRoutes';
 import bookingRoute from './routes/bookingRoute';
+import { morganLogger } from './middlewares/morganLogger';
+import paymentRoute from './routes/paymentRoutes';
 
 const app = express()
 
@@ -17,8 +19,11 @@ const app = express()
 app.use(express.json())
 app.use(cookieParser());
 
+console.log(process.env.BASE_URL);
+
+
 app.use(cors({
-    origin:["http://localhost:5173"],
+    origin:[process.env.BASE_URL as string],
     methods:["GET", "POST", "PUT", "DELETE","OPTIONS"],
     credentials:true
 }))
@@ -26,15 +31,15 @@ app.use(cors({
 
 
 
-app.use(
-  morgan("tiny", {
-    stream: {
-      write: (message) => logger.info(message.trim()),
-    },
-  })
-);
+// app.use(
+//   morgan("tiny", {
+//     stream: {
+//       write: (message) => logger.info(message.trim()),
+//     },
+//   })
+// );
 
-
+app.use(morganLogger)
 
 
 app.use('/api/customer',customerRoute)
@@ -42,6 +47,7 @@ app.use('/api/vendor',vendorRoute)
 app.use('/api/admin',adminRoute)
 app.use('/api/auth',authRoute)
 app.use('/api/booking',bookingRoute)
+app.use('/api/payment',paymentRoute)
 
 app.use(errorHandler)
 

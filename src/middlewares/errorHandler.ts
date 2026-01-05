@@ -24,6 +24,7 @@ export const errorHandler = (
   const message = err.message || MessageEnum.SERVER_ERROR;
   console.log('statusCode', statusCode)
   console.log('message', message)
+  
   res.status(statusCode).json({
     success: false,
     message,
