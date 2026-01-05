@@ -98,6 +98,7 @@ export enum MessageEnum {
   ADMIN_LOGIN_FAILED = "Invalid email or password.",
   ADMIN_NOT_FOUND = "Admin not found.",
   ADMIN_PASSWORD_INCORRECT = "Incorrect password.",
+  ADMIN_ALREADY_EXISTS = "Admin already exists",
 
 
   // --------------------------------------------------------------------------Shop

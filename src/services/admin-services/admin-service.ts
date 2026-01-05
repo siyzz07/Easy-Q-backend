@@ -72,4 +72,38 @@ export class AdminService implements IAdminServiceInterface {
       rejectedVendors,
     };
   };
+
+  // ------------------------- Customer Management -------------------------
+  
+  getCustomers = async (): Promise<ICustomer[]> => {
+    return await this._customerRepository.getCusomersData();
+  }
+
+  blockCustomer = async (id: string): Promise<void> => {
+    await this._customerRepository.blockCustomer(id);
+  }
+
+  // ------------------------- Vendor Management -------------------------
+
+  getVendors = async (): Promise<IVendor[]> => {
+    return await this._vendorRepository.getVendorData();
+  }
+
+  blockVendor = async (id: string): Promise<void> => {
+    await this._vendorRepository.blockVendor(id);
+  }
+
+  getPendingVendors = async (): Promise<IVendor[]> => {
+    const vendors = await this._vendorRepository.getVendorData();
+    return vendors.filter((v) => v.isVerified === "pending");
+  }
+
+  verifyVendor = async (id: string): Promise<void> => {
+    await this._vendorRepository.verifyVendor(id);
+  }
+
+  rejectVendor = async (id: string): Promise<void> => {
+    await this._vendorRepository.rejectVendor(id);
+  }
+
 }

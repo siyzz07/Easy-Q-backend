@@ -8,7 +8,8 @@ import {
     bookingRepository, 
     notificationRepository, 
     serviceRepository, 
-    staffRepository 
+    staffRepository,
+    reviewRepository 
 } from "./repositoriesDi"
 
 // ------------------ Notificaton di
@@ -24,7 +25,7 @@ const BookingControllerInstance = new BookingController(bookingServiceInstance)
 const paymentControllerInstance = new PaymentController()
 
 // ------------------ Review
-cosnt reviewServiceInstance = new ReviewService(review)
+const reviewServiceInstance = new ReviewService(reviewRepository)
 
 
 export { BookingControllerInstance, notificationServiceInstance,paymentControllerInstance }

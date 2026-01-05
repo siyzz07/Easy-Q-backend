@@ -81,39 +81,4 @@ export class CustomerController {
 
   //==================================================================
 
-   //------------------------------------- get customer data
-  getUserDatas = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const data = await this._customerService.getCustomersDatas();
-
-      res.status(StatusCodeEnum.OK).json({
-        message: MessageEnum.CUSTOMER_ALL_DATA_FETCH_SUCCESS,
-        data: data,
-      });
-    } catch (error: unknown) {
-      next(error);
-    }
-  };
-
-
- //------------------------------------- block customer
-  blockCustomer = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      await this._customerService.blockCustomer(req.body.id);
-
-      res
-        .status(StatusCodeEnum.OK)
-        .json({ messeage: MessageEnum.CUSTOMER_DATA_UPDATION_SUCCESS });
-    } catch (error: unknown) {
-      next(error);
-    }
-  };
 }

@@ -6725,3 +6725,11 @@
 [2026-01-05 16:08:59] error: Socket authentication error: jwt expired
 [2026-01-05 16:09:04] error: Socket authentication error: jwt expired
 [2026-01-05 16:09:04] error: Socket authentication error: jwt expired
+[2026-01-05 18:19:54] error: Invalid email or password - POST /api/auth/login
+[2026-01-05 18:33:24] error: Socket authentication error: jwt expired
+[2026-01-05 18:39:28] error: Your account is under verification. Please wait for admin approval. - POST /api/auth/login
+[2026-01-05 18:47:08] error: Admin not found. - POST /api/auth/login
+[2026-01-05 18:47:15] error: Incorrect password. - POST /api/auth/login
+[2026-01-05 18:49:06] error: Socket authentication error: jwt expired
+[2026-01-05 19:16:49] error: Socket authentication error: jwt expired
+[2026-01-05 19:16:49] error: Socket authentication error: jwt expired

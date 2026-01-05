@@ -12,11 +12,7 @@ export interface IVendorShopServiceInterface{
  getShopTypes () :Promise<IServiceType[]|[]>
  getDashboard (data:string) :Promise<any>
  updateVendor(id:string,workingDays:string,data:IVendor):Promise<boolean|void>;
-  getVendorsDatas(): Promise<IVendor[] | []>;//-----------DD
-  blockVendor (customerId:string):Promise<boolean|void>;//-----------
-  getVendorsVerification():Promise<IVendor []|[]>;//-----------
-  rejectVendorRequst (_id:string):Promise<boolean|void>;//-----------
-  verifyVendorRequst (_id:string):Promise<boolean|void>;//-----------
+
   getEachVendorData (data:string):Promise<IVendor|void>//---------------DD
   getVendorsData (data:{search?:string,location?:string,page?:string,limit?:string}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>//-----------------
 

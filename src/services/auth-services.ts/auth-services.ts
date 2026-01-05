@@ -12,7 +12,7 @@ import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, generateJwtToken, refreshToken } from "../../utils/jwt";
 import logger from "../../utils/logger";
 import { sendEmail } from "../../utils/nodeMailer";
-import { token } from "morgan";
+
 import Jwt, {
   JsonWebTokenError,
   JwtPayload,
@@ -49,7 +49,8 @@ export class AuthService implements AuthServiceInterface {
 
   // ----------------------------------------------- verify the signup email
   verifyEmail = async (data: IVendor | ICustomer): Promise<void> => {
-    const { role, ...payload } = { ...data };
+    const { ...payload } = { ...data };
+    const role = (data.role || '').trim().toLowerCase();
 
     if (role === RoleEnum.CUSTOMER.toLowerCase()) {
       //---handle customer
@@ -109,9 +110,10 @@ export class AuthService implements AuthServiceInterface {
     }
   };
 
-  // ----------------------------------------------- add new  verified Enitity (customer/vendor)
-  addNewEntity = async (data: IVendor | ICustomer): Promise<boolean | void> => {
-    const { role, password, ...payload } = { ...data };
+  // ----------------------------------------------- add new  verified Enitity (customer/vendor/admin)
+  addNewEntity = async (data: IVendor | ICustomer | IAdmin): Promise<boolean | void> => {
+    const { password, ...payload } = { ...data };
+    const role = (data.role || '').trim().toLowerCase();
 
     const hashedPassword = await hashPassword(password as string);
 
@@ -165,6 +167,21 @@ export class AuthService implements AuthServiceInterface {
           StatusCodeEnum.INTERNAL_SERVER_ERROR
         );
       }
+    } else if (role === RoleEnum.ADMIN.toLowerCase()) {
+      //- handle admin
+      const exist = await this._adminRepository.checkAdminExist(payload.email as string);
+      if (exist) {
+        throw new ErrorResponse(
+          MessageEnum.ADMIN_ALREADY_EXISTS,
+          StatusCodeEnum.CONFLICT
+        );
+      }
+      const values = {
+        ...payload,
+        password: hashedPassword,
+      };
+      await this._adminRepository.addAdmin(values as IAdmin);
+      return true;
     } else {
       logger.error(MessageEnum.ROLE_NOT_FOUND);
     }
@@ -183,7 +200,8 @@ export class AuthService implements AuthServiceInterface {
     entityData?: IVendor | ICustomer;
     role: string;
   } | void> => {
-    const { email, password, role } = data;
+    const { email, password } = data;
+    const role = (data.role || '').trim().toLowerCase();
     if (role ==RoleEnum.CUSTOMER.toLowerCase()) {
       const checkCustomer = await this._customerRepository.checkCustomerExist(
         email
@@ -323,7 +341,11 @@ export class AuthService implements AuthServiceInterface {
         };
       }
     } else {
-      logger.error(MessageEnum.ROLE_NOT_FOUND);
+      logger.error('Role not found or invalid: ' + role);
+      throw new ErrorResponse(
+        MessageEnum.ROLE_NOT_FOUND,
+        StatusCodeEnum.BAD_REQUEST
+      );
     }
   };
 

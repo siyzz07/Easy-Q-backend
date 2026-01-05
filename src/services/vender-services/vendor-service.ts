@@ -174,42 +174,7 @@ class VendorService implements IVendorShopServiceInterface {
 
 
   //===============================================================
-   verifyVendorRequst = async (_id: string): Promise<boolean | void> => {
-    const result = await this._vendorRepo.verifyVendor(_id);
-    return result;
-  };
 
-
-   rejectVendorRequst = async (_id: string): Promise<boolean | void> => {
-    const result = await this._vendorRepo.rejectVendor(_id);
-    return result;
-  };
-
-
-   getVendorsVerification = async (): Promise<IVendor[] | []> => {
-    const result = await this.getVendorsDatas();
-
-    if (result) {
-      const data = result.filter(
-        (value: IVendor) => value.isVerified == "pending"
-      );
-      return data;
-    } else {
-      return [];
-    }
-  };
-
-
-   getVendorsDatas = async (): Promise<IVendor[] | []> => {
-    const result = await this._vendorRepo.getVendorData();
-    return result;
-  };
-
-  blockVendor = async (customerId: string): Promise<boolean | void> => {
-    const result = await this._vendorRepo.blockVendor(customerId);
-
-    return result;
-  };
 
 
 
