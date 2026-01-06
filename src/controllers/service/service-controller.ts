@@ -27,12 +27,13 @@ export class VendorServiceController {
   // ------------------------------- get  services of the shop / DD
   getSerivces = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
-      const result = await this._Service.getAllService(req.body.userId);
+      const result = await this._Service.getAllService(req.body.userId,req.query);
       res
         .status(StatusCodeEnum.OK)
         .json({
           message: MessageEnum.VENDOR_SERVICE_FETCH_SUCCESS,
-          data: result,
+          data: result.data,
+          pagination:result.pagination
         });
     } catch (error: unknown) {
       next(error)

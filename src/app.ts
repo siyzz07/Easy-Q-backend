@@ -24,7 +24,7 @@ console.log(process.env.BASE_URL);
 
 app.use(cors({
     origin:[process.env.BASE_URL as string],
-    methods:["GET", "POST", "PUT", "DELETE","OPTIONS"],
+    methods:["GET", "POST", "PUT", "DELETE","OPTIONS",'PATCH'],
     credentials:true
 }))
  

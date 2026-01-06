@@ -47,6 +47,7 @@ export interface IBooking {
   createdAt?: Date;
   updatedAt?: Date;
   expireAt?:Date|null
+  reschedule?:number
 }
 
 

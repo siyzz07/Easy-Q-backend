@@ -7,5 +7,6 @@ export interface IBookingServiceInterface {
     checkTimeAvailable(data:checkTimeDto):Promise<boolean|string>
     customerBooking(userId:string) :Promise<IBooking[]>
     selectedBookingData  (id:string) :Promise <IBooking[]>
+    cancelBooking(bookingId:string):Promise<any>
 }
 

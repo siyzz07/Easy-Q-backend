@@ -1,5 +1,7 @@
+import { FilterQuery } from "mongoose";
 import { IServiceRepositoryInterface } from "../interface/service-interface/service-repository-interface";
 import Service from "../models/ServiceModel";
+import { IPaginationResponseMeta } from "../types/common-types";
 import { IService, IServiceData } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
@@ -24,8 +26,25 @@ export class ServiceRepository
   }
 
   //-------------------------------------------------------- get all Serivce
-  async getService(shopId: string): Promise<IService[] | []> {
-    const result = await this.findManyByCondition({ shopId: shopId });
+  async getService(shopId: string,query:{page?:string,limit?:string,search?:string}): Promise<{data:IService[],pagination:IPaginationResponseMeta}> {
+    
+    const filter:FilterQuery<IService> ={
+      shopId
+    }
+
+     if(query.search?.trim()){
+      filter.$or=[
+          { serviceName: { $regex: query.search, $options: "i" } },
+      ]
+    }
+    
+     const options = {
+            page: Number(query.page) || 1,
+            limit: Number(query.limit) || 10,
+            sort: { createdAt: -1 as const },
+        };
+   
+    const result = await this.filterWithPagination(options,filter)
     return result;
   }
 

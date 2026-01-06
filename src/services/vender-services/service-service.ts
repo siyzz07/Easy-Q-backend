@@ -6,6 +6,7 @@ import { IServiceInterface } from "../../interface/service-interface/service-ser
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import logger from "../../utils/logger";
+import { IPaginationResponseMeta } from "../../types/common-types";
 
 export class VendorServiceService implements IServiceInterface {
   private _ServiceRpository: IServiceRepositoryInterface;
@@ -41,8 +42,8 @@ export class VendorServiceService implements IServiceInterface {
   };
 
   //-----------------------------------------------------------------------get services of the shop /DD
-  getAllService = async (shopId: string): Promise<IService[] | []> => {
-    const result = await this._ServiceRpository.getService(shopId);
+  getAllService = async (shopId: string ,query:{page?:string,limit?:string,search?:string}): Promise<{data:IService[],pagination:IPaginationResponseMeta}> => {
+    const result = await this._ServiceRpository.getService(shopId,query);
     return result;
   };
 

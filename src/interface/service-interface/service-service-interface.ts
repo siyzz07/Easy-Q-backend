@@ -8,11 +8,12 @@ import {
   IStaffAdd,
   IVendor,
 } from "../../types/vendorType";
+import { IPaginationResponseMeta } from "../../types/common-types";
 
 //-------------------------------------------------vednor sevices
 export interface IServiceInterface {
   addNewService(data: IService): Promise<boolean | void>;
-  getAllService(shopId: string): Promise<IService[] | []>;
+  getAllService(shopId: string,query:{page?:string,limit?:string,search?:string}): Promise<{data:IService[],pagination:IPaginationResponseMeta}>;
   editService(data: IService): Promise<boolean | void>;
   getSelectedSerivce(_id:string):Promise<IService|void>
 

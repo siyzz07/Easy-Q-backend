@@ -77,7 +77,9 @@ export class BookingController {
 
   getCustomerBookings = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
     try{
+      
       const result = await this._BookingService.customerBooking(req.body.userId)
+
       if(result){ 
         res 
           .status(StatusCodeEnum.OK)
@@ -103,5 +105,26 @@ export class BookingController {
       }
   }
   
+
+
+  /**
+   * 
+   *  cancel booking
+   * 
+   */
+  cancelBooking = async (req:Request,res:Response,next:NextFunction):Promise<void> =>{
+    try{
+        const {bookingId} = req.params 
+        const result = await this._BookingService.cancelBooking(bookingId)
+        if(result){
+          res
+            .status(StatusCodeEnum.OK)
+            .json({success:true , message:MessageEnum.BOOKING_CANCEL_SUCCESS})
+        }
+    }catch(error){
+      next(error)
+    }
+
+  }
 
 }

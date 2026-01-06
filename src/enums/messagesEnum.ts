@@ -155,6 +155,7 @@ export enum MessageEnum {
   BOOKING_DATA_FETCH_SUCCESS = "Booking data fetched successfully",
   BOOKING_DATA_FETCH_FAILED ='Failed to fetch booking data',
   BOOKING_ID_INVALIED = 'Invalied booking id',
+  BOOKING_CANCEL_SUCCESS = 'Booking cancelled successfully',
 
      // --------------------------------------------------------------------------Favorite
     FAVORITE_ADD_SUCCESS = "Vendor added to favorite list",

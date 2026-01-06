@@ -60,7 +60,7 @@ export class BookingService implements IBookingServiceInterface {
 
           const query={
             paymentMethod,
-            paymentStatus:'pending',
+            paymentStatus:'pending',  
             expireAt:null
           }
 
@@ -199,7 +199,25 @@ export class BookingService implements IBookingServiceInterface {
 
   }
 
-  
+
+  cancelBooking = async (bookingId: string): Promise<any> => {
+    
+
+        const result = await this._BookingRepository.updateBooking(bookingId,{status:"cancelled"})
+        if(result){
+          return result
+        }
+
+  }
+
+
+
+
+  /***
+   * 
+   * Helpers---
+   * 
+   */
 
 
 
