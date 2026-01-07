@@ -169,6 +169,17 @@ export enum MessageEnum {
 
     FAVORITE_FETCH_SUCCESS = "Favorite fetched successfully",
     FAVORITE_FETCH_FAILED = "Failed to fetch favorite list",
+
+    // --------------------------------------------------------------------------Review
+    REVIEW_ADD_SUCCESS = "Review added successfully",
+    REVIEW_FETCH_SUCCESS = "Reviews fetched successfully",
+    REVIEW_DELETE_SUCCESS = "Review deleted successfully",
+    REVIEW_UPDATE_SUCCESS = "Review updated successfully",
+    REVIEW_NOT_FOUND = "Review not found",
+
+
+    // --------------------------------------------------------------------------Transaction
+    TRANSACTION_PAYMENT_INVALIED = 'Invalied payment '
  
 }
 

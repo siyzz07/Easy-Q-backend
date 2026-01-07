@@ -105,8 +105,8 @@ export interface IServiceData {
 
 
 export interface IReview extends Document {
-  customerId: Types.ObjectId;
-  vendorId: Types.ObjectId;
+  customerId: mongoose.Types.ObjectId | string;
+  vendorId: mongoose.Types.ObjectId | string;
   rating: string;
   createdAt?: Date;
   comment:string

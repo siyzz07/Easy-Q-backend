@@ -78,15 +78,15 @@ export class BookingController {
   getCustomerBookings = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
     try{
       
-      const result = await this._BookingService.customerBooking(req.body.userId)
+      const result = await this._BookingService.customerBooking(req.body.userId,req.query)
 
       if(result){ 
         res 
           .status(StatusCodeEnum.OK)
-          .json({success:true,message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS,data:result})
+          .json({success:true,message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS,data:result.data , pagination:result.pagination})
       }
     }catch(error){
-      next()
+      next(error)
     }
   }
 
@@ -96,12 +96,16 @@ export class BookingController {
    * 
    */
   getSelectedBookingData =  async(req:Request,res:Response,next:NextFunction):Promise<void> =>{
-      const id = req.params.id
-      const result = await this._BookingService.selectedBookingData(id)
-      if(result){
-        res
-          .status(StatusCodeEnum.OK)
-          .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_FAILED , data:result})
+      try {
+        const id = req.params.id
+        const result = await this._BookingService.selectedBookingData(id)
+        if(result){
+          res
+            .status(StatusCodeEnum.OK)
+            .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS , data:result})
+        }
+      } catch (error) {
+          next(error)
       }
   }
   

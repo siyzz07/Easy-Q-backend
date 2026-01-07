@@ -1,7 +1,7 @@
 import express from "express";
 import { staffControllerInstance, vendorServiceControllerInstance, vendorControllerInstance } from "../di/vendorDi";
 import { emailVerifyTokenMIddleware } from "../middlewares/emailTokenVerify";
-import { isVendor, verifyToken } from "../middlewares/authTokenVerify";
+import { isVendor, isVendorOrCustomer, verifyToken } from "../middlewares/authTokenVerify";
 import { vendorBlockAuth } from "../middlewares/vendorBlockAuth";
 import { authControllerInstance } from "../di/authDi";
 import { validate } from "../middlewares/validate";
@@ -50,6 +50,7 @@ vendorRoute.post('/staff/block-dates',verifyToken,isVendor,vendorBlockAuth,staff
 vendorRoute.post('/service/add-service',verifyToken,isVendor,vendorBlockAuth,vendorServiceControllerInstance.addNewService)
 vendorRoute.get('/service/get-service',verifyToken,vendorBlockAuth,vendorServiceControllerInstance.getSerivces)
 vendorRoute.put('/service/edit-service',verifyToken,isVendor,vendorBlockAuth,vendorServiceControllerInstance.editService)
+vendorRoute.get('/service/selected',verifyToken,isVendorOrCustomer,vendorServiceControllerInstance.getSelectedService)
 
 
 

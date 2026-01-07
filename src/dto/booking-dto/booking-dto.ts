@@ -23,6 +23,7 @@ export interface CreateBookingDTO {
   bookingId:string
   totalAmount: number;
   paymentMethod: string;
+  status:string
 }
 
 

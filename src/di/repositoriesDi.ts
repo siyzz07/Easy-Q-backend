@@ -8,6 +8,7 @@ import { ReviewRepository } from "../repositories/reviewRepository";
 import { ServiceRepository } from "../repositories/serviceRepository";
 import { ServiceTypes } from "../repositories/ServiceTypesRepository";
 import { StaffRepository } from "../repositories/staffsRepository";
+import { TransactionRepository } from "../repositories/transactionRepository";
 import { VendorRepository } from "../repositories/vendorRepository";
 
 // Instantiate all Rep ositories ONCE
@@ -22,3 +23,4 @@ export const serviceTypesRepository = new ServiceTypes();
 export const addressRepository = new CustomerAddresRepository();
 export const favoriteRepository = new FavoriteRepository();
 export const reviewRepository = new ReviewRepository()
+export const transactionRepository = new TransactionRepository()

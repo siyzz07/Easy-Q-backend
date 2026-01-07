@@ -1,5 +1,5 @@
 import { BookingController } from "../controllers/booking/booking-controller"
-import { PaymentController } from "../controllers/payment/payment-controller"
+import { ReviewController } from "../controllers/reviews/review-controller"
 import { ReviewRepository } from "../repositories/reviewRepository"
 import { BookingService } from "../services/common-services/booking-service"
 import { NotificationService } from "../services/common-services/notificaion-service"
@@ -9,8 +9,11 @@ import {
     notificationRepository, 
     serviceRepository, 
     staffRepository,
-    reviewRepository 
+    reviewRepository, 
+    transactionRepository
 } from "./repositoriesDi"
+import { TransactionService } from "../services/common-services/transaction-service"
+import { TransactionController } from "../controllers/transaction/transaction-controller"
 
 // ------------------ Notificaton di
 const notificationServiceInstance = new NotificationService(notificationRepository)
@@ -20,12 +23,14 @@ const bookingServiceInstance = new BookingService(bookingRepository, serviceRepo
 const BookingControllerInstance = new BookingController(bookingServiceInstance)
 
 
-// ------------------ payment
+// ------------------ transaction
 
-const paymentControllerInstance = new PaymentController()
+const transactionServiceInstance = new TransactionService(transactionRepository,bookingRepository)
+const transactionControllerInstance = new TransactionController(transactionServiceInstance)
 
 // ------------------ Review
 const reviewServiceInstance = new ReviewService(reviewRepository)
+const reviewControllerInstance = new ReviewController(reviewServiceInstance)
 
 
-export { BookingControllerInstance, notificationServiceInstance,paymentControllerInstance }
+export { BookingControllerInstance, notificationServiceInstance,reviewControllerInstance,transactionControllerInstance }

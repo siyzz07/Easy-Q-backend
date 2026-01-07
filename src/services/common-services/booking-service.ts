@@ -18,7 +18,7 @@ import { throwDeprecation } from "process";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
 import { ICacheService } from "../../interface/cache-interface/cache-service-interface";
-import { IBooking } from "../../types/common-types";
+import { IBooking, IBookingPopulated, IPaginationResponseMeta } from "../../types/common-types";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
 import { nanoid } from "nanoid";
 import { log } from "console";
@@ -50,23 +50,40 @@ export class BookingService implements IBookingServiceInterface {
   addNewbooking = async (
     data: CreateBookingDTO
   ): Promise<BookingResponseDTO | void> => {
-    const { userId,paymentMethod,bookingId,totalAmount } = data;
+    const { userId,paymentMethod,bookingId,totalAmount,status } = data;
 
       const existBooking = await this._BookingRepository.getEachBookingDataById(bookingId)
 
       if(!existBooking){
 
         }else{
+            
+          let query ={}
+            if(status == 'failed' && paymentMethod == 'razorpay' ){
+                query ={
+                  paymentMethod,
+                   paymentStatus:status,  
+                }
 
-          const query={
-            paymentMethod,
-            paymentStatus:'pending',  
-            expireAt:null
-          }
+            }else if (status == 'paid' && paymentMethod == 'razorpay'){
+                query ={
+                  paymentMethod,
+                  paymentStatus:status,
+                  expireAt:null
+
+                }
+            }else{
+              query ={
+                  paymentMethod,
+                  paymentStatus:status,
+                  expireAt:null
+              }
+            }
+
 
           const result = await this._BookingRepository.updateBooking(bookingId,query)
 
-       
+          console.log(result)
 
           if(result){
            void  this._NotificationSerivce.sendBookingNotificationToVendor(result)
@@ -164,11 +181,11 @@ export class BookingService implements IBookingServiceInterface {
    * get customer boking data
    * 
    */
-  customerBooking = async (userId: string): Promise<IBooking[]> => {
+  customerBooking = async (userId: string,query:{page?:string,limit?:string,search?:string}) :Promise<{data:IBookingPopulated[] ,pagination:IPaginationResponseMeta}>=> {
     
   
 
-    const bookingData = await this._BookingRepository.bookingDatas({customerId:userId}) 
+    const bookingData = await this._BookingRepository.bookingDatas(userId,query) 
     if(bookingData){
         logger.info(MessageEnum.BOOKING_DATA_FETCH_SUCCESS)
     }else{
@@ -184,14 +201,15 @@ export class BookingService implements IBookingServiceInterface {
    * 
    */
 
-  selectedBookingData = async (id:string) :Promise <IBooking[]> =>{
+  selectedBookingData = async (id:string) :Promise <IBookingPopulated> =>{
 
 
-    const bookingData = await this._BookingRepository.bookingDatas({_id:id})
+    const bookingData = await this._BookingRepository.getEachBookingDataById(id)
+
 
     if(bookingData){
       return bookingData
-    }else{
+    }else{ 
       logger.error('invalied booking Id')
       throw new ErrorResponse(MessageEnum.BOOKING_ID_INVALIED , StatusCodeEnum.BAD_REQUEST)
     }
@@ -200,7 +218,7 @@ export class BookingService implements IBookingServiceInterface {
   }
 
 
-  cancelBooking = async (bookingId: string): Promise<any> => {
+  cancelBooking = async (bookingId: string): Promise<IBooking|void> => {
     
 
         const result = await this._BookingRepository.updateBooking(bookingId,{status:"cancelled"})

@@ -1,7 +1,7 @@
-import mongoose, { SortOrder } from "mongoose";
+import mongoose, { Mongoose, SortOrder } from "mongoose";
 import { ICustomer, ICustomerAddressData } from "./customerType";
 import { IService, IServiceData, IStaff, IVendor } from "./vendorType";
-
+import { TransactionTypeEnum, TransactionStatusEnum, TransactionOwnerTypeEnu } from "../enums/transactionEnum";
 
 export interface IJwtPayload {
     userId:string;
@@ -139,4 +139,23 @@ export interface IPaginationResponseMeta {
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
+}
+
+
+
+
+
+
+
+export interface ITransaction extends Document {
+    referenceId?: string;
+    bookingId: mongoose.Types.ObjectId;
+    ownerId: mongoose.Types.ObjectId;
+    ownerType: TransactionOwnerTypeEnu;
+    flow:string
+    transactionType: TransactionTypeEnum;
+    amount: string;
+    status: TransactionStatusEnum;
+    createdAt: Date;
+    updatedAt: Date;
 }

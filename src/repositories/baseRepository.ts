@@ -4,6 +4,7 @@ import {
   FilterQuery,
   UpdateQuery,
   FlattenMaps,
+  PopulateOptions,
 } from "mongoose";
 
 import { ICustomerAddress } from "../types/customerType";
@@ -73,31 +74,41 @@ class BaseRepository<T extends Document>
 
   //---- filter with pagination
   async filterWithPagination(
-    options: IPaginationMeta,
-    filter: FilterQuery<T>
-  ): Promise<{ data: T[]; pagination: IPaginationResponseMeta }> {
-    const page = Math.max(options?.page || 1, 1);
-    const limit = Math.max(options?.limit || 10, 1);
-    const skip = (page - 1) * limit;
-    const sort = options?.sort ?? { _id: -1 };
+  options: IPaginationMeta,
+  filter: FilterQuery<T>,
+  populate: PopulateOptions[] = []
+): Promise<{ data: T[]; pagination: IPaginationResponseMeta }> {
+  const page = Math.max(options?.page || 1, 1);
+  const limit = Math.max(options?.limit || 10, 1);
+  const skip = (page - 1) * limit;
+  const sort = options?.sort ?? { _id: -1 };
 
-    const [data, total] = await Promise.all([
-      this._Model.find(filter).sort(sort ).skip(skip).limit(limit).lean<T[]>(),
-      this._Model.countDocuments(filter),
-    ]);
+  const query = this._Model.find(filter)
+    .sort(sort)
+    .skip(skip)
+    .limit(limit);
 
-    return {
-      data,
-      pagination: {
-        total,
-        page,
-        limit,
-        totalPages: Math.ceil(total / limit),
-        hasNextPage: page * limit < total,
-        hasPrevPage: page > 1,
-      },
-    };
-  }
+
+  populate.forEach((p) => query.populate(p));
+
+  const [data, total] = await Promise.all([
+    query.lean<T[]>(),
+    this._Model.countDocuments(filter),
+  ]);
+
+  return {
+    data,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+      hasNextPage: page * limit < total,
+      hasPrevPage: page > 1,
+    },
+  };
+}
+
 }
 
 export default BaseRepository;
