@@ -19,7 +19,7 @@ adminRoute.get('/admin-dashboard', verifyToken, isAdmin, adminController.dashboa
  * 
  */
 adminRoute.post("/service/add-service", verifyToken, isAdmin, serviceTypesControllerInstence.addServiceType)
-adminRoute.get('/service/get-services', verifyToken, isAdmin, serviceTypesControllerInstence.getServiceTypes)
+adminRoute.get('/service/get-services', verifyToken,serviceTypesControllerInstence.getServiceTypes)
 adminRoute.put('/service/edit-service', verifyToken, isAdmin, serviceTypesControllerInstence.editServiceType)
 
 /**

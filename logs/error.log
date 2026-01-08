@@ -6924,3 +6924,68 @@
 [2026-01-07 23:33:11] error: Socket authentication error: jwt expired
 [2026-01-07 23:33:27] error: Socket authentication error: jwt expired
 [2026-01-07 23:33:27] error: Socket authentication error: jwt expired
+[2026-01-07 23:54:49] error: Socket authentication error: jwt expired
+[2026-01-08 00:04:59] error: Cast to ObjectId failed for value "BK-001" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-001
+[2026-01-08 00:05:09] error: Cast to ObjectId failed for value "BK-003" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-003
+[2026-01-08 00:05:11] error: Cast to ObjectId failed for value "BK-001" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-001
+[2026-01-08 00:05:24] error: Cast to ObjectId failed for value "BK-001" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-001
+[2026-01-08 00:11:37] error: Socket authentication error: jwt expired
+[2026-01-08 00:11:37] error: Socket authentication error: jwt expired
+[2026-01-08 00:13:06] error: Socket authentication error: jwt expired
+[2026-01-08 00:13:06] error: Socket authentication error: jwt expired
+[2026-01-08 00:13:07] error: Socket authentication error: jwt expired
+[2026-01-08 00:13:09] error: Socket authentication error: jwt expired
+[2026-01-08 09:08:57] error: Socket authentication error: jwt expired
+[2026-01-08 09:08:57] error: Socket authentication error: jwt expired
+[2026-01-08 09:09:33] error: Socket authentication error: jwt expired
+[2026-01-08 09:09:33] error: Socket authentication error: jwt expired
+[2026-01-08 09:26:50] error: logger_1.default.warning is not a function - POST /api/auth/refresh-token
+[2026-01-08 09:26:50] error: Socket authentication error: jwt expired
+[2026-01-08 09:26:50] error: Socket authentication error: jwt expired
+[2026-01-08 09:26:50] error: logger_1.default.warning is not a function - POST /api/auth/refresh-token
+[2026-01-08 09:26:50] error: logger_1.default.warning is not a function - POST /api/auth/refresh-token
+[2026-01-08 09:26:50] error: logger_1.default.warning is not a function - POST /api/auth/refresh-token
+[2026-01-08 09:26:51] error: Socket authentication error: jwt expired
+[2026-01-08 09:26:51] error: Socket authentication error: jwt expired
+[2026-01-08 09:27:10] error: Socket authentication error: jwt expired
+[2026-01-08 09:27:10] error: Socket authentication error: jwt expired
+[2026-01-08 09:31:13] error: Vendor validation failed: location.type: `Point` is not a valid enum value for path `location.type`. - POST /api/auth/add-vendor
+[2026-01-08 09:35:49] error: Can't extract geo keys: { _id: ObjectId('695f2d1df212c3f500e5845d'), shopName: "Blade Barber", email: "shibinsiyad.kdpm@gmail.com", phone: "8606399420", proofImage: "https://res.cloudinary.com/dctw36awu/image/upload/v1767845121/vendor-proof/y4hifusjx3li9dihjvo1.jpg", password: "$2b$10$R468bcSFMAnXoQm8HhpSDOXpJTRoPEkT9Itos2KEuJPQm045rBxcu", workingDays: [], rating: "0", isActive: true, hasShop: false, location: { type: "Point" }, isVerified: "pending", images: [], createdAt: new Date(1767845149709), updatedAt: new Date(1767845149709), __v: 0 }  Point must be an array or object, instead got type missing - POST /api/auth/add-vendor
+[2026-01-08 09:46:37] error: Your account is under verification. Please wait for admin approval. - POST /api/auth/login
+[2026-01-08 11:31:46] error: Socket authentication error: jwt expired
+[2026-01-08 11:31:46] error: Socket authentication error: jwt expired
+[2026-01-08 11:31:49] error: Socket authentication error: jwt expired
+[2026-01-08 11:33:41] error: Socket authentication error: jwt expired
+[2026-01-08 11:33:41] error: Socket authentication error: jwt expired
+[2026-01-08 11:33:59] error: Socket authentication error: jwt expired
+[2026-01-08 11:33:59] error: Socket authentication error: jwt expired
+[2026-01-08 11:34:00] error: Socket authentication error: jwt expired
+[2026-01-08 11:34:00] error: Socket authentication error: jwt expired
+[2026-01-08 11:34:01] error: Socket authentication error: jwt expired
+[2026-01-08 11:34:01] error: Socket authentication error: jwt expired
+[2026-01-08 11:34:03] error: Socket authentication error: jwt expired
+[2026-01-08 11:34:03] error: Socket authentication error: jwt expired
+[2026-01-08 11:55:55] error: Socket authentication error: jwt expired
+[2026-01-08 11:55:55] error: Socket authentication error: jwt expired
+[2026-01-08 11:55:55] error: Socket authentication error: jwt expired
+[2026-01-08 11:55:55] error: Socket authentication error: jwt expired
+[2026-01-08 11:56:05] error: Socket authentication error: jwt expired
+[2026-01-08 11:56:07] error: Socket authentication error: jwt expired
+[2026-01-08 13:03:41] error: Socket authentication error: jwt expired
+[2026-01-08 13:03:41] error: Socket authentication error: jwt expired
+[2026-01-08 13:23:10] error: Socket authentication error: jwt expired
+[2026-01-08 13:23:10] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:50] error: Socket authentication error: jwt expired
+[2026-01-08 13:47:51] error: Socket authentication error: jwt expired
+[2026-01-08 13:48:30] error: Socket authentication error: jwt expired
+[2026-01-08 13:48:30] error: Socket authentication error: jwt expired
+[2026-01-08 13:58:32] error: Socket authentication error: jwt expired
+[2026-01-08 13:58:32] error: Socket authentication error: jwt expired

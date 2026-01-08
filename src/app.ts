@@ -14,6 +14,7 @@ import { morganLogger } from './middlewares/morganLogger';
 import paymentRoute from './routes/transacationRoutes';
 import reviewRoute from './routes/reviewRoutes';
 import transactionRoute from './routes/transacationRoutes';
+import walletRoutes from './routes/walletRoutes';
 
 const app = express()
 
@@ -52,6 +53,7 @@ app.use('/api/booking',bookingRoute)
 app.use('/api/payment',paymentRoute)
 app.use('/api/review',reviewRoute)
 app.use('/api/transaction',transactionRoute)
+app.use('/api/wallet',walletRoutes)
 
 app.use(errorHandler)
 

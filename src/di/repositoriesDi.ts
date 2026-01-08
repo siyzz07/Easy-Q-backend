@@ -10,6 +10,7 @@ import { ServiceTypes } from "../repositories/ServiceTypesRepository";
 import { StaffRepository } from "../repositories/staffsRepository";
 import { TransactionRepository } from "../repositories/transactionRepository";
 import { VendorRepository } from "../repositories/vendorRepository";
+import { WalletRepository } from "../repositories/walletRepository";
 
 // Instantiate all Rep ositories ONCE
 export const adminRepository = new AdminRepository();
@@ -24,3 +25,4 @@ export const addressRepository = new CustomerAddresRepository();
 export const favoriteRepository = new FavoriteRepository();
 export const reviewRepository = new ReviewRepository()
 export const transactionRepository = new TransactionRepository()
+export const walletRepository = new WalletRepository()

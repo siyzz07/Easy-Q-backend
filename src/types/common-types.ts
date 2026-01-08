@@ -159,3 +159,12 @@ export interface ITransaction extends Document {
     createdAt: Date;
     updatedAt: Date;
 }
+
+
+
+export interface IWallet {
+  user: mongoose.Types.ObjectId;
+  userType: "Vendor" | "Customer";
+  balance: number;
+
+}

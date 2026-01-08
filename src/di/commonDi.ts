@@ -10,10 +10,13 @@ import {
     serviceRepository, 
     staffRepository,
     reviewRepository, 
-    transactionRepository
+    transactionRepository,
+    walletRepository
 } from "./repositoriesDi"
 import { TransactionService } from "../services/common-services/transaction-service"
 import { TransactionController } from "../controllers/transaction/transaction-controller"
+import { WalletService } from "../services/common-services/wallet-service"
+import { WalletController } from "../controllers/wallet/wallet-controller"
 
 // ------------------ Notificaton di
 const notificationServiceInstance = new NotificationService(notificationRepository)
@@ -23,6 +26,9 @@ const bookingServiceInstance = new BookingService(bookingRepository, serviceRepo
 const BookingControllerInstance = new BookingController(bookingServiceInstance)
 
 
+// ------------------ wallet
+const walletServiceInstance = new WalletService(walletRepository)
+const walletControllerInstance = new WalletController(walletServiceInstance)
 // ------------------ transaction
 
 const transactionServiceInstance = new TransactionService(transactionRepository,bookingRepository)
@@ -33,4 +39,10 @@ const reviewServiceInstance = new ReviewService(reviewRepository)
 const reviewControllerInstance = new ReviewController(reviewServiceInstance)
 
 
-export { BookingControllerInstance, notificationServiceInstance,reviewControllerInstance,transactionControllerInstance }
+export { 
+    BookingControllerInstance, 
+    notificationServiceInstance,
+    reviewControllerInstance,
+    transactionControllerInstance,
+    walletControllerInstance
+ }
