@@ -11,7 +11,7 @@ export interface IStaffRepositoryInterface {
     getSingleStaff(shopId:string,staffName?:string,staffId?:string):Promise<IStaff|null>
     editStaff(shopId:string,_id:string,data:any):Promise <boolean|void>
     duplicateStaffFind(shopId:string,staffName:string,staffId?:string):Promise <IStaff[]|[]>
-    getStaffById(id:string):Promise<IStaff>
+    getStaffById (id:string):Promise<IStaff | null>
     updateStaff(id: string, data: UpdateQuery<IStaff>): Promise<IStaff | null>
 
 

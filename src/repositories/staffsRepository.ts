@@ -6,7 +6,7 @@ import BaseRepository from "./baseRepository";
 import { IPaginationResponseMeta } from "../types/common-types";
 
 export class StaffRepository
-  extends BaseRepository<any>
+  extends BaseRepository<IStaff>
   implements IStaffRepositoryInterface
 {
   private _StaffModel = staffModel;
@@ -87,7 +87,7 @@ export class StaffRepository
     
   }
   //-----------------------------------------------------edit Staff
-   async getStaffById(id: string): Promise<IStaff> {
+   async getStaffById(id: string): Promise<IStaff | null> {
 
     const result = await this.findById(id)
     return result

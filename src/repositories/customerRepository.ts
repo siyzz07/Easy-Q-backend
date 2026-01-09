@@ -7,7 +7,7 @@ import Service from "../models/ServiceModel";
 import { ICustomerRepo } from "../interface/customer-interface/customer-repository-interface";
 
 export class CustomerRepository
-  extends BaseRepository<any>
+  extends BaseRepository<ICustomer>
   implements ICustomerRepo
 {
   private _customerModel = customer;

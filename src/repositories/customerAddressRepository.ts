@@ -1,12 +1,11 @@
-
-import { query } from "winston";
+import { FilterQuery } from "mongoose";
 import { ICustomerAddressRepositoryInterface } from "../interface/address-interface/address-repository-interface";
 import addressModel from "../models/addressModel";
 import { IAddress, ICustomerAddress } from "../types/customerType";
 import BaseRepository from "./baseRepository";
 
 export class CustomerAddresRepository
-  extends BaseRepository<any>
+  extends BaseRepository<ICustomerAddress>
   implements ICustomerAddressRepositoryInterface
 {
   private _addressModel = addressModel;
@@ -45,80 +44,89 @@ export class CustomerAddresRepository
 
     return;
   }
-  //-----------------------------------------------------------------get all address of the user
 
-  async getAllAddress(custoemrId: string): Promise<ICustomerAddress | null> {
-    const address = await this.findByCustomer(custoemrId);
-    if (address) {
-      return address;
-    } else {
-      return null;
+  //-------------------------------------------------------------find the address exist or not in the user
+  async checkAddressDuplicat(
+    customerId: string,
+    address: string,
+    excludeId?: string
+  ): Promise<boolean> {
+    const query: FilterQuery<ICustomerAddress> = {
+      customerId,
+      address: {
+        $elemMatch: {
+          address: { $regex: new RegExp(`^${address}$`, "i") },
+        },
+      },
+    };
+
+    if (excludeId) {
+      query["address.$elemMatch"]._id = { $ne: excludeId };
     }
-  }
-  //-----------------------------------------------------------------get user have same addess
- async checkAddressDuplicat(
-  customerId: string,
-  address: string,
-  excludeId?: string
-): Promise<boolean> {
-  const query: any = {
-    customerId,
-    address: {
-      $elemMatch: {
-        address: address,
-        ...(excludeId ? { _id: { $ne: excludeId } } : {}),
-      },
-    },
-  };
 
-  const addressExist = await this._addressModel.findOne(query);
-  return !!addressExist;
-}
-  //-----------------------------------------------------------------delet customer address
-  async deletCustomerAddress(customerId: string, id: string): Promise<boolean> {
-    const result = await this._addressModel.updateOne(
-      { customerId },
-      { $pull: { address: { _id: id } } }
-    );
- 
-    return result.modifiedCount > 0;
+    const exist = await this.findOneByCondiition(query);
+    return !!exist;
   }
 
-  //-----------------------------------------------------------------edit customer address
+  async getAllAddress(customerId: string): Promise<ICustomerAddress | null> {
+    const result = await this.findByCustomer(customerId);
+    return result;
+  }
+
+  //------------------------------------------------------------edit address
   async editCustomerAddress(
-  customerId: string,
-  addressId: string,
-  payload: IAddress
-): Promise<boolean> {
- 
+    customerId: string,
+    addressId: string,
+    updatedData: IAddress
+  ): Promise<boolean> {
+    const query = {
+      customerId: customerId,
+      "address._id": addressId,
+    };
 
- const updated = await this._addressModel.findOneAndUpdate(
-    { customerId, "address._id": addressId },
-    {
+    const update = {
       $set: {
-        "address.$.address": payload.address,
-        "address.$.phone": payload.phone,
-        "address.$.country": payload.country,
-        "address.$.state": payload.state,
-        "address.$.city": payload.city,
+        "address.$": updatedData,
       },
-    },
-    { new: true }
-  );
+    };
+    const result = await this._addressModel.findOneAndUpdate(query, update, {
+      new: true,
+    });
 
+    return !!result;
+  }
 
-  return updated !== null;
-}
+  //------------------------------------------------------------delete address
+
+  async deletCustomerAddress(
+    customerId: string,
+    addressId: string
+  ): Promise<boolean> {
+    const query = { customerId: customerId };
+    const update = {
+      $pull: {
+        address: { _id: addressId },
+      },
+    };
+
+    const result = await this._addressModel.findOneAndUpdate(query, update, {
+      new: true,
+    });
+    return !!result;
+  }
 
 //-----------------------------------------------------------------get selected address
-async getSelectedAddress(customerId: string, addressId: string): Promise<IAddress> {
+async getSelectedAddress(customerId: string, addressId: string): Promise<ICustomerAddress | null> {
   
   const query = {
   customerId: customerId,};
 
-  const result = await this.findOneByCondiition(query)
-  return result
+  const result = await this._addressModel.findOne(
+    query,
+    { address: { $elemMatch: { _id: addressId } } } 
+  ).lean<ICustomerAddress>();
 
+  return result
 }
 
 

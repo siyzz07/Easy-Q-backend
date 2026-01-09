@@ -8,7 +8,7 @@ export interface IServiceRepositoryInterface{
     addService(data:IService):Promise<boolean>
     getService(shopId:string,query:{page?:string,limit?:string,search?:string}): Promise<{data:IService[],pagination:IPaginationResponseMeta}>
     editService(_id:string,data:IService):Promise<boolean>
-    getSelectedService(_id:string):Promise<IService>
+    getSelectedService(_id:string):Promise<IService | null>
 
     //==============================================
         getEachvendorServices(_shopId:string):Promise<IServiceData[]|[]>//-------------------------------------------------

@@ -6,7 +6,7 @@ import { IService, IServiceData } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
 export class ServiceRepository
-  extends BaseRepository<any>
+  extends BaseRepository<IService>
   implements IServiceRepositoryInterface
 {
   private _ServiceModel = Service;
@@ -58,7 +58,7 @@ export class ServiceRepository
     }
   }
  //-------------------------------------------------------- get selected service
- getSelectedService(_id: string): Promise<IService> {
+ getSelectedService(_id: string): Promise<IService | null> {
    const result = this.findById(_id)
    return result
  }

@@ -1,6 +1,6 @@
 
-import { ICustomer } from "../../types/customerType";
-import { IVendor } from "../../types/vendorType";
+import { CustomerDto } from "../../dto/customer-dto/customer-dto";
+import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 
 
 export interface IAdminServiceInterface {
@@ -8,13 +8,13 @@ export interface IAdminServiceInterface {
   dashboard () :Promise<any>
 
   // Customer Management
-  getCustomers(): Promise<ICustomer[]>;
+  getCustomers(): Promise<CustomerDto[]>;
   blockCustomer(id: string): Promise<void>;
 
   // Vendor Management
-  getVendors(): Promise<IVendor[]>;
+  getVendors(): Promise<VendorDto[]>;
   blockVendor(id: string): Promise<void>;
-  getPendingVendors(): Promise<IVendor[]>;
+  getPendingVendors(): Promise<VendorDto[]>;
   verifyVendor(id: string): Promise<void>;
   rejectVendor(id: string): Promise<void>;
  

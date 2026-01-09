@@ -2,8 +2,11 @@ import { IAdminRepo } from "../../interface/admin-interface/admin-repository-int
 import { IAdminServiceInterface } from "../../interface/admin-interface/admin-service-interface";
 import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
 import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
-import { ICustomer } from "../../types/customerType";
 import { IVendor } from "../../types/vendorType";
+import { CustomerDto } from "../../dto/customer-dto/customer-dto";
+import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
+import { CustomerMapper } from "../../mappers/customer-mapper/customer-mapper";
+import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 
 export class AdminService implements IAdminServiceInterface {
   private _adminRepository: IAdminRepo;
@@ -75,8 +78,9 @@ export class AdminService implements IAdminServiceInterface {
 
   // ------------------------- Customer Management -------------------------
   
-  getCustomers = async (): Promise<ICustomer[]> => {
-    return await this._customerRepository.getCusomersData();
+  getCustomers = async (): Promise<CustomerDto[]> => {
+    const result = await this._customerRepository.getCusomersData();
+    return CustomerMapper.toDTOList(result);
   }
 
   blockCustomer = async (id: string): Promise<void> => {
@@ -85,17 +89,19 @@ export class AdminService implements IAdminServiceInterface {
 
   // ------------------------- Vendor Management -------------------------
 
-  getVendors = async (): Promise<IVendor[]> => {
-    return await this._vendorRepository.getVendorData();
+  getVendors = async (): Promise<VendorDto[]> => {
+    const result = await this._vendorRepository.getVendorData();
+    return VendorMapper.toDTOList(result);
   }
 
   blockVendor = async (id: string): Promise<void> => {
     await this._vendorRepository.blockVendor(id);
   }
 
-  getPendingVendors = async (): Promise<IVendor[]> => {
+  getPendingVendors = async (): Promise<VendorDto[]> => {
     const vendors = await this._vendorRepository.getVendorData();
-    return vendors.filter((v) => v.isVerified === "pending");
+    const pending = vendors.filter((v) => v.isVerified === "pending");
+    return VendorMapper.toDTOList(pending);
   }
 
   verifyVendor = async (id: string): Promise<void> => {

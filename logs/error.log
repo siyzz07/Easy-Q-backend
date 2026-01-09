@@ -7054,3 +7054,8 @@
 [2026-01-09 09:22:15] error: Socket authentication error: jwt expired
 [2026-01-09 09:22:22] error: Socket authentication error: jwt expired
 [2026-01-09 09:22:22] error: Socket authentication error: jwt expired
+[2026-01-09 09:33:04] error: Socket authentication error: jwt expired
+[2026-01-09 09:33:04] error: Socket authentication error: jwt expired
+[2026-01-09 11:30:34] error: Socket authentication error: jwt expired
+[2026-01-09 11:30:34] error: Socket authentication error: jwt expired
+[2026-01-09 11:40:18] error: Your account is under verification. Please wait for admin approval. - POST /api/auth/login

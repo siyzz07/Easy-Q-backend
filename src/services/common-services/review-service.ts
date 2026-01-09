@@ -1,10 +1,10 @@
 import { IReviewRepositoryInterface } from "../../interface/reivew-interface/review-repository-interface";
 import { IReviewServiceInterface } from "../../interface/reivew-interface/review-service-interface";
 import { IReview } from "../../types/vendorType";
-
-
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { ErrorResponse } from "../../utils/errorResponse";
+import { ReviewResponseDTO } from "../../dto/review-dto/review-dto";
+import { ReviewMapper } from "../../mappers/review-mapper/review-mapper";
 
 interface IReviewPayload {
     userId: string;
@@ -41,7 +41,7 @@ export class ReviewService implements IReviewServiceInterface{
        return await this._ReviewRepository.addReview(reviewData)
     }
 
-    async getReviews(vendorId: string, userId?: string): Promise<IReview[]> {
+    async getReviews(vendorId: string, userId?: string): Promise<ReviewResponseDTO[]> {
         const reviews = await this._ReviewRepository.getReviews(vendorId)
         
         if (userId && reviews.length > 0) {
@@ -55,7 +55,7 @@ export class ReviewService implements IReviewServiceInterface{
                 reviews.unshift(userReview);
             }
         }
-        return reviews
+        return ReviewMapper.toDTOList(reviews)
     }
 
     async deleteReview(reviewId: string): Promise<boolean> {

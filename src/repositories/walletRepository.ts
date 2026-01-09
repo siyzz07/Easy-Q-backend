@@ -5,7 +5,7 @@ import { IWallet } from "../types/common-types";
 import BaseRepository from "./baseRepository";
 
 export class WalletRepository
-  extends BaseRepository<any>
+  extends BaseRepository<IWallet>
   implements IWalletRepositoryInterface
 {
   private _WalletModel = walletModel;
@@ -15,15 +15,14 @@ export class WalletRepository
   }
 
   /**
-   * 
-   *  create a wallet
-   * 
+   * create new wallet for user
+   *
    */
   async createWallet(
     id: string,
     userType: "Customer" | "Vendor"
   ): Promise<IWallet> {
-    return await this.create({ user: id, userType });
+    return await this.create({ user: new mongoose.Types.ObjectId(id), userType, balance: 0 });
   }
 
   /**

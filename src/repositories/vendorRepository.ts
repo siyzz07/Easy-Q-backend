@@ -10,7 +10,7 @@ import BaseRepository from "./baseRepository";
 import { IPaginationResponseMeta } from "../types/common-types";
 
 export class VendorRepository
-  extends BaseRepository<any>
+  extends BaseRepository<IVendor>
   implements IVendorRepo
 {
   private _vendorModel = vendorModel;
@@ -35,19 +35,19 @@ export class VendorRepository
   }
 
   //--------------- get vendor data
-  async vendorData(email: string): Promise<void> {
+  async vendorData(email: string): Promise<IVendor | null> {
     const vendor = this.findByEmail(email);
     return vendor;
   }
 
   //--------------- get vendor data by id
-  async vendorDatabyId(id: string): Promise<IVendor | any> {
+  async vendorDatabyId(id: string): Promise<IVendor | null> {
     const vendor = this.findById(id);
     return vendor;
   }
 
   //--------------- find and update
-  async findByIdAndUpdate(id: string, data: object): Promise<any> {
+  async findByIdAndUpdate(id: string, data: object): Promise<IVendor | null> {
     const vendor = await vendorModel.findByIdAndUpdate(
       id,
       { $set: data },

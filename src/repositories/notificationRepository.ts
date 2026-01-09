@@ -6,7 +6,7 @@ import BaseRepository from "./baseRepository";
 
 
 
-export class NotificationRepository extends BaseRepository<any>  implements INotificationRepositoryInterface{
+export class NotificationRepository extends BaseRepository<INotification>  implements INotificationRepositoryInterface{
 
   private _NotificationModel = notificationModel
 
@@ -15,7 +15,7 @@ export class NotificationRepository extends BaseRepository<any>  implements INot
   }
 
    async addNewNotification(data: Partial<INotification>): Promise<boolean> {
-      const result = await this.create(data)
+      const result = await this.create(data as INotification)
       return !!result
 
   }

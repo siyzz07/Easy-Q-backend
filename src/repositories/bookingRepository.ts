@@ -10,10 +10,11 @@ import { ErrorReply } from "redis";
 import { ErrorResponse } from "../utils/errorResponse";
 import { MessageEnum } from "../enums/messagesEnum";
 import { StatusCodeEnum } from "../enums/httpStatusCodeEnum";
+import mongoose from "mongoose";
 
 
 
-export class BookingRepository extends BaseRepository<any> implements IBookingRopsitoryInterface{
+export class BookingRepository extends BaseRepository<IBooking> implements IBookingRopsitoryInterface{
 
     private _BookingModal = BookingModel
 
@@ -23,9 +24,9 @@ export class BookingRepository extends BaseRepository<any> implements IBookingRo
 
 
 //----------------------------------- add new booking
-   async addNewBooking(data: IBooking): Promise<IBooking|void> {
+   async addNewBooking(data: Partial<IBooking>): Promise<IBooking|void> {
 
-        const result = await this.create(data)
+        const result = await this.create(data as IBooking)
         return result
     
 
@@ -44,12 +45,14 @@ export class BookingRepository extends BaseRepository<any> implements IBookingRo
       if(!result){
         throw new ErrorResponse(MessageEnum.BOOKING_DATA_FETCH_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
       }
-      return result
+      return result as IBookingPopulated
   }
 //----------------------------------- update booking
   async updateBooking(id: string, data: Partial<IBooking>): Promise<IBooking|void> {
       const result = await this.update(id,data)
-      return result
+      if(result){
+        return result
+      }
   }
 
 
@@ -58,7 +61,7 @@ export class BookingRepository extends BaseRepository<any> implements IBookingRo
   async bookingDatas (data:string, query:{page?:string,limit?:string,search?:string}) :Promise<{data:IBookingPopulated[] ,pagination:IPaginationResponseMeta}>{
 
         let  filter:FilterQuery<IBooking>={
-            customerId:data
+            customerId: new mongoose.Types.ObjectId(data)
         }
            
         if(query.search!=='all'){
@@ -80,8 +83,8 @@ export class BookingRepository extends BaseRepository<any> implements IBookingRo
                 ];
 
       
-       let result = await  this.filterWithPagination(options,filter,populate)
-       return result
+       let result = await  this.filterWithPagination<IBookingPopulated>(options,filter,populate)
+       return result as {data:IBookingPopulated[] ,pagination:IPaginationResponseMeta}
        
       
 

@@ -5,7 +5,7 @@ import { IReview } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
 
-export class ReviewRepository extends BaseRepository<any> implements IReviewRepositoryInterface{
+export class ReviewRepository extends BaseRepository<IReview> implements IReviewRepositoryInterface{
 
         private _ReviewModel = Review
 
@@ -15,7 +15,7 @@ export class ReviewRepository extends BaseRepository<any> implements IReviewRepo
 
     //------------------------------ add new review
         async addReview(data: Partial<IReview>): Promise<boolean | void> {
-            const result = await  this.create(data)
+            const result = await  this.create(data as IReview)
             return result ? true : false
         }
 

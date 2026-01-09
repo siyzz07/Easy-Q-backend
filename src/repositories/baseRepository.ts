@@ -15,7 +15,7 @@ import {
 } from "../types/common-types";
 import { options } from "joi";
 
-class BaseRepository<T extends Document>
+class BaseRepository<T>
   implements IBaseRepositoryInterface<T>
 {
   private _Model: Model<T>;
@@ -26,15 +26,15 @@ class BaseRepository<T extends Document>
 
   async create(data: T): Promise<T> {
     const document = new this._Model(data);
-    return document.save();
+    return document.save() as unknown as Promise<T>;
   }
 
   async findById(id: string): Promise<T | null> {
-    return this._Model.findById(id);
+    return this._Model.findById(id).exec();
   }
 
   async findByEmail(email: string): Promise<T | null> {
-    return this._Model.findOne({ email });
+    return this._Model.findOne({ email }).exec();
   }
 
   async updatePassword(
@@ -45,7 +45,7 @@ class BaseRepository<T extends Document>
       { email },
       { $set: { password: hashedPassword } },
       { new: true }
-    );
+    ).exec();
   }
 
   async findByCustomer(customerId: string): Promise<ICustomerAddress | null> {
@@ -57,27 +57,27 @@ class BaseRepository<T extends Document>
     return this._Model.find().exec();
   }
 
-  async findManyByCondition(conditions: FilterQuery<T>): Promise<any> {
-    return await this._Model.find(conditions).lean().exec();
+  async findManyByCondition(conditions: FilterQuery<T>): Promise<T[]> {
+    return await this._Model.find(conditions).lean<T[]>().exec();
   }
 
-  async findOneByCondiition(conditions: FilterQuery<T>): Promise<any> {
-    return await this._Model.findOne(conditions).lean().exec();
+  async findOneByCondiition(conditions: FilterQuery<T>): Promise<T | null> {
+    return await this._Model.findOne(conditions).lean<T>().exec();
   }
 
-  async update(id: string, data: UpdateQuery<T>): Promise<any | null> {
+  async update(id: string, data: UpdateQuery<T>): Promise<T | null> {
     const updated = await this._Model
       .findByIdAndUpdate(id, data, { new: true })
       .lean<T>();
-    return updated;
+    return updated as T | null;
   }
 
   //---- filter with pagination
-  async filterWithPagination(
+  async filterWithPagination<R = T>(
   options: IPaginationMeta,
   filter: FilterQuery<T>,
   populate: PopulateOptions[] = []
-): Promise<{ data: T[]; pagination: IPaginationResponseMeta }> {
+): Promise<{ data: R[]; pagination: IPaginationResponseMeta }> {
   const page = Math.max(options?.page || 1, 1);
   const limit = Math.max(options?.limit || 10, 1);
   const skip = (page - 1) * limit;
@@ -92,7 +92,7 @@ class BaseRepository<T extends Document>
   populate.forEach((p) => query.populate(p));
 
   const [data, total] = await Promise.all([
-    query.lean<T[]>(),
+    query.lean<R[]>(),
     this._Model.countDocuments(filter),
   ]);
 

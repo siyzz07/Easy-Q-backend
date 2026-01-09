@@ -7,9 +7,10 @@ import { ErrorResponse } from "../../utils/errorResponse";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
-import { BookingMapper } from "../../mappers/booking-mapper/booking-mapper";
+import { BookingMapper, toBookingPopulatedMapper } from "../../mappers/booking-mapper/booking-mapper";
 import {
   BookingResponseDTO,
+  bookingDatasPopulatedDto,
   checkTimeDto,
 } from "../../dto/booking-dto/booking-dto";
 import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
@@ -219,11 +220,14 @@ export class BookingService implements IBookingServiceInterface {
     } = data;
 
     const staffData = await this._StaffRepository.getStaffById(staffId);
+    if(!staffData){
+      throw new ErrorResponse(MessageEnum.STAFF_NOT_FOUND,StatusCodeEnum.BAD_REQUEST)
+    }
     const serviceData = await this._ServiceRepository.getSelectedService(
       serviceId
     );
 
-    const serviceDuration = Number(serviceData.duration);
+    const serviceDuration = Number(serviceData?.duration as string);
     const bookingDateKey = new Date(date).toLocaleDateString("en-CA");
 
     const bookedDatas = await this._BookingRepository.getBookedDatasByCondition(
@@ -232,7 +236,7 @@ export class BookingService implements IBookingServiceInterface {
 
     const availableTime = await this.sortAndFindAvailableTime(
       bookedDatas,
-      staffData,
+      staffData ,
       serviceDuration,
       timePreffer
     );
@@ -254,7 +258,7 @@ export class BookingService implements IBookingServiceInterface {
       bookingDate: bookingDateKey,
       bookingTimeStart: availableTime.startTime,
       bookingTimeEnd: availableTime.endTime,
-      totalAmount: serviceData.price,
+      totalAmount: serviceData?.price,
       status: "pending",
       paymentStatus: "pending",
       expireAt: new Date(Date.now() + TTL * 60 * 1000),
@@ -280,7 +284,7 @@ export class BookingService implements IBookingServiceInterface {
     userId: string,
     query: { page?: string; limit?: string; search?: string }
   ): Promise<{
-    data: IBookingPopulated[];
+    data: bookingDatasPopulatedDto[];
     pagination: IPaginationResponseMeta;
   }> => {
     const bookingData = await this._BookingRepository.bookingDatas(
@@ -292,7 +296,10 @@ export class BookingService implements IBookingServiceInterface {
     } else {
       logger.error(MessageEnum.BOOKING_DATA_FETCH_FAILED);
     }
-    return bookingData;
+    return {
+      data: toBookingPopulatedMapper.toDtoList(bookingData.data),
+      pagination: bookingData.pagination
+    };
   };
 
   /**
@@ -301,13 +308,13 @@ export class BookingService implements IBookingServiceInterface {
    *
    */
 
-  selectedBookingData = async (id: string): Promise<IBookingPopulated> => {
+  selectedBookingData = async (id: string): Promise<bookingDatasPopulatedDto> => {
     const bookingData = await this._BookingRepository.getEachBookingDataById(
       id
     );
 
     if (bookingData) {
-      return bookingData;
+      return toBookingPopulatedMapper.toDto(bookingData);
     } else {
       logger.error("invalied booking Id");
       throw new ErrorResponse(
