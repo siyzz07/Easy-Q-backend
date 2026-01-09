@@ -150,11 +150,11 @@ export interface IPaginationResponseMeta {
 export interface ITransaction extends Document {
     referenceId?: string;
     bookingId: mongoose.Types.ObjectId;
-    ownerId: mongoose.Types.ObjectId;
-    ownerType: TransactionOwnerTypeEnu;
+    user: mongoose.Types.ObjectId;
+    userType: TransactionOwnerTypeEnu;
     flow:string
     transactionType: TransactionTypeEnum;
-    amount: string;
+    amount: number;
     status: TransactionStatusEnum;
     createdAt: Date;
     updatedAt: Date;

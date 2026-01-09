@@ -21,18 +21,24 @@ import { WalletController } from "../controllers/wallet/wallet-controller"
 // ------------------ Notificaton di
 const notificationServiceInstance = new NotificationService(notificationRepository)
 
-// ------------------ booking di
-const bookingServiceInstance = new BookingService(bookingRepository, serviceRepository, staffRepository, notificationServiceInstance)
-const BookingControllerInstance = new BookingController(bookingServiceInstance)
 
 
 // ------------------ wallet
 const walletServiceInstance = new WalletService(walletRepository)
 const walletControllerInstance = new WalletController(walletServiceInstance)
+
 // ------------------ transaction
 
 const transactionServiceInstance = new TransactionService(transactionRepository,bookingRepository)
 const transactionControllerInstance = new TransactionController(transactionServiceInstance)
+
+
+// ------------------ booking di
+const bookingServiceInstance = new BookingService(bookingRepository, serviceRepository, staffRepository, notificationServiceInstance,walletServiceInstance,transactionRepository)
+const BookingControllerInstance = new BookingController(bookingServiceInstance)
+
+
+
 
 // ------------------ Review
 const reviewServiceInstance = new ReviewService(reviewRepository)

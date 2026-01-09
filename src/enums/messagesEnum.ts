@@ -182,14 +182,16 @@ export enum MessageEnum {
      WALLET_UPDATED = "Wallet updated successfully",
      WALLET_UPDATE_FAILED = "Failed to update wallet",
      WALLET_NOT_FOUND = "Wallet not found",
-     INSUFFICIENT_BALANCE = "Insufficient wallet balance",
-     INVALID_AMOUNT = "Invalid wallet amount",
+     WALLET_INSUFFICIENT_BALANCE = "Insufficient wallet balance",
+     WALLET_INVALID_AMOUNT = "Invalid wallet amount",
      WALLET_CREATED = "Wallet created successfully",
      WALLET_ALREADY_EXISTS = "Wallet already exists",
      WALLET_FETCH_SUCCESS = "Wallet fetched successfully",
 
     // --------------------------------------------------------------------------Transaction
-    TRANSACTION_PAYMENT_INVALIED = 'Invalied payment '
+    TRANSACTION_PAYMENT_INVALIED = 'Invalied payment ',
+    TRANSACTION_FETCH_SUCCESS = 'Transaction fetchess successfully '
+
  
 }
 

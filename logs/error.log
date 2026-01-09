@@ -6989,3 +6989,68 @@
 [2026-01-08 13:48:30] error: Socket authentication error: jwt expired
 [2026-01-08 13:58:32] error: Socket authentication error: jwt expired
 [2026-01-08 13:58:32] error: Socket authentication error: jwt expired
+[2026-01-08 14:28:27] error: Socket authentication error: jwt expired
+[2026-01-08 14:28:27] error: Socket authentication error: jwt expired
+[2026-01-08 14:28:27] error: Socket authentication error: jwt expired
+[2026-01-08 14:28:27] error: Socket authentication error: jwt expired
+[2026-01-08 14:28:27] error: Socket authentication error: jwt expired
+[2026-01-08 14:33:22] error: Socket authentication error: jwt expired
+[2026-01-08 14:33:23] error: Socket authentication error: jwt expired
+[2026-01-08 15:25:27] error: Socket authentication error: jwt expired
+[2026-01-08 15:25:27] error: Socket authentication error: jwt expired
+[2026-01-08 15:25:27] error: Socket authentication error: jwt expired
+[2026-01-08 15:25:27] error: Socket authentication error: jwt expired
+[2026-01-08 15:25:28] error: Socket authentication error: jwt expired
+[2026-01-08 18:19:38] error: Operation `bookings.findOne()` buffering timed out after 10000ms - POST /api/booking/add-booking
+[2026-01-08 18:23:08] error: Operation `bookings.findOne()` buffering timed out after 10000ms - POST /api/booking/add-booking
+[2026-01-08 18:23:58] error: Operation `bookings.findOne()` buffering timed out after 10000ms - POST /api/booking/add-booking
+[2026-01-08 18:24:35] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:26:06] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:26:43] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:29:23] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:31:03] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:39:18] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:40:14] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:40:52] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:46:01] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:46:05] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:47:45] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:48:54] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:49:26] error: Socket authentication error: jwt expired
+[2026-01-08 18:49:27] error: Socket authentication error: jwt expired
+[2026-01-08 18:49:27] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:52:07] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:53:38] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:54:30] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:56:07] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:56:36] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 18:59:40] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 19:02:03] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 19:02:33] error: Insufficient wallet balance - POST /api/booking/add-booking
+[2026-01-08 19:03:32] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 19:03:39] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 19:05:13] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 19:07:49] error: Argument passed in does not match the accepted types - POST /api/booking/add-booking
+[2026-01-08 19:08:16] error: Transaction validation failed: amount: Path `amount` is required. - POST /api/booking/add-booking
+[2026-01-08 19:09:14] error: Insufficient wallet balance - POST /api/booking/add-booking
+[2026-01-08 19:10:26] error: Socket authentication error: jwt expired
+[2026-01-08 19:10:26] error: Socket authentication error: jwt expired
+[2026-01-08 19:10:28] error: Transaction validation failed: amount: Path `amount` is required. - POST /api/booking/add-booking
+[2026-01-08 19:12:04] error: Transaction validation failed: amount: Path `amount` is required. - POST /api/booking/add-booking
+[2026-01-08 21:22:22] error: Socket authentication error: jwt expired
+[2026-01-08 21:22:22] error: Socket authentication error: jwt expired
+[2026-01-08 21:22:29] error: Socket authentication error: jwt expired
+[2026-01-08 21:22:29] error: Socket authentication error: jwt expired
+[2026-01-08 21:35:09] error: Socket authentication error: jwt expired
+[2026-01-08 21:35:09] error: Socket authentication error: jwt expired
+[2026-01-08 21:35:12] error: Socket authentication error: jwt expired
+[2026-01-09 08:56:29] error: Socket authentication error: jwt expired
+[2026-01-09 08:56:29] error: Socket authentication error: jwt expired
+[2026-01-09 08:56:40] error: Socket authentication error: jwt expired
+[2026-01-09 08:56:40] error: Socket authentication error: jwt expired
+[2026-01-09 08:58:10] error: Socket authentication error: jwt expired
+[2026-01-09 08:58:10] error: Socket authentication error: jwt expired
+[2026-01-09 09:22:14] error: Socket authentication error: jwt expired
+[2026-01-09 09:22:15] error: Socket authentication error: jwt expired
+[2026-01-09 09:22:22] error: Socket authentication error: jwt expired
+[2026-01-09 09:22:22] error: Socket authentication error: jwt expired

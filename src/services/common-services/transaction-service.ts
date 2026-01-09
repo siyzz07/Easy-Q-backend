@@ -7,6 +7,7 @@ import { ITransactionServiceInterface } from "../../interface/transaction-interf
 import { ErrorResponse } from "../../utils/errorResponse";
 import crypto from "crypto";
 import logger from "../../utils/logger";
+import { ITransaction } from "../../types/common-types";
 
 export class TransactionService implements ITransactionServiceInterface {
   private _TransactionRepository: ITransactionRepositoryInterface;
@@ -77,4 +78,15 @@ export class TransactionService implements ITransactionServiceInterface {
       );
     }
   };
+
+   /**
+   *  getTranasactons
+   *
+   */
+  getTransactons = async (userId: string): Promise<ITransaction[]> => {
+
+      let result = await this._TransactionRepository.getTransactionByuser(userId)
+      return result
+
+  }
 }

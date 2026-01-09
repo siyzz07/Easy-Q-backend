@@ -18,12 +18,13 @@ export class WalletService implements IWalletServiceInterface {
     // --------------------------- get wallet data
 
     getWalletData = async (id: string,type:'Vendor'|'Customer'): Promise<IWallet> =>{
-    
+
+
         const data = await this._WalletRepository.getWalletByuser(id)
         if(!data){
            return  await this._WalletRepository.createWallet(id,type)
         }else{
-            logger.info(MessageEnum.WALLET_CREATED)
+            logger.info(MessageEnum.WALLET_FETCH_SUCCESS)
             return  data
         }
 
@@ -32,8 +33,11 @@ export class WalletService implements IWalletServiceInterface {
     }
 
  // --------------------------- update wallet data
-    updateWallet = async(id: string, type: "Vendor" | "Customer", amount: string): Promise<boolean|void> => {
-         const data = await this._WalletRepository.getWalletByuser(id)
+    updateWallet = async(id: string, type: "Vendor" | "Customer", amount: number): Promise<boolean|void> => {
+        
+            console.log('id',id , 'type',type, 'amount ',amount)
+        
+        const data = await this._WalletRepository.getWalletByuser(id)
         if(!data){
             await this._WalletRepository.createWallet(id,type)
         }

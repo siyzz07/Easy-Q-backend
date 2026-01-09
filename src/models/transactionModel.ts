@@ -15,15 +15,16 @@ const transactionSchema = new Schema<ITransaction>(
       required: true,
     },
     
-    // Who this transaction belongs to
-    ownerId: {
+
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
+      refPath:'userType'
     },
     
-    ownerType: {
+    userType: {
       type: String,
-      enum: ["customer", "vendor", "admin"],
+      enum: ["customer", "vendor"],
       required: true,
     },
     
@@ -40,14 +41,13 @@ const transactionSchema = new Schema<ITransaction>(
     },
     
     amount: {
-      type: String,
+      type: Number,
       required: true,
     },
     
     status: {
       type: String,
-      enum: Object.values(TransactionStatusEnum),
-      default: TransactionStatusEnum.CREATED,
+      enum: Object.values(TransactionStatusEnum)
     },
   },
   { timestamps: true }
