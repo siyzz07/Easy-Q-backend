@@ -75,6 +75,16 @@ export class VendorServiceService implements IServiceInterface {
       throw new ErrorResponse(MessageEnum.SERVICE_FETCH_FAILED,StatusCodeEnum.NOT_FOUND)
     }
   }
+  //-----------------------------------------------------------------------get selected populated
+  getSelectedSerivcePopulated = async(_id: string): Promise<IServiceData|void> => {
+    const  result = await this._ServiceRpository.getSelectedServicePopulated(_id)
+    if(result){
+       return  result
+    }else{
+      logger.error('error to fetch the service')
+      throw new ErrorResponse(MessageEnum.SERVICE_FETCH_FAILED,StatusCodeEnum.NOT_FOUND)
+    }
+  }
 
 
   //==========================================================

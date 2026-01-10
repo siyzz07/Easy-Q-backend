@@ -94,6 +94,24 @@ export class VendorServiceController {
       next(error)
     }
   }
+  // ------------------------------- get selected service 
+  getSelectedServicePopulated = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
+    try{
+
+      const {id} = req.query
+      console.log(id)
+      const reuslt = await this._Service.getSelectedSerivcePopulated(id as string)
+      if(reuslt){
+        res
+          .status(StatusCodeEnum.OK)
+          .json({message:MessageEnum.SERVICE_FETCH_SUCCESS,data:reuslt})
+      }
+        
+
+    }catch(error:unknown){
+      next(error)
+    }
+  }
 
   
 }

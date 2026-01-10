@@ -7059,3 +7059,30 @@
 [2026-01-09 11:30:34] error: Socket authentication error: jwt expired
 [2026-01-09 11:30:34] error: Socket authentication error: jwt expired
 [2026-01-09 11:40:18] error: Your account is under verification. Please wait for admin approval. - POST /api/auth/login
+[2026-01-09 11:41:58] error: Your account is under verification. Please wait for admin approval. - POST /api/auth/login
+[2026-01-09 11:44:16] error: Customer not found - POST /api/auth/login
+[2026-01-09 11:46:37] error: Cannot set properties of undefined (setting '_id') - POST /api/customer/profile/edit-address
+[2026-01-09 14:39:53] error: Socket authentication error: jwt expired
+[2026-01-09 14:39:53] error: Socket authentication error: jwt expired
+[2026-01-09 14:39:54] error: Socket authentication error: jwt expired
+[2026-01-09 14:39:54] error: Socket authentication error: jwt expired
+[2026-01-09 15:03:51] error: Socket authentication error: jwt expired
+[2026-01-09 15:03:51] error: Socket authentication error: jwt expired
+[2026-01-09 15:04:43] error: Socket authentication error: jwt expired
+[2026-01-09 15:04:43] error: Socket authentication error: jwt expired
+[2026-01-09 15:04:44] error: Socket authentication error: jwt expired
+[2026-01-09 15:04:44] error: Socket authentication error: jwt expired
+[2026-01-09 15:04:52] error: Vendor not found - POST /api/auth/login
+[2026-01-09 15:06:06] error: Your account is under verification. Please wait for admin approval. - POST /api/auth/login
+[2026-01-09 15:45:29] error: Cast to ObjectId failed for value "BK-001" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-001
+[2026-01-09 15:52:39] error: Cast to ObjectId failed for value "BK-002" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-002
+[2026-01-09 15:52:44] error: Cast to ObjectId failed for value "BK-001" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-001
+[2026-01-09 15:54:33] error: Cast to ObjectId failed for value "BK-004" (type string) at path "_id" for model "Booking" - GET /api/booking/BK-004
+[2026-01-09 16:24:44] error: Socket authentication error: jwt expired
+[2026-01-09 16:24:44] error: Socket authentication error: jwt expired
+[2026-01-09 16:24:44] error: Socket authentication error: jwt expired
+[2026-01-09 16:24:44] error: Socket authentication error: jwt expired
+[2026-01-09 16:24:45] error: Socket authentication error: jwt expired
+[2026-01-09 16:24:45] error: Socket authentication error: jwt expired
+[2026-01-09 16:24:57] error: Socket authentication error: jwt expired
+[2026-01-09 16:24:57] error: Socket authentication error: jwt expired

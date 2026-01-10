@@ -74,10 +74,11 @@ class VendorService implements IVendorShopServiceInterface {
   };
 
 
-   //----------------------------------------- add shop data
+   //----------------------------------------- get shop data
   getShopData = async (id: string): Promise<VendorDto> =>{
     
      const data = await this._vendorRepo.vendorDatabyId(id)
+    
      if(data){
          return VendorMapper.toDTO(data)
      }
@@ -189,7 +190,7 @@ class VendorService implements IVendorShopServiceInterface {
     
 
         const response = await this._vendorRepo.vendorsDataWithPagination(data)
-        
+
         if(response){
           logger.info('vendor data fetch successfully')
         }else{

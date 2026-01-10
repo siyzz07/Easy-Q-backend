@@ -62,6 +62,12 @@ export class ServiceRepository
    const result = this.findById(_id)
    return result
  }
+ getSelectedServicePopulated(_id: string): Promise<IServiceData|null> {
+
+    return this._ServiceModel.findById(_id).populate('availableStaff').lean<IServiceData>();
+    
+  
+ }
 
 
   //===================================================

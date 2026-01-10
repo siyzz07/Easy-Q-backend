@@ -150,7 +150,9 @@ class VendorController {
     try {
 
       const result = await this._vendorShopService.getVendorsData(req.query);
-     
+      
+          console.log('result.data :>> ', result.data);
+
       res.status(StatusCodeEnum.OK).json({
         success: true,
         message: MessageEnum.SHOP_DATA_FETCH_SUCCESS,

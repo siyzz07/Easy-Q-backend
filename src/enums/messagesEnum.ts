@@ -156,6 +156,11 @@ export enum MessageEnum {
   BOOKING_DATA_FETCH_FAILED ='Failed to fetch booking data',
   BOOKING_ID_INVALIED = 'Invalied booking id',
   BOOKING_CANCEL_SUCCESS = 'Booking cancelled successfully',
+  BOOKING_AMOUNT_REFUNDED = 'Booking amount refunded successfully',
+  BOOKING_RESCHEDULE_LIMIT = "You can reschedule a booking only 2 times. You have already rescheduled it twice.",
+  BOOKING_RESCHEDULE_SUCCESS = "Booking rescheduled successfully",
+  BOOKING_RESCHEDULE_FAILED = "Failed to reschedule booking",
+
 
      // --------------------------------------------------------------------------Favorite
     FAVORITE_ADD_SUCCESS = "Vendor added to favorite list",

@@ -68,7 +68,8 @@ export interface IBooking {
   paymentStatus: string;
   createdAt?: Date;
   updatedAt?: Date;
-  expireAt?:Date|null
+  expireAt?:Date|null,
+  reschedule :string
 }
 
 export interface INotification {

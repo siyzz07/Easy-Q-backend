@@ -79,6 +79,7 @@ export const toBookingPopulatedMapper = {
         state: b.shopId.state,
         profileImage: b.shopId.ProfileImage,
         isVerified: b.shopId.isVerified,
+        workingDays:b.shopId.workingDays as []
       },
 
       service: {

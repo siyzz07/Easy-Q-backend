@@ -72,25 +72,23 @@ export class BookingService implements IBookingServiceInterface {
     data: CreateBookingDTO
   ): Promise<BookingResponseDTO | void> => {
 
-    console.log('1');
-    
+
     
     const { userId, paymentMethod, bookingId, totalAmount, status } = data;
+
+    console.log('apypmentMethod :>> ', paymentMethod);
+
     const existBooking = await this._BookingRepository.getEachBookingDataById(
       bookingId
     );
     
-    console.log('2');
-    
+
     if (!existBooking) {
-      console.log('not found booking data');
-      
-      //  throw new ErrorResponse(MessageEnum.boo)
+      logger.error(MessageEnum.BOOKING_ID_INVALIED)
+       throw new ErrorResponse(MessageEnum.BOOKING_ID_INVALIED,StatusCodeEnum.BAD_REQUEST)
     } else {
       let amount = Number(existBooking.totalAmount)
       let query = {};
-      
-      console.log('3');
       if (status == "failed" && paymentMethod == "razorpay") {
         query = {
           paymentMethod,
@@ -130,18 +128,19 @@ export class BookingService implements IBookingServiceInterface {
             this._TransactionRepository.createTransaction(customerTransaction),
             this._TransactionRepository.createTransaction(vendorTransaction),
           ]);
+
+         const vendorWallet  = await this._WalletService.getWalletData(existBooking.shopId._id as string ,RoleEnum.VENDOR)
+         await this._WalletService.updateWallet(existBooking.shopId._id as string as string,RoleEnum.VENDOR ,amount)
         }
         
         if (paymentMethod == "wallet") {
-          
-          console.log('4');
+
           const customerWallet  = await this._WalletService.getWalletData(userId as string,RoleEnum.CUSTOMER)
           const vendorWallet  = await this._WalletService.getWalletData(existBooking.shopId._id as string ,RoleEnum.VENDOR)
-          console.log('5');
-          
+
           if(Number(customerWallet.balance) < Number(existBooking.totalAmount)){
             
-            console.log('6');
+            
             throw new ErrorResponse(MessageEnum.WALLET_INSUFFICIENT_BALANCE,StatusCodeEnum.BAD_REQUEST)
           }
            
@@ -154,8 +153,7 @@ export class BookingService implements IBookingServiceInterface {
             status: TransactionStatusEnum.SUCCESS,
             amount:amount
           };
-          console.log('7');
-          
+
           const vendorTransaction = {
             bookingId: new mongoose.Types.ObjectId(existBooking._id),
             user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
@@ -165,9 +163,7 @@ export class BookingService implements IBookingServiceInterface {
             status: TransactionStatusEnum.SUCCESS,
             amount:amount
           };
-          
-          console.log('8');
-         
+
           
           await Promise.all([
             this._WalletService.updateWallet(userId as string,RoleEnum.CUSTOMER ,-amount),
@@ -176,14 +172,21 @@ export class BookingService implements IBookingServiceInterface {
             this._TransactionRepository.createTransaction(vendorTransaction),
           ]);
           
-          console.log('9');
         query = {
           paymentMethod,
-          paymentStatus: 'paind',
+          paymentStatus: 'paid',
           expireAt: null,
         };
         
         
+      }
+
+      if(paymentMethod == 'payAtShop'){
+        query = {
+          paymentMethod,
+          paymentStatus: 'pending',
+          expireAt: null,
+        };
       }
 
       const result = await this._BookingRepository.updateBooking(
@@ -191,7 +194,7 @@ export class BookingService implements IBookingServiceInterface {
         query
       );
 
-      console.log(result);
+ 
 
       if (result) {
         void this._NotificationService.sendBookingNotificationToVendor(result);
@@ -242,6 +245,7 @@ export class BookingService implements IBookingServiceInterface {
     );
 
     if (!availableTime) {
+
       logger.warn("time not available on the preffered time gap");
       return false;
     }
@@ -264,11 +268,10 @@ export class BookingService implements IBookingServiceInterface {
       expireAt: new Date(Date.now() + TTL * 60 * 1000),
     };
 
-    console.log("one");
     const result = await this._BookingRepository.addNewBooking(bookingData);
 
     if (result) {
-      console.log("two");
+
       return result._id as string;
     }
     return false;
@@ -302,6 +305,30 @@ export class BookingService implements IBookingServiceInterface {
     };
   };
 
+/**
+   *
+   *
+   * get customer boking data
+   *
+   */
+VendorBooking  = async(userId: string, query: { page?: string; limit?: string; search?: string; date:string }): Promise<{ data: bookingDatasPopulatedDto[]; pagination: IPaginationResponseMeta; }> => {
+
+
+  const bookingData = await this._BookingRepository.bookingDatasForVendor(
+      userId,
+      query
+    );
+    if (bookingData) {
+      logger.info(MessageEnum.BOOKING_DATA_FETCH_SUCCESS);
+    } else {
+      logger.error(MessageEnum.BOOKING_DATA_FETCH_FAILED);
+    }
+    return {
+      data: toBookingPopulatedMapper.toDtoList(bookingData.data),
+      pagination: bookingData.pagination
+    };
+}
+
   /**
    *
    *  get selected booking data
@@ -332,6 +359,135 @@ export class BookingService implements IBookingServiceInterface {
       return result;
     }
   };
+
+  //------------------------- refund of booking
+  refundBookingCash = async(bookingId: string): Promise<IBooking | void> => {
+
+    const booking = await this._BookingRepository.getEachBookingDataById(bookingId)
+ 
+    if(booking){
+      const vendorWallet = await this._WalletService.getWalletData(booking.shopId._id as string,RoleEnum.VENDOR)
+      const custoerWallet = await this._WalletService.getWalletData(booking.customerId._id as string ,RoleEnum.CUSTOMER)
+      let amount = booking.totalAmount
+
+
+      if(Number(amount)> Number(vendorWallet.balance) )
+      {
+          logger.error(MessageEnum.WALLET_INSUFFICIENT_BALANCE)
+        throw new ErrorResponse(MessageEnum.WALLET_INSUFFICIENT_BALANCE , StatusCodeEnum.BAD_REQUEST)
+      }
+
+
+      const customerTransaction = {
+            bookingId: new mongoose.Types.ObjectId(booking._id),
+            user: new mongoose.Types.ObjectId(booking.customerId._id),
+            userType: TransactionOwnerTypeEnu.CUSTOMER,
+            flow:"credit" ,
+            transactionType: TransactionTypeEnum.WALLET,
+            status: TransactionStatusEnum.SUCCESS,
+            amount:Number(amount)
+          };
+
+          const vendorTransaction = {
+            bookingId: new mongoose.Types.ObjectId(booking._id),
+            user: new mongoose.Types.ObjectId(booking.shopId._id as string),
+            userType: TransactionOwnerTypeEnu.VENDOR,
+            flow:"debit" ,
+            transactionType: TransactionTypeEnum.WALLET,
+            status: TransactionStatusEnum.SUCCESS,
+            amount:Number(amount)
+          };
+
+          try{
+
+            await Promise.all([
+        this._BookingRepository.updateBooking(String(booking._id) as string, {paymentStatus: "refunded"}),
+        this._WalletService.updateWallet(booking.shopId._id as string,RoleEnum.VENDOR,-amount),
+        this._WalletService.updateWallet(booking.customerId._id as string ,RoleEnum.CUSTOMER,Number(amount)),
+        this._TransactionRepository.createTransaction(customerTransaction),
+        this._TransactionRepository.createTransaction(vendorTransaction),
+        
+      ])
+    }catch(error){
+      logger.error('error to refund data')
+      throw new ErrorResponse('Error to refund data',StatusCodeEnum.INTERNAL_SERVER_ERROR)
+    }
+    logger.info('booking amount refundedn success fully')
+      
+    }
+  }
+
+
+
+
+  //------------------------- reschedule booking time
+  bookingTimeReSchedule = async (data:{staffId:string,timePreffer:string,date:string,bookingId:string,userId:string}): Promise<boolean|void> =>{
+      const {
+      staffId,
+      timePreffer,
+      date,
+      bookingId
+    } = data;
+
+    const staffData = await this._StaffRepository.getStaffById(staffId);
+    const bookingData= await this._BookingRepository.getEachBookingDataById(bookingId)
+
+    
+    if(Number(bookingData?.reschedule)>=2){
+      throw new ErrorResponse(MessageEnum.BOOKING_RESCHEDULE_LIMIT,StatusCodeEnum.BAD_REQUEST)
+    }
+
+    
+    if(!staffData){
+      throw new ErrorResponse(MessageEnum.STAFF_NOT_FOUND,StatusCodeEnum.BAD_REQUEST)
+    }
+
+    
+    const serviceDuration = Number(bookingData?.serviceId?.duration as string);
+    const bookingDateKey = new Date(date).toLocaleDateString("en-CA");
+
+    const bookedDatas = await this._BookingRepository.getBookedDatasByCondition(
+      { staffId: staffId, bookingDate: bookingDateKey }
+    );
+
+    const availableTime = await this.sortAndFindAvailableTime(
+      bookedDatas,
+      staffData ,
+      serviceDuration,
+      timePreffer
+    );
+
+    if (!availableTime) {
+
+        logger.warn("time not available on the preffered time gap");
+        return false;
+      }
+
+      const rescheduleCount = Number(bookingData?.reschedule)+1
+
+      const updatedData = {
+        
+        staffId: new Types.ObjectId(staffId),
+        bookingDate: bookingDateKey,
+        bookingTimeStart: availableTime.startTime,
+        bookingTimeEnd: availableTime.endTime,
+        status:bookingData?.status,
+        reschedule:rescheduleCount
+      }
+
+      const result = await this._BookingRepository.updateBooking(bookingData?._id as string,updatedData);
+      console.log(result)
+      if(updatedData){
+        logger.info(MessageEnum.BOOKING_RESCHEDULE_SUCCESS)
+        return true
+
+      }else{
+        logger.error(MessageEnum.BOOKING_RESCHEDULE_FAILED)
+        throw  new ErrorResponse (MessageEnum.BOOKING_RESCHEDULE_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+      }
+
+  } 
+
 
   /***
    *

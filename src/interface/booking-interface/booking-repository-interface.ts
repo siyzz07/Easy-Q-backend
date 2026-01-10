@@ -8,4 +8,5 @@ export interface IBookingRopsitoryInterface {
     getEachBookingDataById (_id:string):Promise<IBookingPopulated|void>
     updateBooking (id:string , data:Partial<IBooking>):Promise<IBooking|void>
     bookingDatas (data:string ,query:{page?:string,limit?:string,search?:string}) :Promise<{data:IBookingPopulated[],pagination:IPaginationResponseMeta}>
+    bookingDatasForVendor (data:string ,query:{page?:string,limit?:string,search?:string, date?:string}) :Promise<{data:IBookingPopulated[],pagination:IPaginationResponseMeta}>
 }

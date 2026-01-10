@@ -6,18 +6,20 @@ export const VendorMapper = {
     toDTO(vendor: any): VendorDto {
         return {
             _id: vendor._id?.toString() || "",
-            shopName: vendor.shopName,
-            email: vendor.email,
-            phone: vendor.phone,
-            ProfileImage: vendor.ProfileImage,
-            city: vendor.city,
-            openAt: vendor.openAt,
-            closeAt: vendor.closeAt,
-            isActive: vendor.isActive,
-            isVerified: vendor.isVerified,
-            cordinates: vendor.cordinates,
-            hasShop: vendor.hasShop,
-            images: vendor.images?.map((i:any) => i.url || i) || [] 
+            shopName: vendor.shopName || "",
+            email: vendor.email || "",
+            phone: vendor.phone || "",
+            ProfileImage: vendor.ProfileImage || "",
+            city: vendor.city || "",
+            openAt: vendor.openAt || "",
+            closeAt: vendor.closeAt || "",
+            isActive: vendor.isActive || false,
+            isVerified: vendor.isVerified || "pending",
+            cordinates: vendor.cordinates || {},
+            hasShop: vendor.hasShop || false,
+            images: vendor.images?.map((i:any) => i.url || i) || [], 
+            workingDays: vendor.workingDays || [],
+            state:vendor.state
         }
     },
     toDTOList(vendors: any[]): VendorDto[] {

@@ -12,4 +12,6 @@ export interface VendorDto {
   cordinates: any;       
   hasShop: boolean;
   images: string[];
+  state:string
+  workingDays:string[]
 }

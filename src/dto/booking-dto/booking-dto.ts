@@ -85,6 +85,8 @@ export interface VendorDTO {
   state?: string;
   profileImage?: string;
   isVerified?: "pending" | "verified" | "rejected";
+  workingDays:string[]
+
 }
 
 
