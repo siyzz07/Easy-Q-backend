@@ -7,6 +7,7 @@ import { CustomerDto } from "../../dto/customer-dto/customer-dto";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { CustomerMapper } from "../../mappers/customer-mapper/customer-mapper";
 import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
+import { IPaginationResponseMeta } from "../../types/common-types";
 
 export class AdminService implements IAdminServiceInterface {
   private _adminRepository: IAdminRepo;
@@ -92,6 +93,13 @@ export class AdminService implements IAdminServiceInterface {
   getVendors = async (): Promise<VendorDto[]> => {
     const result = await this._vendorRepository.getVendorData();
     return VendorMapper.toDTOList(result);
+  }
+
+
+  getVendorsPagination = async(query: { page?: string; limit?: string; search?: string; }): Promise<{ data: IVendor[]; pagination: IPaginationResponseMeta }> =>{
+    
+    let result = await this._vendorRepository.getVendorDataPaginaition(query)
+    return result
   }
 
   blockVendor = async (id: string): Promise<void> => {

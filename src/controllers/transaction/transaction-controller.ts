@@ -49,14 +49,16 @@ export class TransactionController {
    */
   getTransactions = async (req: Request, res: Response): Promise<void> => {
     const result = await this._TransactionService.getTransactons(
-      req.body.userId
+      req.body.userId,
+      req.query
     );
 
     res
       .status(StatusCodeEnum.OK)
       .json({
         success: true,
-        data: result,
+        data: result.data,
+        pagination:result.pagination,
         message: MessageEnum.TRANSACTION_FETCH_SUCCESS,
       });
   };

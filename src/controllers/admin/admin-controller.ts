@@ -69,10 +69,11 @@ export class AdminController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const data = await this._adminService.getVendors();
+      const data = await this._adminService.getVendorsPagination(req.query);
       res.status(StatusCodeEnum.OK).json({
         message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS,
-        data: data,
+        data: data.data,
+        paginaion:data.pagination
       });
     } catch (error: unknown) {
       next(error);
