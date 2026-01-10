@@ -55,13 +55,15 @@ export class VendorServiceService implements IServiceInterface {
   //-----------------------------------------------------------------------edit services of the shop
   editService = async (data: IService): Promise<boolean | void> => {
     const { _id, userId, ...payload } = { ...data };
-
     const result = await this._ServiceRpository.editService(
       _id as string,
       payload
     );
     if (result) {
+      logger.info('service edited successully')
       return true;
+    }else{
+      logger.error('error to edit service')
     }
   };
 

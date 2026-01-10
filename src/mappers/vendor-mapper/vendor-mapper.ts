@@ -19,7 +19,9 @@ export const VendorMapper = {
             hasShop: vendor.hasShop || false,
             images: vendor.images?.map((i:any) => i.url || i) || [], 
             workingDays: vendor.workingDays || [],
-            state:vendor.state
+            state:vendor.state,
+            rating:vendor.rating,
+            proofImage:vendor.proofImage
         }
     },
     toDTOList(vendors: any[]): VendorDto[] {

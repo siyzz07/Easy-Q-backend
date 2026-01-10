@@ -30,6 +30,7 @@ export interface IVendor {
   ProfileImage?: string;
   images?:IImage[];
   isActive?: boolean;
+  rating?:number
   planExpreData?: Date;
   createAt?: Date;
   updatedAt?: Date;

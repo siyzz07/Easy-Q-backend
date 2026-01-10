@@ -3,7 +3,7 @@ export interface VendorDto {
   shopName: string;
   email: string;
   phone: string;
-  ProfileImage: string;
+  ProfileImage?:string;
   city: string;
   openAt: string;
   closeAt: string;
@@ -13,5 +13,7 @@ export interface VendorDto {
   hasShop: boolean;
   images: string[];
   state:string
-  workingDays:string[]
+  workingDays:string[];
+  rating:number,
+  proofImage:string
 }
