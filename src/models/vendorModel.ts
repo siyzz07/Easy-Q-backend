@@ -35,6 +35,10 @@ const vendorSchema = new Schema<IVendor>(
     city: {
       type: String,
     },
+    rating:{
+        type:Number,
+        default:0
+    },
     workingDays: {
       type: [String],
       default: [],

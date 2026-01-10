@@ -8,9 +8,10 @@ import { IServiceType } from "../types/adminTypes";
 import { IImage, IService, IStaff, IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 import { IPaginationResponseMeta } from "../types/common-types";
+import { VendorDto } from "../dto/vendor-dto/vendor-dto";
 
 export class VendorRepository
-  extends BaseRepository<any>
+  extends BaseRepository<IVendor>
   implements IVendorRepo
 {
   private _vendorModel = vendorModel;
@@ -35,19 +36,19 @@ export class VendorRepository
   }
 
   //--------------- get vendor data
-  async vendorData(email: string): Promise<void> {
+  async vendorData(email: string): Promise<IVendor | null> {
     const vendor = this.findByEmail(email);
     return vendor;
   }
 
   //--------------- get vendor data by id
-  async vendorDatabyId(id: string): Promise<IVendor | any> {
+  async vendorDatabyId(id: string): Promise<IVendor | null> {
     const vendor = this.findById(id);
     return vendor;
   }
 
   //--------------- find and update
-  async findByIdAndUpdate(id: string, data: object): Promise<any> {
+  async findByIdAndUpdate(id: string, data: object): Promise<IVendor | null> {
     const vendor = await vendorModel.findByIdAndUpdate(
       id,
       { $set: data },
@@ -111,10 +112,38 @@ export class VendorRepository
     }
   }
 
+
+  async getVendorDataPaginaition(query:{page?:string,limit?:string , search?:string}): Promise<{data: IVendor[] ,pagination:IPaginationResponseMeta}> {
+    
+    let filter:FilterQuery<IVendor> = {}
+
+    if(query?.search?.trim()){
+      filter.$or=[
+        {shopName:{$regex:query.search ,$options:'i'}}
+      ]
+    }
+
+ 
+       const options = {
+            page: Number(query.page) || 1,
+            limit: Number(query.limit) || 10,
+            sort: { createdAt: -1 as const },
+          };
+    
+    
+    const result = await this.filterWithPagination(options,filter)
+     return  result
+  }
+
   async getVendorsData(): Promise<IVendor[] | null> {
     const vendorData = await this._vendorModel.find({ isActive: true }).lean();
     return vendorData;
   }
+
+  // async getVendorsData(): Promise<IVendor[] | null> {f
+  //   const vendorData = await this._vendorModel.find({ isActive: true }).lean();
+  //   return vendorData;
+  // }
 
   async getEachVendorData(_id: string): Promise<IVendor | null> {
     const result = await this._vendorModel.findById(_id).populate("shopType");

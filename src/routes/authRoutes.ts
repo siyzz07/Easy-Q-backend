@@ -21,6 +21,7 @@ authRoute.post('/add-customer',emailVerifyTokenMIddleware,authControllerInstance
 
 
 authRoute.post('/add-vendor',emailVerifyTokenMIddleware,authControllerInstance.addNewEntity)
+authRoute.post('/create-admin',authControllerInstance.addNewEntity)
 
 authRoute.post('/verify-email',authControllerInstance.verifyEmail)
 authRoute.post('/login',authControllerInstance.login)

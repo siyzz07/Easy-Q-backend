@@ -3,6 +3,7 @@ import { IBookingServiceInterface } from "../../interface/booking-interface/book
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { checkTimeReqMapper } from "../../mappers/booking-mapper/booking-mapper";
+import { log } from "console";
 
 
 
@@ -30,6 +31,7 @@ export class BookingController {
   ): Promise<void> => {
     try{
 
+
       const result = await this._BookingService.addNewbooking(req.body)
       if(result){
         res
@@ -51,7 +53,6 @@ export class BookingController {
     try{
 
       const result = await this._BookingService.checkTimeAvailable(checkTimeReqMapper.toDto(req.body))
-      console.log(result)
       if(result){
           res 
             .status(StatusCodeEnum.OK)
@@ -77,16 +78,34 @@ export class BookingController {
 
   getCustomerBookings = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
     try{
-      const result = await this._BookingService.customerBooking(req.body.userId)
+      
+      const result = await this._BookingService.customerBooking(req.body.userId,req.query)
+
       if(result){ 
         res 
           .status(StatusCodeEnum.OK)
-          .json({success:true,message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS,data:result})
+          .json({success:true,message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS,data:result.data , pagination:result.pagination})
       }
     }catch(error){
-      next()
+      next(error)
     }
   }
+
+  /**
+   * 
+   *  get bookings of the vendor
+   * 
+   */
+  getVendorBookings = async (req:Request,res:Response):Promise<void> =>{
+    
+    let result = await this._BookingService.VendorBooking(req.body.userId,req.query)
+
+    res 
+      .status(StatusCodeEnum.OK)
+      .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS ,data:result.data ,pagination:result.pagination})
+
+  }
+
 
   /**
    * 
@@ -94,14 +113,74 @@ export class BookingController {
    * 
    */
   getSelectedBookingData =  async(req:Request,res:Response,next:NextFunction):Promise<void> =>{
-      const id = req.params.id
-      const result = await this._BookingService.selectedBookingData(id)
-      if(result){
-        res
-          .status(StatusCodeEnum.OK)
-          .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_FAILED , data:result})
+      try {
+
+        
+        const id = req.params.id
+        const result = await this._BookingService.selectedBookingData(id)
+        if(result){
+          res
+            .status(StatusCodeEnum.OK)
+            .json({success:true , message:MessageEnum.BOOKING_DATA_FETCH_SUCCESS , data:result})
+        }
+      } catch (error) {
+          next(error)
       }
   }
   
 
+
+  /**
+   * 
+   *  cancel booking
+   * 
+   */
+  cancelBooking = async (req:Request,res:Response,next:NextFunction):Promise<void> =>{
+    try{
+        const {bookingId} = req.params 
+        const result = await this._BookingService.cancelBooking(bookingId)
+        if(result){
+          res
+            .status(StatusCodeEnum.OK)
+            .json({success:true , message:MessageEnum.BOOKING_CANCEL_SUCCESS})
+        }
+    }catch(error){
+      next(error)
+    }
+
+  }
+
+
+  
+  /**
+   * 
+   *  refund booking
+   * 
+   */
+   refundBooking = async (req:Request,res:Response) :Promise<void> =>{
+
+    const bookingId = req.params.bookingId
+
+    const result = await this._BookingService.refundBookingCash(bookingId)
+
+    res
+      .status(StatusCodeEnum.OK)
+      .json({success:true , message:MessageEnum.BOOKING_AMOUNT_REFUNDED})
+   }
+
+   /**
+   * 
+   *  booking time reschedule
+   * 
+   */
+  bookingTimeReschedule = async (req:Request,res:Response) :Promise<void> =>{
+      
+    const response = await this._BookingService.bookingTimeReSchedule(req.body)
+
+    if(response){
+      res
+        .status(StatusCodeEnum.OK)
+        .json({success:true,message:MessageEnum.BOOKING_RESCHEDULE_SUCCESS})
+    }
+  }
 }

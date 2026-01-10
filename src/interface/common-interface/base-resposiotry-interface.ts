@@ -4,7 +4,7 @@ import { IStaff } from "../../types/vendorType";
 import { IPaginationMeta, IPaginationResponseMeta } from "../../types/common-types";
 
 
-export interface IBaseRepositoryInterface<T extends Document> {
+export interface IBaseRepositoryInterface<T> {
    
   create(data: T): Promise<T>;
   findById(id: string): Promise<T | null>;
@@ -12,8 +12,8 @@ export interface IBaseRepositoryInterface<T extends Document> {
   updatePassword(email:string,hashedPassword:string):Promise <T|null>
   findByCustomer(customerId:string):Promise<ICustomerAddress | null>
   findAll(): Promise<T[]>
-  findManyByCondition(conditions: Partial<T>):Promise<any>
-  findOneByCondiition(conditions: Partial<T>):Promise<any>
+  findManyByCondition(conditions: Partial<T>):Promise<T[]>
+  findOneByCondiition(conditions: Partial<T>):Promise<T | null>
   update(id: string, data: UpdateQuery<T>): Promise<T | null>
-  filterWithPagination (options:IPaginationMeta,filter:FilterQuery<T>):Promise<{ data: T[]; pagination: IPaginationResponseMeta }>
+  filterWithPagination<R = T> (options:IPaginationMeta,filter:FilterQuery<T>):Promise<{ data: R[]; pagination: IPaginationResponseMeta }>
 }

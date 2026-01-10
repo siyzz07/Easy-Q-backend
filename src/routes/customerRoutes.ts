@@ -44,6 +44,7 @@ customerRoute.get('/shop-data/:id',verifyToken,customerBlockAuth,vendorControlle
  */
 customerRoute.get('/shop-data/services/:shopId',verifyToken,customerBlockAuth,vendorServiceControllerInstance.getShopServices)
 customerRoute.get('/service/get-service',verifyToken,customerBlockAuth,vendorServiceControllerInstance.getSelectedService)
+customerRoute.get('/service/get-service-populated',verifyToken,customerBlockAuth,vendorServiceControllerInstance.getSelectedServicePopulated)
 
 /**
  * 

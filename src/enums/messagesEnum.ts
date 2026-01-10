@@ -98,6 +98,7 @@ export enum MessageEnum {
   ADMIN_LOGIN_FAILED = "Invalid email or password.",
   ADMIN_NOT_FOUND = "Admin not found.",
   ADMIN_PASSWORD_INCORRECT = "Incorrect password.",
+  ADMIN_ALREADY_EXISTS = "Admin already exists",
 
 
   // --------------------------------------------------------------------------Shop
@@ -154,6 +155,12 @@ export enum MessageEnum {
   BOOKING_DATA_FETCH_SUCCESS = "Booking data fetched successfully",
   BOOKING_DATA_FETCH_FAILED ='Failed to fetch booking data',
   BOOKING_ID_INVALIED = 'Invalied booking id',
+  BOOKING_CANCEL_SUCCESS = 'Booking cancelled successfully',
+  BOOKING_AMOUNT_REFUNDED = 'Booking amount refunded successfully',
+  BOOKING_RESCHEDULE_LIMIT = "You can reschedule a booking only 2 times. You have already rescheduled it twice.",
+  BOOKING_RESCHEDULE_SUCCESS = "Booking rescheduled successfully",
+  BOOKING_RESCHEDULE_FAILED = "Failed to reschedule booking",
+
 
      // --------------------------------------------------------------------------Favorite
     FAVORITE_ADD_SUCCESS = "Vendor added to favorite list",
@@ -167,6 +174,29 @@ export enum MessageEnum {
 
     FAVORITE_FETCH_SUCCESS = "Favorite fetched successfully",
     FAVORITE_FETCH_FAILED = "Failed to fetch favorite list",
+
+    // --------------------------------------------------------------------------Review
+    REVIEW_ADD_SUCCESS = "Review added successfully",
+    REVIEW_FETCH_SUCCESS = "Reviews fetched successfully",
+    REVIEW_DELETE_SUCCESS = "Review deleted successfully",
+    REVIEW_UPDATE_SUCCESS = "Review updated successfully",
+    REVIEW_NOT_FOUND = "Review not found",
+
+
+    // --------------------------------------------------------------------------Wallet
+     WALLET_UPDATED = "Wallet updated successfully",
+     WALLET_UPDATE_FAILED = "Failed to update wallet",
+     WALLET_NOT_FOUND = "Wallet not found",
+     WALLET_INSUFFICIENT_BALANCE = "Insufficient wallet balance",
+     WALLET_INVALID_AMOUNT = "Invalid wallet amount",
+     WALLET_CREATED = "Wallet created successfully",
+     WALLET_ALREADY_EXISTS = "Wallet already exists",
+     WALLET_FETCH_SUCCESS = "Wallet fetched successfully",
+
+    // --------------------------------------------------------------------------Transaction
+    TRANSACTION_PAYMENT_INVALIED = 'Invalied payment ',
+    TRANSACTION_FETCH_SUCCESS = 'Transaction fetchess successfully '
+
  
 }
 

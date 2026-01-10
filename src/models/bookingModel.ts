@@ -1,6 +1,7 @@
 // models/BookingModel.ts
 import mongoose, { Schema } from "mongoose";
 import { IBooking } from "../types/common-types";
+import { string } from "joi";
 const bookingSchema = new Schema<IBooking>(
   {
     customerId: {
@@ -63,6 +64,10 @@ const bookingSchema = new Schema<IBooking>(
     expireAt: {
       type: Date,
       default: null,
+    },
+    reschedule:{
+      type:Number,
+      default:0
     }
   },
   {

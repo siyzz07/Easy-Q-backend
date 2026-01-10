@@ -17,8 +17,7 @@ export interface ICustomerServiceInterface{
     
 
     //==========================================================
-    getCustomersDatas(): Promise<ICustomer[] | []>;//-----------
-    blockCustomer (customerId:string):Promise<boolean|void>;//-----------
+
 
 }
 

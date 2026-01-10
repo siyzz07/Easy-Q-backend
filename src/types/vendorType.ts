@@ -30,6 +30,7 @@ export interface IVendor {
   ProfileImage?: string;
   images?:IImage[];
   isActive?: boolean;
+  rating?:number
   planExpreData?: Date;
   createAt?: Date;
   updatedAt?: Date;
@@ -105,8 +106,8 @@ export interface IServiceData {
 
 
 export interface IReview extends Document {
-  customerId: Types.ObjectId;
-  vendorId: Types.ObjectId;
+  customerId: mongoose.Types.ObjectId | string;
+  vendorId: mongoose.Types.ObjectId | string;
   rating: string;
   createdAt?: Date;
   comment:string

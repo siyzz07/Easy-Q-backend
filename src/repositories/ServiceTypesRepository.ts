@@ -7,7 +7,7 @@ import { IServiceType } from "../types/adminTypes";
 import BaseRepository from "./baseRepository";
 
 export class ServiceTypes
-  extends BaseRepository<any>
+  extends BaseRepository<IServiceType>
   implements IServiceTypesRepositoryInterface
 {
   private _ServiceTypeModel = ServiceTypesModel;

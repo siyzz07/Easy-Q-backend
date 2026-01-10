@@ -3,6 +3,7 @@ import { MessageEnum } from "../../enums/messagesEnum";
 
 import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
 import { IStaffServiceInterface } from "../../interface/staff-interface/staff-service-interface";
+import { IPaginationResponseMeta } from "../../types/common-types";
 import { IStaff, IStaffAdd } from "../../types/vendorType";
 import { ErrorResponse } from "../../utils/errorResponse";
 import logger from "../../utils/logger";
@@ -55,13 +56,11 @@ export class StaffService implements IStaffServiceInterface {
   };
 
   // ---------------------------------- get staffs
-  getStaffService = async (shopId: string): Promise<IStaff[] | []> => {
-    const data = await this._StaffRepository.getStaff(shopId);
-    if (data) {
+  getStaffService = async (shopId: string ,query:{page?:string,limit?:string,search?:string}): Promise<{data:IStaff[],pagination:IPaginationResponseMeta}> => {
+    const data = await this._StaffRepository.getStaff(shopId,query);
+
       return data;
-    } else {
-      return [];
-    }
+
   };
 
   //  ---------------------------------- edit Staff

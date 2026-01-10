@@ -1,11 +1,12 @@
-import mongoose, { UpdateQuery } from "mongoose";
+import mongoose, { FilterQuery, UpdateQuery } from "mongoose";
 import { IStaffRepositoryInterface } from "../interface/staff-interface/staff-repository-interface";
 import staffModel from "../models/staffModel";
 import { IStaff } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
+import { IPaginationResponseMeta } from "../types/common-types";
 
 export class StaffRepository
-  extends BaseRepository<any>
+  extends BaseRepository<IStaff>
   implements IStaffRepositoryInterface
 {
   private _StaffModel = staffModel;
@@ -26,23 +27,27 @@ export class StaffRepository
   }
 
   //-----------------------------------------------------get the shop staffs
-  async getStaff(shopId: string): Promise<IStaff[] | []> {
+  async getStaff(shopId: string, query:{page?:string,limit?:string,search?:string}): Promise<{data:IStaff[],pagination:IPaginationResponseMeta}>{
 
-  let query
-   
-      query ={
-        shopId:shopId,
-        
-      }
-  
-    const result = await this.findManyByCondition(query);
-    if (result) {
-
-      console.log(result)
-      return result;
-    } else {
-      return [];
+    let filter:FilterQuery<IStaff>={
+      shopId
     }
+
+    if(query.search?.trim()){
+      filter.$or=[
+          { staffName: { $regex: query.search, $options: "i" } },
+      ]
+    }
+    
+     const options = {
+            page: Number(query.page) || 1,
+            limit: Number(query.limit) || 10,
+            sort: { createdAt: -1 as const },
+        };
+
+    const result = await this.filterWithPagination(options,filter)
+      return result;
+
   }
 
   //-----------------------------------------------------get single staff data
@@ -82,7 +87,7 @@ export class StaffRepository
     
   }
   //-----------------------------------------------------edit Staff
-   async getStaffById(id: string): Promise<IStaff> {
+   async getStaffById(id: string): Promise<IStaff | null> {
 
     const result = await this.findById(id)
     return result

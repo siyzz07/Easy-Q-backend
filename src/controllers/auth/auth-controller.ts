@@ -55,8 +55,9 @@ export class AuthController {
   ): Promise<void> => {
     try {
       const data = req.body;
+      console.log('data',data);
       const result = await this._authService.login(data);
-
+      console.log('result',result);
       if (result) {
         res.cookie(`${result.role}Jwt`, result.refreshToken, {
           httpOnly: true,

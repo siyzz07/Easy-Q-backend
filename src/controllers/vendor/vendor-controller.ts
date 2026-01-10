@@ -143,96 +143,16 @@ class VendorController {
   };
 
   //=========================================================
-  geVendorsDatas = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const data = await this._vendorShopService.getVendorsDatas();
-      res.status(StatusCodeEnum.OK).json({
-        message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS,
-        data: data,
-      });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        res
-          .status(StatusCodeEnum.INTERNAL_SERVER_ERROR)
-          .json({ message: MessageEnum.SERVER_ERROR });
-      }
 
-      console.log(error);
-    }
-  };
-
-  blockVendor = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      await this._vendorShopService.blockVendor(req.body.id);
-
-      res
-        .status(StatusCodeEnum.OK)
-        .json({ messeage: MessageEnum.VENDOR_DATA_UPDATION_SUCCESS });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
-    }
-  };
-
-  getVendorsRequest = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const result = await this._vendorShopService.getVendorsVerification();
-      res.status(StatusCodeEnum.OK).json({
-        message: MessageEnum.VENDOR__DATA_FETCH_SUCCESS,
-        data: result,
-      });
-    } catch (error: unknown) {}
-  };
-
-  rejectVendorRequest = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const result = await this._vendorShopService.rejectVendorRequst(
-        req.body.id
-      );
-      res
-        .status(StatusCodeEnum.OK)
-        .json({ message: MessageEnum.VENDOR_DENIED });
-    } catch (error: unknown) {}
-  };
-
-  acceptVendorRequest = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
-    try {
-      const result = await this._vendorShopService.verifyVendorRequst(
-        req.body.id
-      );
-      res
-        .status(StatusCodeEnum.OK)
-        .json({ message: MessageEnum.VENDOR_VRIFIED });
-    } catch (error: unknown) {}
-  };
 
   //==================================================================
   getShopsData = async (req: Request, res: Response): Promise<void> => {
     try {
 
       const result = await this._vendorShopService.getVendorsData(req.query);
-     
+      
+          console.log('result.data :>> ', result.data);
+
       res.status(StatusCodeEnum.OK).json({
         success: true,
         message: MessageEnum.SHOP_DATA_FETCH_SUCCESS,

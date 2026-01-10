@@ -35,14 +35,14 @@ export class StaffController {
   getStaffsController = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
 
-     
+      
 
-      const result = await this._StaffServices.getStaffService(req.body.userId);
+      const result = await this._StaffServices.getStaffService(req.body.userId,req.query);
 
       if (result) {
         res
           .status(StatusCodeEnum.OK)
-          .json({ message: MessageEnum.STAFF_FETCH_SUCCESS, data: result });
+          .json({ message: MessageEnum.STAFF_FETCH_SUCCESS, data: result.data ,pagination:result.pagination });
       } else {
         throw new Error(MessageEnum.STAFF_FETCH_FAILED);
       }

@@ -23,6 +23,7 @@ export interface CreateBookingDTO {
   bookingId:string
   totalAmount: number;
   paymentMethod: string;
+  status:string
 }
 
 
@@ -84,6 +85,9 @@ export interface VendorDTO {
   state?: string;
   profileImage?: string;
   isVerified?: "pending" | "verified" | "rejected";
+  workingDays:string[]
+  rating?:number
+
 }
 
 
