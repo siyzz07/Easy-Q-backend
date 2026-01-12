@@ -36,7 +36,7 @@ export class TransactionRepository extends BaseRepository<ITransaction> implemen
             sort: { createdAt: -1 as const },
              };
 
-             let result = await this.filterWithPagination(options,filter)
+             const result = await this.filterWithPagination(options,filter)
 
              return result
 

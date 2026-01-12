@@ -115,7 +115,7 @@ export class VendorRepository
 
   async getVendorDataPaginaition(query:{page?:string,limit?:string , search?:string}): Promise<{data: IVendor[] ,pagination:IPaginationResponseMeta}> {
     
-    let filter:FilterQuery<IVendor> = {}
+    const filter:FilterQuery<IVendor> = {}
 
     if(query?.search?.trim()){
       filter.$or=[

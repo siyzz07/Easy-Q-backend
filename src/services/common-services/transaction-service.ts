@@ -86,7 +86,7 @@ export class TransactionService implements ITransactionServiceInterface {
    */
   getTransactons = async (userId: string,query:{page?:string,limit?:string,filter?:string}):Promise<{data:ITransaction[] ,pagination:IPaginationResponseMeta}> => {
 
-      let result = await this._TransactionRepository.getTransactionByuser(userId,query)
+      const result = await this._TransactionRepository.getTransactionByuser(userId,query)
       return result
 
   }

@@ -20,7 +20,7 @@ export class WalletController {
     //---------- get wallet data
     getCustomerWalletData = async (req:Request,res:Response):Promise<void>=>{
     
-        let result = await this._WalletService.getWalletData(req.body.userId,'Customer')
+        const result = await this._WalletService.getWalletData(req.body.userId,'Customer')
         
         res
             .status(StatusCodeEnum.OK)
@@ -40,7 +40,7 @@ export class WalletController {
     //--------------- get vendor wallet data
         getVendorWalletData = async (req:Request,res:Response):Promise<void>=>{
         
-        let result = await this._WalletService.getWalletData(req.body.userId,'Vendor')
+        const result = await this._WalletService.getWalletData(req.body.userId,'Vendor')
         
         res
             .status(StatusCodeEnum.OK)

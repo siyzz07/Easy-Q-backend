@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 import { Error } from "mongoose";
-import { ErrorResponse } from "../utils/errorResponse";
-import { StatusCodeEnum } from "../enums/httpStatusCodeEnum";
 
 const dbConfig = async (): Promise<void> => {
   try {

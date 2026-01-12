@@ -98,7 +98,7 @@ export class BookingController {
    */
   getVendorBookings = async (req:Request,res:Response):Promise<void> =>{
     
-    let result = await this._BookingService.VendorBooking(req.body.userId,req.query)
+    const result = await this._BookingService.VendorBooking(req.body.userId,req.query)
 
     res 
       .status(StatusCodeEnum.OK)

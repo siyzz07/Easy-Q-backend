@@ -29,7 +29,7 @@ export class StaffRepository
   //-----------------------------------------------------get the shop staffs
   async getStaff(shopId: string, query:{page?:string,limit?:string,search?:string}): Promise<{data:IStaff[],pagination:IPaginationResponseMeta}>{
 
-    let filter:FilterQuery<IStaff>={
+    const filter:FilterQuery<IStaff>={
       shopId
     }
 

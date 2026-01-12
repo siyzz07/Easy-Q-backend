@@ -1,4 +1,5 @@
 import cloudinary from "../config/cloudinaryConfig";
+import logger from "./logger";
 
 export const deleteCloudinaryImage = async (public_id: string) => {
   try {
@@ -12,6 +13,7 @@ export const deleteCloudinaryImage = async (public_id: string) => {
       return false;
     }
   } catch (error) {
+    logger.error(error)
     return false;
   }
 };

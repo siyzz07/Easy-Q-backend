@@ -2,7 +2,6 @@ import { IBookingRopsitoryInterface } from "../../interface/booking-interface/bo
 import { IBookingServiceInterface } from "../../interface/booking-interface/booking-service-interface";
 import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
 import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
-import { addMinutes, format, parse } from "date-fns";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
@@ -14,30 +13,22 @@ import {
   checkTimeDto,
 } from "../../dto/booking-dto/booking-dto";
 import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
-import mongoose, { Schema, Types } from "mongoose";
-import { throwDeprecation } from "process";
+import mongoose, { Types } from "mongoose";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
-import { ICacheService } from "../../interface/cache-interface/cache-service-interface";
 import {
   IBooking,
-  IBookingPopulated,
   IPaginationResponseMeta,
 } from "../../types/common-types";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
 import { nanoid } from "nanoid";
-import { log } from "console";
-import { Logger } from "winston";
-import { IWalletRepositoryInterface } from "../../interface/wallet-interface/wallet-repository-interface";
 import { ITransactionRepositoryInterface } from "../../interface/transaction-interface/transaction-repository-interface";
-import { transactionRepository } from "../../di/repositoriesDi";
 import {
   TransactionOwnerTypeEnu,
   TransactionStatusEnum,
   TransactionTypeEnum,
 } from "../../enums/transactionEnum";
 import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
-import { WalletService } from "./wallet-service";
 import { RoleEnum } from "../../enums/role";
 
 export class BookingService implements IBookingServiceInterface {
@@ -87,7 +78,7 @@ export class BookingService implements IBookingServiceInterface {
       logger.error(MessageEnum.BOOKING_ID_INVALIED)
        throw new ErrorResponse(MessageEnum.BOOKING_ID_INVALIED,StatusCodeEnum.BAD_REQUEST)
     } else {
-      let amount = Number(existBooking.totalAmount)
+      const amount = Number(existBooking.totalAmount)
       let query = {};
       if (status == "failed" && paymentMethod == "razorpay") {
         query = {
@@ -230,6 +221,9 @@ export class BookingService implements IBookingServiceInterface {
       serviceId
     );
 
+    // if(serviceData?.isActive){
+    //   throw new ErrorResponse('Service not available',StatusCodeEnum.BAD_REQUEST)
+    // }
     const serviceDuration = Number(serviceData?.duration as string);
     const bookingDateKey = new Date(date).toLocaleDateString("en-CA");
 
@@ -368,7 +362,7 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
     if(booking){
       const vendorWallet = await this._WalletService.getWalletData(booking.shopId._id as string,RoleEnum.VENDOR)
       const custoerWallet = await this._WalletService.getWalletData(booking.customerId._id as string ,RoleEnum.CUSTOMER)
-      let amount = booking.totalAmount
+      const amount = booking.totalAmount
 
 
       if(Number(amount)> Number(vendorWallet.balance) )

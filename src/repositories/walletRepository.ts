@@ -33,7 +33,7 @@ export class WalletRepository
   async getWalletByuser(user: string): Promise<IWallet|null> {
 
       const userid =new mongoose.Types.ObjectId(user)
-        let data = await this.findOneByCondiition({ user:userid}); 
+        const data = await this.findOneByCondiition({ user:userid}); 
         if(data){
             return data
         }else{

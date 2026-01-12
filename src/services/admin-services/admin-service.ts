@@ -98,7 +98,7 @@ export class AdminService implements IAdminServiceInterface {
 
   getVendorsPagination = async(query: { page?: string; limit?: string; search?: string; }): Promise<{ data: IVendor[]; pagination: IPaginationResponseMeta }> =>{
     
-    let result = await this._vendorRepository.getVendorDataPaginaition(query)
+    const result = await this._vendorRepository.getVendorDataPaginaition(query)
     return result
   }
 

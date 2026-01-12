@@ -81,7 +81,7 @@ export class BookingRepository
     data: IBookingPopulated[];
     pagination: IPaginationResponseMeta;
   }> {
-    let filter: FilterQuery<IBooking> = {
+    const filter: FilterQuery<IBooking> = {
       customerId: new mongoose.Types.ObjectId(data),
     };
 
@@ -103,7 +103,7 @@ export class BookingRepository
       { path: "staffId" },
     ];
 
-    let result = await this.filterWithPagination<IBookingPopulated>(
+    const result = await this.filterWithPagination<IBookingPopulated>(
       options,
       filter,
       populate
@@ -123,7 +123,7 @@ export class BookingRepository
     data: IBookingPopulated[];
     pagination: IPaginationResponseMeta;
   }> {
-    let filter: FilterQuery<IBooking> = {
+    const filter: FilterQuery<IBooking> = {
       shopId: new mongoose.Types.ObjectId(data),
     };
 
@@ -157,7 +157,7 @@ export class BookingRepository
       { path: "staffId" },
     ];
 
-    let result = await this.filterWithPagination<IBookingPopulated>(
+    const result = await this.filterWithPagination<IBookingPopulated>(
       options,
       filter,
       populate

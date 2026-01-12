@@ -1,13 +1,10 @@
 import express from 'express'
 import customerRoute from './routes/customerRoutes'
 import cors from 'cors'
-import morgan from "morgan";
-import logger from "./utils/logger";
 import vendorRoute from './routes/vendorRoutes'
 import cookieParser from "cookie-parser";
 import adminRoute from './routes/adminRoutes'
 import { errorHandler } from './middlewares/errorHandler';
-import { ErrorResponse } from './utils/errorResponse';
 import authRoute from './routes/authRoutes';
 import bookingRoute from './routes/bookingRoute';
 import { morganLogger } from './middlewares/morganLogger';
