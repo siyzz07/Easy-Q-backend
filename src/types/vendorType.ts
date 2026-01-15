@@ -1,9 +1,11 @@
 import mongoose, { ObjectId } from "mongoose";
 import { Schema, Document, Types } from "mongoose";
 
-interface IZone {
-  lat: string;
-  lon: string;
+
+
+export interface IGeoLocation {
+  type: "Point";
+  coordinates: number[];
 }
 
 export interface IImage {
@@ -26,7 +28,7 @@ export interface IVendor {
   openAt?: string;
   closeAt?: string;
   workingDays?: string[];
-  cordinates?: IZone;
+  location?: IGeoLocation;
   ProfileImage?: string;
   images?:IImage[];
   isActive?: boolean;

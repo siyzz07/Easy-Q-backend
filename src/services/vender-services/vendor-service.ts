@@ -32,21 +32,21 @@ class VendorService implements IVendorShopServiceInterface {
   addShopData = async (
     data: IShopData,
     vendorId: string,
-    cordinates: object,
+    coordinates: { lat: number; lon: number },
     workingDays:string
   ): Promise<any> => {
     try {
+      const days = workingDays.split(',')
 
-      
-    const days = workingDays.split(',')
-    
-    
-      
+      const location = {
+        type: "Point",
+        coordinates: [coordinates.lon, coordinates.lat],
+      };
 
       const updateData = {
         ...data,
         workingDays:days,
-        cordinates,
+        location,
         hasShop:true
       };
 
@@ -186,8 +186,9 @@ class VendorService implements IVendorShopServiceInterface {
   }
 
 
-   getVendorsData = async (data:{search?:string,location?:string,page?:string,limit?:string}): Promise<{data:VendorDto[],pagination: IPaginationResponseMeta}> => {
-    
+   getVendorsData = async (data:{search?:string,location?:string,page?:string,limit?:string, latitude?:number, longitude?:number}): Promise<{data:VendorDto[],pagination: IPaginationResponseMeta}> => {
+
+      console.log('data  :>> ', data );
 
         const response = await this._vendorRepo.vendorsDataWithPagination(data)
 

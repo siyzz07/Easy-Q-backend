@@ -78,6 +78,10 @@ export enum MessageEnum {
 
   
   
+  // --------------------------------------------------------------------------google autth
+   GOOGLEAUTH_CANCELLED= "Google sign-in cancelled.",
+   GOOGLEAUTH_LOGIN_TRY= "Please login using Google to proceed.",
+
   // --------------------------------------------------------------------------token
   
   TOKEN_VALID = "Token is valid",

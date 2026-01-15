@@ -61,7 +61,7 @@ customerRoute.post('/profile/change-password',verifyToken,isCustomer,customerBlo
  * 
  */
 customerRoute.get('/profile/get-address',verifyToken,customerBlockAuth,AddressControllerInstance.getAddress)
-customerRoute.post('/profile/delete-address',verifyToken,customerBlockAuth,AddressControllerInstance.deleteAddress)
+customerRoute.delete('/profile/delete-address/:addressId',verifyToken,customerBlockAuth,AddressControllerInstance.deleteAddress)
 customerRoute.post('/profile/edit-address',verifyToken,customerBlockAuth,validate({body:editAddressSchema}),AddressControllerInstance.editAddress)
 customerRoute.post('/profile/add-address',verifyToken,customerBlockAuth,validate({body:addAddressSchema}),AddressControllerInstance.addNewAddresss)
 customerRoute.get('/profile/get-each-address',verifyToken,customerBlockAuth,AddressControllerInstance.eachAddressData)

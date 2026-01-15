@@ -1,4 +1,5 @@
 
+import { FilterQuery } from "mongoose";
 import { IReviewRepositoryInterface } from "../interface/reivew-interface/review-repository-interface";
 import Review from "../models/ReviewModel";
 import { IReview } from "../types/vendorType";
@@ -36,6 +37,10 @@ export class ReviewRepository extends BaseRepository<IReview> implements IReview
     async updateReview(reviewId: string, data: Partial<IReview>): Promise<boolean> {
         const result = await this._ReviewModel.findByIdAndUpdate(reviewId, data)
         return result ? true : false
+    }
+
+   async findOneByCondiition(conditions: FilterQuery<IReview>): Promise<IReview | null> {
+        return  await this._ReviewModel.findOne(conditions)
     }
 
 }

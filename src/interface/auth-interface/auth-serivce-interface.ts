@@ -12,4 +12,5 @@ export interface AuthServiceInterface {
   resetPasswordEmailVerify(data:{email:string,role:string}):Promise<boolean|void>
   resetPassword(data:{email:string,password:string,role:string}):Promise<void>
   updateAccessToken(token:any,role:string):Promise<string>
+  googleAuth (token:string):Promise<{ accessToken: string; refreshToken: string,role:string ,entityData?:IVendor|ICustomer}|void>
 }

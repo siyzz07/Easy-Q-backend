@@ -28,7 +28,7 @@ adminRoute.put('/service/edit-service', verifyToken, isAdmin, serviceTypesContro
  * 
  */
 adminRoute.get("/data/customers", verifyToken, isAdmin, adminController.getCustomers);
-adminRoute.post("/data/block-customer", verifyToken, isAdmin, adminController.blockCustomer);
+adminRoute.put("/data/block-customer", verifyToken, isAdmin, adminController.blockCustomer);
 
 /**
  * 
@@ -36,7 +36,7 @@ adminRoute.post("/data/block-customer", verifyToken, isAdmin, adminController.bl
  * 
  */
 adminRoute.get("/data/vendors", verifyToken, isAdmin, adminController.getVendors);
-adminRoute.post("/data/block-vendor", verifyToken, isAdmin, adminController.blockVendor);
+adminRoute.put("/data/block-vendor", verifyToken, isAdmin, adminController.blockVendor);
 adminRoute.get('/data/vendors-request', verifyToken, isAdmin, adminController.getVendorsRequest)
 adminRoute.post('/data/verified-vendor', verifyToken, isAdmin, adminController.acceptVendorRequest)
 adminRoute.post('/data/reject-vendor', verifyToken, isAdmin, adminController.rejectVendorRequest)

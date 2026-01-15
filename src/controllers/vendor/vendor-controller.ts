@@ -21,7 +21,7 @@ class VendorController {
       const { userId, latitude, longitude, workingDays, ...data } = {
         ...req.body,
       };
-      const cordinates = {
+      const coordinates = {
         lat: latitude,
         lon: longitude,
       };
@@ -29,7 +29,7 @@ class VendorController {
       await this._vendorShopService.addShopData(
         data,
         userId,
-        cordinates,
+        coordinates,
         workingDays
       );
 
@@ -148,6 +148,9 @@ class VendorController {
   //==================================================================
   getShopsData = async (req: Request, res: Response): Promise<void> => {
     try {
+
+
+
 
       const result = await this._vendorShopService.getVendorsData(req.query);
       

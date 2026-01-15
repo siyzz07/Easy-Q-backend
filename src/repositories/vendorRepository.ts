@@ -112,27 +112,25 @@ export class VendorRepository
     }
   }
 
+  async getVendorDataPaginaition(query: {
+    page?: string;
+    limit?: string;
+    search?: string;
+  }): Promise<{ data: IVendor[]; pagination: IPaginationResponseMeta }> {
+    const filter: FilterQuery<IVendor> = {};
 
-  async getVendorDataPaginaition(query:{page?:string,limit?:string , search?:string}): Promise<{data: IVendor[] ,pagination:IPaginationResponseMeta}> {
-    
-    const filter:FilterQuery<IVendor> = {}
-
-    if(query?.search?.trim()){
-      filter.$or=[
-        {shopName:{$regex:query.search ,$options:'i'}}
-      ]
+    if (query?.search?.trim()) {
+      filter.$or = [{ shopName: { $regex: query.search, $options: "i" } }];
     }
 
- 
-       const options = {
-            page: Number(query.page) || 1,
-            limit: Number(query.limit) || 10,
-            sort: { createdAt: -1 as const },
-          };
-    
-    
-    const result = await this.filterWithPagination(options,filter)
-     return  result
+    const options = {
+      page: Number(query.page) || 1,
+      limit: Number(query.limit) || 10,
+      sort: { createdAt: -1 as const },
+    };
+
+    const result = await this.filterWithPagination(options, filter);
+    return result;
   }
 
   async getVendorsData(): Promise<IVendor[] | null> {
@@ -178,10 +176,24 @@ export class VendorRepository
     location?: string;
     page?: string;
     limit?: string;
-  }): Promise<{data:IVendor[],pagination: IPaginationResponseMeta} > {
+    lat?: number;
+    lng?: number;
+    distance?: number;
+  }): Promise<{ data: IVendor[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IVendor> = {};
 
-    if (data.search?.trim() || data.location?.trim()) {
+    if (data.lat && data.lng) {
+      filter.location = {
+        $geoWithin: {
+          $centerSphere: [
+            [Number(data.lng), Number(data.lat)],
+            (Number(data.distance) || 10000) / 9378137, 
+          ],
+        },
+      };
+    }
+
+    if (data.search?.trim()) {
       filter.$or = [];
 
       if (data.search?.trim()) {
@@ -189,22 +201,16 @@ export class VendorRepository
           shopName: { $regex: data.search, $options: "i" },
         });
       }
-
-      if (data.location?.trim()) {
-        filter.$or.push({
-          city: { $regex: data.location, $options: "i" },
-        });
-      }
     }
 
-   const options = {
-  page: Number(data.page) || 1,
-  limit: Number(data.limit) || 10,
-  sort: { _id: -1 } as const,
-};
+    const options = {
+      page: Number(data.page) || 1,
+      limit: Number(data.limit) || 10,
+      sort: { _id: -1 } as const,
+    };
 
-    const response = await this.filterWithPagination(options,filter)
-    return response
-
+    console.log("filter :>> ", filter);
+    const response = await this.filterWithPagination(options, filter);
+    return response;
   }
 }

@@ -55,9 +55,7 @@ export class AuthController {
   ): Promise<void> => {
     try {
       const data = req.body;
-      console.log('data',data);
       const result = await this._authService.login(data);
-      console.log('result',result);
       if (result) {
         res.cookie(`${result.role}Jwt`, result.refreshToken, {
           httpOnly: true,
@@ -76,6 +74,35 @@ export class AuthController {
       next(error);
     }
   };
+
+  /**
+   * 
+   * 
+   *  google auth login
+   * 
+   */
+
+  googleLogin  = async(req:Request,res:Response) :Promise<void> =>{
+      console.log('reached');
+      
+      const token = req.body.token
+
+      const result = await this._authService.googleAuth (token)
+       if (result) {
+        res.cookie(`${result.role}Jwt`, result.refreshToken, {
+          httpOnly: true,
+          secure: false,
+          maxAge: Number(process.env.REFRESH_TOKEN_EXPIRY),
+        });
+        res.status(StatusCodeEnum.OK).json({
+          message: `${result.role} ${MessageEnum.LOGIN_SUCCESSFLLY}`,
+          accesstoken: result.accessToken,
+          ...(result.entityData && { data: result.entityData }),
+        });
+      }
+
+
+  }
 
   /**
    *

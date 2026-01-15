@@ -29,6 +29,7 @@ authRoute.post('/reset-password/verify',authControllerInstance.resetPasswordEmai
 authRoute.post('/reset-password',emailVerifyTokenMIddleware,authControllerInstance.resetPassword)
 authRoute.post('/refresh-token',authControllerInstance.refreshToken)
 authRoute.post('/logout',verifyToken,authControllerInstance.logout)
+authRoute.post('/google-auth',authControllerInstance.googleLogin)
 
 export default authRoute
 

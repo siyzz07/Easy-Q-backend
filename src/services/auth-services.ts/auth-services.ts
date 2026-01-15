@@ -1,4 +1,4 @@
-import { log } from "console";
+import { error, log } from "console";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 
@@ -22,6 +22,7 @@ import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository
 import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
 import { IAdminRepo } from "../../interface/admin-interface/admin-repository-interface";
 import { RoleEnum } from "../../enums/role";
+import { OAuth2Client } from "google-auth-library";
 
 
 
@@ -115,6 +116,8 @@ export class AuthService implements AuthServiceInterface {
     const { password, ...payload } = { ...data };
     const role = (data.role || '').trim().toLowerCase();
 
+    
+
     const hashedPassword = await hashPassword(password as string);
 
     if (role == RoleEnum.CUSTOMER.toLowerCase()) {
@@ -152,10 +155,15 @@ export class AuthService implements AuthServiceInterface {
           StatusCodeEnum.CONFLICT
         );
       }
+
+
+
       const values = {
         ...payload,
         password: hashedPassword,
       };
+
+      console.log('vaaaaaalues',values)
 
       const result = await this._vendorRepository.addNewVendor(values as IVendor);
       if (result) {
@@ -200,8 +208,11 @@ export class AuthService implements AuthServiceInterface {
     entityData?: IVendor | ICustomer;
     role: string;
   } | void> => {
+    
     const { email, password } = data;
     const role = (data.role || '').trim().toLowerCase();
+
+
     if (role ==RoleEnum.CUSTOMER.toLowerCase()) {
       const checkCustomer = await this._customerRepository.checkCustomerExist(
         email
@@ -217,6 +228,12 @@ export class AuthService implements AuthServiceInterface {
         await this._customerRepository.customerDataByEmail(email);
       if (customerData) {
         if (customerData.isActive) {
+
+
+            if(!customerData.password){
+              throw new ErrorResponse(MessageEnum.GOOGLEAUTH_LOGIN_TRY,StatusCodeEnum.BAD_REQUEST)
+            }
+
           const passwordMatch = await comparePassword(
             password,
             customerData.password
@@ -348,6 +365,78 @@ export class AuthService implements AuthServiceInterface {
       );
     }
   };
+
+   /**
+   *
+   *  google auth 
+   *
+   */
+  // -----------------------------------------------google auth login and signup
+  googleAuth = async(token: string): Promise<{ accessToken: string; refreshToken: string; role: string; entityData?: IVendor | ICustomer; } | void> => {
+    
+    const clint = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+    const ticket = await clint.verifyIdToken({
+      idToken:token,
+      audience:process.env.GOOGLE_CLIENT_ID
+    })
+
+    if(!ticket){
+
+    }
+
+    let googleData = ticket.getPayload()
+    if(googleData){
+
+        const {email,name} = googleData
+
+      const checkCustomer = await this._customerRepository.checkCustomerExist(
+        email as string
+      );
+      
+      if( !checkCustomer){
+            const payload ={
+              name,
+              email
+            }
+         await this._customerRepository.addNewCustomer( payload as Partial<ICustomer> );
+
+      }
+
+       
+      const customerData: ICustomer | null =
+        await this._customerRepository.customerDataByEmail(email as string);
+      if (customerData) {
+        if (customerData.isActive) {
+          const payload: IJwtPayload = {
+            userId: customerData._id as string,
+            role: RoleEnum.CUSTOMER,
+          };
+
+          const AccessToken: string = accessToken(payload);
+          const RefreshToken: string = refreshToken(payload);
+
+          return {
+            accessToken: AccessToken,
+            refreshToken: RefreshToken,
+            role: RoleEnum.CUSTOMER,
+          };
+        } else {
+          throw new ErrorResponse(
+            MessageEnum.CUSTOMER_BLOCKED,
+            StatusCodeEnum.BAD_REQUEST
+          );
+        }
+      }
+
+
+      
+      
+    } 
+
+
+
+  }
+
 
   /**
    *
