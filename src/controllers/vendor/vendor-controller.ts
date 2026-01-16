@@ -3,6 +3,7 @@ import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
 import { workerData } from "worker_threads";
+import { log } from "console";
 
 class VendorController {
   private _vendorShopService: IVendorShopServiceInterface;
@@ -147,40 +148,56 @@ class VendorController {
 
   //==================================================================
   getShopsData = async (req: Request, res: Response): Promise<void> => {
-    try {
+  try {
+    const {
+      search,
+      page,
+      limit,
+      lat,
+      lng,
+      distance,
+    } = req.query;
 
+    const categories =
+      (req.query.categories ||
+        req.query["categories[]"] ||
+        []) as string[];
 
+    const ratings =
+      (req.query.ratings ||
+        req.query["ratings[]"] ||
+        []) as string[];
 
+    const result = await this._vendorShopService.getVendorsData({
+      search: search as string,
+      page: page as string,
+      limit: limit as string,
+      lat: lat ? Number(lat) : undefined,
+      lng: lng ? Number(lng) : undefined,
+      distance: distance ? Number(distance) : undefined,
+      categories,
+      ratings,
+    });
 
-      const result = await this._vendorShopService.getVendorsData(req.query);
-      
-          console.log('result.data :>> ', result.data);
+    res.status(StatusCodeEnum.OK).json({
+      success: true,
+      message: MessageEnum.SHOP_DATA_FETCH_SUCCESS,
+      data: result.data,
+      pagination: result.pagination,
+    });
+  } catch (error: unknown) {
+    console.error("Error fetching shops:", error);
 
-      res.status(StatusCodeEnum.OK).json({
-        success: true,
-        message: MessageEnum.SHOP_DATA_FETCH_SUCCESS,
-        data: result.data,
-        pagination:result.pagination
-      });
-    } catch (error: unknown) {
-      console.error("Error fetching shops:", error);
-
-      if (error instanceof Error) {
-        res.status(StatusCodeEnum.INTERNAL_SERVER_ERROR).json({
-          success: false,
-          message: MessageEnum.SHOP_DATA_ADDED_FAILED,
-          error: error.message,
-          data: [],
-        });
-      } else {
-        res.status(StatusCodeEnum.INTERNAL_SERVER_ERROR).json({
-          success: false,
-          message: MessageEnum.SERVER_ERROR,
-          data: [],
-        });
-      }
-    }
-  };
+    res.status(StatusCodeEnum.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : MessageEnum.SERVER_ERROR,
+      data: [],
+    });
+  }
+};
 
   //--------------------------  add shopp images --------------------------
   addShopImages = async (

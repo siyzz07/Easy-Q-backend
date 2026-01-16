@@ -179,6 +179,8 @@ export class VendorRepository
     lat?: number;
     lng?: number;
     distance?: number;
+    categories?:string[];
+    ratings?:string[]
   }): Promise<{ data: IVendor[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IVendor> = {};
 
@@ -202,6 +204,25 @@ export class VendorRepository
         });
       }
     }
+
+
+ if (data.categories && data.categories.length > 0) {
+    filter.shopType = {
+      $in: data.categories,
+    };
+  }
+
+  // if (data.ratings && data.ratings.length > 0) {
+  //   const numericRatings = data.ratings.map(Number);
+
+  //   const minRating = Math.min(...numericRatings);
+
+  //   filter.rating = {
+  //     $gte: minRating,
+  //   };
+  // }
+
+
 
     const options = {
       page: Number(data.page) || 1,

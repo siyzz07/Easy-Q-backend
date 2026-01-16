@@ -186,9 +186,8 @@ class VendorService implements IVendorShopServiceInterface {
   }
 
 
-   getVendorsData = async (data:{search?:string,location?:string,page?:string,limit?:string, latitude?:number, longitude?:number}): Promise<{data:VendorDto[],pagination: IPaginationResponseMeta}> => {
+   getVendorsData = async (data:{search?:string,location?:string,page?:string,limit?:string, latitude?:number, longitude?:number, categories?:string[],ratings?:string[]}): Promise<{data:VendorDto[],pagination: IPaginationResponseMeta}> => {
 
-      console.log('data  :>> ', data );
 
         const response = await this._vendorRepo.vendorsDataWithPagination(data)
 
