@@ -30,6 +30,7 @@ import {
 } from "../../enums/transactionEnum";
 import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
 import { RoleEnum } from "../../enums/role";
+import { log } from "console";
 
 export class BookingService implements IBookingServiceInterface {
   private _BookingRepository: IBookingRopsitoryInterface;
@@ -213,6 +214,28 @@ export class BookingService implements IBookingServiceInterface {
       shopId,
     } = data;
 
+
+      let dateNow = new Date()
+      let selectedDate = new Date(data.date)
+      let dateFormat = dateNow.toDateString()
+      let selectedDateFromat = selectedDate.toDateString()
+
+
+
+       if(dateFormat == selectedDateFromat){
+            const now = new Date();
+            const nowMinutes = now.getHours() * 60 + now.getMinutes();
+            const [h, m] = timePreffer.split(":");
+            const preferredMinutes = Number(h) * 60 + Number(m);
+
+            if(nowMinutes>= preferredMinutes){
+              logger.warn("time not available on the preffered time gap");
+              return false;
+            }
+
+       }
+       
+
     const staffData = await this._StaffRepository.getStaffById(staffId);
     if(!staffData){
       throw new ErrorResponse(MessageEnum.STAFF_NOT_FOUND,StatusCodeEnum.BAD_REQUEST)
@@ -231,12 +254,21 @@ export class BookingService implements IBookingServiceInterface {
       { staffId: staffId, bookingDate: bookingDateKey }
     );
 
+
+    console.log('bookedDatas :>> ', bookedDatas);
+    console.log('staffData :>> ', staffData);
+    console.log('serviceDuration :>> ', serviceDuration);
+    console.log('timePreffer :>> ', timePreffer);
+
+
     const availableTime = await this.sortAndFindAvailableTime(
       bookedDatas,
       staffData ,
       serviceDuration,
       timePreffer
     );
+
+    console.log('avalilableTime :>> ', availableTime);
 
     if (!availableTime) {
 
@@ -288,6 +320,9 @@ export class BookingService implements IBookingServiceInterface {
       userId,
       query
     );
+
+
+    console.log('bookingData :>> ', bookingData);
     if (bookingData) {
       logger.info(MessageEnum.BOOKING_DATA_FETCH_SUCCESS);
     } else {
@@ -423,6 +458,9 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
       bookingId
     } = data;
 
+
+ 
+
     const staffData = await this._StaffRepository.getStaffById(staffId);
     const bookingData= await this._BookingRepository.getEachBookingDataById(bookingId)
 
@@ -501,7 +539,10 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
   /**
    * check there is time betwee the time preioud
    */
-  private diffMinutes(start: string, end: string): number {
+  private  diffMinutes(start: string, end: string): number {
+
+      
+
     const [sh, sm] = start.split(":").map(Number);
     const [eh, em] = end.split(":").map(Number);
 
@@ -565,6 +606,11 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
     const staffBookings = [staffOpen, ...breaks, ...bookings, staffClose];
 
     const staffBookingsSroted = await this.sortTimes(staffBookings);
+
+    console.log('staffBookingsSorted :>> ', staffBookingsSroted);
+    console.log('serviceDuration :>> ', serviceDuration);
+    console.log('prefferTime :>> ', prefferTime);
+
     const availableTime = await this.findAvailabletime(
       staffBookingsSroted,
       serviceDuration,
@@ -579,7 +625,7 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
   }
 
   /**
-   * add booking to the cache
+   * find available time
    */
   private async findAvailabletime(
     timeLine: { start: string; end: string; type: string }[],
@@ -603,6 +649,11 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
     const [startIdx, endIdx] = indexes;
 
     for (let i = startIdx; i < endIdx; i++) {
+
+        let start = timeLine[i].end
+        let end = timeLine[i+1].start
+
+
       const freeTime = this.diffMinutes(timeLine[i].end, timeLine[i + 1].start);
 
       if (freeTime >= serviceDuration) {

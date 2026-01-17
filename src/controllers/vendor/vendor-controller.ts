@@ -158,15 +158,10 @@ class VendorController {
       distance,
     } = req.query;
 
-    const categories =
-      (req.query.categories ||
-        req.query["categories[]"] ||
-        []) as string[];
+    const categories =(req.query.categories ||req.query["categories[]"] ||[]) as string[];
 
-    const ratings =
-      (req.query.ratings ||
-        req.query["ratings[]"] ||
-        []) as string[];
+    const ratings =(req.query.ratings ||req.query["ratings[]"] ||[]) as string[];
+
 
     const result = await this._vendorShopService.getVendorsData({
       search: search as string,

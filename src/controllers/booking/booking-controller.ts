@@ -79,7 +79,12 @@ export class BookingController {
   getCustomerBookings = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
     try{
       
+
+      console.log('reached cutomer booking controller');
+      
       const result = await this._BookingService.customerBooking(req.body.userId,req.query)
+
+      console.log('result :>> ', result);
 
       if(result){ 
         res 

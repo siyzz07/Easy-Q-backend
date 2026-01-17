@@ -86,7 +86,11 @@ export interface VendorDTO {
   profileImage?: string;
   isVerified?: "pending" | "verified" | "rejected";
   workingDays:string[]
-  rating?:number
+  rating?:number;
+  location?: {
+    type: string;
+    coordinates: number[];
+  };
 
 }
 
@@ -122,3 +126,5 @@ export interface StaffDTO {
   closingTime: string;
   isActive?: boolean;
 }
+
+

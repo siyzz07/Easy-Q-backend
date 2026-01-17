@@ -3,7 +3,7 @@ import { ITransactionRepositoryInterface } from "../interface/transaction-interf
 import { TransactionModel } from "../models/transactionModel";
 import { IPaginationResponseMeta, ITransaction } from "../types/common-types";
 import BaseRepository from "./baseRepository";
-import mongoose, { FilterQuery } from 'mongoose';
+import mongoose, { FilterQuery, PopulateOption, PopulateOptions } from 'mongoose';
 
 
 export class TransactionRepository extends BaseRepository<ITransaction> implements ITransactionRepositoryInterface{
@@ -30,14 +30,20 @@ export class TransactionRepository extends BaseRepository<ITransaction> implemen
             ]
         }
 
+
+        const populate :PopulateOptions[]=[
+            {path:'bookingId'}
+        ]
+
+
             const options = {
             page: Number(query.page) || 1,
             limit: Number(query.limit) || 10,
             sort: { createdAt: -1 as const },
              };
 
-             const result = await this.filterWithPagination(options,filter)
-
+             const result = await this.filterWithPagination(options,filter,populate)
+                
              return result
 
     }
