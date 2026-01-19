@@ -188,4 +188,22 @@ export class BookingController {
         .json({success:true,message:MessageEnum.BOOKING_RESCHEDULE_SUCCESS})
     }
   }
+
+  /**
+   * 
+   *  check the customer have any boooking in the shop -check the customer is eligible for review the shop
+   * 
+   */
+  isThereBooking = async (req:Request,res:Response) :Promise<void> =>{
+
+    let vendorId = req.params.vendorId
+    let customerId= req.body.userId
+    const result = await this._BookingService.bookingCheck({vendorId,customerId})
+    res
+      .status(StatusCodeEnum.OK)
+      .json({success:true , data:result})
+    
+
+  }
+
 }

@@ -16,6 +16,7 @@ bookingRoute.get('/vendor',verifyToken,isVendor,BookingControllerInstance.getVen
 bookingRoute.get('/:id',verifyToken,isVendorOrCustomer,BookingControllerInstance.getSelectedBookingData)
 bookingRoute.patch('/cancel/:bookingId',verifyToken,isCustomer,BookingControllerInstance.cancelBooking)
 bookingRoute.post('/refund/:bookingId',verifyToken,BookingControllerInstance.refundBooking)
+bookingRoute.get('/review-eligibility/:vendorId',verifyToken,BookingControllerInstance.isThereBooking)
 bookingRoute.patch('/reschedule',verifyToken,isCustomer,BookingControllerInstance.bookingTimeReschedule)
 
 export default bookingRoute

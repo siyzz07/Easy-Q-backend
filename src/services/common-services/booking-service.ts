@@ -13,7 +13,7 @@ import {
   checkTimeDto,
 } from "../../dto/booking-dto/booking-dto";
 import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
-import mongoose, { Types } from "mongoose";
+import mongoose, { mongo, Types } from "mongoose";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
 import {
@@ -31,6 +31,7 @@ import {
 import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
 import { RoleEnum } from "../../enums/role";
 import { log } from "console";
+import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
 
 export class BookingService implements IBookingServiceInterface {
   private _BookingRepository: IBookingRopsitoryInterface;
@@ -520,6 +521,25 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
 
   } 
 
+
+  /**
+   * 
+   *  check customer have boookig on the particular shop / used for checking the customer eligible for add review
+   * 
+   */
+  bookingCheck =  async(data: { vendorId: string; customerId: string; }): Promise<boolean> =>{
+    
+      const payload ={
+        customerId:new mongoose.Types.ObjectId(data.customerId),
+        shopId:new mongoose.Types.ObjectId(data.vendorId)
+      }
+
+    const result =  await this._BookingRepository.getBookedDatasByCondition(payload)
+
+        let  eligibility = result.some((data:IBooking)=> data.status == BookingStatusEnum.COMPLETED)
+
+        return eligibility
+  }
 
   /***
    *

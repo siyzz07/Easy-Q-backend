@@ -10,6 +10,7 @@ export interface IBookingServiceInterface {
     selectedBookingData  (id:string) :Promise <bookingDatasPopulatedDto>
     cancelBooking(bookingId:string):Promise<IBooking|void>
     refundBookingCash(bookingId:string):Promise<IBooking|void>
+    bookingCheck(data:{vendorId:string;customerId:string}):Promise<boolean>
     bookingTimeReSchedule (data:{staffId:string,timePreffer:string,date:string,bookingId:string,userId:string}):Promise<boolean|void>
 }
 

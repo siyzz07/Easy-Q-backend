@@ -1,4 +1,4 @@
-enum BookingStatus {
+export enum BookingStatusEnum {
   PENDING = "pending",
   CONFIRMED = "confirmed",
   CANCELLED = "cancelled",

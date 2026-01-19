@@ -10,6 +10,9 @@ import logger from "../../utils/logger";
 import { IPaginationResponseMeta, ITransaction } from "../../types/common-types";
 import { query } from "winston";
 
+import { TransactionMapper } from "../../mappers/transaction-mapper/transaction-mapper";
+import { TransactionDTO } from "../../dto/transaction-dto/transaction-dto";
+
 export class TransactionService implements ITransactionServiceInterface {
   private _TransactionRepository: ITransactionRepositoryInterface;
   private _BookingRepository: IBookingRopsitoryInterface;
@@ -84,10 +87,15 @@ export class TransactionService implements ITransactionServiceInterface {
    *  getTranasactons
    *
    */
-  getTransactons = async (userId: string,query:{page?:string,limit?:string,filter?:string}):Promise<{data:ITransaction[] ,pagination:IPaginationResponseMeta}> => {
+  getTransactons = async (userId: string,query:{page?:string,limit?:string,filter?:string}):Promise<{data:TransactionDTO[] ,pagination:IPaginationResponseMeta}> => {
 
       const result = await this._TransactionRepository.getTransactionByuser(userId,query)
-      return result
+      const mappedData = result.data.map((transaction)=> TransactionMapper.toDTO(transaction));
+
+      return {
+        data:mappedData,
+        pagination:result.pagination
+      }
 
   }
 }

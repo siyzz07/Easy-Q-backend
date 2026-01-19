@@ -32,7 +32,15 @@ export class TransactionRepository extends BaseRepository<ITransaction> implemen
 
 
         const populate :PopulateOptions[]=[
-            {path:'bookingId'}
+            {path:'bookingId',
+
+
+                populate:[
+                    {path:'shopId'},
+                    {path:'serviceId' ,select:'serviceName'}
+                ]
+            },
+
         ]
 
 
