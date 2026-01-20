@@ -65,10 +65,10 @@ class VendorService implements IVendorShopServiceInterface {
         if (error.message == MessageEnum.SHOP_DATA_ADDED_FAILED) {
           throw error;
         } else {
-          console.log("server error for adding show data");
+          logger.error("server error for adding show data");
         }
       } else {
-        console.log("server error for adding show data");
+        logger.error("server error for adding show data");
       }
     }
   };

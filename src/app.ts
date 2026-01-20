@@ -12,6 +12,7 @@ import paymentRoute from './routes/transacationRoutes';
 import reviewRoute from './routes/reviewRoutes';
 import transactionRoute from './routes/transacationRoutes';
 import walletRoutes from './routes/walletRoutes';
+import notificaionRoute from './routes/notificaionRoutes';
 
 const app = express()
 
@@ -51,6 +52,7 @@ app.use('/api/payment',paymentRoute)
 app.use('/api/review',reviewRoute)
 app.use('/api/transaction',transactionRoute)
 app.use('/api/wallet',walletRoutes)
+app.use('/api/notification',notificaionRoute)
 
 app.use(errorHandler)
 

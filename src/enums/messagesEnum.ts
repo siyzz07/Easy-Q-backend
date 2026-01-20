@@ -199,8 +199,14 @@ export enum MessageEnum {
 
     // --------------------------------------------------------------------------Transaction
     TRANSACTION_PAYMENT_INVALIED = 'Invalied payment ',
-    TRANSACTION_FETCH_SUCCESS = 'Transaction fetchess successfully '
+    TRANSACTION_FETCH_SUCCESS = 'Transaction fetchess successfully ',
+    
+    // --------------------------------------------------------------------------Notificaion
+    NOTIFICATION_FETCH_SUCCESS = "Notifications fetched successfully",
+    NOTIFICATION_FETCH_FAILED = "Failed to fetch notifications",
 
+    NOTIFICATION_UPDATED_SUCCESS = "Updated successfully",
+    NOTIFICATION_UPDATED_FAILED = "Update failed",
  
 }
 

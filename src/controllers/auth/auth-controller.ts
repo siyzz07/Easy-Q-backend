@@ -83,8 +83,7 @@ export class AuthController {
    */
 
   googleLogin  = async(req:Request,res:Response) :Promise<void> =>{
-      console.log('reached');
-      
+
       const token = req.body.token
 
       const result = await this._authService.googleAuth (token)

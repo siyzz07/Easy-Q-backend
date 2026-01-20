@@ -69,8 +69,6 @@ export class BookingService implements IBookingServiceInterface {
     
     const { userId, paymentMethod, bookingId, totalAmount, status } = data;
 
-    console.log('apypmentMethod :>> ', paymentMethod);
-
     const existBooking = await this._BookingRepository.getEachBookingDataById(
       bookingId
     );
@@ -191,14 +189,14 @@ export class BookingService implements IBookingServiceInterface {
 
       if (result) {
         void this._NotificationService.sendBookingNotificationToVendor(result);
-        void this._NotificationService.sendBookingNotificationToCustomer(
-          result
-        );
+        void this._NotificationService.sendBookingNotificationToCustomer(result );
         return BookingMapper.toDTO(result);
       } else {
       }
     }
   };
+
+
 
   // ------------------------------- check the prifered time is available ----------------------
 

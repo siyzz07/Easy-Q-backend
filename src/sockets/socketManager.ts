@@ -16,7 +16,7 @@ export class SocketManager implements ISocketManager {
   constructor(server: http.Server) {
     this.io = new Server(server, {
       cors: {
-        origin: [process.env.BASE_URL as string],
+        origin: "*",
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS",'PATCH  '],
         credentials: true,
       },

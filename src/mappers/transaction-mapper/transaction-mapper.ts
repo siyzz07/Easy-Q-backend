@@ -5,9 +5,6 @@ import { format } from "date-fns";
 export class TransactionMapper {
     static toDTO(transaction: ITransaction): TransactionDTO {
 
-
-            console.log('transaction :>> ', transaction);
-
         const dto: TransactionDTO = {
             id: (transaction as any)._id.toString(), 
             flow: transaction.flow as "debit" | "credit",

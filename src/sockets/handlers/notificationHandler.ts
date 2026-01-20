@@ -28,7 +28,7 @@ export class socketNotificationHandler {
    * booking notifiction  - customer
    */
   static bookingNotificationToCustomer(io:Server,userId:string,payload:INotificationPayload){
-    logger.info('notification sended to customer')
+    logger.info('notification sendedm to customer')
     console.log(userId)
     io.to(userId).emit('notification-booking:success',payload)
   }

@@ -384,7 +384,8 @@ export class AuthService implements AuthServiceInterface {
 
     }
 
-    let googleData = ticket.getPayload()
+    let googleData = ticket.getPayload() 
+
     if(googleData){
 
         const {email,name} = googleData

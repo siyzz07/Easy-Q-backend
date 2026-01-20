@@ -3,6 +3,7 @@ import {
   BookingMessageContent,
   BookingMessageContentLong,
   BookingMessageTitle,
+  MessageEnum,
 } from "../../enums/messagesEnum";
 import { INotificationRepositoryInterface } from "../../interface/notificaion-interface/notificaion-repository-interface";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
@@ -10,6 +11,8 @@ import { IBooking, INotification } from "../../types/common-types";
 import { socketNotificationHandler } from "../../sockets/handlers/notificationHandler";
 // import { ISocketManager, SocketManager } from "../../sockets/socketManager";
 import { socketManagerServer } from "../../sockets/socketInstance";
+import { ErrorResponse } from "../../utils/errorResponse";
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 export class NotificationService implements INotificationServiceInterface {
   private _NotificationRepository: INotificationRepositoryInterface;
@@ -21,6 +24,26 @@ export class NotificationService implements INotificationServiceInterface {
     
   
   }
+
+
+
+  /**
+   * 
+   *  get notifications
+   * 
+   */
+getNotification = async (userid: string): Promise<INotification[]> => {
+    if(!userid){
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+    }
+
+    
+     return this._NotificationRepository.getUserNotification(userid)
+}
+
+
+
+
 
   /**
    *
@@ -52,11 +75,9 @@ export class NotificationService implements INotificationServiceInterface {
       createdAt:new Date()
     };
 
-    const result = await this._NotificationRepository.addNewNotification(
-      NotificationPayload
-    );
+    const result = await this._NotificationRepository.addNewNotification(NotificationPayload);
 
-    await socketNotificationHandler.bookingNotificationToVendor(socketManagerServer.getIo(),data.shopId.toString(),SocketPayload)
+     socketNotificationHandler.bookingNotificationToVendor(socketManagerServer.getIo(),data.shopId.toString(),SocketPayload)
 
 
 
@@ -72,8 +93,8 @@ export class NotificationService implements INotificationServiceInterface {
 
 
    sendBookingNotificationToCustomer = async(data: IBooking): Promise<void> =>{
-
- 
+     
+    
      const NotificationPayload: Partial<INotification> = {
       recipient: new mongoose.Types.ObjectId(data.customerId),
       recipientType: "Customer",
@@ -90,18 +111,15 @@ export class NotificationService implements INotificationServiceInterface {
       },
     };
 
-
     const SocketPayload = {
       title: BookingMessageTitle.BOOKING_SUCCESS,
       message: `${BookingMessageContent.BOOKING_SUCCESS} - ${data.bookingDate} - ${data.bookingTimeStart}`,
       type:'booking',
       createdAt:new Date()
     };
-
     const result = await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
-    
     await socketNotificationHandler.bookingNotificationToCustomer(socketManagerServer.getIo(),data.customerId.toString(),SocketPayload)
    }
 }
