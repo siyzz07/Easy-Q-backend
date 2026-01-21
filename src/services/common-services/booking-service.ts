@@ -533,7 +533,6 @@ export class BookingService implements IBookingServiceInterface {
       bookingData?._id as string,
       updatedData
     );
-    console.log(result);
     if (updatedData) {
       logger.info(MessageEnum.BOOKING_RESCHEDULE_SUCCESS);
       return true;

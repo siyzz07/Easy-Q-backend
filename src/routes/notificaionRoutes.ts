@@ -9,6 +9,7 @@ const notificaionRoute = express.Router()
 
 
 notificaionRoute.get('/notifications',verifyToken,notificationControllerInstance.getNotification)
+notificaionRoute.patch('/update',verifyToken,notificationControllerInstance.updateNotification)
 
 
 export default notificaionRoute

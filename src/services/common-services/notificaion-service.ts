@@ -21,29 +21,38 @@ export class NotificationService implements INotificationServiceInterface {
   constructor(notificationRepository: INotificationRepositoryInterface) {
     this._NotificationRepository = notificationRepository;
     //  this._SocketManager = socketManager;
-    
-  
   }
 
-
-
   /**
-   * 
+   *
    *  get notifications
-   * 
+   *
    */
-getNotification = async (userid: string): Promise<INotification[]> => {
-    if(!userid){
-      throw new ErrorResponse(MessageEnum.SERVER_ERROR,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+  getNotification = async (userid: string): Promise<INotification[]> => {
+    if (!userid) {
+      throw new ErrorResponse(
+        MessageEnum.SERVER_ERROR,
+        StatusCodeEnum.INTERNAL_SERVER_ERROR
+      );
     }
 
-    
-     return this._NotificationRepository.getUserNotification(userid)
-}
+    return this._NotificationRepository.getUserNotification(userid);
+  };
 
+  /**
+   *
+   *  update notifications
+   *
+   */
 
+  upateNotification = async (userId: string, updateType: string, id?: string): Promise<void>  =>{
 
-
+      if(updateType == 'one'){
+         const  result = await this._NotificationRepository.updateNotification(userId,id)
+      }else{
+        const  result = await this._NotificationRepository.updateNotification(userId)
+      }
+  }
 
   /**
    *
@@ -51,7 +60,7 @@ getNotification = async (userid: string): Promise<INotification[]> => {
    *
    */
 
-  sendBookingNotificationToVendor = async ( data: IBooking): Promise<void> => {
+  sendBookingNotificationToVendor = async (data: IBooking): Promise<void> => {
     const NotificationPayload: Partial<INotification> = {
       recipient: new mongoose.Types.ObjectId(data.shopId),
       recipientType: "Vendor",
@@ -71,37 +80,35 @@ getNotification = async (userid: string): Promise<INotification[]> => {
     const SocketPayload = {
       title: BookingMessageTitle.NEW_BOOKING_VENDOR,
       message: `${BookingMessageContent.NEW_BOOKING_VENDOR} - ${data.bookingDate} - ${data.bookingTimeStart}`,
-      type:'booking',
-      createdAt:new Date()
+      type: "booking",
+      createdAt: new Date(),
     };
 
-    const result = await this._NotificationRepository.addNewNotification(NotificationPayload);
+    const result = await this._NotificationRepository.addNewNotification(
+      NotificationPayload
+    );
 
-     socketNotificationHandler.bookingNotificationToVendor(socketManagerServer.getIo(),data.shopId.toString(),SocketPayload)
-
-
-
-    
+    socketNotificationHandler.bookingNotificationToVendor(
+      socketManagerServer.getIo(),
+      data.shopId.toString(),
+      SocketPayload
+    );
   };
 
-
-   /**
+  /**
    *
    * Booking notificatoin ----  CUSTOMER
    *
    */
 
-
-   sendBookingNotificationToCustomer = async(data: IBooking): Promise<void> =>{
-     
-    
-     const NotificationPayload: Partial<INotification> = {
+  sendBookingNotificationToCustomer = async (data: IBooking): Promise<void> => {
+    const NotificationPayload: Partial<INotification> = {
       recipient: new mongoose.Types.ObjectId(data.customerId),
       recipientType: "Customer",
       category: "booking",
       type: "booking_completed",
       title: BookingMessageTitle.BOOKING_SUCCESS,
-      content:BookingMessageContentLong.BOOKING_CONFIRMED,
+      content: BookingMessageContentLong.BOOKING_CONFIRMED,
       metaData: {
         booking: {
           id: data._id,
@@ -114,13 +121,16 @@ getNotification = async (userid: string): Promise<INotification[]> => {
     const SocketPayload = {
       title: BookingMessageTitle.BOOKING_SUCCESS,
       message: `${BookingMessageContent.BOOKING_SUCCESS} - ${data.bookingDate} - ${data.bookingTimeStart}`,
-      type:'booking',
-      createdAt:new Date()
+      type: "booking",
+      createdAt: new Date(),
     };
     const result = await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
-    await socketNotificationHandler.bookingNotificationToCustomer(socketManagerServer.getIo(),data.customerId.toString(),SocketPayload)
-   }
+    await socketNotificationHandler.bookingNotificationToCustomer(
+      socketManagerServer.getIo(),
+      data.customerId.toString(),
+      SocketPayload
+    );
+  };
 }
- 
