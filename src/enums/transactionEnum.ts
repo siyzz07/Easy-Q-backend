@@ -1,6 +1,7 @@
 export enum TransactionTypeEnum {
   RAZORPAY = "razorpay",
   WALLET = "wallet",
+  PAYATSHOP = 'payAtShop'
 }
 
 export enum TransactionStatusEnum {

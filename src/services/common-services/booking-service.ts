@@ -6,7 +6,10 @@ import { ErrorResponse } from "../../utils/errorResponse";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
-import { BookingMapper, toBookingPopulatedMapper } from "../../mappers/booking-mapper/booking-mapper";
+import {
+  BookingMapper,
+  toBookingPopulatedMapper,
+} from "../../mappers/booking-mapper/booking-mapper";
 import {
   BookingResponseDTO,
   bookingDatasPopulatedDto,
@@ -16,10 +19,7 @@ import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
 import mongoose, { mongo, Types } from "mongoose";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
-import {
-  IBooking,
-  IPaginationResponseMeta,
-} from "../../types/common-types";
+import { IBooking, IPaginationResponseMeta } from "../../types/common-types";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
 import { nanoid } from "nanoid";
 import { ITransactionRepositoryInterface } from "../../interface/transaction-interface/transaction-repository-interface";
@@ -47,7 +47,7 @@ export class BookingService implements IBookingServiceInterface {
     serviceRepository: IServiceRepositoryInterface,
     staffRepository: IStaffRepositoryInterface,
     notificationService: INotificationServiceInterface,
-    walletSerivce:IWalletServiceInterface,
+    walletSerivce: IWalletServiceInterface,
     transactionRepository: ITransactionRepositoryInterface
     // cacheService: ICacheService
   ) {
@@ -64,36 +64,33 @@ export class BookingService implements IBookingServiceInterface {
   addNewbooking = async (
     data: CreateBookingDTO
   ): Promise<BookingResponseDTO | void> => {
-
-
-    
     const { userId, paymentMethod, bookingId, totalAmount, status } = data;
 
     const existBooking = await this._BookingRepository.getEachBookingDataById(
       bookingId
     );
-    
 
     if (!existBooking) {
-      logger.error(MessageEnum.BOOKING_ID_INVALIED)
-       throw new ErrorResponse(MessageEnum.BOOKING_ID_INVALIED,StatusCodeEnum.BAD_REQUEST)
+      logger.error(MessageEnum.BOOKING_ID_INVALIED);
+      throw new ErrorResponse(
+        MessageEnum.BOOKING_ID_INVALIED,
+        StatusCodeEnum.BAD_REQUEST
+      );
     } else {
-      const amount = Number(existBooking.totalAmount)
+      const amount = Number(existBooking.totalAmount);
       let query = {};
       if (status == "failed" && paymentMethod == "razorpay") {
         query = {
           paymentMethod,
           paymentStatus: status,
         };
-        
       } else if (status == "paid" && paymentMethod == "razorpay") {
-        
         query = {
           paymentMethod,
           paymentStatus: status,
           expireAt: null,
         };
-        
+
         const customerTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(userId),
@@ -101,81 +98,98 @@ export class BookingService implements IBookingServiceInterface {
           flow: "debit",
           transactionType: TransactionTypeEnum.RAZORPAY,
           status: TransactionStatusEnum.SUCCESS,
-          amount:amount
+          amount: amount,
         };
-        
-          const vendorTransaction = {
-            bookingId: new mongoose.Types.ObjectId(existBooking._id),
-            user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
-            userType: TransactionOwnerTypeEnu.VENDOR,
-            flow: "credit",
-            transactionType: TransactionTypeEnum.RAZORPAY,
-            status: TransactionStatusEnum.SUCCESS,
-            amount:amount
-          };
 
-          
-          await Promise.all([
-            this._TransactionRepository.createTransaction(customerTransaction),
-            this._TransactionRepository.createTransaction(vendorTransaction),
-          ]);
-
-         const vendorWallet  = await this._WalletService.getWalletData(existBooking.shopId._id as string ,RoleEnum.VENDOR)
-         await this._WalletService.updateWallet(existBooking.shopId._id as string as string,RoleEnum.VENDOR ,amount)
-        }
-        
-        if (paymentMethod == "wallet") {
-
-          const customerWallet  = await this._WalletService.getWalletData(userId as string,RoleEnum.CUSTOMER)
-          const vendorWallet  = await this._WalletService.getWalletData(existBooking.shopId._id as string ,RoleEnum.VENDOR)
-
-          if(Number(customerWallet.balance) < Number(existBooking.totalAmount)){
-            
-            
-            throw new ErrorResponse(MessageEnum.WALLET_INSUFFICIENT_BALANCE,StatusCodeEnum.BAD_REQUEST)
-          }
-           
-          const customerTransaction = {
-            bookingId: new mongoose.Types.ObjectId(existBooking._id),
-            user: new mongoose.Types.ObjectId(userId),
-            userType: TransactionOwnerTypeEnu.CUSTOMER,
-            flow: "debit",
-            transactionType: TransactionTypeEnum.WALLET,
-            status: TransactionStatusEnum.SUCCESS,
-            amount:amount
-          };
-
-          const vendorTransaction = {
-            bookingId: new mongoose.Types.ObjectId(existBooking._id),
-            user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
-            userType: TransactionOwnerTypeEnu.VENDOR,
-            flow: "credit",
-            transactionType: TransactionTypeEnum.WALLET,
-            status: TransactionStatusEnum.SUCCESS,
-            amount:amount
-          };
-
-          
-          await Promise.all([
-            this._WalletService.updateWallet(userId as string,RoleEnum.CUSTOMER ,-amount),
-            this._WalletService.updateWallet(existBooking.shopId._id as string as string,RoleEnum.VENDOR ,amount),
-            this._TransactionRepository.createTransaction(customerTransaction),
-            this._TransactionRepository.createTransaction(vendorTransaction),
-          ]);
-          
-        query = {
-          paymentMethod,
-          paymentStatus: 'paid',
-          expireAt: null,
+        const vendorTransaction = {
+          bookingId: new mongoose.Types.ObjectId(existBooking._id),
+          user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
+          userType: TransactionOwnerTypeEnu.VENDOR,
+          flow: "credit",
+          transactionType: TransactionTypeEnum.RAZORPAY,
+          status: TransactionStatusEnum.SUCCESS,
+          amount: amount,
         };
-        
-        
+
+        await Promise.all([
+          this._TransactionRepository.createTransaction(customerTransaction),
+          this._TransactionRepository.createTransaction(vendorTransaction),
+        ]);
+
+        const vendorWallet = await this._WalletService.getWalletData(
+          existBooking.shopId._id as string,
+          RoleEnum.VENDOR
+        );
+        await this._WalletService.updateWallet(
+          existBooking.shopId._id as string as string,
+          RoleEnum.VENDOR,
+          amount
+        );
       }
 
-      if(paymentMethod == 'payAtShop'){
+      if (paymentMethod == "wallet") {
+        const customerWallet = await this._WalletService.getWalletData(
+          userId as string,
+          RoleEnum.CUSTOMER
+        );
+        const vendorWallet = await this._WalletService.getWalletData(
+          existBooking.shopId._id as string,
+          RoleEnum.VENDOR
+        );
+
+        if (Number(customerWallet.balance) < Number(existBooking.totalAmount)) {
+          throw new ErrorResponse(
+            MessageEnum.WALLET_INSUFFICIENT_BALANCE,
+            StatusCodeEnum.BAD_REQUEST
+          );
+        }
+
+        const customerTransaction = {
+          bookingId: new mongoose.Types.ObjectId(existBooking._id),
+          user: new mongoose.Types.ObjectId(userId),
+          userType: TransactionOwnerTypeEnu.CUSTOMER,
+          flow: "debit",
+          transactionType: TransactionTypeEnum.WALLET,
+          status: TransactionStatusEnum.SUCCESS,
+          amount: amount,
+        };
+
+        const vendorTransaction = {
+          bookingId: new mongoose.Types.ObjectId(existBooking._id),
+          user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
+          userType: TransactionOwnerTypeEnu.VENDOR,
+          flow: "credit",
+          transactionType: TransactionTypeEnum.WALLET,
+          status: TransactionStatusEnum.SUCCESS,
+          amount: amount,
+        };
+
+        await Promise.all([
+          this._WalletService.updateWallet(
+            userId as string,
+            RoleEnum.CUSTOMER,
+            -amount
+          ),
+          this._WalletService.updateWallet(
+            existBooking.shopId._id as string as string,
+            RoleEnum.VENDOR,
+            amount
+          ),
+          this._TransactionRepository.createTransaction(customerTransaction),
+          this._TransactionRepository.createTransaction(vendorTransaction),
+        ]);
+
         query = {
           paymentMethod,
-          paymentStatus: 'pending',
+          paymentStatus: "paid",
+          expireAt: null,
+        };
+      }
+
+      if (paymentMethod == "payAtShop") {
+        query = {
+          paymentMethod,
+          paymentStatus: "pending",
           expireAt: null,
         };
       }
@@ -185,18 +199,16 @@ export class BookingService implements IBookingServiceInterface {
         query
       );
 
- 
-
       if (result) {
         void this._NotificationService.sendBookingNotificationToVendor(result);
-        void this._NotificationService.sendBookingNotificationToCustomer(result );
+        void this._NotificationService.sendBookingNotificationToCustomer(
+          result
+        );
         return BookingMapper.toDTO(result);
       } else {
       }
     }
   };
-
-
 
   // ------------------------------- check the prifered time is available ----------------------
 
@@ -213,39 +225,37 @@ export class BookingService implements IBookingServiceInterface {
       shopId,
     } = data;
 
+    let dateNow = new Date();
+    let selectedDate = new Date(data.date);
+    let dateFormat = dateNow.toDateString();
+    let selectedDateFromat = selectedDate.toDateString();
 
-      let dateNow = new Date()
-      let selectedDate = new Date(data.date)
-      let dateFormat = dateNow.toDateString()
-      let selectedDateFromat = selectedDate.toDateString()
+    if (dateFormat == selectedDateFromat) {
+      const now = new Date();
+      const nowMinutes = now.getHours() * 60 + now.getMinutes();
+      const [h, m] = timePreffer.split(":");
+      const preferredMinutes = Number(h) * 60 + Number(m);
 
-
-
-       if(dateFormat == selectedDateFromat){
-            const now = new Date();
-            const nowMinutes = now.getHours() * 60 + now.getMinutes();
-            const [h, m] = timePreffer.split(":");
-            const preferredMinutes = Number(h) * 60 + Number(m);
-
-            if(nowMinutes>= preferredMinutes){
-              logger.warn("time not available on the preffered time gap");
-              return false;
-            }
-
-       }
-       
+      if (nowMinutes >= preferredMinutes) {
+        logger.warn("time not available on the preffered time gap");
+        return false;
+      }
+    }
 
     const staffData = await this._StaffRepository.getStaffById(staffId);
-    if(!staffData){
-      throw new ErrorResponse(MessageEnum.STAFF_NOT_FOUND,StatusCodeEnum.BAD_REQUEST)
+    if (!staffData) {
+      throw new ErrorResponse(
+        MessageEnum.STAFF_NOT_FOUND,
+        StatusCodeEnum.BAD_REQUEST
+      );
     }
     const serviceData = await this._ServiceRepository.getSelectedService(
       serviceId
     );
-
-    // if(serviceData?.isActive){
-    //   throw new ErrorResponse('Service not available',StatusCodeEnum.BAD_REQUEST)
-    // }
+    if(!serviceData?.isActive){
+      logger.error('service was blocked by admin')
+      throw new ErrorResponse('Service not available',StatusCodeEnum.BAD_REQUEST)
+    }
     const serviceDuration = Number(serviceData?.duration as string);
     const bookingDateKey = new Date(date).toLocaleDateString("en-CA");
 
@@ -254,23 +264,16 @@ export class BookingService implements IBookingServiceInterface {
     );
 
 
-    console.log('bookedDatas :>> ', bookedDatas);
-    console.log('staffData :>> ', staffData);
-    console.log('serviceDuration :>> ', serviceDuration);
-    console.log('timePreffer :>> ', timePreffer);
-
-
     const availableTime = await this.sortAndFindAvailableTime(
       bookedDatas,
-      staffData ,
+      staffData,
       serviceDuration,
-      timePreffer
+      timePreffer,
+      date
     );
 
-    console.log('avalilableTime :>> ', availableTime);
 
     if (!availableTime) {
-
       logger.warn("time not available on the preffered time gap");
       return false;
     }
@@ -296,7 +299,6 @@ export class BookingService implements IBookingServiceInterface {
     const result = await this._BookingRepository.addNewBooking(bookingData);
 
     if (result) {
-
       return result._id as string;
     }
     return false;
@@ -321,7 +323,6 @@ export class BookingService implements IBookingServiceInterface {
     );
 
 
-    console.log('bookingData :>> ', bookingData);
     if (bookingData) {
       logger.info(MessageEnum.BOOKING_DATA_FETCH_SUCCESS);
     } else {
@@ -329,20 +330,24 @@ export class BookingService implements IBookingServiceInterface {
     }
     return {
       data: toBookingPopulatedMapper.toDtoList(bookingData.data),
-      pagination: bookingData.pagination
+      pagination: bookingData.pagination,
     };
   };
 
-/**
+  /**
    *
    *
    * get customer boking data
    *
    */
-VendorBooking  = async(userId: string, query: { page?: string; limit?: string; search?: string; date:string }): Promise<{ data: bookingDatasPopulatedDto[]; pagination: IPaginationResponseMeta; }> => {
-
-
-  const bookingData = await this._BookingRepository.bookingDatasForVendor(
+  VendorBooking = async (
+    userId: string,
+    query: { page?: string; limit?: string; search?: string; date: string }
+  ): Promise<{
+    data: bookingDatasPopulatedDto[];
+    pagination: IPaginationResponseMeta;
+  }> => {
+    const bookingData = await this._BookingRepository.bookingDatasForVendor(
       userId,
       query
     );
@@ -353,9 +358,9 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
     }
     return {
       data: toBookingPopulatedMapper.toDtoList(bookingData.data),
-      pagination: bookingData.pagination
+      pagination: bookingData.pagination,
     };
-}
+  };
 
   /**
    *
@@ -363,7 +368,9 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
    *
    */
 
-  selectedBookingData = async (id: string): Promise<bookingDatasPopulatedDto> => {
+  selectedBookingData = async (
+    id: string
+  ): Promise<bookingDatasPopulatedDto> => {
     const bookingData = await this._BookingRepository.getEachBookingDataById(
       id
     );
@@ -389,91 +396,108 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
   };
 
   //------------------------- refund of booking
-  refundBookingCash = async(bookingId: string): Promise<IBooking | void> => {
+  refundBookingCash = async (bookingId: string): Promise<IBooking | void> => {
+    const booking = await this._BookingRepository.getEachBookingDataById(
+      bookingId
+    );
 
-    const booking = await this._BookingRepository.getEachBookingDataById(bookingId)
- 
-    if(booking){
-      const vendorWallet = await this._WalletService.getWalletData(booking.shopId._id as string,RoleEnum.VENDOR)
-      const custoerWallet = await this._WalletService.getWalletData(booking.customerId._id as string ,RoleEnum.CUSTOMER)
-      const amount = booking.totalAmount
+    if (booking) {
+      const vendorWallet = await this._WalletService.getWalletData(
+        booking.shopId._id as string,
+        RoleEnum.VENDOR
+      );
+      const custoerWallet = await this._WalletService.getWalletData(
+        booking.customerId._id as string,
+        RoleEnum.CUSTOMER
+      );
+      const amount = booking.totalAmount;
 
-
-      if(Number(amount)> Number(vendorWallet.balance) )
-      {
-          logger.error(MessageEnum.WALLET_INSUFFICIENT_BALANCE)
-        throw new ErrorResponse(MessageEnum.WALLET_INSUFFICIENT_BALANCE , StatusCodeEnum.BAD_REQUEST)
+      if (Number(amount) > Number(vendorWallet.balance)) {
+        logger.error(MessageEnum.WALLET_INSUFFICIENT_BALANCE);
+        throw new ErrorResponse(
+          MessageEnum.WALLET_INSUFFICIENT_BALANCE,
+          StatusCodeEnum.BAD_REQUEST
+        );
       }
 
-
       const customerTransaction = {
-            bookingId: new mongoose.Types.ObjectId(booking._id),
-            user: new mongoose.Types.ObjectId(booking.customerId._id),
-            userType: TransactionOwnerTypeEnu.CUSTOMER,
-            flow:"credit" ,
-            transactionType: TransactionTypeEnum.WALLET,
-            status: TransactionStatusEnum.SUCCESS,
-            amount:Number(amount)
-          };
+        bookingId: new mongoose.Types.ObjectId(booking._id),
+        user: new mongoose.Types.ObjectId(booking.customerId._id),
+        userType: TransactionOwnerTypeEnu.CUSTOMER,
+        flow: "credit",
+        transactionType: TransactionTypeEnum.WALLET,
+        status: TransactionStatusEnum.SUCCESS,
+        amount: Number(amount),
+      };
 
-          const vendorTransaction = {
-            bookingId: new mongoose.Types.ObjectId(booking._id),
-            user: new mongoose.Types.ObjectId(booking.shopId._id as string),
-            userType: TransactionOwnerTypeEnu.VENDOR,
-            flow:"debit" ,
-            transactionType: TransactionTypeEnum.WALLET,
-            status: TransactionStatusEnum.SUCCESS,
-            amount:Number(amount)
-          };
+      const vendorTransaction = {
+        bookingId: new mongoose.Types.ObjectId(booking._id),
+        user: new mongoose.Types.ObjectId(booking.shopId._id as string),
+        userType: TransactionOwnerTypeEnu.VENDOR,
+        flow: "debit",
+        transactionType: TransactionTypeEnum.WALLET,
+        status: TransactionStatusEnum.SUCCESS,
+        amount: Number(amount),
+      };
 
-          try{
-
-            await Promise.all([
-        this._BookingRepository.updateBooking(String(booking._id) as string, {paymentStatus: "refunded"}),
-        this._WalletService.updateWallet(booking.shopId._id as string,RoleEnum.VENDOR,-amount),
-        this._WalletService.updateWallet(booking.customerId._id as string ,RoleEnum.CUSTOMER,Number(amount)),
-        this._TransactionRepository.createTransaction(customerTransaction),
-        this._TransactionRepository.createTransaction(vendorTransaction),
-        
-      ])
-    }catch(error){
-      logger.error('error to refund data')
-      throw new ErrorResponse('Error to refund data',StatusCodeEnum.INTERNAL_SERVER_ERROR)
+      try {
+        await Promise.all([
+          this._BookingRepository.updateBooking(String(booking._id) as string, {
+            paymentStatus: "refunded",
+          }),
+          this._WalletService.updateWallet(
+            booking.shopId._id as string,
+            RoleEnum.VENDOR,
+            -amount
+          ),
+          this._WalletService.updateWallet(
+            booking.customerId._id as string,
+            RoleEnum.CUSTOMER,
+            Number(amount)
+          ),
+          this._TransactionRepository.createTransaction(customerTransaction),
+          this._TransactionRepository.createTransaction(vendorTransaction),
+        ]);
+      } catch (error) {
+        logger.error("error to refund data");
+        throw new ErrorResponse(
+          "Error to refund data",
+          StatusCodeEnum.INTERNAL_SERVER_ERROR
+        );
+      }
+      logger.info("booking amount refundedn success fully");
     }
-    logger.info('booking amount refundedn success fully')
-      
-    }
-  }
-
-
-
+  };
 
   //------------------------- reschedule booking time
-  bookingTimeReSchedule = async (data:{staffId:string,timePreffer:string,date:string,bookingId:string,userId:string}): Promise<boolean|void> =>{
-      const {
-      staffId,
-      timePreffer,
-      date,
-      bookingId
-    } = data;
-
-
- 
+  bookingTimeReSchedule = async (data: {
+    staffId: string;
+    timePreffer: string;
+    date: string;
+    bookingId: string;
+    userId: string;
+  }): Promise<boolean | void> => {
+    const { staffId, timePreffer, date, bookingId } = data;
 
     const staffData = await this._StaffRepository.getStaffById(staffId);
-    const bookingData= await this._BookingRepository.getEachBookingDataById(bookingId)
+    const bookingData = await this._BookingRepository.getEachBookingDataById(
+      bookingId
+    );
 
-    
-    if(Number(bookingData?.reschedule)>=2){
-      throw new ErrorResponse(MessageEnum.BOOKING_RESCHEDULE_LIMIT,StatusCodeEnum.BAD_REQUEST)
+    if (Number(bookingData?.reschedule) >= 1) {
+      throw new ErrorResponse(
+        MessageEnum.BOOKING_RESCHEDULE_LIMIT,
+        StatusCodeEnum.BAD_REQUEST
+      );
     }
 
-    
-    if(!staffData){
-      throw new ErrorResponse(MessageEnum.STAFF_NOT_FOUND,StatusCodeEnum.BAD_REQUEST)
+    if (!staffData) {
+      throw new ErrorResponse(
+        MessageEnum.STAFF_NOT_FOUND,
+        StatusCodeEnum.BAD_REQUEST
+      );
     }
 
-    
     const serviceDuration = Number(bookingData?.serviceId?.duration as string);
     const bookingDateKey = new Date(date).toLocaleDateString("en-CA");
 
@@ -483,61 +507,111 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
 
     const availableTime = await this.sortAndFindAvailableTime(
       bookedDatas,
-      staffData ,
+      staffData,
       serviceDuration,
-      timePreffer
+      timePreffer,
+      date
     );
 
     if (!availableTime) {
+      logger.warn("time not available on the preffered time gap");
+      return false;
+    }
 
-        logger.warn("time not available on the preffered time gap");
-        return false;
-      }
+    const rescheduleCount = Number(bookingData?.reschedule) + 1;
 
-      const rescheduleCount = Number(bookingData?.reschedule)+1
+    const updatedData = {
+      staffId: new Types.ObjectId(staffId),
+      bookingDate: bookingDateKey,
+      bookingTimeStart: availableTime.startTime,
+      bookingTimeEnd: availableTime.endTime,
+      status: bookingData?.status,
+      reschedule: rescheduleCount,
+    };
 
-      const updatedData = {
-        
-        staffId: new Types.ObjectId(staffId),
-        bookingDate: bookingDateKey,
-        bookingTimeStart: availableTime.startTime,
-        bookingTimeEnd: availableTime.endTime,
-        status:bookingData?.status,
-        reschedule:rescheduleCount
-      }
-
-      const result = await this._BookingRepository.updateBooking(bookingData?._id as string,updatedData);
-      console.log(result)
-      if(updatedData){
-        logger.info(MessageEnum.BOOKING_RESCHEDULE_SUCCESS)
-        return true
-
-      }else{
-        logger.error(MessageEnum.BOOKING_RESCHEDULE_FAILED)
-        throw  new ErrorResponse (MessageEnum.BOOKING_RESCHEDULE_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
-      }
-
-  } 
-
+    const result = await this._BookingRepository.updateBooking(
+      bookingData?._id as string,
+      updatedData
+    );
+    console.log(result);
+    if (updatedData) {
+      logger.info(MessageEnum.BOOKING_RESCHEDULE_SUCCESS);
+      return true;
+    } else {
+      logger.error(MessageEnum.BOOKING_RESCHEDULE_FAILED);
+      throw new ErrorResponse(
+        MessageEnum.BOOKING_RESCHEDULE_FAILED,
+        StatusCodeEnum.INTERNAL_SERVER_ERROR
+      );
+    }
+  };
 
   /**
-   * 
+   *
    *  check customer have boookig on the particular shop / used for checking the customer eligible for add review
-   * 
+   *
    */
-  bookingCheck =  async(data: { vendorId: string; customerId: string; }): Promise<boolean> =>{
-    
-      const payload ={
-        customerId:new mongoose.Types.ObjectId(data.customerId),
-        shopId:new mongoose.Types.ObjectId(data.vendorId)
+  bookingCheck = async (data: {
+    vendorId: string;
+    customerId: string;
+  }): Promise<boolean> => {
+    const payload = {
+      customerId: new mongoose.Types.ObjectId(data.customerId),
+      shopId: new mongoose.Types.ObjectId(data.vendorId),
+    };
+
+    const result = await this._BookingRepository.getBookedDatasByCondition(
+      payload
+    );
+
+    let eligibility = result.some(
+      (data: IBooking) => data.status == BookingStatusEnum.COMPLETED
+    );
+
+    return eligibility;
+  };
+
+  /**
+   *
+   *
+   *  update booking status
+   *
+   */
+  bookingStatusUpdate = async (
+    bookingId: string,
+    status: string
+  ): Promise<boolean> => {
+    if (!bookingId && !status) {
+      logger.error("error to update the booking stautus");
+      throw new ErrorResponse(
+        MessageEnum.SERVER_ERROR,
+        StatusCodeEnum.INTERNAL_SERVER_ERROR
+      );
+    }
+    let payload: Partial<IBooking> = {};
+    if (status == BookingStatusEnum.COMPLETED) {
+      let bookingData = await this._BookingRepository.getEachBookingDataById(
+        bookingId
+      );
+
+      if (bookingData?.paymentMethod == TransactionTypeEnum.PAYATSHOP) {
+        payload.paymentStatus = "paid";
       }
+    }
 
-    const result =  await this._BookingRepository.getBookedDatasByCondition(payload)
+    payload.status = status;
 
-        let  eligibility = result.some((data:IBooking)=> data.status == BookingStatusEnum.COMPLETED)
+    const result = await this._BookingRepository.updateBooking(
+      bookingId,
+      payload
+    );
 
-        return eligibility
-  }
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   /***
    *
@@ -557,10 +631,7 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
   /**
    * check there is time betwee the time preioud
    */
-  private  diffMinutes(start: string, end: string): number {
-
-      
-
+  private diffMinutes(start: string, end: string): number {
     const [sh, sm] = start.split(":").map(Number);
     const [eh, em] = end.split(":").map(Number);
 
@@ -595,7 +666,8 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
     bookedDatas: IBooking[],
     staffData: IStaff,
     serviceDuration: number,
-    prefferTime: string
+    prefferTime: string,
+    date:string
   ): Promise<{ startTime: string; endTime: string } | false> {
     const staffOpen = {
       start: staffData.openingTime,
@@ -625,14 +697,12 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
 
     const staffBookingsSroted = await this.sortTimes(staffBookings);
 
-    console.log('staffBookingsSorted :>> ', staffBookingsSroted);
-    console.log('serviceDuration :>> ', serviceDuration);
-    console.log('prefferTime :>> ', prefferTime);
 
     const availableTime = await this.findAvailabletime(
       staffBookingsSroted,
       serviceDuration,
-      prefferTime
+      prefferTime,
+      date
     );
 
     if (availableTime) {
@@ -648,8 +718,22 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
   private async findAvailabletime(
     timeLine: { start: string; end: string; type: string }[],
     serviceDuration: number,
-    preferredTime: string
+    preferredTime: string,
+    date:string
   ): Promise<{ startTime: string; endTime: string } | false> {
+
+     let isCurrentDay  = false
+    let dateNow = new Date();
+    let selectedDate = new Date(date);
+    let dateFormat = dateNow.toDateString();
+    let selectedDateFromat = selectedDate.toDateString();
+
+    if (dateFormat == selectedDateFromat) {
+
+           isCurrentDay = false
+    }
+
+
     const indexes: number[] = [];
 
     function add(index: number) {
@@ -667,15 +751,40 @@ VendorBooking  = async(userId: string, query: { page?: string; limit?: string; s
     const [startIdx, endIdx] = indexes;
 
     for (let i = startIdx; i < endIdx; i++) {
+      let start = timeLine[i].end;
+      let end = timeLine[i + 1].start;
 
-        let start = timeLine[i].end
-        let end = timeLine[i+1].start
+        if(isCurrentDay){
+              const now = new Date();
+              const nowMinutes = now.getHours() * 60 + now.getMinutes();
+              const [h, m] = start.split(":");
+              const startMinutes = Number(h) * 60 + Number(m);
+              const endMinutes = Number(h)*60+Number(m)
+
+              if(nowMinutes >= startMinutes && nowMinutes >endMinutes){
+                continue
+              }
+
+              if(nowMinutes > startMinutes && nowMinutes < endMinutes){
+                  const time = now.toLocaleTimeString("en-IN", {
+                                    timeZone: "Asia/Kolkata",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: false,
+                                  });
+
+                start = time
+              }
 
 
-      const freeTime = this.diffMinutes(timeLine[i].end, timeLine[i + 1].start);
+        }
+
+      const freeTime = this.diffMinutes(start,end);
+      // const freeTime = this.diffMinutes(timeLine[i].end, timeLine[i + 1].start);
 
       if (freeTime >= serviceDuration) {
-        const startTime = timeLine[i].end;
+        const startTime = start;
+        // const startTime = timeLine[i].end;
         const endTime = this.findEndTime(startTime, serviceDuration);
         return { startTime, endTime };
       }

@@ -12,5 +12,6 @@ export interface IBookingServiceInterface {
     refundBookingCash(bookingId:string):Promise<IBooking|void>
     bookingCheck(data:{vendorId:string;customerId:string}):Promise<boolean>
     bookingTimeReSchedule (data:{staffId:string,timePreffer:string,date:string,bookingId:string,userId:string}):Promise<boolean|void>
+    bookingStatusUpdate (bookingId:string,status:string) :Promise<boolean>
 }
 

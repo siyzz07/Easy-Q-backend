@@ -189,6 +189,31 @@ export class BookingController {
     }
   }
 
+   /**
+   * 
+   *  update booking status
+   * 
+   */
+  statusUpdate = async (req:Request,res:Response) =>{
+
+    let bookingId = req.params.bookingId
+
+    const result = await this._BookingService.bookingStatusUpdate(bookingId,req.body.status)
+
+    if(result){
+       res
+        .status(StatusCodeEnum.OK)
+        .json({success:true})
+    }else{
+       res
+        .status(StatusCodeEnum.OK)
+        .json({success:false})
+    }
+
+
+  }
+
+
   /**
    * 
    *  check the customer have any boooking in the shop -check the customer is eligible for review the shop

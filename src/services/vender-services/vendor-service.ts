@@ -197,7 +197,7 @@ class VendorService implements IVendorShopServiceInterface {
           throw new ErrorResponse (MessageEnum.VENDOR__DATA_FETCH_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
         }
 
-        const activeShops = (response.data || [] ).filter((shop)=> shop.hasShop == true)
+        const activeShops = (response.data || [] ).filter((shop)=> shop.hasShop == true && shop.isActive==true)
         return {data: VendorMapper.toDTOList(activeShops) , pagination:response.pagination};
     
     };
