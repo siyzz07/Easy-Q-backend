@@ -1,7 +1,7 @@
-import mongoose, { SortOrder } from "mongoose";
+import mongoose, { Mongoose, SortOrder } from "mongoose";
 import { ICustomer, ICustomerAddressData } from "./customerType";
 import { IService, IServiceData, IStaff, IVendor } from "./vendorType";
-
+import { TransactionTypeEnum, TransactionStatusEnum, TransactionOwnerTypeEnu } from "../enums/transactionEnum";
 
 export interface IJwtPayload {
     userId:string;
@@ -47,6 +47,7 @@ export interface IBooking {
   createdAt?: Date;
   updatedAt?: Date;
   expireAt?:Date|null
+  reschedule?:number
 }
 
 
@@ -67,7 +68,8 @@ export interface IBooking {
   paymentStatus: string;
   createdAt?: Date;
   updatedAt?: Date;
-  expireAt?:Date|null
+  expireAt?:Date|null,
+  reschedule :string
 }
 
 export interface INotification {
@@ -84,6 +86,7 @@ export interface INotification {
     | "booking_cancelled"
     | "booking_completed"
     | "contract_applyied"
+    |'booking_rescheduled'
     | "contract_signed"
     | "message"
     | "system"
@@ -138,4 +141,32 @@ export interface IPaginationResponseMeta {
   totalPages: number;
   hasNextPage: boolean;
   hasPrevPage: boolean;
+}
+
+
+
+
+
+
+
+export interface ITransaction extends Document {
+    referenceId?: string;
+    bookingId: mongoose.Types.ObjectId;
+    user: mongoose.Types.ObjectId;
+    userType: TransactionOwnerTypeEnu;
+    flow:string
+    transactionType: TransactionTypeEnum;
+    amount: number;
+    status: TransactionStatusEnum;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+
+
+export interface IWallet {
+  user: mongoose.Types.ObjectId;
+  userType: "Vendor" | "Customer";
+  balance: number;
+
 }

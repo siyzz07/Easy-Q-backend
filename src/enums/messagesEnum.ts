@@ -78,6 +78,10 @@ export enum MessageEnum {
 
   
   
+  // --------------------------------------------------------------------------google autth
+   GOOGLEAUTH_CANCELLED= "Google sign-in cancelled.",
+   GOOGLEAUTH_LOGIN_TRY= "Please login using Google to proceed.",
+
   // --------------------------------------------------------------------------token
   
   TOKEN_VALID = "Token is valid",
@@ -98,6 +102,7 @@ export enum MessageEnum {
   ADMIN_LOGIN_FAILED = "Invalid email or password.",
   ADMIN_NOT_FOUND = "Admin not found.",
   ADMIN_PASSWORD_INCORRECT = "Incorrect password.",
+  ADMIN_ALREADY_EXISTS = "Admin already exists",
 
 
   // --------------------------------------------------------------------------Shop
@@ -154,6 +159,12 @@ export enum MessageEnum {
   BOOKING_DATA_FETCH_SUCCESS = "Booking data fetched successfully",
   BOOKING_DATA_FETCH_FAILED ='Failed to fetch booking data',
   BOOKING_ID_INVALIED = 'Invalied booking id',
+  BOOKING_CANCEL_SUCCESS = 'Booking cancelled successfully',
+  BOOKING_AMOUNT_REFUNDED = 'Booking amount refunded successfully',
+  BOOKING_RESCHEDULE_LIMIT = "You can reschedule a booking only 1 times. You have already rescheduled it twice.",
+  BOOKING_RESCHEDULE_SUCCESS = "Booking rescheduled successfully",
+  BOOKING_RESCHEDULE_FAILED = "Failed to reschedule booking",
+
 
      // --------------------------------------------------------------------------Favorite
     FAVORITE_ADD_SUCCESS = "Vendor added to favorite list",
@@ -167,6 +178,35 @@ export enum MessageEnum {
 
     FAVORITE_FETCH_SUCCESS = "Favorite fetched successfully",
     FAVORITE_FETCH_FAILED = "Failed to fetch favorite list",
+
+    // --------------------------------------------------------------------------Review
+    REVIEW_ADD_SUCCESS = "Review added successfully",
+    REVIEW_FETCH_SUCCESS = "Reviews fetched successfully",
+    REVIEW_DELETE_SUCCESS = "Review deleted successfully",
+    REVIEW_UPDATE_SUCCESS = "Review updated successfully",
+    REVIEW_NOT_FOUND = "Review not found",
+
+
+    // --------------------------------------------------------------------------Wallet
+     WALLET_UPDATED = "Wallet updated successfully",
+     WALLET_UPDATE_FAILED = "Failed to update wallet",
+     WALLET_NOT_FOUND = "Wallet not found",
+     WALLET_INSUFFICIENT_BALANCE = "Insufficient wallet balance",
+     WALLET_INVALID_AMOUNT = "Invalid wallet amount",
+     WALLET_CREATED = "Wallet created successfully",
+     WALLET_ALREADY_EXISTS = "Wallet already exists",
+     WALLET_FETCH_SUCCESS = "Wallet fetched successfully",
+
+    // --------------------------------------------------------------------------Transaction
+    TRANSACTION_PAYMENT_INVALIED = 'Invalied payment ',
+    TRANSACTION_FETCH_SUCCESS = 'Transaction fetchess successfully ',
+    
+    // --------------------------------------------------------------------------Notificaion
+    NOTIFICATION_FETCH_SUCCESS = "Notifications fetched successfully",
+    NOTIFICATION_FETCH_FAILED = "Failed to fetch notifications",
+
+    NOTIFICATION_UPDATED_SUCCESS = "Updated successfully",
+    NOTIFICATION_UPDATED_FAILED = "Update failed",
  
 }
 
@@ -179,6 +219,7 @@ export enum BookingMessageTitle {
   BOOKING_SUCCESS = "Booking Successful",
   BOOKING_FAILED = "Booking Failed",
   BOOKING_CONFIRMED_CUSTOMER = "Booking Confirmed",
+  BOOKING_RESCHEDULED = "Booking Rescheduled",
 
   // Vendor side
   NEW_BOOKING_VENDOR = "New Booking Received",
@@ -197,13 +238,14 @@ export enum BookingMessageContent {
   BOOKING_SUCCESS = "Your booking has been successfully created.",
   BOOKING_FAILED = "There was an issue creating your booking.",
   BOOKING_CONFIRMED_CUSTOMER = "Your booking has been confirmed. Your scheduled time is:",
+  BOOKING_RESCHEDULED = "Your booking has been rescheduled. Your updated scheduled time is:",
 
   // Vendor side
-  NEW_BOOKING_VENDOR = "You have a new booking",
+  NEW_BOOKING_VENDOR = "A customer has placed a new booking on time",
 
   // Common
   BOOKING_UPDATED = "Your booking details have been updated.",
-  BOOKING_CANCELLED = "This booking has been cancelled.",
+  BOOKING_CANCELLED = "Booking has been cancelled .",
 }
 
 

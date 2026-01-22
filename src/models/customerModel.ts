@@ -16,7 +16,6 @@ const customerSchema = new Schema<ICustomer>(
     },
     phone: {
       type: String,
-      required: true,
     },
     isVerified: {
       type: Boolean,

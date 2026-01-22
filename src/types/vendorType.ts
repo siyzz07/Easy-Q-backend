@@ -1,9 +1,11 @@
 import mongoose, { ObjectId } from "mongoose";
 import { Schema, Document, Types } from "mongoose";
 
-interface IZone {
-  lat: string;
-  lon: string;
+
+
+export interface IGeoLocation {
+  type: "Point";
+  coordinates: number[];
 }
 
 export interface IImage {
@@ -26,10 +28,11 @@ export interface IVendor {
   openAt?: string;
   closeAt?: string;
   workingDays?: string[];
-  cordinates?: IZone;
+  location?: IGeoLocation;
   ProfileImage?: string;
   images?:IImage[];
   isActive?: boolean;
+  rating?:number
   planExpreData?: Date;
   createAt?: Date;
   updatedAt?: Date;
@@ -105,8 +108,8 @@ export interface IServiceData {
 
 
 export interface IReview extends Document {
-  customerId: Types.ObjectId;
-  vendorId: Types.ObjectId;
+  customerId: mongoose.Types.ObjectId | string;
+  vendorId: mongoose.Types.ObjectId | string;
   rating: string;
   createdAt?: Date;
   comment:string

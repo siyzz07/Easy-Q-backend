@@ -1,4 +1,4 @@
-import { log } from "console";
+import { error, log } from "console";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 
@@ -12,7 +12,7 @@ import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, generateJwtToken, refreshToken } from "../../utils/jwt";
 import logger from "../../utils/logger";
 import { sendEmail } from "../../utils/nodeMailer";
-import { token } from "morgan";
+
 import Jwt, {
   JsonWebTokenError,
   JwtPayload,
@@ -22,6 +22,7 @@ import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository
 import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
 import { IAdminRepo } from "../../interface/admin-interface/admin-repository-interface";
 import { RoleEnum } from "../../enums/role";
+import { OAuth2Client } from "google-auth-library";
 
 
 
@@ -49,7 +50,8 @@ export class AuthService implements AuthServiceInterface {
 
   // ----------------------------------------------- verify the signup email
   verifyEmail = async (data: IVendor | ICustomer): Promise<void> => {
-    const { role, ...payload } = { ...data };
+    const { ...payload } = { ...data };
+    const role = (data.role || '').trim().toLowerCase();
 
     if (role === RoleEnum.CUSTOMER.toLowerCase()) {
       //---handle customer
@@ -109,9 +111,12 @@ export class AuthService implements AuthServiceInterface {
     }
   };
 
-  // ----------------------------------------------- add new  verified Enitity (customer/vendor)
-  addNewEntity = async (data: IVendor | ICustomer): Promise<boolean | void> => {
-    const { role, password, ...payload } = { ...data };
+  // ----------------------------------------------- add new  verified Enitity (customer/vendor/admin)
+  addNewEntity = async (data: IVendor | ICustomer | IAdmin): Promise<boolean | void> => {
+    const { password, ...payload } = { ...data };
+    const role = (data.role || '').trim().toLowerCase();
+
+    
 
     const hashedPassword = await hashPassword(password as string);
 
@@ -150,10 +155,15 @@ export class AuthService implements AuthServiceInterface {
           StatusCodeEnum.CONFLICT
         );
       }
+
+
+
       const values = {
         ...payload,
         password: hashedPassword,
       };
+
+      console.log('vaaaaaalues',values)
 
       const result = await this._vendorRepository.addNewVendor(values as IVendor);
       if (result) {
@@ -165,6 +175,21 @@ export class AuthService implements AuthServiceInterface {
           StatusCodeEnum.INTERNAL_SERVER_ERROR
         );
       }
+    } else if (role === RoleEnum.ADMIN.toLowerCase()) {
+      //- handle admin
+      const exist = await this._adminRepository.checkAdminExist(payload.email as string);
+      if (exist) {
+        throw new ErrorResponse(
+          MessageEnum.ADMIN_ALREADY_EXISTS,
+          StatusCodeEnum.CONFLICT
+        );
+      }
+      const values = {
+        ...payload,
+        password: hashedPassword,
+      };
+      await this._adminRepository.addAdmin(values as IAdmin);
+      return true;
     } else {
       logger.error(MessageEnum.ROLE_NOT_FOUND);
     }
@@ -183,7 +208,11 @@ export class AuthService implements AuthServiceInterface {
     entityData?: IVendor | ICustomer;
     role: string;
   } | void> => {
-    const { email, password, role } = data;
+    
+    const { email, password } = data;
+    const role = (data.role || '').trim().toLowerCase();
+
+
     if (role ==RoleEnum.CUSTOMER.toLowerCase()) {
       const checkCustomer = await this._customerRepository.checkCustomerExist(
         email
@@ -199,6 +228,12 @@ export class AuthService implements AuthServiceInterface {
         await this._customerRepository.customerDataByEmail(email);
       if (customerData) {
         if (customerData.isActive) {
+
+
+            if(!customerData.password){
+              throw new ErrorResponse(MessageEnum.GOOGLEAUTH_LOGIN_TRY,StatusCodeEnum.BAD_REQUEST)
+            }
+
           const passwordMatch = await comparePassword(
             password,
             customerData.password
@@ -323,9 +358,86 @@ export class AuthService implements AuthServiceInterface {
         };
       }
     } else {
-      logger.error(MessageEnum.ROLE_NOT_FOUND);
+      logger.error('Role not found or invalid: ' + role);
+      throw new ErrorResponse(
+        MessageEnum.ROLE_NOT_FOUND,
+        StatusCodeEnum.BAD_REQUEST
+      );
     }
   };
+
+   /**
+   *
+   *  google auth 
+   *
+   */
+  // -----------------------------------------------google auth login and signup
+  googleAuth = async(token: string): Promise<{ accessToken: string; refreshToken: string; role: string; entityData?: IVendor | ICustomer; } | void> => {
+    
+    const clint = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+    const ticket = await clint.verifyIdToken({
+      idToken:token,
+      audience:process.env.GOOGLE_CLIENT_ID
+    })
+
+    if(!ticket){
+
+    }
+
+    let googleData = ticket.getPayload() 
+
+    if(googleData){
+
+        const {email,name} = googleData
+
+      const checkCustomer = await this._customerRepository.checkCustomerExist(
+        email as string
+      );
+      
+      if( !checkCustomer){
+            const payload ={
+              name,
+              email
+            }
+         await this._customerRepository.addNewCustomer( payload as Partial<ICustomer> );
+
+      }
+
+       
+      const customerData: ICustomer | null =
+        await this._customerRepository.customerDataByEmail(email as string);
+      if (customerData) {
+        if (customerData.isActive) {
+          const payload: IJwtPayload = {
+            userId: customerData._id as string,
+            role: RoleEnum.CUSTOMER,
+          };
+
+          const AccessToken: string = accessToken(payload);
+          const RefreshToken: string = refreshToken(payload);
+
+          return {
+            accessToken: AccessToken,
+            refreshToken: RefreshToken,
+            role: RoleEnum.CUSTOMER,
+          };
+        } else {
+          throw new ErrorResponse(
+            MessageEnum.CUSTOMER_BLOCKED,
+            StatusCodeEnum.BAD_REQUEST
+          );
+        }
+      }
+
+
+      
+      
+    } 
+
+
+
+  }
+
 
   /**
    *

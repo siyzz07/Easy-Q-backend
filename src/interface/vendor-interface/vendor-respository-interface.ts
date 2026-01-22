@@ -1,3 +1,4 @@
+import { VendorDTO } from "../../dto/booking-dto/booking-dto";
 import { IServiceType } from "../../types/adminTypes";
 import { IPaginationResponseMeta } from "../../types/common-types";
 import { IImage, IService, IStaff, IVendor } from "../../types/vendorType";
@@ -14,6 +15,8 @@ export interface IVendorRepo {
     
 
     getVendorData():Promise<IVendor[]|[]> //--------------------DD
+    getVendorDataPaginaition(query:{page?:string,limit?:string , search?:string}): Promise<{data: IVendor[] ,pagination:IPaginationResponseMeta}>; //--------------------DD
+
     blockVendor(_id:string):Promise<boolean> //--------------------
     rejectVendor(_id:string):Promise<boolean> //--------------------
     verifyVendor(_id:string):Promise<boolean> //--------------------
@@ -26,6 +29,6 @@ export interface IVendorRepo {
     addImage (_id:string,image:IImage):Promise<boolean>
     deleteShopImage(_id:string,imageId:string):Promise<boolean>
 
-    vendorsDataWithPagination (data:{search?:string,location?:string,page?:string,limit?:string}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>
+    vendorsDataWithPagination (data:{search?:string,page?:string,limit?:string, lat?:number, lng?: number,distance?:number, categories?:string[],ratings?:string[]}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>
     
 }

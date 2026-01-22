@@ -82,16 +82,5 @@ export class CustomerService implements ICustomerServiceInterface {
   //=======================================================================
 
 
-  //---------------------------------------- get all cutomer data
-   getCustomersDatas = async (): Promise<ICustomer[] | []> => {
-    const result = await this._customerRepository.getCusomersData();
-    return result;
-  };
 
-  //---------------------------------------- block customer by admin
-  blockCustomer = async (customerId: string): Promise<boolean | void> => {
-    const result = await this._customerRepository.blockCustomer(customerId);
-
-    return result;
-  };
 }

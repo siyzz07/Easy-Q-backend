@@ -56,7 +56,6 @@ export class AuthController {
     try {
       const data = req.body;
       const result = await this._authService.login(data);
-
       if (result) {
         res.cookie(`${result.role}Jwt`, result.refreshToken, {
           httpOnly: true,
@@ -75,6 +74,34 @@ export class AuthController {
       next(error);
     }
   };
+
+  /**
+   * 
+   * 
+   *  google auth login
+   * 
+   */
+
+  googleLogin  = async(req:Request,res:Response) :Promise<void> =>{
+
+      const token = req.body.token
+
+      const result = await this._authService.googleAuth (token)
+       if (result) {
+        res.cookie(`${result.role}Jwt`, result.refreshToken, {
+          httpOnly: true,
+          secure: false,
+          maxAge: Number(process.env.REFRESH_TOKEN_EXPIRY),
+        });
+        res.status(StatusCodeEnum.OK).json({
+          message: `${result.role} ${MessageEnum.LOGIN_SUCCESSFLLY}`,
+          accesstoken: result.accessToken,
+          ...(result.entityData && { data: result.entityData }),
+        });
+      }
+
+
+  }
 
   /**
    *

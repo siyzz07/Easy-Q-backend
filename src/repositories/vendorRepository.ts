@@ -8,9 +8,10 @@ import { IServiceType } from "../types/adminTypes";
 import { IImage, IService, IStaff, IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 import { IPaginationResponseMeta } from "../types/common-types";
+import { VendorDto } from "../dto/vendor-dto/vendor-dto";
 
 export class VendorRepository
-  extends BaseRepository<any>
+  extends BaseRepository<IVendor>
   implements IVendorRepo
 {
   private _vendorModel = vendorModel;
@@ -35,19 +36,19 @@ export class VendorRepository
   }
 
   //--------------- get vendor data
-  async vendorData(email: string): Promise<void> {
+  async vendorData(email: string): Promise<IVendor | null> {
     const vendor = this.findByEmail(email);
     return vendor;
   }
 
   //--------------- get vendor data by id
-  async vendorDatabyId(id: string): Promise<IVendor | any> {
+  async vendorDatabyId(id: string): Promise<IVendor | null> {
     const vendor = this.findById(id);
     return vendor;
   }
 
   //--------------- find and update
-  async findByIdAndUpdate(id: string, data: object): Promise<any> {
+  async findByIdAndUpdate(id: string, data: object): Promise<IVendor | null> {
     const vendor = await vendorModel.findByIdAndUpdate(
       id,
       { $set: data },
@@ -111,10 +112,36 @@ export class VendorRepository
     }
   }
 
+  async getVendorDataPaginaition(query: {
+    page?: string;
+    limit?: string;
+    search?: string;
+  }): Promise<{ data: IVendor[]; pagination: IPaginationResponseMeta }> {
+    const filter: FilterQuery<IVendor> = {};
+
+    if (query?.search?.trim()) {
+      filter.$or = [{ shopName: { $regex: query.search, $options: "i" } }];
+    }
+
+    const options = {
+      page: Number(query.page) || 1,
+      limit: Number(query.limit) || 10,
+      sort: { createdAt: -1 as const },
+    };
+
+    const result = await this.filterWithPagination(options, filter);
+    return result;
+  }
+
   async getVendorsData(): Promise<IVendor[] | null> {
     const vendorData = await this._vendorModel.find({ isActive: true }).lean();
     return vendorData;
   }
+
+  // async getVendorsData(): Promise<IVendor[] | null> {f
+  //   const vendorData = await this._vendorModel.find({ isActive: true }).lean();
+  //   return vendorData;
+  // }
 
   async getEachVendorData(_id: string): Promise<IVendor | null> {
     const result = await this._vendorModel.findById(_id).populate("shopType");
@@ -149,10 +176,27 @@ export class VendorRepository
     location?: string;
     page?: string;
     limit?: string;
-  }): Promise<{data:IVendor[],pagination: IPaginationResponseMeta} > {
+    lat?: number;
+    lng?: number;
+    distance?: number;
+    categories?: string[];
+    ratings?: string[];
+  }): Promise<{ data: IVendor[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IVendor> = {};
 
-    if (data.search?.trim() || data.location?.trim()) {
+
+    if (data.lat && data.lng) {
+      filter.location = {
+        $geoWithin: {
+          $centerSphere: [
+            [Number(data.lng), Number(data.lat)],
+            (Number(data.distance) || 10000) / 9378137,
+          ],
+        },
+      };
+    }
+
+    if (data.search?.trim()) {
       filter.$or = [];
 
       if (data.search?.trim()) {
@@ -160,22 +204,35 @@ export class VendorRepository
           shopName: { $regex: data.search, $options: "i" },
         });
       }
+    }
 
-      if (data.location?.trim()) {
-        filter.$or.push({
-          city: { $regex: data.location, $options: "i" },
-        });
+    if (data.categories && data.categories.length > 0) {
+      filter.shopType = {
+        $in: data.categories,
+      };
+    }
+
+    if (data.ratings && data.ratings.length > 0) {
+      if (typeof data.ratings == "string") {
+        filter.rating = {
+          $gte: Number(data.ratings),
+        };
+      } else {
+        const numericRatings = data.ratings.map(Number);
+        const minRating = Math.min(...numericRatings);
+        filter.rating = {
+          $gte: minRating,
+        };
       }
     }
 
-   const options = {
-  page: Number(data.page) || 1,
-  limit: Number(data.limit) || 10,
-  sort: { _id: -1 } as const,
-};
+    const options = {
+      page: Number(data.page) || 1,
+      limit: Number(data.limit) || 10,
+      sort: { _id: -1 } as const,
+    };
 
-    const response = await this.filterWithPagination(options,filter)
-    return response
-
+    const response = await this.filterWithPagination(options, filter);
+    return response;
   }
 }

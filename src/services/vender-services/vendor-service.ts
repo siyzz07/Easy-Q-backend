@@ -1,7 +1,5 @@
-import { workerData } from "worker_threads";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
-import { IServiceInterface } from "../../interface/service-interface/service-service-interface";
 import { IServiceTypesRepositoryInterface } from "../../interface/service-types-interface/service-type-repository-interface";
 import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
 import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
@@ -13,6 +11,8 @@ import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import logger from "../../utils/logger";
 import { deleteCloudinaryImage } from "../../utils/cloudinary";
 import { IPaginationResponseMeta } from "../../types/common-types";
+import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
+import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 
 class VendorService implements IVendorShopServiceInterface {
   private _vendorRepo: IVendorRepo;
@@ -32,21 +32,21 @@ class VendorService implements IVendorShopServiceInterface {
   addShopData = async (
     data: IShopData,
     vendorId: string,
-    cordinates: object,
+    coordinates: { lat: number; lon: number },
     workingDays:string
   ): Promise<any> => {
     try {
+      const days = workingDays.split(',')
 
-      
-    const days = workingDays.split(',')
-    
-    
-      
+      const location = {
+        type: "Point",
+        coordinates: [coordinates.lon, coordinates.lat],
+      };
 
       const updateData = {
         ...data,
         workingDays:days,
-        cordinates,
+        location,
         hasShop:true
       };
 
@@ -65,20 +65,24 @@ class VendorService implements IVendorShopServiceInterface {
         if (error.message == MessageEnum.SHOP_DATA_ADDED_FAILED) {
           throw error;
         } else {
-          console.log("server error for adding show data");
+          logger.error("server error for adding show data");
         }
       } else {
-        console.log("server error for adding show data");
+        logger.error("server error for adding show data");
       }
     }
   };
 
 
-   //----------------------------------------- add shop data
-  getShopData = async (id: string): Promise<IVendor> =>{
+   //----------------------------------------- get shop data
+  getShopData = async (id: string): Promise<VendorDto> =>{
     
      const data = await this._vendorRepo.vendorDatabyId(id)
-     return data
+    
+     if(data){
+         return VendorMapper.toDTO(data)
+     }
+     throw new ErrorResponse(MessageEnum.VENDOR__DATA_FETCH_FAILED, StatusCodeEnum.NOT_FOUND)
 
   }
 
@@ -152,7 +156,7 @@ class VendorService implements IVendorShopServiceInterface {
    const updateData = {
      ...data,
      workingDays:days,
-    };
+     };
 
     const result = await this._vendorRepo.findByIdAndUpdate(_id as string,updateData)
       if(result){
@@ -163,63 +167,18 @@ class VendorService implements IVendorShopServiceInterface {
   }
 
 
-
-
-
-
-
-
-
-
-
-
   //===============================================================
-   verifyVendorRequst = async (_id: string): Promise<boolean | void> => {
-    const result = await this._vendorRepo.verifyVendor(_id);
-    return result;
-  };
-
-
-   rejectVendorRequst = async (_id: string): Promise<boolean | void> => {
-    const result = await this._vendorRepo.rejectVendor(_id);
-    return result;
-  };
-
-
-   getVendorsVerification = async (): Promise<IVendor[] | []> => {
-    const result = await this.getVendorsDatas();
-
-    if (result) {
-      const data = result.filter(
-        (value: IVendor) => value.isVerified == "pending"
-      );
-      return data;
-    } else {
-      return [];
-    }
-  };
-
-
-   getVendorsDatas = async (): Promise<IVendor[] | []> => {
-    const result = await this._vendorRepo.getVendorData();
-    return result;
-  };
-
-  blockVendor = async (customerId: string): Promise<boolean | void> => {
-    const result = await this._vendorRepo.blockVendor(customerId);
-
-    return result;
-  };
 
 
 
-   getEachVendorData = async (data: string): Promise<IVendor | void>  => {
+
+   getEachVendorData = async (data: string): Promise<VendorDto | void>  => {
     
     console.log(data );
     
     const result = await this._vendorRepo.getEachVendorData(data)
     if(result){
-      return result
+      return VendorMapper.toDTO(result)
     }else{
       throw new Error(MessageEnum.VENDOR__DATA_FETCH_FAILED)
     }
@@ -227,19 +186,19 @@ class VendorService implements IVendorShopServiceInterface {
   }
 
 
-   getVendorsData = async (data:{search?:string,location?:string,page?:string,limit?:string}): Promise<{data:IVendor[],pagination: IPaginationResponseMeta}> => {
-    
+   getVendorsData = async (data:{search?:string,location?:string,page?:string,limit?:string, latitude?:number, longitude?:number, categories?:string[],ratings?:string[]}): Promise<{data:VendorDto[],pagination: IPaginationResponseMeta}> => {
+
 
         const response = await this._vendorRepo.vendorsDataWithPagination(data)
-        
+
         if(response){
           logger.info('vendor data fetch successfully')
         }else{
           throw new ErrorResponse (MessageEnum.VENDOR__DATA_FETCH_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
         }
 
-        const activeShops = (response.data || [] ).filter((shop)=> shop.hasShop == true)
-        return {data:activeShops , pagination:response.pagination};
+        const activeShops = (response.data || [] ).filter((shop)=> shop.hasShop == true && shop.isActive==true)
+        return {data: VendorMapper.toDTOList(activeShops) , pagination:response.pagination};
     
     };
 

@@ -2,9 +2,10 @@ import { IFavoriteRepository } from "../interface/favorite-interface/favorite-re
 import favoriteModel from "../models/favoriteModel";
 import { IFavorite } from "../types/customerType";
 import BaseRepository from "./baseRepository";
+import mongoose from "mongoose";
 
 
-export class FavoriteRepository extends BaseRepository<any> implements IFavoriteRepository{
+export class FavoriteRepository extends BaseRepository<IFavorite> implements IFavoriteRepository{
 
         private _FavoriteModel  = favoriteModel
 
@@ -16,7 +17,11 @@ export class FavoriteRepository extends BaseRepository<any> implements IFavorite
 
 //--------------------------------------------------- Create a favorite document for a customer
   async createFavorite(data: {customerId:string,list:[]}):Promise<IFavorite> {
-        const result = await this.create(data)
+        const payload = { 
+            customerId: new mongoose.Types.ObjectId(data.customerId), 
+            vendors: data.list 
+        };
+        const result = await this.create(payload as unknown as IFavorite)
         return result
   }
 

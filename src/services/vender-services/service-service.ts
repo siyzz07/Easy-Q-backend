@@ -6,6 +6,9 @@ import { IServiceInterface } from "../../interface/service-interface/service-ser
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import logger from "../../utils/logger";
+import { IPaginationResponseMeta } from "../../types/common-types";
+import { ServiceResponseDTO } from "../../dto/service-dto/service-dto";
+import { ServiceMapper } from "../../mappers/service-mapper/service-mapper";
 
 export class VendorServiceService implements IServiceInterface {
   private _ServiceRpository: IServiceRepositoryInterface;
@@ -41,29 +44,44 @@ export class VendorServiceService implements IServiceInterface {
   };
 
   //-----------------------------------------------------------------------get services of the shop /DD
-  getAllService = async (shopId: string): Promise<IService[] | []> => {
-    const result = await this._ServiceRpository.getService(shopId);
-    return result;
+  getAllService = async (shopId: string ,query:{page?:string,limit?:string,search?:string}): Promise<{data:ServiceResponseDTO[],pagination:IPaginationResponseMeta}> => {
+    const result = await this._ServiceRpository.getService(shopId,query);
+    return {
+        data: ServiceMapper.toDTOList(result.data),
+        pagination: result.pagination
+    };
   };
 
   //-----------------------------------------------------------------------edit services of the shop
   editService = async (data: IService): Promise<boolean | void> => {
     const { _id, userId, ...payload } = { ...data };
-
     const result = await this._ServiceRpository.editService(
       _id as string,
       payload
     );
     if (result) {
+      logger.info('service edited successully')
       return true;
+    }else{
+      logger.error('error to edit service')
     }
   };
 
   //-----------------------------------------------------------------------get selected service
-  getSelectedSerivce = async(_id: string): Promise<IService> => {
+  getSelectedSerivce = async(_id: string): Promise<ServiceResponseDTO> => {
     const  result = await this._ServiceRpository.getSelectedService(_id)
     if(result){
-        return result
+        return ServiceMapper.toDTO(result)
+    }else{
+      logger.error('error to fetch the service')
+      throw new ErrorResponse(MessageEnum.SERVICE_FETCH_FAILED,StatusCodeEnum.NOT_FOUND)
+    }
+  }
+  //-----------------------------------------------------------------------get selected populated
+  getSelectedSerivcePopulated = async(_id: string): Promise<IServiceData|void> => {
+    const  result = await this._ServiceRpository.getSelectedServicePopulated(_id)
+    if(result){
+       return  result
     }else{
       logger.error('error to fetch the service')
       throw new ErrorResponse(MessageEnum.SERVICE_FETCH_FAILED,StatusCodeEnum.NOT_FOUND)
@@ -74,8 +92,8 @@ export class VendorServiceService implements IServiceInterface {
   //==========================================================
 
   //-------------------------------------DD
-  getEachVendorServices = async (data: string): Promise<IServiceData[] | []> => {
+  getEachVendorServices = async (data: string): Promise<ServiceResponseDTO[] | []> => {
     const result = await this._ServiceRpository.getEachvendorServices(data)
-    return result as unknown as IServiceData[];
+    return ServiceMapper.toDTOList(result as unknown as any[]);
   };
 }

@@ -21,6 +21,7 @@ authRoute.post('/add-customer',emailVerifyTokenMIddleware,authControllerInstance
 
 
 authRoute.post('/add-vendor',emailVerifyTokenMIddleware,authControllerInstance.addNewEntity)
+authRoute.post('/create-admin',authControllerInstance.addNewEntity)
 
 authRoute.post('/verify-email',authControllerInstance.verifyEmail)
 authRoute.post('/login',authControllerInstance.login)
@@ -28,6 +29,7 @@ authRoute.post('/reset-password/verify',authControllerInstance.resetPasswordEmai
 authRoute.post('/reset-password',emailVerifyTokenMIddleware,authControllerInstance.resetPassword)
 authRoute.post('/refresh-token',authControllerInstance.refreshToken)
 authRoute.post('/logout',verifyToken,authControllerInstance.logout)
+authRoute.post('/google-auth',authControllerInstance.googleLogin)
 
 export default authRoute
 

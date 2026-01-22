@@ -27,12 +27,13 @@ export class VendorServiceController {
   // ------------------------------- get  services of the shop / DD
   getSerivces = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
-      const result = await this._Service.getAllService(req.body.userId);
+      const result = await this._Service.getAllService(req.body.userId,req.query);
       res
         .status(StatusCodeEnum.OK)
         .json({
           message: MessageEnum.VENDOR_SERVICE_FETCH_SUCCESS,
-          data: result,
+          data: result.data,
+          pagination:result.pagination
         });
     } catch (error: unknown) {
       next(error)
@@ -42,6 +43,7 @@ export class VendorServiceController {
   // ------------------------------- edit  services of a shop
   editService = async (req:Request,res:Response,next:NextFunction) :Promise<void> =>{
     try{
+
 
       const result = await this._Service.editService(req.body)
       if(result){
@@ -82,6 +84,24 @@ export class VendorServiceController {
 
       const {id} = req.query
       const reuslt = await this._Service.getSelectedSerivce(id as string)
+      if(reuslt){
+        res
+          .status(StatusCodeEnum.OK)
+          .json({message:MessageEnum.SERVICE_FETCH_SUCCESS,data:reuslt})
+      }
+        
+
+    }catch(error:unknown){
+      next(error)
+    }
+  }
+  // ------------------------------- get selected service 
+  getSelectedServicePopulated = async(req:Request,res:Response,next:NextFunction) :Promise<void> =>{
+    try{
+
+      const {id} = req.query
+      console.log(id)
+      const reuslt = await this._Service.getSelectedSerivcePopulated(id as string)
       if(reuslt){
         res
           .status(StatusCodeEnum.OK)

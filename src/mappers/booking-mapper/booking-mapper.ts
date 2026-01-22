@@ -48,6 +48,7 @@ export const checkTimeReqMapper = {
 
 export const toBookingPopulatedMapper = {
   toDto(b: IBookingPopulated): bookingDatasPopulatedDto {
+
     return {
       id: b._id as string,
       bookingId: b.bookingId,
@@ -79,6 +80,9 @@ export const toBookingPopulatedMapper = {
         state: b.shopId.state,
         profileImage: b.shopId.ProfileImage,
         isVerified: b.shopId.isVerified,
+        workingDays:b.shopId.workingDays as [],
+        location:b.shopId.location
+
       },
 
       service: {

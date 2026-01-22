@@ -26,13 +26,13 @@ export const socketAuth = (
 
     socket.data.userId = decoded.userId;
     next(); 
-  } catch (err) {
+  } catch (err:any) {
     logger.error("Socket authentication error:", err);
 
-
+ 
     next(
       new ErrorResponse(
-        "socket authentication failed",
+         err?.message,
         StatusCodeEnum.INTERNAL_SERVER_ERROR
       ) as unknown as ExtendedError
     );

@@ -35,6 +35,10 @@ const vendorSchema = new Schema<IVendor>(
     city: {
       type: String,
     },
+    rating: {
+      type: Number,
+      default: 0,
+    },
     workingDays: {
       type: [String],
       default: [],
@@ -56,9 +60,18 @@ const vendorSchema = new Schema<IVendor>(
       type: Boolean,
       default: false,
     },
-    cordinates: {
-      lat: { type: String },
-      lon: { type: String },
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+      },
+      coordinates: {
+        type: [Number],
+        validate: {
+          validator: (v: number[]) => !v || v.length === 2,
+          message: "Coordinates must be [lng, lat]",
+        },
+      },
     },
     planExpreData: {
       type: Date,
@@ -70,6 +83,16 @@ const vendorSchema = new Schema<IVendor>(
     },
   },
   { timestamps: true }
+);
+
+vendorSchema.index(
+  { location: "2dsphere" },
+  {
+    partialFilterExpression: {
+      hasShop: true,
+      "location.coordinates": { $exists: true },
+    },
+  }
 );
 
 export default model<IVendor>("Vendor", vendorSchema);

@@ -52,9 +52,11 @@ export class CustomerAddressContorller {
     next: NextFunction
   ): Promise<void> => {
     try {
+
+      const addresId = req.params.addressId
       const response = await this._addressService.deletCustomerAddress(
         req.body.userId,
-        req.body.addressId
+       addresId
       );
       if (response) {
         res

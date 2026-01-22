@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import logger from "./logger";
 
 
 
@@ -59,7 +60,7 @@ export const sendEmail = async (to: string, verifyUrl: string) => {
       html: htmlContent,
     });
 
-    console.log("Verification email sent:", info.messageId);
+    logger.info("Verification email sent:", info.messageId);
   } catch (error) {
     console.error("Error sending verification email:", error);
     throw error;

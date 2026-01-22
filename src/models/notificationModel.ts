@@ -27,7 +27,7 @@ const notificationSchema = new Schema<INotification>(
     type: {
       type: String,
       enum: [
-
+        "booking_rescheduled",
         "new_booking",
         "booking_cancelled",
         "booking_completed",
