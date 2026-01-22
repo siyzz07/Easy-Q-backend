@@ -3,7 +3,12 @@ import { IBookingServiceInterface } from "../../interface/booking-interface/book
 import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
 import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
 import { ErrorResponse } from "../../utils/errorResponse";
-import { MessageEnum } from "../../enums/messagesEnum";
+import {
+  BookingMessageContent,
+  BookingMessageContentLong,
+  BookingMessageTitle,
+  MessageEnum,
+} from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 import {
@@ -32,6 +37,10 @@ import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet
 import { RoleEnum } from "../../enums/role";
 import { log } from "console";
 import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
+import {
+  BookingNotificationTypeEnum,
+  NotificationCategoryEnum,
+} from "../../enums/notificationEnum";
 
 export class BookingService implements IBookingServiceInterface {
   private _BookingRepository: IBookingRopsitoryInterface;
@@ -200,9 +209,25 @@ export class BookingService implements IBookingServiceInterface {
       );
 
       if (result) {
-        void this._NotificationService.sendBookingNotificationToVendor(result);
+        void this._NotificationService.sendBookingNotificationToVendor(
+          result.shopId.toString(),
+          NotificationCategoryEnum.BOOKING,
+          BookingNotificationTypeEnum.BOOKING_NEW,
+          BookingMessageTitle.NEW_BOOKING_VENDOR,
+          `${BookingMessageContent.NEW_BOOKING_VENDOR} - ${result.bookingDate} - ${result.bookingTimeStart}`,
+          result._id as string,
+          result.bookingDate,
+          result.bookingTimeStart
+        );
         void this._NotificationService.sendBookingNotificationToCustomer(
-          result
+          result.customerId.toString(),
+          NotificationCategoryEnum.BOOKING,
+          BookingNotificationTypeEnum.BOOKING_COMPLETED,
+          BookingMessageTitle.BOOKING_SUCCESS,
+          `${BookingMessageContentLong.BOOKING_CONFIRMED}-${result.bookingDate} - ${result.bookingTimeStart}`,
+          result._id as string,
+          result.bookingDate,
+          result.bookingTimeStart
         );
         return BookingMapper.toDTO(result);
       } else {
@@ -252,9 +277,12 @@ export class BookingService implements IBookingServiceInterface {
     const serviceData = await this._ServiceRepository.getSelectedService(
       serviceId
     );
-    if(!serviceData?.isActive){
-      logger.error('service was blocked by admin')
-      throw new ErrorResponse('Service not available',StatusCodeEnum.BAD_REQUEST)
+    if (!serviceData?.isActive) {
+      logger.error("service was blocked by admin");
+      throw new ErrorResponse(
+        "Service not available",
+        StatusCodeEnum.BAD_REQUEST
+      );
     }
     const serviceDuration = Number(serviceData?.duration as string);
     const bookingDateKey = new Date(date).toLocaleDateString("en-CA");
@@ -263,7 +291,6 @@ export class BookingService implements IBookingServiceInterface {
       { staffId: staffId, bookingDate: bookingDateKey }
     );
 
-
     const availableTime = await this.sortAndFindAvailableTime(
       bookedDatas,
       staffData,
@@ -271,7 +298,6 @@ export class BookingService implements IBookingServiceInterface {
       timePreffer,
       date
     );
-
 
     if (!availableTime) {
       logger.warn("time not available on the preffered time gap");
@@ -322,7 +348,6 @@ export class BookingService implements IBookingServiceInterface {
       query
     );
 
-
     if (bookingData) {
       logger.info(MessageEnum.BOOKING_DATA_FETCH_SUCCESS);
     } else {
@@ -369,11 +394,34 @@ export class BookingService implements IBookingServiceInterface {
    */
 
   selectedBookingData = async (
-    id: string
+    userId: string,
+    id: string,
+    role: string
   ): Promise<bookingDatasPopulatedDto> => {
     const bookingData = await this._BookingRepository.getEachBookingDataById(
       id
     );
+
+    if (role == RoleEnum.CUSTOMER) {
+      if (bookingData?.customerId._id != userId) {
+        logger.error("booking data invalied access by customer");
+        throw new ErrorResponse(
+          MessageEnum.BOOKING_DATA_FETCH_FAILED,
+          StatusCodeEnum.BAD_REQUEST
+        );
+      }
+    }
+
+    if (role == RoleEnum.VENDOR) {
+
+      if (bookingData?.shopId._id?.toString() !== userId) {
+        logger.error("booking data invalied access by vendor ");
+        throw new ErrorResponse(
+          MessageEnum.BOOKING_DATA_FETCH_FAILED,
+          StatusCodeEnum.BAD_REQUEST
+        );
+      }
+    }
 
     if (bookingData) {
       return toBookingPopulatedMapper.toDto(bookingData);
@@ -391,6 +439,29 @@ export class BookingService implements IBookingServiceInterface {
       status: "cancelled",
     });
     if (result) {
+
+
+
+        void this._NotificationService.sendBookingNotificationToVendor(
+          result.shopId.toString(),
+          NotificationCategoryEnum.BOOKING,
+          BookingNotificationTypeEnum.BOOKING_CANCELLED,
+          BookingMessageTitle.BOOKING_CANCELLED,
+          `${BookingMessageContent.BOOKING_CANCELLED} - ${result.bookingDate} - ${result.bookingTimeStart}`,
+          result._id as string,
+          result.bookingDate,
+          result.bookingTimeStart
+        );
+        void this._NotificationService.sendBookingNotificationToCustomer(
+          result.customerId.toString(),
+          NotificationCategoryEnum.BOOKING,
+          BookingNotificationTypeEnum.BOOKING_CANCELLED,
+          BookingMessageTitle.BOOKING_CANCELLED,
+          `${BookingMessageContent.BOOKING_CANCELLED}-${result.bookingDate} - ${result.bookingTimeStart}`,
+          result._id as string,
+          result.bookingDate,
+          result.bookingTimeStart
+        );
       return result;
     }
   };
@@ -533,8 +604,30 @@ export class BookingService implements IBookingServiceInterface {
       bookingData?._id as string,
       updatedData
     );
-    if (updatedData) {
+    if (result) {
       logger.info(MessageEnum.BOOKING_RESCHEDULE_SUCCESS);
+
+       void this._NotificationService.sendBookingNotificationToVendor(
+          result.shopId.toString(),
+          NotificationCategoryEnum.BOOKING,
+          BookingNotificationTypeEnum.BOOKING_RESCHEDULED,
+          BookingMessageTitle.BOOKING_RESCHEDULED,
+          `${BookingMessageContent.BOOKING_RESCHEDULED} - ${result.bookingDate} - ${result.bookingTimeStart}`,
+          result._id as string,
+          result.bookingDate,
+          result.bookingTimeStart
+        );
+        void this._NotificationService.sendBookingNotificationToCustomer(
+          result.customerId.toString(),
+          NotificationCategoryEnum.BOOKING,
+          BookingNotificationTypeEnum.BOOKING_RESCHEDULED,
+          BookingMessageTitle.BOOKING_RESCHEDULED,
+          `${BookingMessageContent.BOOKING_RESCHEDULED}-${result.bookingDate} - ${result.bookingTimeStart}`,
+          result._id as string,
+          result.bookingDate,
+          result.bookingTimeStart
+        );
+
       return true;
     } else {
       logger.error(MessageEnum.BOOKING_RESCHEDULE_FAILED);
@@ -666,7 +759,7 @@ export class BookingService implements IBookingServiceInterface {
     staffData: IStaff,
     serviceDuration: number,
     prefferTime: string,
-    date:string
+    date: string
   ): Promise<{ startTime: string; endTime: string } | false> {
     const staffOpen = {
       start: staffData.openingTime,
@@ -696,7 +789,6 @@ export class BookingService implements IBookingServiceInterface {
 
     const staffBookingsSroted = await this.sortTimes(staffBookings);
 
-
     const availableTime = await this.findAvailabletime(
       staffBookingsSroted,
       serviceDuration,
@@ -718,20 +810,17 @@ export class BookingService implements IBookingServiceInterface {
     timeLine: { start: string; end: string; type: string }[],
     serviceDuration: number,
     preferredTime: string,
-    date:string
+    date: string
   ): Promise<{ startTime: string; endTime: string } | false> {
-
-     let isCurrentDay  = false
+    let isCurrentDay = false;
     let dateNow = new Date();
     let selectedDate = new Date(date);
     let dateFormat = dateNow.toDateString();
     let selectedDateFromat = selectedDate.toDateString();
 
     if (dateFormat == selectedDateFromat) {
-
-           isCurrentDay = false
+      isCurrentDay = false;
     }
-
 
     const indexes: number[] = [];
 
@@ -753,32 +842,30 @@ export class BookingService implements IBookingServiceInterface {
       let start = timeLine[i].end;
       let end = timeLine[i + 1].start;
 
-        if(isCurrentDay){
-              const now = new Date();
-              const nowMinutes = now.getHours() * 60 + now.getMinutes();
-              const [h, m] = start.split(":");
-              const startMinutes = Number(h) * 60 + Number(m);
-              const endMinutes = Number(h)*60+Number(m)
+      if (isCurrentDay) {
+        const now = new Date();
+        const nowMinutes = now.getHours() * 60 + now.getMinutes();
+        const [h, m] = start.split(":");
+        const startMinutes = Number(h) * 60 + Number(m);
+        const endMinutes = Number(h) * 60 + Number(m);
 
-              if(nowMinutes >= startMinutes && nowMinutes >endMinutes){
-                continue
-              }
-
-              if(nowMinutes > startMinutes && nowMinutes < endMinutes){
-                  const time = now.toLocaleTimeString("en-IN", {
-                                    timeZone: "Asia/Kolkata",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    hour12: false,
-                                  });
-
-                start = time
-              }
-
-
+        if (nowMinutes >= startMinutes && nowMinutes > endMinutes) {
+          continue;
         }
 
-      const freeTime = this.diffMinutes(start,end);
+        if (nowMinutes > startMinutes && nowMinutes < endMinutes) {
+          const time = now.toLocaleTimeString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          });
+
+          start = time;
+        }
+      }
+
+      const freeTime = this.diffMinutes(start, end);
       // const freeTime = this.diffMinutes(timeLine[i].end, timeLine[i + 1].start);
 
       if (freeTime >= serviceDuration) {

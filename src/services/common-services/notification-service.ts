@@ -60,28 +60,25 @@ export class NotificationService implements INotificationServiceInterface {
    *
    */
 
-  sendBookingNotificationToVendor = async (data: IBooking): Promise<void> => {
+
+//------------------ new booking notification
+  sendBookingNotificationToVendor = async (vendorId:string ,category:'booking'|'contract'|'message',type: "booking_rescheduled" | "booking_cancelled" | "new_booking" ,title:string,content:string,bookingId:string,date:string,time:string): Promise<void> => {
+  
     const NotificationPayload: Partial<INotification> = {
-      recipient: new mongoose.Types.ObjectId(data.shopId),
+      recipient: new mongoose.Types.ObjectId(vendorId),
       recipientType: "Vendor",
-      category: "booking",
-      type: "new_booking",
-      title: BookingMessageTitle.NEW_BOOKING_VENDOR,
-      content: BookingMessageContentLong.NEW_BOOKING_VENDOR,
+      category,
+      type,
+      title,
+      content,
+      createdAt:new Date(),
       metaData: {
         booking: {
-          id: data._id,
-          date: data.bookingDate,
-          time: data.bookingTimeStart,
+          id: bookingId,
+          date: date,
+          time: time,
         },
       },
-    };
-
-    const SocketPayload = {
-      title: BookingMessageTitle.NEW_BOOKING_VENDOR,
-      message: `${BookingMessageContent.NEW_BOOKING_VENDOR} - ${data.bookingDate} - ${data.bookingTimeStart}`,
-      type: "booking",
-      createdAt: new Date(),
     };
 
     const result = await this._NotificationRepository.addNewNotification(
@@ -90,8 +87,8 @@ export class NotificationService implements INotificationServiceInterface {
 
     socketNotificationHandler.bookingNotificationToVendor(
       socketManagerServer.getIo(),
-      data.shopId.toString(),
-      SocketPayload
+      vendorId.toString(),
+      NotificationPayload
     );
   };
 
@@ -100,37 +97,36 @@ export class NotificationService implements INotificationServiceInterface {
    * Booking notificatoin ----  CUSTOMER
    *
    */
-
-  sendBookingNotificationToCustomer = async (data: IBooking): Promise<void> => {
+  // ----------------- booking confirm notification 
+  sendBookingNotificationToCustomer = async (customerId:string ,category:'booking'|'contract'|'message',type: "booking_rescheduled" | "booking_cancelled" | "booking_completed" ,title:string,content:string,bookingId:string,date:string,time:string ): Promise<void> => {
+   
     const NotificationPayload: Partial<INotification> = {
-      recipient: new mongoose.Types.ObjectId(data.customerId),
-      recipientType: "Customer",
-      category: "booking",
-      type: "booking_completed",
-      title: BookingMessageTitle.BOOKING_SUCCESS,
-      content: BookingMessageContentLong.BOOKING_CONFIRMED,
+      recipient: new mongoose.Types.ObjectId(customerId),
+      recipientType: 'Customer',
+      category,
+      type: type,
+      title:title,
+      // content:`${ BookingMessageContentLong.BOOKING_CONFIRMED}-${data.bookingDate} - ${data.bookingTimeStart}`,
+      content:content,
+      createdAt:new Date(),
       metaData: {
         booking: {
-          id: data._id,
-          date: data.bookingDate,
-          time: data.bookingTimeStart,
+          id: bookingId,
+          date: date,
+          time: time,
         },
       },
     };
 
-    const SocketPayload = {
-      title: BookingMessageTitle.BOOKING_SUCCESS,
-      message: `${BookingMessageContent.BOOKING_SUCCESS} - ${data.bookingDate} - ${data.bookingTimeStart}`,
-      type: "booking",
-      createdAt: new Date(),
-    };
     const result = await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
     await socketNotificationHandler.bookingNotificationToCustomer(
       socketManagerServer.getIo(),
-      data.customerId.toString(),
-      SocketPayload
+      customerId.toString(),
+      NotificationPayload
     );
   };
+
+
 }

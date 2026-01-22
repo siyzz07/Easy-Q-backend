@@ -86,6 +86,7 @@ export interface INotification {
     | "booking_cancelled"
     | "booking_completed"
     | "contract_applyied"
+    |'booking_rescheduled'
     | "contract_signed"
     | "message"
     | "system"

@@ -122,7 +122,9 @@ export class BookingController {
 
         
         const id = req.params.id
-        const result = await this._BookingService.selectedBookingData(id)
+        const role = req.params.role
+        const userId = req.body.userId
+        const result = await this._BookingService.selectedBookingData(userId,id,role)
         if(result){
           res
             .status(StatusCodeEnum.OK)

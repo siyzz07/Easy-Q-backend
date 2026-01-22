@@ -161,7 +161,7 @@ export enum MessageEnum {
   BOOKING_ID_INVALIED = 'Invalied booking id',
   BOOKING_CANCEL_SUCCESS = 'Booking cancelled successfully',
   BOOKING_AMOUNT_REFUNDED = 'Booking amount refunded successfully',
-  BOOKING_RESCHEDULE_LIMIT = "You can reschedule a booking only 2 times. You have already rescheduled it twice.",
+  BOOKING_RESCHEDULE_LIMIT = "You can reschedule a booking only 1 times. You have already rescheduled it twice.",
   BOOKING_RESCHEDULE_SUCCESS = "Booking rescheduled successfully",
   BOOKING_RESCHEDULE_FAILED = "Failed to reschedule booking",
 
@@ -219,6 +219,7 @@ export enum BookingMessageTitle {
   BOOKING_SUCCESS = "Booking Successful",
   BOOKING_FAILED = "Booking Failed",
   BOOKING_CONFIRMED_CUSTOMER = "Booking Confirmed",
+  BOOKING_RESCHEDULED = "Booking Rescheduled",
 
   // Vendor side
   NEW_BOOKING_VENDOR = "New Booking Received",
@@ -237,13 +238,14 @@ export enum BookingMessageContent {
   BOOKING_SUCCESS = "Your booking has been successfully created.",
   BOOKING_FAILED = "There was an issue creating your booking.",
   BOOKING_CONFIRMED_CUSTOMER = "Your booking has been confirmed. Your scheduled time is:",
+  BOOKING_RESCHEDULED = "Your booking has been rescheduled. Your updated scheduled time is:",
 
   // Vendor side
-  NEW_BOOKING_VENDOR = "You have a new booking",
+  NEW_BOOKING_VENDOR = "A customer has placed a new booking on time",
 
   // Common
   BOOKING_UPDATED = "Your booking details have been updated.",
-  BOOKING_CANCELLED = "This booking has been cancelled.",
+  BOOKING_CANCELLED = "Booking has been cancelled .",
 }
 
 

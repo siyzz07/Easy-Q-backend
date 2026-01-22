@@ -64,7 +64,6 @@ export class BookingRepository
     data: Partial<IBooking>
   ): Promise<IBooking | void> {
 
-    console.log('booking updated ata' , id  , data)
     const result = await this.update(id, data);
     if (result) {
       logger.info('booking updated successfully')
@@ -134,7 +133,7 @@ export class BookingRepository
  
     if (query.search === "requests") {
       filter.status = "cancelled";
-      filter.paymentStatus = { $ne: "refunded" };
+      filter.paymentStatus = { $nin: ["refunded", "failed"] };
       filter.paymentMethod ={$ne : 'payAtShop'}
     }
 

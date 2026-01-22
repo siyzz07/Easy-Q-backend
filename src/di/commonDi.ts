@@ -2,7 +2,7 @@ import { BookingController } from "../controllers/booking/booking-controller"
 import { ReviewController } from "../controllers/reviews/review-controller"
 import { ReviewRepository } from "../repositories/reviewRepository"
 import { BookingService } from "../services/common-services/booking-service"
-import { NotificationService } from "../services/common-services/notificaion-service"
+import { NotificationService } from "../services/common-services/notification-service"
 import { ReviewService } from "../services/common-services/review-service"
 import { 
     bookingRepository, 
