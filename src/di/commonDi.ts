@@ -12,7 +12,8 @@ import {
     reviewRepository, 
     transactionRepository,
     walletRepository,
-    vendorRepository
+    vendorRepository,
+    addressRepository
 } from "./repositoriesDi"
 import { TransactionService } from "../services/common-services/transaction-service"
 import { TransactionController } from "../controllers/transaction/transaction-controller"
@@ -36,7 +37,7 @@ const transactionControllerInstance = new TransactionController(transactionServi
 
 
 // ------------------ booking di
-const bookingServiceInstance = new BookingService(bookingRepository, serviceRepository, staffRepository, notificationServiceInstance,walletServiceInstance,transactionRepository)
+const bookingServiceInstance = new BookingService(bookingRepository, serviceRepository, staffRepository, notificationServiceInstance,walletServiceInstance,transactionRepository,addressRepository)
 const BookingControllerInstance = new BookingController(bookingServiceInstance)
 
 

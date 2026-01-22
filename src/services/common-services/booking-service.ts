@@ -41,6 +41,7 @@ import {
   BookingNotificationTypeEnum,
   NotificationCategoryEnum,
 } from "../../enums/notificationEnum";
+import { ICustomerAddressRepositoryInterface } from "../../interface/address-interface/address-repository-interface";
 
 export class BookingService implements IBookingServiceInterface {
   private _BookingRepository: IBookingRopsitoryInterface;
@@ -49,6 +50,7 @@ export class BookingService implements IBookingServiceInterface {
   private _NotificationService: INotificationServiceInterface;
   private _WalletService: IWalletServiceInterface;
   private _TransactionRepository: ITransactionRepositoryInterface;
+  private _AddresRepository: ICustomerAddressRepositoryInterface;
   // private _Cache_service: ICacheService;
 
   constructor(
@@ -57,7 +59,8 @@ export class BookingService implements IBookingServiceInterface {
     staffRepository: IStaffRepositoryInterface,
     notificationService: INotificationServiceInterface,
     walletSerivce: IWalletServiceInterface,
-    transactionRepository: ITransactionRepositoryInterface
+    transactionRepository: ITransactionRepositoryInterface,
+    addressRepository: ICustomerAddressRepositoryInterface
     // cacheService: ICacheService
   ) {
     this._BookingRepository = bookingService;
@@ -66,6 +69,7 @@ export class BookingService implements IBookingServiceInterface {
     this._NotificationService = notificationService;
     this._WalletService = walletSerivce;
     this._TransactionRepository = transactionRepository;
+    this._AddresRepository = addressRepository;
     // this._Cache_service = cacheService;
   }
 
@@ -362,7 +366,7 @@ export class BookingService implements IBookingServiceInterface {
   /**
    *
    *
-   * get customer boking data
+   * get vendor boking data
    *
    */
   VendorBooking = async (
@@ -392,76 +396,95 @@ export class BookingService implements IBookingServiceInterface {
    *  get selected booking data
    *
    */
+selectedBookingData = async (
+  userId: string,
+  id: string,
+  role: string
+): Promise<bookingDatasPopulatedDto> => {
 
-  selectedBookingData = async (
-    userId: string,
-    id: string,
-    role: string
-  ): Promise<bookingDatasPopulatedDto> => {
-    const bookingData = await this._BookingRepository.getEachBookingDataById(
-      id
+  const bookingData = await this._BookingRepository.getEachBookingDataById(id);
+
+  if (!bookingData) {
+    logger.error("invalid booking Id");
+    throw new ErrorResponse(
+      MessageEnum.BOOKING_ID_INVALIED,
+      StatusCodeEnum.BAD_REQUEST
     );
+  }
 
-    if (role == RoleEnum.CUSTOMER) {
-      if (bookingData?.customerId._id != userId) {
-        logger.error("booking data invalied access by customer");
-        throw new ErrorResponse(
-          MessageEnum.BOOKING_DATA_FETCH_FAILED,
-          StatusCodeEnum.BAD_REQUEST
-        );
-      }
-    }
-
-    if (role == RoleEnum.VENDOR) {
-
-      if (bookingData?.shopId._id?.toString() !== userId) {
-        logger.error("booking data invalied access by vendor ");
-        throw new ErrorResponse(
-          MessageEnum.BOOKING_DATA_FETCH_FAILED,
-          StatusCodeEnum.BAD_REQUEST
-        );
-      }
-    }
-
-    if (bookingData) {
-      return toBookingPopulatedMapper.toDto(bookingData);
-    } else {
-      logger.error("invalied booking Id");
+ 
+  if (role === RoleEnum.CUSTOMER) {
+    if (bookingData.customerId?._id?.toString() !== userId) {
+      logger.error("booking data invalid access by customer");
       throw new ErrorResponse(
-        MessageEnum.BOOKING_ID_INVALIED,
+        MessageEnum.BOOKING_DATA_FETCH_FAILED,
         StatusCodeEnum.BAD_REQUEST
       );
     }
+  }
+
+  if (role === RoleEnum.VENDOR) {
+    if (bookingData.shopId?._id?.toString() !== userId) {
+      logger.error("booking data invalid access by vendor");
+      throw new ErrorResponse(
+        MessageEnum.BOOKING_DATA_FETCH_FAILED,
+        StatusCodeEnum.BAD_REQUEST
+      );
+    }
+  }
+
+  
+  const address = await this._AddresRepository.getAllAddress(
+    bookingData.customerId?._id?.toString() as string
+  );
+
+  const selectedAddress = address?.address?.find(
+    (item) =>
+      item._id?.toString() === bookingData.customerAddressId?.toString()
+  );
+
+  
+  const bookingObject = {...bookingData};
+
+  const updatedBookingData = {
+    ...bookingObject,
+    customerAddressId: selectedAddress || null, 
   };
+
+  return toBookingPopulatedMapper.toDto(updatedBookingData as any);
+};
+
+  /**
+   *
+   *  cancel booking
+   *
+   */
 
   cancelBooking = async (bookingId: string): Promise<IBooking | void> => {
     const result = await this._BookingRepository.updateBooking(bookingId, {
       status: "cancelled",
     });
     if (result) {
-
-
-
-        void this._NotificationService.sendBookingNotificationToVendor(
-          result.shopId.toString(),
-          NotificationCategoryEnum.BOOKING,
-          BookingNotificationTypeEnum.BOOKING_CANCELLED,
-          BookingMessageTitle.BOOKING_CANCELLED,
-          `${BookingMessageContent.BOOKING_CANCELLED} - ${result.bookingDate} - ${result.bookingTimeStart}`,
-          result._id as string,
-          result.bookingDate,
-          result.bookingTimeStart
-        );
-        void this._NotificationService.sendBookingNotificationToCustomer(
-          result.customerId.toString(),
-          NotificationCategoryEnum.BOOKING,
-          BookingNotificationTypeEnum.BOOKING_CANCELLED,
-          BookingMessageTitle.BOOKING_CANCELLED,
-          `${BookingMessageContent.BOOKING_CANCELLED}-${result.bookingDate} - ${result.bookingTimeStart}`,
-          result._id as string,
-          result.bookingDate,
-          result.bookingTimeStart
-        );
+      void this._NotificationService.sendBookingNotificationToVendor(
+        result.shopId.toString(),
+        NotificationCategoryEnum.BOOKING,
+        BookingNotificationTypeEnum.BOOKING_CANCELLED,
+        BookingMessageTitle.BOOKING_CANCELLED,
+        `${BookingMessageContent.BOOKING_CANCELLED} - ${result.bookingDate} - ${result.bookingTimeStart}`,
+        result._id as string,
+        result.bookingDate,
+        result.bookingTimeStart
+      );
+      void this._NotificationService.sendBookingNotificationToCustomer(
+        result.customerId.toString(),
+        NotificationCategoryEnum.BOOKING,
+        BookingNotificationTypeEnum.BOOKING_CANCELLED,
+        BookingMessageTitle.BOOKING_CANCELLED,
+        `${BookingMessageContent.BOOKING_CANCELLED}-${result.bookingDate} - ${result.bookingTimeStart}`,
+        result._id as string,
+        result.bookingDate,
+        result.bookingTimeStart
+      );
       return result;
     }
   };
@@ -607,26 +630,27 @@ export class BookingService implements IBookingServiceInterface {
     if (result) {
       logger.info(MessageEnum.BOOKING_RESCHEDULE_SUCCESS);
 
-       void this._NotificationService.sendBookingNotificationToVendor(
-          result.shopId.toString(),
-          NotificationCategoryEnum.BOOKING,
-          BookingNotificationTypeEnum.BOOKING_RESCHEDULED,
-          BookingMessageTitle.BOOKING_RESCHEDULED,
-          `${BookingMessageContent.BOOKING_RESCHEDULED} - ${result.bookingDate} - ${result.bookingTimeStart}`,
-          result._id as string,
-          result.bookingDate,
-          result.bookingTimeStart
-        );
-        void this._NotificationService.sendBookingNotificationToCustomer(
-          result.customerId.toString(),
-          NotificationCategoryEnum.BOOKING,
-          BookingNotificationTypeEnum.BOOKING_RESCHEDULED,
-          BookingMessageTitle.BOOKING_RESCHEDULED,
-          `${BookingMessageContent.BOOKING_RESCHEDULED}-${result.bookingDate} - ${result.bookingTimeStart}`,
-          result._id as string,
-          result.bookingDate,
-          result.bookingTimeStart
-        );
+      void this._NotificationService.sendBookingNotificationToVendor(
+        result.shopId.toString(),
+        NotificationCategoryEnum.BOOKING,
+        BookingNotificationTypeEnum.BOOKING_RESCHEDULED,
+        BookingMessageTitle.BOOKING_RESCHEDULED,
+        `${BookingMessageContent.BOOKING_RESCHEDULED} - ${result.bookingDate} - ${result.bookingTimeStart}`,
+        result._id as string,
+        result.bookingDate,
+        result.bookingTimeStart
+      );
+
+      void this._NotificationService.sendBookingNotificationToCustomer(
+        result.customerId.toString(),
+        NotificationCategoryEnum.BOOKING,
+        BookingNotificationTypeEnum.BOOKING_RESCHEDULED,
+        BookingMessageTitle.BOOKING_RESCHEDULED,
+        `${BookingMessageContent.BOOKING_RESCHEDULED}-${result.bookingDate} - ${result.bookingTimeStart}`,
+        result._id as string,
+        result.bookingDate,
+        result.bookingTimeStart
+      );
 
       return true;
     } else {

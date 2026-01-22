@@ -44,9 +44,11 @@ export class BookingRepository
       .populate("customerId")
       .populate("shopId")
       .populate("serviceId")
-      .populate("customerAddressId")
+      // .populate("customerAddressId")
       .populate("staffId")
       .lean<IBookingPopulated>();
+
+      
 
       
 
@@ -58,6 +60,8 @@ export class BookingRepository
     }
     return result as IBookingPopulated;
   }
+
+
   //----------------------------------- update booking
   async updateBooking(
     id: string,
