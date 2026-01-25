@@ -204,10 +204,25 @@ export enum MessageEnum {
     // --------------------------------------------------------------------------Notificaion
     NOTIFICATION_FETCH_SUCCESS = "Notifications fetched successfully",
     NOTIFICATION_FETCH_FAILED = "Failed to fetch notifications",
-
+    
     NOTIFICATION_UPDATED_SUCCESS = "Updated successfully",
     NOTIFICATION_UPDATED_FAILED = "Update failed",
- 
+    // --------------------------------------------------------------------------Contract
+     CONTRACT_CREATED = "Contract created successfully",
+  CONTRACT_UPDATED = "Contract updated successfully",
+  CONTRACT_DELETED = "Contract deleted successfully",
+  CONTRACT_APPLIED = "Contract applied successfully",
+  CONTRACT_ACCEPTED = "Vendor accepted for the contract",
+  CONTRACT_REJECTED = "Vendor rejected for the contract",
+  CONTRACT_CLOSED = "Contract closed successfully",
+  CONTRACT_COMPLETED = "Contract marked as completed",
+   CONTRACT_CREATE_FAILED = "Failed to create contract",
+  CONTRACT_UPDATE_FAILED = "Failed to update contract",
+  CONTRACT_DELETE_FAILED = "Failed to delete contract",
+  CONTRACT_NOT_FOUND = "Contract not found",
+  CONTRACT_ALREADY_APPLIED = "You have already applied for this contract",
+
+
 }
 
 

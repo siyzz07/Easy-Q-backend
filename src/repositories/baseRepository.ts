@@ -18,7 +18,8 @@ import { options } from "joi";
 class BaseRepository<T>
   implements IBaseRepositoryInterface<T>
 {
-  private _Model: Model<T>;
+  protected _Model: Model<T>;
+
 
   constructor(model: Model<T>) {
     this._Model = model;

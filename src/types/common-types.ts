@@ -170,3 +170,38 @@ export interface IWallet {
   balance: number;
 
 }
+
+
+
+
+export interface IContract {
+  _id?: mongoose.Types.ObjectId;
+  contractId: string;
+  customerId: mongoose.Types.ObjectId;
+  addressId: mongoose.Types.ObjectId;
+  title: string;
+  description: string;
+  services:mongoose.Types.ObjectId;
+  budget: number;
+
+  location: {
+    type: "Point";
+    coordinates: number[]; 
+  };
+
+
+  acceptedVendors: mongoose.Types.ObjectId[];
+
+  status: "open" | "in_progress" | "completed" | "cancelled"|"closed";
+
+  createdAt: Date;
+}
+
+
+export interface IAddContracValues {
+  contractName: string;
+  description: string;
+  phone: string;
+  address: string;
+  serviceType: string;
+}

@@ -11,6 +11,8 @@ import { StaffRepository } from "../repositories/staffsRepository";
 import { TransactionRepository } from "../repositories/transactionRepository";
 import { VendorRepository } from "../repositories/vendorRepository";
 import { WalletRepository } from "../repositories/walletRepository";
+import ContractRepository from "../repositories/contractRepository";
+
 
 // Instantiate all Rep ositories ONCE
 export const adminRepository = new AdminRepository();
@@ -26,3 +28,5 @@ export const favoriteRepository = new FavoriteRepository();
 export const reviewRepository = new ReviewRepository()
 export const transactionRepository = new TransactionRepository()
 export const walletRepository = new WalletRepository()
+export const contractRepository = new ContractRepository();
+

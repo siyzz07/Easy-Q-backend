@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IShopTypeServiceInterface } from "../../interface/service-types-interface/service-type-service-interface";
+import { log } from "console";
 
 export class ServiceTypeController {
   private _ServiceTypeService: IShopTypeServiceInterface;
@@ -32,7 +33,8 @@ export class ServiceTypeController {
   getServiceTypes = async (req: Request, res: Response): Promise<void> => {
     try {
       
-      
+        console.log('service types reached');
+        
       const result = await this._ServiceTypeService.getServices()
       
       res
