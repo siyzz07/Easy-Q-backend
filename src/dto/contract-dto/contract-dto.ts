@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 export interface  ContractCustomerDto {
     _id: string;
     name: string;
@@ -33,13 +35,13 @@ export interface ContractVendorDto {
 }
 
 export interface ContractDto {
-    _id: string;
+    _id?: mongoose.Types.ObjectId|string;
     contractId: string;
     customerId: ContractCustomerDto | string;
     addressId: ContractAddressDto | string;
     title: string;
     description: string;
-    services: (ContractServiceDto | string)[];
+    service: (ContractServiceDto | string)[];
     budget: number;
     location: {
         type: "Point";

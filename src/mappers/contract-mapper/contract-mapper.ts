@@ -32,7 +32,7 @@ export const ContractMapper = {
             : (contract.addressId ? contract.addressId.toString() : "");
 
     
-        const services = contract.services && contract.services.length > 0
+        const service = contract.service && contract.service.length > 0
             ? contract.services.map((s: any) => {
                 if (s.serviceName) {
                     return {
@@ -47,7 +47,7 @@ export const ContractMapper = {
             })
             : [];
 
-    
+
         const acceptedVendors = contract.acceptedVendors && contract.acceptedVendors.length > 0
             ? contract.acceptedVendors.map((v: any) => {
                 if (v.shopName) {
@@ -71,7 +71,7 @@ export const ContractMapper = {
             addressId: address,
             title: contract.title,
             description: contract.description,
-            services: services,
+            service: service,
             budget: contract.budget,
             location: contract.location,
             acceptedVendors: acceptedVendors,

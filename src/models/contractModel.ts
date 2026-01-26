@@ -31,7 +31,7 @@ const ContractSchema = new Schema<IContract>({
     required: true
   },
 
-   services:{
+   service:{
       type: Schema.Types.ObjectId,
       ref:'ServiceTypes'
    },

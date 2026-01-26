@@ -181,7 +181,7 @@ export interface IContract {
   addressId: mongoose.Types.ObjectId;
   title: string;
   description: string;
-  services:mongoose.Types.ObjectId;
+  service:mongoose.Types.ObjectId;
   budget: number;
 
   location: {

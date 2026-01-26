@@ -51,7 +51,7 @@ export interface IAddress{
   state:string;
   country:string;
   phone:string;
-  coordiantes:any
+  coordinates:any
   userId?:string
 }
 

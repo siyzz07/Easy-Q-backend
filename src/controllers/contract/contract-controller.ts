@@ -57,6 +57,22 @@ class ContractController {
             next(error);
         }
     };
+
+
+    /**
+     * 
+     *  get customer contract
+     * 
+     */
+    getCustomerContract = async (req:Request,res:Response ):Promise<void> =>{
+
+        const result = await this._contractService.getCustomerContracts(req.body.userId,req.query)
+        console.log('result :>> ', result);
+        res 
+            .status(StatusCodeEnum.OK)
+            .json({success:true , message:MessageEnum.CONTRACT_FETCH_SUCCESS ,data:result.data , pagination:result.pagination})
+
+    }
 }
 
 export default ContractController;

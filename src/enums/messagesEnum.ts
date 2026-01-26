@@ -221,6 +221,8 @@ export enum MessageEnum {
   CONTRACT_DELETE_FAILED = "Failed to delete contract",
   CONTRACT_NOT_FOUND = "Contract not found",
   CONTRACT_ALREADY_APPLIED = "You have already applied for this contract",
+  CONTRACT_FETCH_SUCCESS = "Contract fetched successfully",
+  CONTRACT_FETCH_FAILED = "Failed to fetch contract"
 
 
 }

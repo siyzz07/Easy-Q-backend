@@ -2,7 +2,7 @@ import { IContractRepositoryInterface } from "../../interface/contract-interface
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
 import { ContractMapper } from "../../mappers/contract-mapper/contract-mapper";
-import { IAddContracValues, IContract } from "../../types/common-types";
+import { IAddContracValues, IContract, IPaginationMeta } from "../../types/common-types";
 import { ErrorResponse } from "../../utils/errorResponse"; // Assuming this exists based on other files
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum"; // Assuming this exists
 import { MessageEnum } from "../../enums/messagesEnum"; // Assuming this exists
@@ -41,15 +41,16 @@ class ContractService implements IContractServiceInterface {
       (data) => data._id?.toString() === address.toString(),
     );
 
+
     const location: IGeoLocation = {
       type: "Point",
       coordinates: [
-        Number(selectedAddress!.coordiantes.lng),
-        Number(selectedAddress!.coordiantes.lat),
+        Number(selectedAddress?.coordinates.lng),
+        Number(selectedAddress?.coordinates.lat),
       ],
     };
 
-    const cosntractPayload = {
+    const contractPayload = {
       contractId: `CTR-${nanoid(10)}`,
       customerId: new mongoose.Types.ObjectId(userId),
       addressId: new mongoose.Types.ObjectId(address),
@@ -64,7 +65,7 @@ class ContractService implements IContractServiceInterface {
     };
 
     const result =
-      await this._ContractRepository.addNewContract(cosntractPayload);
+      await this._ContractRepository.addNewContract(contractPayload);
 
     if (result) {
       return ContractMapper.toDTO(result);
@@ -128,6 +129,18 @@ class ContractService implements IContractServiceInterface {
    *    get contract of customer
    *
    */
+  getCustomerContracts = async (customerId: string, query: { page?: string; limit?: string; search?: string; filter?: string; }): Promise<{ data: ContractDto[]; pagination: IPaginationMeta; }> => {
+    
+    console.log(' reached heare:>> ', );
+
+    const result = await this._ContractRepository.getCustomerContracts(customerId,query)
+
+    console.log('reult :>> ', result);
+    return result
+
+
+
+  }
 
   /**
    *
