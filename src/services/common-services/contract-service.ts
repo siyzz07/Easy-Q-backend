@@ -2,7 +2,7 @@ import { IContractRepositoryInterface } from "../../interface/contract-interface
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
 import { ContractMapper } from "../../mappers/contract-mapper/contract-mapper";
-import { IAddContracValues, IContract, IPaginationMeta } from "../../types/common-types";
+import { IAddContracValues, IContract, IPaginationMeta, IPaginationResponseMeta } from "../../types/common-types";
 import { ErrorResponse } from "../../utils/errorResponse"; // Assuming this exists based on other files
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum"; // Assuming this exists
 import { MessageEnum } from "../../enums/messagesEnum"; // Assuming this exists
@@ -11,17 +11,21 @@ import { nanoid } from "nanoid";
 import mongoose from "mongoose";
 import { ContractStatusEnum } from "../../enums/contractEnum";
 import { IGeoLocation } from "../../types/vendorType";
+import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
 
 class ContractService implements IContractServiceInterface {
   private _ContractRepository: IContractRepositoryInterface;
   private _AddressRepository: ICustomerAddressRepositoryInterface;
+  private _VendorRepositroy: IVendorRepo
 
   constructor(
     contractRepo: IContractRepositoryInterface,
     addressRepository: ICustomerAddressRepositoryInterface,
+    vendorRepository : IVendorRepo
   ) {
     this._ContractRepository = contractRepo;
     this._AddressRepository = addressRepository;
+    this._VendorRepositroy = vendorRepository
   }
 
   /**
@@ -36,10 +40,15 @@ class ContractService implements IContractServiceInterface {
     const { contractName, description, phone, address, serviceType } =
       contractData;
 
+
     const addressesData = await this._AddressRepository.getAllAddress(userId);
     let selectedAddress = addressesData?.address.find(
       (data) => data._id?.toString() === address.toString(),
     );
+
+    if (!selectedAddress) {
+      throw new ErrorResponse("Address not found", StatusCodeEnum.NOT_FOUND);
+    }
 
 
     const location: IGeoLocation = {
@@ -53,10 +62,16 @@ class ContractService implements IContractServiceInterface {
     const contractPayload = {
       contractId: `CTR-${nanoid(10)}`,
       customerId: new mongoose.Types.ObjectId(userId),
-      addressId: new mongoose.Types.ObjectId(address),
+      address: {
+        address: selectedAddress?.address || "",
+        city: selectedAddress?.city || "",
+        state: selectedAddress?.state || "",
+        country: selectedAddress?.country || "",
+        phone: selectedAddress?.phone || ""
+      },
       title: contractName,
       description: description,
-      services: new mongoose.Types.ObjectId(serviceType),
+      service: new mongoose.Types.ObjectId(serviceType),
       budget: 0,
       location,
       acceptedVendors: [],
@@ -129,16 +144,19 @@ class ContractService implements IContractServiceInterface {
    *    get contract of customer
    *
    */
-  getCustomerContracts = async (customerId: string, query: { page?: string; limit?: string; search?: string; filter?: string; }): Promise<{ data: ContractDto[]; pagination: IPaginationMeta; }> => {
+  getCustomerContracts = async (customerId: string, query: { page?: string; limit?: string; search?: string; filter?: string; }): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta; }> => {
     
-    console.log(' reached heare:>> ', );
+      
 
-    const result = await this._ContractRepository.getCustomerContracts(customerId,query)
+
+  const result = await this._ContractRepository.getCustomerContracts(customerId,query)
+
 
     console.log('reult :>> ', result);
-    return result
-
-
+    return {
+      data: ContractMapper.toDTOList(result.data),
+      pagination: result.pagination
+    }
 
   }
 
@@ -147,6 +165,9 @@ class ContractService implements IContractServiceInterface {
    *    get workds  of vendor 
    *
    */
+  getVendorContractWorks(vendorId: string, query: { page?: string; limit?: string; search?: string; lat?: number; lng?: number; distance?: number; }): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta; }> {
+    
+  }
 
 
   /**

@@ -73,6 +73,17 @@ class ContractController {
             .json({success:true , message:MessageEnum.CONTRACT_FETCH_SUCCESS ,data:result.data , pagination:result.pagination})
 
     }
+
+
+    /**
+     * 
+     *  get vendor works ------- vendor can see the available works  // from there he can apply that work
+     * 
+     */
+
+    getWorks = async(req:Request,res:Response) :Promise<void> =>{
+        
+    }
 }
 
 export default ContractController;

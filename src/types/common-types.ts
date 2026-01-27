@@ -178,7 +178,13 @@ export interface IContract {
   _id?: mongoose.Types.ObjectId;
   contractId: string;
   customerId: mongoose.Types.ObjectId;
-  addressId: mongoose.Types.ObjectId;
+  address: {
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    phone: string;
+  };
   title: string;
   description: string;
   service:mongoose.Types.ObjectId;
@@ -191,7 +197,7 @@ export interface IContract {
 
 
   acceptedVendors: mongoose.Types.ObjectId[];
-
+  appliedVendors: mongoose.Types.ObjectId[]
   status: "open" | "in_progress" | "completed" | "cancelled"|"closed";
 
   createdAt: Date;

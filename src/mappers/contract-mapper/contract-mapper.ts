@@ -20,32 +20,38 @@ export const ContractMapper = {
             : (contract.customerId ? contract.customerId.toString() : "");
 
   
-        const address = contract.addressId && contract.addressId.address
-            ? {
+        let address: ContractAddressDto | null = null;
+
+        if (contract.address && contract.address.address) {
+            address = {
+                _id: contract.addressId ? contract.addressId.toString() : "",
+                address: contract.address.address,
+                city: contract.address.city,
+                state: contract.address.state,
+                country: contract.address.country,
+                phone: contract.address.phone
+            };
+        } else if (contract.addressId && contract.addressId.address) {
+             address = {
                 _id: contract.addressId._id.toString(),
                 address: contract.addressId.address,
                 city: contract.addressId.city,
                 state: contract.addressId.state,
                 country: contract.addressId.country,
                 phone: contract.addressId.phone
-            } as ContractAddressDto
-            : (contract.addressId ? contract.addressId.toString() : "");
+            };
+        }
 
     
-        const service = contract.service && contract.service.length > 0
-            ? contract.services.map((s: any) => {
-                if (s.serviceName) {
-                    return {
-                        _id: s._id.toString(),
-                        serviceName: s.serviceName,
-                        description: s.description,
-                        price: s.price,
-                        image: s.image
-                    } as ContractServiceDto;
-                }
-                return s.toString();
-            })
-            : [];
+        const serviceType = contract.service && contract.service.serviceName
+            ? {
+                 _id: contract.service._id.toString(),
+                 serviceName: contract.service.serviceName,
+                 description: contract.service.description,
+                 price: contract.service.price,
+                 image: contract.service.image
+            } as ContractServiceDto
+            : null;
 
 
         const acceptedVendors = contract.acceptedVendors && contract.acceptedVendors.length > 0
@@ -64,17 +70,34 @@ export const ContractMapper = {
             })
             : [];
 
+            const appliedVendors = contract.appliedVendors && contract.appliedVendors.length > 0
+            ? contract.appliedVendors.map((v: any) => {
+                if (v.shopName) {
+                    return {
+                        _id: v._id.toString(),
+                        shopName: v.shopName,
+                        email: v.email,
+                        phone: v.phone,
+                        city: v.city,
+                        profileImage: v.ProfileImage || ""
+                    } as ContractVendorDto;
+                }
+                return v.toString();
+            })
+            : [];
+
         return {
             _id: contract._id ? contract._id.toString() : "",
             contractId: contract.contractId,
             customerId: customer,
-            addressId: address,
-            title: contract.title,
+            address: address,
+            contractName: contract.title,
             description: contract.description,
-            service: service,
+            serviceType: serviceType,
             budget: contract.budget,
             location: contract.location,
             acceptedVendors: acceptedVendors,
+            appliedVendors:appliedVendors,
             status: contract.status,
             createdAt: contract.createdAt,
             updatedAt: contract.updatedAt 

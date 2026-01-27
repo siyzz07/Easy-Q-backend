@@ -38,17 +38,17 @@ export interface ContractDto {
     _id?: mongoose.Types.ObjectId|string;
     contractId: string;
     customerId: ContractCustomerDto | string;
-    addressId: ContractAddressDto | string;
-    title: string;
+    address: ContractAddressDto | null;
+    contractName: string;
     description: string;
-    service: (ContractServiceDto | string)[];
+    serviceType: ContractServiceDto | null;
     budget: number;
     location: {
         type: "Point";
         coordinates: number[];
     };
     acceptedVendors: (ContractVendorDto | string)[];
-
+    appliedVendors:(ContractVendorDto | string)[]
     status: string;
     createdAt?: Date;
     updatedAt?: Date;

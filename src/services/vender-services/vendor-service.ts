@@ -174,8 +174,6 @@ class VendorService implements IVendorShopServiceInterface {
 
    getEachVendorData = async (data: string): Promise<VendorDto | void>  => {
     
-    console.log(data );
-    
     const result = await this._vendorRepo.getEachVendorData(data)
     if(result){
       return VendorMapper.toDTO(result)
