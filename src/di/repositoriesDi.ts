@@ -12,6 +12,7 @@ import { TransactionRepository } from "../repositories/transactionRepository";
 import { VendorRepository } from "../repositories/vendorRepository";
 import { WalletRepository } from "../repositories/walletRepository";
 import ContractRepository from "../repositories/contractRepository";
+import { ChatRoomRepository } from "../repositories/chatRoomRepository";
 
 
 // Instantiate all Rep ositories ONCE
@@ -29,4 +30,4 @@ export const reviewRepository = new ReviewRepository()
 export const transactionRepository = new TransactionRepository()
 export const walletRepository = new WalletRepository()
 export const contractRepository = new ContractRepository();
-
+export const chatRoomRepository = new ChatRoomRepository()

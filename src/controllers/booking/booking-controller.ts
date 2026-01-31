@@ -84,8 +84,6 @@ export class BookingController {
       
       const result = await this._BookingService.customerBooking(req.body.userId,req.query)
 
-      console.log('result :>> ', result);
-
       if(result){ 
         res 
           .status(StatusCodeEnum.OK)

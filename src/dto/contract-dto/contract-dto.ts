@@ -32,6 +32,7 @@ export interface ContractVendorDto {
     phone: string;
     city: string;
     profileImage: string;
+    rating:string
 }
 
 export interface ContractDto {

@@ -52,9 +52,8 @@ export class ServiceTypeController {
   //--------------------------------------------------------------------------edit services
   editServiceType = async (req:Request,res:Response) :Promise<void> =>{
     try{
-        console.log( req.body);
+    
         const result = await this._ServiceTypeService.editServiceType(req.body)
-        console.log('ppp',result);
         
         if( result){
           res

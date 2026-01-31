@@ -64,7 +64,7 @@ const ContractSchema = new Schema<IContract>({
       required: true,
     },
     coordinates: {
-      type: [Number], // [lng, lat]
+      type: [Number], // ----------------------[lng, lat]
       required: true,
     },
   },

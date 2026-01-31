@@ -85,9 +85,11 @@ export interface INotification {
     | "new_booking"
     | "booking_cancelled"
     | "booking_completed"
-    | "contract_applyied"
     |'booking_rescheduled'
-    | "contract_signed"
+    | "contract_applied"
+    |"contract_approved"
+    |"contract_rejected"
+    |"contract_cancelled"
     | "message"
     | "system"
     | "payment_success"
@@ -210,4 +212,22 @@ export interface IAddContracValues {
   phone: string;
   address: string;
   serviceType: string;
+}
+
+
+
+
+export interface IChatMember {
+  userId: mongoose.Types.ObjectId;
+  userType: "Customer" | "Vendor";
+  role: "admin" | "member";
+}
+
+export interface IChatRoom {
+  _id?: mongoose.Types.ObjectId;
+  contractId: mongoose.Types.ObjectId;
+  members: IChatMember[];
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

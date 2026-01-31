@@ -208,7 +208,7 @@ export enum MessageEnum {
     NOTIFICATION_UPDATED_SUCCESS = "Updated successfully",
     NOTIFICATION_UPDATED_FAILED = "Update failed",
     // --------------------------------------------------------------------------Contract
-     CONTRACT_CREATED = "Contract created successfully",
+  CONTRACT_CREATED = "Contract created successfully",
   CONTRACT_UPDATED = "Contract updated successfully",
   CONTRACT_DELETED = "Contract deleted successfully",
   CONTRACT_APPLIED = "Contract applied successfully",
@@ -283,4 +283,24 @@ export enum BookingMessageContentLong {
 
  
   
+export enum ContractNotificationTitleEnum {
+  CONTRACT_APPLIED = "New apply for contract",
+  CONTRACT_APPROVED = "Contract approved",
+  CONTRACT_REJECTED = "Contract rejected",
+  CONTRACT_SIGNED = "Contract signed",
+  CONTRACT_CANCELLED = "Contract cancelled",
+}
 
+
+export enum ContractNotificationContentEnum {
+  CONTRACT_APPLIED =
+    "A vendor has applied for your contract \"{{contractName}}\". Please review the application and take action.",
+  CONTRACT_APPROVED =
+    "Your contract has been approved successfully. You can proceed with the next steps.",
+  CONTRACT_REJECTED =
+    "Your contract application has been rejected. You may review the details or apply again.",
+  CONTRACT_SIGNED =
+    "The contract has been signed by both parties. Work can begin as scheduled.",
+  CONTRACT_CANCELLED =
+    "This contract has been cancelled. No further action is required.",
+}

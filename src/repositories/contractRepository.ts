@@ -29,7 +29,7 @@ class ContractRepository
 
   async getContract(contractId: string): Promise<IContract | null> {
     return await this._ContractModel
-      .findOne({ contractId: contractId })
+      .findOne({ _id: contractId })
       .populate("customerId")
       .populate("service")
       .populate("acceptedVendors")
@@ -89,7 +89,8 @@ class ContractRepository
    *  get vendor  works  data // the data that vendor see works and search works apply works
    *
    */
-   async getVendorWrokWithPaginationAndLocation(
+  async getVendorWrokWithPaginationAndLocation(
+    vendorId: string,
     serviceType: string,
     query: {
       page?: string;
@@ -100,7 +101,7 @@ class ContractRepository
       distance?: number;
       postedWithin: string;
     },
-  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
+  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {
       service: new mongoose.Types.ObjectId(serviceType),
     };
@@ -115,6 +116,9 @@ class ContractRepository
         },
       };
     }
+
+    filter.appliedVendors = { $nin: [vendorId] };
+    filter.acceptedVendors = { $nin: [vendorId] };
 
     if (query.search?.trim()) {
       filter.$or = [];
@@ -155,18 +159,79 @@ class ContractRepository
       sort: { createdAt: -1 } as const,
     };
 
-    const populate :PopulateOptions[] = [
-           { path: "customerId" },
+    const populate: PopulateOptions[] = [
+      { path: "customerId" },
       { path: "service" },
       { path: "acceptedVendors" },
       { path: "appliedVendors" },
-    ]
+    ];
 
-    const  result: {
-  data: ContractDto[];
-  pagination: IPaginationResponseMeta;
-} = await this.filterWithPagination(options,filter,populate)
+    const result = await this.filterWithPagination(options, filter, populate);
+    return result;
+  }
 
+  /**
+   *
+   *  apply for a contract
+   *
+   */
+  async applyForAContract(
+    vendorId: string,
+    contractId: string,
+  ): Promise<boolean> {
+    const result = await this._ContractModel.findByIdAndUpdate(
+      contractId,
+      {
+        $addToSet: { appliedVendors: vendorId },
+      },
+      { new: true },
+    );
+
+    return !!result;
+  }
+
+  /**
+   *
+   *  remove vendor from contract request
+   *
+   */
+  async removeFromContractRequest(
+    contractId: string,
+    vendorId: string,
+  ): Promise<boolean> {
+    const result = await this._ContractModel.findByIdAndUpdate(contractId, {
+      $pull: { appliedVendors: vendorId },
+    });
+
+    return !!result;
+  }
+
+  /**
+   *
+   *  accept -- vendor from contract request
+   *
+   */
+  async acceptVendorForContract(
+    contractId: string,
+    vendorId: string,
+  ): Promise<boolean> {
+
+  
+
+    const result = await this._ContractModel.findOneAndUpdate(
+      {
+        _id: contractId,
+        appliedVendors: vendorId,
+        acceptedVendors: { $ne: vendorId },
+      },
+      {
+        $addToSet: { acceptedVendors: vendorId },
+        $pull: { appliedVendors: vendorId },
+      },
+      { new: true },
+    );
+    console.log('result :>> ', result);
+    return !!result;
   }
 }
 

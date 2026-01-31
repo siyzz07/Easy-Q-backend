@@ -63,7 +63,8 @@ export const ContractMapper = {
                         email: v.email,
                         phone: v.phone,
                         city: v.city,
-                        profileImage: v.ProfileImage || ""
+                        profileImage: v.ProfileImage || "",
+                         rating:v.rating
                     } as ContractVendorDto;
                 }
                 return v.toString();
@@ -79,7 +80,8 @@ export const ContractMapper = {
                         email: v.email,
                         phone: v.phone,
                         city: v.city,
-                        profileImage: v.ProfileImage || ""
+                        profileImage: v.ProfileImage || "",
+                        rating:v.rating
                     } as ContractVendorDto;
                 }
                 return v.toString();

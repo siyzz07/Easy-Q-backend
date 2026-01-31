@@ -66,8 +66,6 @@ export class StaffService implements IStaffServiceInterface {
   //  ---------------------------------- edit Staff
   editStaff = async (data: IStaff): Promise<boolean | void> => {
     const { userId, _id, staffName, ...payload } = { ...data };
-    console.log(payload);
-
     const exist = await this._StaffRepository.duplicateStaffFind(
       userId as string,
       staffName,

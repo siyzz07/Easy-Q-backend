@@ -5,3 +5,4 @@ export enum ContractStatusEnum {
   CANCELLED = "cancelled",     
   CLOSED = "closed"            
 }
+

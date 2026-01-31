@@ -9,5 +9,8 @@ import { IContract, IPaginationResponseMeta } from "../../types/common-types";
     getContracts(filter?: any): Promise<IContract[]>
 
     getCustomerContracts(customerId:string, query:{page?:string,limit?:string,search?:string, filter?:string}):Promise<{data:ContractDto[] , pagination:IPaginationResponseMeta}>
-    getVendorWrokWithPaginationAndLocation (serviceType:string,query:{page?:string,limit?:string,search?:string,lat?:number,lng?:number,distance?:number,postedWithin:string}):Promise< {data:ContractDto[], pagination:IPaginationResponseMeta}>
+    getVendorWrokWithPaginationAndLocation (vendorId:string,serviceType:string,query:{page?:string,limit?:string,search?:string,lat?:number,lng?:number,distance?:number,postedWithin:string}):Promise< {data:any[], pagination:IPaginationResponseMeta}>
+    applyForAContract (vendorId:string,contractId:string):Promise<boolean>
+    removeFromContractRequest (contractId:string,vendorId:string):Promise<boolean>
+    acceptVendorForContract (contractId:string,vendorId:string):Promise<boolean>
  }

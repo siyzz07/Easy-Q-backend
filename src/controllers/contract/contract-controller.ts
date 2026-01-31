@@ -67,7 +67,6 @@ class ContractController {
     getCustomerContract = async (req:Request,res:Response ):Promise<void> =>{
 
         const result = await this._contractService.getCustomerContracts(req.body.userId,req.query)
-        console.log('result :>> ', result);
         res 
             .status(StatusCodeEnum.OK)
             .json({success:true , message:MessageEnum.CONTRACT_FETCH_SUCCESS ,data:result.data , pagination:result.pagination})
@@ -83,7 +82,60 @@ class ContractController {
 
     getWorks = async(req:Request,res:Response) :Promise<void> =>{
         
+        const query = req.query
+        const vendorId = req.body.userId
+        
+        const result = await this._contractService.getVendorContractWorks(vendorId,query)
+
+        res
+            .status(StatusCodeEnum.OK)
+            .json({success:true , message:MessageEnum.CONTRACT_FETCH_SUCCESS , data:result.data , pagination:result.pagination})
+
+
     }
+
+    /**
+     * 
+     *  apply for a contract
+     * 
+     */
+    applyContract = async (req:Request,res:Response ) :Promise <void> =>{
+
+        const vendorId  = req.body.userId
+        const contractId = req.params.contractId
+        let result = await this._contractService.applyForContract(vendorId,contractId)
+
+        if(result ){
+            res
+             .status(StatusCodeEnum.OK)
+             .json({success:true , message:MessageEnum.CONTRACT_APPLIED ,})
+        }
+
+        
+    }
+
+     /**
+     * 
+     *  update applied vendors - reject or accep 
+     * 
+     */
+    updateVendorContractRequest = async (req:Request,res:Response) =>{
+
+        const vendorId = req.body.vendorId
+        const decision = req.body.decision
+        const contractId = req.body.contractId
+
+        const result = await this._contractService.handleAppliedVendors(vendorId,contractId,decision)
+
+        if(result){
+            res
+                .status(StatusCodeEnum.OK)
+                .json({success:true , message:MessageEnum.CONTRACT_UPDATED})
+        }
+
+
+    }
+
 }
 
 export default ContractController;

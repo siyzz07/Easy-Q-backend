@@ -129,4 +129,42 @@ export class NotificationService implements INotificationServiceInterface {
   };
 
 
+/**
+ * 
+ * 
+ *  contract notification --- to CUSTOMER
+ * 
+ */
+//--------------------- send contract notification to customer
+sendContractNotificationToCustomer = async (customerId: string, category: "booking" | "contract" | "message", type: "contract_applied" | "contract_approved" | "contract_rejected" | "contract_cancelled", title: string, content: string,contractId:string): Promise<void> =>{
+  
+   
+    const NotificationPayload: Partial<INotification> = {
+      recipient: new mongoose.Types.ObjectId(customerId),
+      recipientType: 'Customer',
+      category,
+      type: type,
+      title:title,
+      content:content,
+      createdAt:new Date(),
+      metaData: {
+        contract: {
+          id: contractId,
+        },
+      },
+    };
+
+    const result = await this._NotificationRepository.addNewNotification(
+      NotificationPayload
+    );
+    await socketNotificationHandler.contractNotificationToCustomer(
+      socketManagerServer.getIo(),
+      customerId.toString(),
+      NotificationPayload
+    );
+}
+
+
+
+
 }
