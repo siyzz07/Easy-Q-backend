@@ -31,3 +31,5 @@ export const transactionRepository = new TransactionRepository()
 export const walletRepository = new WalletRepository()
 export const contractRepository = new ContractRepository();
 export const chatRoomRepository = new ChatRoomRepository()
+import { MessageRepository } from "../repositories/messageRepository";
+export const messageRepository = new MessageRepository();

@@ -27,4 +27,25 @@ export class ChatRoomController {
             .json({success:true , message:MessageEnum.CHAT_ROOM_FETCH_SUCCESS, data:response})
 
     }
+
+    /**
+     * 
+     *   starat vedio call
+     * 
+     */
+    startVedioCall = async (req:Request,res:Response) =>{
+        const roomId = req.body.chatRoomId
+        const contractId = req.body.contractId
+        const caller = req.body.caller
+
+        console.log('req.body :>> ', req.body);
+
+        const response = await this._ChatRoomService.startVedioCall(roomId,contractId,caller)
+
+        console.log('response :>> ', response);
+        res
+            .status(StatusCodeEnum.OK)
+            .json({success:true , roomId:response})
+
+    }
 }

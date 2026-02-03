@@ -224,16 +224,20 @@ export enum MessageEnum {
     CONTRACT_FETCH_SUCCESS = "Contract fetched successfully",
     CONTRACT_FETCH_FAILED = "Failed to fetch contract",
     // --------------------------------------------------------------------------chatRoom
-  CHAT_ROOM_CREATE_SUCCESS = "Chat room created successfully",
-  CHAT_ROOM_CREATE_FAILED = "Failed to create chat room",
-  CHAT_ROOM_FETCH_SUCCESS = "Chat room fetched successfully",
-  CHAT_ROOM_FETCH_FAILED = "Failed to fetch chat room",
-  CHAT_ROOM_UPDATE_SUCCESS = "Chat room updated successfully",
-  CHAT_ROOM_UPDATE_FAILED = "Failed to update chat room",
-  CHAT_ROOM_DELETE_SUCCESS = "Chat room deleted successfully",
-  CHAT_ROOM_DELETE_FAILED = "Failed to delete chat room",
-  CHAT_ROOM_NOT_FOUND = "Chat room not found",
-
+    CHAT_ROOM_CREATE_SUCCESS = "Chat room created successfully",
+    CHAT_ROOM_CREATE_FAILED = "Failed to create chat room",
+    CHAT_ROOM_FETCH_SUCCESS = "Chat room fetched successfully",
+    CHAT_ROOM_FETCH_FAILED = "Failed to fetch chat room",
+    CHAT_ROOM_UPDATE_SUCCESS = "Chat room updated successfully",
+    CHAT_ROOM_UPDATE_FAILED = "Failed to update chat room",
+    CHAT_ROOM_DELETE_SUCCESS = "Chat room deleted successfully",
+    CHAT_ROOM_DELETE_FAILED = "Failed to delete chat room",
+    CHAT_ROOM_NOT_FOUND = "Chat room not found",
+    
+    // --------------------------------------------------------------------------message
+    MESSAGE_CREATED_FILED = 'Error to save message',
+    MESSAGE_FETCH_FILED = 'Error to fetch messages',
+    MESSAGE_FETCH_SUCCESS = '"Messages fetched successfully"',
 
 }
 

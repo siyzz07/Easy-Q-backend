@@ -6,12 +6,23 @@ import logger from "../../utils/logger";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
+import {
+  IVedioCallNotify,
+  socketNotificationHandler,
+} from "../../sockets/handlers/notificationHandler";
+import { socketManagerServer } from "../../sockets/socketInstance";
+import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
 
 export class ChatRoomService implements IChatRoomServiceInterface {
   private _ChatRoomRepository: IChatRoomRepositoryInterface;
+  private _ContractService: IContractServiceInterface;
 
-  constructor(chatRoomRepository: IChatRoomRepositoryInterface) {
+  constructor(
+    chatRoomRepository: IChatRoomRepositoryInterface,
+    contractService: IContractServiceInterface,
+  ) {
     this._ChatRoomRepository = chatRoomRepository;
+    this._ContractService = contractService;
   }
 
   /**
@@ -99,4 +110,50 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       );
     }
   };
+
+  /**
+   *
+   *  create  a new vedio call
+   *
+   */
+  async startVedioCall(
+    roomId: string,
+    contractId: string,
+    caller: string,
+  ): Promise<string> {
+    const chatRoomData =
+      await this._ChatRoomRepository.getChatRoomByContractId(contractId);
+
+    if (!chatRoomData) {
+      throw new Error("Chat room not found");
+    }
+
+    const contractData = await this._ContractService.getContract(contractId);
+
+    if (!contractData) {
+      throw new Error("Contract not found");
+    }
+
+    const payload = {
+      contractName: contractData.contractName,
+      roomId: roomId,
+    };
+
+    const notifyUsers: IVedioCallNotify[] = chatRoomData.members.filter(
+      (member) => member.userId.toString() !== caller,
+    ).map((value) =>({
+      userId:value.userId.toString(),
+      userType :value.userType
+    }))
+
+    await socketNotificationHandler.vedioCallNotify(
+      socketManagerServer.getIo(),
+      notifyUsers,
+      payload,
+    );
+
+    console.log('roomId :>> ', roomId);
+
+    return roomId;
+  }
 }

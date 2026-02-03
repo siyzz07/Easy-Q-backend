@@ -21,8 +21,6 @@ export class  ChatEvents {
 
 
         this.socket.on('message:new',(data:MessagePayload)=>{
-            console.log('in hererereererer');
-            
             handleMessage(this.io,data)
         })
     }

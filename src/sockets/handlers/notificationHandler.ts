@@ -9,6 +9,13 @@ export interface INotificationPayload {
   createdAt: Date;
 }
 
+
+
+export interface IVedioCallNotify{
+  userId:string;
+  userType:string;
+}
+
 export class socketNotificationHandler {
   /**
    *
@@ -47,5 +54,22 @@ export class socketNotificationHandler {
   ) {
     logger.info("contract notification sended to customer");
     io.to(userId).emit("contract-notification", payload);
+  }
+
+
+   /**
+   *
+   * vedio call notify to the users
+   */
+
+  static vedioCallNotify (
+    io:Server,
+    data:IVedioCallNotify[],
+    payload:{contractName:string,roomId:string}
+  ){
+    data.forEach((value:IVedioCallNotify)=>{
+      io.to(value.userId).emit('incomming-vedio-call',payload)
+    })
+
   }
 }
