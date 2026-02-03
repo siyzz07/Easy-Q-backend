@@ -13,6 +13,8 @@ const chatRoomControllerInstance =  new ChatRoomController(chatRoomServiceInstan
 const messageServiceInstance: MessageService =  new MessageService(messageRepository);
 const messageControllerInstance =  new MessageController(messageServiceInstance);
 
+contractServiceInstance.setChatRoomService(chatRoomServiceInstance);
+
 export {
   chatRoomServiceInstance,
   chatRoomControllerInstance,

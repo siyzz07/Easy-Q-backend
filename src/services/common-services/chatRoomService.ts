@@ -34,24 +34,31 @@ export class ChatRoomService implements IChatRoomServiceInterface {
     contractId: string,
     customerId: string,
   ): Promise<boolean | void> => {
+
+    console.log('contractId :>> ', contractId);
+    console.log('customerId :>> ', customerId);
     const roomData = await this._ChatRoomRepository.createChatRoom(contractId);
-
-    if (roomData) {
-      logger.info("chat room created");
-
-      let result = await this._ChatRoomRepository.addMemberToChatRoom(
-        contractId.toString(),
-        customerId,
-        "Customer",
-        "admin",
-      );
-
-      if (result) {
-        logger.info("Member addedd in chat room");
-        return true;
-      } else {
-        logger.error("error to add member in contract room");
-      }
+  console.log('1');
+  
+  if (roomData) {
+    logger.info("chat room created");
+    
+    console.log('2');
+    let result = await this._ChatRoomRepository.addMemberToChatRoom(
+      contractId.toString(),
+      customerId,
+      "Customer",
+      "admin",
+    );
+    console.log('3');
+    
+    if (result) {
+      logger.info("Member addedd in chat room");
+      return true;
+    } else {
+      logger.error("error to add member in contract room");
+    }
+    console.log('4');
     } else {
       logger.error("error to create chat room");
     }

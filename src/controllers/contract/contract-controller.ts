@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum"; // Assuming this exists
+import { log } from "console";
 
 class ContractController {
   private _contractService: IContractServiceInterface;
@@ -22,6 +23,8 @@ class ContractController {
   ): Promise<void> => {
     try {
       const { userId, ...data } = req.body;
+      console.log('reach add contract controller');
+      
       const result = await this._contractService.addNewContract(userId, data);
       res
         .status(StatusCodeEnum.OK)

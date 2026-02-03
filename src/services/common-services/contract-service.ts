@@ -31,25 +31,34 @@ import {
   NotificationCategoryEnum,
 } from "../../enums/notificationEnum";
 import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
+import { log } from "winston";
 
 class ContractService implements IContractServiceInterface {
   private _ContractRepository: IContractRepositoryInterface;
   private _AddressRepository: ICustomerAddressRepositoryInterface;
   private _VendorRepositroy: IVendorRepo;
-  private _NotificationService: INotificationServiceInterface;
-  private _ChatRoomService: IChatRoomServiceInterface;
+  private _NotificationService!: INotificationServiceInterface;
+  private _ChatRoomService!: IChatRoomServiceInterface;
 
   constructor(
     contractRepo: IContractRepositoryInterface,
     addressRepository: ICustomerAddressRepositoryInterface,
     vendorRepository: IVendorRepo,
-    notificationService: INotificationServiceInterface,
-    chatRoomService: IChatRoomServiceInterface,
+    notificationService?: INotificationServiceInterface,
+    chatRoomService?: IChatRoomServiceInterface,
   ) {
     this._ContractRepository = contractRepo;
     this._AddressRepository = addressRepository;
     this._VendorRepositroy = vendorRepository;
+    if(notificationService) this._NotificationService = notificationService;
+    if(chatRoomService) this._ChatRoomService = chatRoomService;
+  }
+
+  public setNotificationService(notificationService: INotificationServiceInterface) {
     this._NotificationService = notificationService;
+  }
+
+  public setChatRoomService(chatRoomService: IChatRoomServiceInterface) {
     this._ChatRoomService = chatRoomService;
   }
 
@@ -62,8 +71,10 @@ class ContractService implements IContractServiceInterface {
     userId: string,
     contractData: IAddContracValues,
   ): Promise<ContractDto> {
-    const { contractName, description, phone, address, serviceType } =
-      contractData;
+    const { contractName, description, phone, address, serviceType } =contractData;
+
+    console.log('reached add contract -service');
+    
 
     const addressesData = await this._AddressRepository.getAllAddress(userId);
     let selectedAddress = addressesData?.address.find(
@@ -101,15 +112,18 @@ class ContractService implements IContractServiceInterface {
       status: ContractStatusEnum.OPEN,
       createdAt: new Date(),
     };
-
-    const result =
-      await this._ContractRepository.addNewContract(contractPayload);
-
+    console.log('11');
+    
+    const result = await this._ContractRepository.addNewContract(contractPayload);
+    console.log('12');
+    
     if (result) {
+      console.log('13');
       let response = await this._ChatRoomService.createChatRoom(
         result._id?.toString() as string,
         userId,
       );
+      console.log('14');
 
       if (!response) {
         throw new ErrorResponse(
