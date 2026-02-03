@@ -3,6 +3,9 @@ import { IChatRoomRepositoryInterface } from "../../interface/chatRoom-interface
 import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
 import { IChatRoom } from "../../types/common-types";
 import logger from "../../utils/logger";
+import { ErrorResponse } from "../../utils/errorResponse";
+import { MessageEnum } from "../../enums/messagesEnum";
+import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 export class ChatRoomService implements IChatRoomServiceInterface {
   private _ChatRoomRepository: IChatRoomRepositoryInterface;
@@ -61,11 +64,39 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       "member",
     );
     if (result) {
-      logger.info('new vendor added in chat room')
+      logger.info("new vendor added in chat room");
       return true;
     } else {
-      logger.error('error to add new vendor')
+      logger.error("error to add new vendor");
       return false;
     }
   }
+
+  /**
+   *
+   *  get chat room data by contract id
+   *
+   */
+  getChatRoomData = async (contractId: string): Promise<IChatRoom | void> => {
+    if (!contractId) {
+      logger.error("error to get chat Room data , contractId null");
+      throw new ErrorResponse(
+        MessageEnum.CHAT_ROOM_FETCH_FAILED,
+        StatusCodeEnum.BAD_REQUEST,
+      );
+    }
+
+    const response =
+      await this._ChatRoomRepository.getChatRoomByContractId(contractId);
+
+    if (response) {
+      logger.info("chat room get successfuly");
+      return response;
+    } else {
+      throw new ErrorResponse(
+        MessageEnum.CHAT_ROOM_NOT_FOUND,
+        StatusCodeEnum.INTERNAL_SERVER_ERROR,
+      );
+    }
+  };
 }

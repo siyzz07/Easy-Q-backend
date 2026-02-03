@@ -231,3 +231,24 @@ export interface IChatRoom {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+
+import { Types } from "mongoose";
+
+export type SenderModelType = "Vendor" | "Customer";
+
+export interface IMessage {
+  _id?: Types.ObjectId;
+  chatRoomId: Types.ObjectId;
+  sender: Types.ObjectId;
+  senderRole: SenderModelType;
+  text?: string;
+  attachments?: {
+    url: string;
+    type: "image" ;
+  }[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+

@@ -14,6 +14,8 @@ import transactionRoute from './routes/transacationRoutes';
 import walletRoutes from './routes/walletRoutes';
 import notificaionRoute from './routes/notificaionRoutes';
 import contractRoute from './routes/contractRoutes';
+import chatRoom from './models/chatRoom';
+import chatRoute from './routes/chatRoute';
 
 
 const app = express()
@@ -56,6 +58,8 @@ app.use('/api/transaction',transactionRoute)
 app.use('/api/wallet',walletRoutes)
 app.use('/api/notification',notificaionRoute)
 app.use('/api/contract',contractRoute)
+app.use('/api/chat',chatRoute)
+
 
 
 app.use(errorHandler)

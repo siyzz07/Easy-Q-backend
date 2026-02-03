@@ -13,4 +13,6 @@ import { IContract, IPaginationResponseMeta } from "../../types/common-types";
     applyForAContract (vendorId:string,contractId:string):Promise<boolean>
     removeFromContractRequest (contractId:string,vendorId:string):Promise<boolean>
     acceptVendorForContract (contractId:string,vendorId:string):Promise<boolean>
+    getVendorContracts(vendorId:string, query:{page?:string,limit?:string,search?:string}):Promise<{data:ContractDto[] , pagination:IPaginationResponseMeta}>
+
  }

@@ -318,6 +318,14 @@ class ContractService implements IContractServiceInterface {
    *    get contracts of vendor
    *
    */
+  getVendorContracts =async(vendorId: string, query: { page?: string; limit?: string; search?: string; }): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta; }> => {
+    
+    let result  = await this._ContractRepository.getVendorContracts(vendorId,query)
+     return {
+      data: ContractMapper.toDTOList(result.data),
+      pagination: result.pagination,
+    };
+  }
 }
 
 export default ContractService;

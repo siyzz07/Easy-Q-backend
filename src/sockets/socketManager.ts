@@ -2,6 +2,7 @@ import { Server, Socket } from "socket.io";
 import http from "http";
 import { socketAuth } from '../middlewares/socketAuth';
 import logger from "../utils/logger";
+import { ChatEvents } from "./events/chatEvents";
 
 
 export interface ISocketManager {
@@ -36,8 +37,8 @@ export class SocketManager implements ISocketManager {
       console.log(`Client connected: ${socket.id}`);
       console.log("UserId:", socket.data.userId); 
 
-      // new ChatEvents(socket, this.io).register();
-      // new NotificationEvents(socket, this.io).register();
+      new ChatEvents(socket, this.io).register();
+      // // new NotificationEvents(socket, this.io).register();
     });
 
     console.log("Socket Server initialized");

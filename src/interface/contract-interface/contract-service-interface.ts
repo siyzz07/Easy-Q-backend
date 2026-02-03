@@ -10,4 +10,5 @@ export interface IContractServiceInterface {
     getVendorContractWorks (vendorId:string,query:{page?:string,limit?:string,search?:string,lat?:number,lng?:number,distance?:number}):Promise< {data:ContractDto[], pagination:IPaginationResponseMeta}>
     applyForContract (vendorId:string,contractId:string) :Promise<boolean>
     handleAppliedVendors (vendorId:string,contractId:string,decision:'accept'|'reject') :Promise<boolean>
+    getVendorContracts (vendorId:string,query:{page?:string,limit?:string,search?:string}):Promise< {data:ContractDto[], pagination:IPaginationResponseMeta}>
 }

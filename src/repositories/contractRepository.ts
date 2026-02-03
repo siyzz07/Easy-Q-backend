@@ -230,8 +230,44 @@ class ContractRepository
       },
       { new: true },
     );
-    console.log('result :>> ', result);
+   
     return !!result;
+  }
+
+
+  /**
+   *
+   *  accept -- vendor from contract request
+   *
+   */
+   async getVendorContracts(vendorId: string, query: { page?: string; limit?: string; search?: string; }): Promise<{ data: any[]; pagination: IPaginationResponseMeta; }> {
+     
+        const filter :FilterQuery<IContract> ={}
+
+        if(query.search?.trim()){
+          filter.$or=[
+            {title:{$regex:query.search ,$options:'i'}}
+          ]
+        }
+
+filter.acceptedVendors = { $in: [vendorId] };
+
+        const options = {
+          page:Number(query.page)||1,
+          limit:Number(query.limit)||9,
+          sort:{createdAt : -1 as const}
+        }
+
+        const populate :PopulateOptions[] = [
+          {path:'customerId'},
+          {path:'service'}
+
+        ]
+
+        const result = await  this.filterWithPagination(options,filter,populate)
+        return result
+
+
   }
 }
 
