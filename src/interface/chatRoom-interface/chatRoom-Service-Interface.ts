@@ -8,4 +8,5 @@ export interface IChatRoomServiceInterface {
       getChatRoomData (contractId:string):Promise<IChatRoom|void>
       startVedioCall (roomId:string,contractId:string,caller:string):Promise<string>
       zegoToken (roomId:string,userId:string):Promise<{ token: string; appId: number; userName: string }>
+      leaveVedioCall(roomId:string , userId:string):Promise<boolean|void>
 }

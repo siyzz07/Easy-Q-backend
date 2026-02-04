@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { handleMessage, joinRoom, MessagePayload } from "../handlers/chatHandlers";
+import { handleMessage, joinRoom, MessagePayload, VedioCallRoomEnter } from "../handlers/chatHandlers";
 
 
 
@@ -23,6 +23,11 @@ export class  ChatEvents {
 
         this.socket.on('message:new',(data:MessagePayload)=>{
             handleMessage(this.io,data)
+        })
+
+
+        this.socket.on('join-vedio-room',(data:{roomId:string, userId:string})=>{
+                VedioCallRoomEnter(this.io,data,)
         })
     }
    

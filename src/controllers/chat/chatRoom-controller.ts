@@ -67,4 +67,18 @@ export class ChatRoomController {
             .json({success:true ,data:result})
 
     }
+
+      /**
+     * 
+     *    leave from vedio call
+     * 
+     */
+    leaveVedioCall = async (req:Request,res:Response):Promise<void> =>{
+
+        const response = await this._ChatRoomService.leaveVedioCall(req.body.roomId , req.body.leaveUser)
+
+        res
+            .status(StatusCodeEnum.OK)
+            .json({succcess:true})
+    }
 }

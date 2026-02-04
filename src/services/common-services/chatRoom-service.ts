@@ -14,6 +14,7 @@ import { socketManagerServer } from "../../sockets/socketInstance";
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
 import { log } from "console";
 import { generateToken04 } from "../../utils/zegoServerAssistant";
+import { leaveVedioCallNotify } from "../../sockets/handlers/chatHandlers";
 
 export class ChatRoomService implements IChatRoomServiceInterface {
   private _ChatRoomRepository: IChatRoomRepositoryInterface;
@@ -220,4 +221,27 @@ export class ChatRoomService implements IChatRoomServiceInterface {
 
   return { token, appId, userName: name };
 };
+
+ /**
+   *
+   *  remove form vedio room
+   *
+   */
+  leaveVedioCall = async(roomId: string, userId: string): Promise<boolean | void> => {
+
+    const roomData = await this._ChatRoomRepository.getChatRoomById(roomId)
+
+    
+    const notifyUsers: [{userId:string}] = roomData.members
+
+      .filter((member:any) => member.userId._id.toString() !== userId)
+      .map((value:any) => ({
+        userId: value.userId._id.toString(),
+
+      }));
+      
+
+      leaveVedioCallNotify(socketManagerServer.getIo(),{roomId,userId},notifyUsers)
+
+  }
 };
