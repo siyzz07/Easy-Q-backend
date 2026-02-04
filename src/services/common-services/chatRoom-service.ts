@@ -12,6 +12,8 @@ import {
 } from "../../sockets/handlers/notificationHandler";
 import { socketManagerServer } from "../../sockets/socketInstance";
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
+import { log } from "console";
+import { generateToken04 } from "../../utils/zegoServerAssistant";
 
 export class ChatRoomService implements IChatRoomServiceInterface {
   private _ChatRoomRepository: IChatRoomRepositoryInterface;
@@ -34,31 +36,30 @@ export class ChatRoomService implements IChatRoomServiceInterface {
     contractId: string,
     customerId: string,
   ): Promise<boolean | void> => {
-
-    console.log('contractId :>> ', contractId);
-    console.log('customerId :>> ', customerId);
+    console.log("contractId :>> ", contractId);
+    console.log("customerId :>> ", customerId);
     const roomData = await this._ChatRoomRepository.createChatRoom(contractId);
-  console.log('1');
-  
-  if (roomData) {
-    logger.info("chat room created");
-    
-    console.log('2');
-    let result = await this._ChatRoomRepository.addMemberToChatRoom(
-      contractId.toString(),
-      customerId,
-      "Customer",
-      "admin",
-    );
-    console.log('3');
-    
-    if (result) {
-      logger.info("Member addedd in chat room");
-      return true;
-    } else {
-      logger.error("error to add member in contract room");
-    }
-    console.log('4');
+    console.log("1");
+
+    if (roomData) {
+      logger.info("chat room created");
+
+      console.log("2");
+      let result = await this._ChatRoomRepository.addMemberToChatRoom(
+        contractId.toString(),
+        customerId,
+        "Customer",
+        "admin",
+      );
+      console.log("3");
+
+      if (result) {
+        logger.info("Member addedd in chat room");
+        return true;
+      } else {
+        logger.error("error to add member in contract room");
+      }
+      console.log("4");
     } else {
       logger.error("error to create chat room");
     }
@@ -146,12 +147,12 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       roomId: roomId,
     };
 
-    const notifyUsers: IVedioCallNotify[] = chatRoomData.members.filter(
-      (member) => member.userId.toString() !== caller,
-    ).map((value) =>({
-      userId:value.userId.toString(),
-      userType :value.userType
-    }))
+    const notifyUsers: IVedioCallNotify[] = chatRoomData.members
+      .filter((member) => member.userId.toString() !== caller)
+      .map((value) => ({
+        userId: value.userId.toString(),
+        userType: value.userType,
+      }));
 
     await socketNotificationHandler.vedioCallNotify(
       socketManagerServer.getIo(),
@@ -159,8 +160,64 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       payload,
     );
 
-    console.log('roomId :>> ', roomId);
+    console.log("roomId :>> ", roomId);
 
     return roomId;
   }
-}
+
+  /**
+   *
+   *  get zegocloud token
+   *
+   */
+  zegoToken = async (roomId: string, userId: string): Promise<{ token: string; appId: number; userName: string }> => {
+
+  let name = "";
+
+  const roomData = await this._ChatRoomRepository.getChatRoomById(roomId);
+
+  if (!roomData) {
+    throw new ErrorResponse(
+      MessageEnum.CHAT_ROOM_NOT_FOUND,
+      StatusCodeEnum.INTERNAL_SERVER_ERROR
+    );
+  }
+
+  const userMember = roomData.members.find(
+    (value: any) => value.userId._id.toString() === userId
+  );
+
+  if (!userMember) {
+    throw new Error("User not in this room");
+  }
+
+  if (userMember.userType === "Vendor") {
+    name = userMember.userId.shopName;
+  } else {
+    name = userMember.userId.name;
+  }
+
+  const appId = Number(process.env.ZEGOCLOUD_APP_ID);
+  const serverSecret = process.env.ZEGOCLOUD_SERVER_SECRET as string;
+  const effectiveTime = 3600; 
+
+  console.log('appId :>> ', appId);
+  console.log('userId :>> ', userId);
+  console.log('serverSecret :>> ', serverSecret);
+  console.log('effectiveTime :>> ', effectiveTime);
+  console.log('roomId :>> ', roomId);
+
+
+
+  
+  const token = generateToken04(
+    appId,
+    userId,
+    serverSecret,
+    effectiveTime,
+    roomId
+  );
+
+  return { token, appId, userName: name };
+};
+};

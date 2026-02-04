@@ -1,8 +1,8 @@
 import { ChatRoomController } from "../controllers/chat/chatRoom-controller";
-import { ChatRoomService } from "../services/common-services/chatRoomService";
+import { ChatRoomService } from "../services/common-services/chatRoom-service";
 import { chatRoomRepository } from "./repositoriesDi";
 
-import { MessageService } from "../services/common-services/messageService";
+import { MessageService } from "../services/common-services/message-service";
 import { messageRepository } from "./repositoriesDi";
 
 import { MessageController } from "../controllers/chat/message-controller";

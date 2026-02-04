@@ -8,5 +8,6 @@ const chatRoute = express.Router()
 chatRoute.get('/chat-contract/:contractId',verifyToken,chatRoomControllerInstance.chatRoomData)
 chatRoute.get('/messages/:chatRoomId', verifyToken, messageControllerInstance.getMessages)
 chatRoute.post('/vedio-call/start',verifyToken,chatRoomControllerInstance.startVedioCall)
+chatRoute.get('/zego/token',chatRoomControllerInstance.getZegocloudToken)
 
 export default chatRoute

@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import logger from "../../utils/logger";
 import { INotification } from "../../types/common-types";
+import { log } from "winston";
 
 export interface INotificationPayload {
   title: string;
@@ -15,6 +16,8 @@ export interface IVedioCallNotify{
   userId:string;
   userType:string;
 }
+
+
 
 export class socketNotificationHandler {
   /**
@@ -68,8 +71,48 @@ export class socketNotificationHandler {
     payload:{contractName:string,roomId:string}
   ){
     data.forEach((value:IVedioCallNotify)=>{
+       console.log('vdio call notificaion');
+       
       io.to(value.userId).emit('incomming-vedio-call',payload)
     })
 
   }
+
+   // User joins call page
+  // static joinCall(
+  //   io: Server,
+  //   socket: any,
+  //   roomId: string,
+  //   userId: string
+  // ) {
+  //   if (!activeCalls[roomId]) {
+  //     activeCalls[roomId] = new Set();
+  //   }
+
+  //   activeCalls[roomId].add(userId);
+  //   socket.join(roomId);
+
+  //   console.log("User joined call:", roomId, userId);
+  // }
+
+  // // User leaves call page
+  // static leaveCall(
+  //   io: Server,
+  //   roomId: string,
+  //   userId: string
+  // ) {
+  //   if (!activeCalls[roomId]) return;
+
+  //   activeCalls[roomId].delete(userId);
+
+  //   console.log("User left call:", roomId, userId);
+
+  //   // If nobody left → END CALL
+  //   if (activeCalls[roomId].size === 0) {
+  //     delete activeCalls[roomId];
+  //     io.to(roomId).emit("call-ended");
+  //     console.log("Call ended:", roomId);
+  //   }
+  // }
+
 }

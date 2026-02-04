@@ -9,6 +9,8 @@ export type AttachmentType = {
   type: "image";
 };
 
+
+
 export type MessagePayload = {
   chatRoomId: string;
   sender: string;
@@ -19,8 +21,13 @@ export type MessagePayload = {
 };
 
 
+const activeCalls: Record<string, Set<string>> = {}; 
+
 //-------------- join chat room
 export const joinRoom = (socket:Socket,roomId:string) =>{
+
+
+    
     socket.join(roomId)
 }
 

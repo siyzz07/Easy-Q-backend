@@ -48,4 +48,23 @@ export class ChatRoomController {
             .json({success:true , roomId:response})
 
     }
+    /**
+     * 
+     *    vedio call token
+     * 
+     */
+    getZegocloudToken = async (req:Request,res:Response) :Promise<void> =>{
+                      
+        console.log('reachen din to creaet token');
+        
+        const userId = req.query.userId
+        const roomId = req.query.roomId
+
+        let result = await this._ChatRoomService.zegoToken(roomId as string,userId as string)
+      console.log('result :>> ', result);
+        res
+            .status(StatusCodeEnum.OK)
+            .json({success:true ,data:result})
+
+    }
 }
