@@ -244,4 +244,16 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       leaveVedioCallNotify(socketManagerServer.getIo(),{roomId,userId},notifyUsers)
 
   }
+
+    /**
+   *
+   *  Remove from chat room
+   *
+   */
+  removeMember = async (contractId: string, memberId: string): Promise<boolean> =>{
+
+      const reuslt = await this._ChatRoomRepository.removeMember(contractId,memberId)
+      return reuslt
+
+  }
 };

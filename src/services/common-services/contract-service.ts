@@ -426,6 +426,22 @@ class ContractService implements IContractServiceInterface {
       pagination: result.pagination,
     };
   };
+
+    /**
+   *
+   *    remove from contract
+   *
+   */
+  removeFromContract = async(vendorId: string, contractId: string): Promise<boolean|void> =>{
+
+       const [contract,chatRoom] = await Promise.all([this._ContractRepository.removeRomAcceptedVendor(contractId,vendorId),this._ChatRoomService.removeMember(contractId,vendorId)])
+
+       if(contract && chatRoom){
+        return true
+       }else{
+        throw new ErrorResponse(MessageEnum.CONTRACT_UPDATE_FAILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
+       }
+  }
 }
 
 export default ContractService;

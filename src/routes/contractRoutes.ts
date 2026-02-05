@@ -16,5 +16,6 @@ contractRoute.get('/vendor/works',verifyToken,isVendor,contractControllerInstanc
 contractRoute.patch('/apply/:contractId',verifyToken,isVendor,contractControllerInstance.applyContract)
 contractRoute.patch('/applied-request',verifyToken,isCustomer,contractControllerInstance.updateVendorContractRequest)
 contractRoute.get('/vendor/contracts',verifyToken,isVendor,contractControllerInstance.getVendorContracts)
+contractRoute.delete(`/room/vendor-remove/:contractId/:vendorId`,verifyToken,isCustomer ,contractControllerInstance.removeVendorFromContract)
 
 export default contractRoute;

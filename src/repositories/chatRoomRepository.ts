@@ -83,4 +83,19 @@ export class ChatRoomRepository
     const result = await this._ChatRoomModel.findById(id).populate('members.userId')
     return result
   }
+
+   /**
+   *
+   *  remove member from chat room
+   *
+   */
+async removeMember(contractId: string, memberId: string): Promise<boolean> {
+
+  const result = await this._ChatRoomModel.findOneAndUpdate(
+    { contractId },
+    { $pull: { members: { userId: memberId } } }
+  );
+
+  return !!result;
+}
 }

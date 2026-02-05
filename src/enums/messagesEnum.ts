@@ -229,6 +229,7 @@ export enum MessageEnum {
     CONTRACT_HIRE_NOT_ALLOWED_CANCELLED = "Hiring is not allowed on cancelled contracts",
     CONTRACT_EDIT_COMPLETED_DENIED = "Editing is not allowed for completed contracts",
     CONTRACT_EDIT_CANCELLED_DENIED = "Editing is not allowed for cancelled contracts",
+    CONTRACT_VENDOR_REMOVED_SUCCESS = "Vendor removed successfully",
     // --------------------------------------------------------------------------chatRoom
     CHAT_ROOM_CREATE_SUCCESS = "Chat room created successfully",
     CHAT_ROOM_CREATE_FAILED = "Failed to create chat room",

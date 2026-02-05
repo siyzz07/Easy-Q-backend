@@ -271,6 +271,19 @@ filter.acceptedVendors = { $in: [vendorId] };
 
 
   }
+
+   /**
+   *
+   *   remove from the accepted vendor contract
+   *
+   */
+   async removeRomAcceptedVendor(contractId: string, vendorId: string): Promise<boolean> {
+      const result = await this._ContractModel.findByIdAndUpdate(contractId, {
+      $pull: { acceptedVendors: vendorId },
+    });
+
+    return !!result;
+  }
 }
 
 export default ContractRepository;

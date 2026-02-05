@@ -28,7 +28,7 @@ class ContractController {
       const result = await this._contractService.addNewContract(userId, data);
       res
         .status(StatusCodeEnum.OK)
-        .json({ message: "Contract created successfully", data: result });
+        .json({ message: MessageEnum.CONTRACT_CREATED, data: result });
     } catch (error) {
       next(error);
     }
@@ -48,7 +48,7 @@ class ContractController {
       );
       res
         .status(StatusCodeEnum.OK)
-        .json({ success:true, message: "Contract updated successfully" });
+        .json({ success:true, message: MessageEnum.CONTRACT_UPDATED });
  
   };
 
@@ -62,7 +62,7 @@ class ContractController {
       const result = await this._contractService.getContract(contractId);
       res
         .status(StatusCodeEnum.OK)
-        .json({ message: "Contract fetched successfully", data: result });
+        .json({ message: MessageEnum.CONTRACT_FETCH_SUCCESS, data: result });
     } catch (error) {
       next(error);
     }
@@ -78,7 +78,7 @@ class ContractController {
       const result = await this._contractService.getContracts(filter);
       res
         .status(StatusCodeEnum.OK)
-        .json({ message: "Contracts fetched successfully", data: result });
+        .json({ message:MessageEnum.CONTRACT_FETCH_SUCCESS, data: result });
     } catch (error) {
       next(error);
     }
@@ -190,6 +190,26 @@ class ContractController {
     }
 
   }
+
+  /**
+   *
+   *  remove vendor from the accepted contract
+   *
+   */
+  removeVendorFromContract = async (req:Request,res:Response) :Promise<void> =>{
+
+    let contractId = req.params.contractId
+    let vendorId= req.params.vendorId
+
+    const result = await this._contractService.removeFromContract(vendorId,contractId)
+
+    res
+      .status(StatusCodeEnum.OK)
+      .json({success:true , message:MessageEnum.CONTRACT_VENDOR_REMOVED_SUCCESS})
+
+  }
+
+
 }
 
 export default ContractController;
