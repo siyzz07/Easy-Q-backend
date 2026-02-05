@@ -23,6 +23,17 @@ export type MessagePayload = {
 
 const activeCalls: Record<string, Set<string>> = {}; 
 
+export const getActiveCallUsers = (roomId: string): Set<string> | undefined => {
+  return activeCalls[roomId];
+}; 
+
+export const getRoomIdByUserId = (userId: string): string | null => {
+  for (const [roomId, users] of Object.entries(activeCalls)) {
+    if (users.has(userId)) return roomId;
+  }
+  return null;
+} 
+
 //-------------- join chat room
 export const joinRoom = (socket:Socket,roomId:string) =>{
     socket.join(roomId)
@@ -54,7 +65,8 @@ export const  VedioCallRoomEnter = async (io:Server,data:{roomId:string,userId:s
     }
      console.log('added to room');
      
-    activeCalls[data.roomId].add(data.userId) 
+    activeCalls[data.roomId].add(data.userId);
+
 
 }
 
@@ -66,6 +78,7 @@ export const leaveVedioCallNotify = async (io:Server , data:{roomId:string , use
 
      if (!activeCalls[data.roomId]) return;
     activeCalls[data.roomId].delete(data.userId);
+    
     if (activeCalls[data.roomId].size === 0) {
 
       delete activeCalls[data.roomId];

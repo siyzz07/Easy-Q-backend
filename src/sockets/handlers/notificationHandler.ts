@@ -50,7 +50,7 @@ export class socketNotificationHandler {
    *
    * contract notifiction  - customer
    */
-  static contractNotificationToCustomer(
+  static contractNotification(
     io: Server,
     userId: string,
     payload: Partial<INotification>,
@@ -59,6 +59,18 @@ export class socketNotificationHandler {
     io.to(userId).emit("contract-notification", payload);
   }
 
+  /**
+   *
+   * contract notifiction  - vendor
+   */
+  static contractNotificationTo(
+    io: Server,
+    userId: string,
+    payload: Partial<INotification>,
+  ) {
+    logger.info("contract notification sended to customer");
+    io.to(userId).emit("contract-notification", payload);
+  }
 
    /**
    *
@@ -70,55 +82,15 @@ export class socketNotificationHandler {
     data:IVedioCallNotify[],
     payload:{contractName:string,roomId:string}
   ){
+
+    console.log('data0-0-0- :>> ', data);
+
     data.forEach((value:IVedioCallNotify)=>{
-       console.log('vdio call notificaion');
-       
-      io.to(value.userId).emit('incomming-vedio-call',payload)
+       console.log(`Sending video call notification to: ${value.userId}`);
+       io.to(value.userId).emit('incomming-vedio-call',payload)
     })
 
   }
 
-   /**
-   *
-   * end vedio call notify
-   */
-
-
-   // User joins call page
-  // static joinCall(
-  //   io: Server,
-  //   socket: any,
-  //   roomId: string,
-  //   userId: string
-  // ) {
-  //   if (!activeCalls[roomId]) {
-  //     activeCalls[roomId] = new Set();
-  //   }
-
-  //   activeCalls[roomId].add(userId);
-  //   socket.join(roomId);
-
-  //   console.log("User joined call:", roomId, userId);
-  // }
-
-  // // User leaves call page
-  // static leaveCall(
-  //   io: Server,
-  //   roomId: string,
-  //   userId: string
-  // ) {
-  //   if (!activeCalls[roomId]) return;
-
-  //   activeCalls[roomId].delete(userId);
-
-  //   console.log("User left call:", roomId, userId);
-
-  //   // If nobody left → END CALL
-  //   if (activeCalls[roomId].size === 0) {
-  //     delete activeCalls[roomId];
-  //     io.to(roomId).emit("call-ended");
-  //     console.log("Call ended:", roomId);
-  //   }
-  // }
 
 }

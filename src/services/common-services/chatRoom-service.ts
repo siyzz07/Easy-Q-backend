@@ -14,7 +14,7 @@ import { socketManagerServer } from "../../sockets/socketInstance";
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
 import { log } from "console";
 import { generateToken04 } from "../../utils/zegoServerAssistant";
-import { leaveVedioCallNotify } from "../../sockets/handlers/chatHandlers";
+import { leaveVedioCallNotify, getActiveCallUsers } from "../../sockets/handlers/chatHandlers";
 
 export class ChatRoomService implements IChatRoomServiceInterface {
   private _ChatRoomRepository: IChatRoomRepositoryInterface;
@@ -148,12 +148,31 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       roomId: roomId,
     };
 
+    const activeUsers = getActiveCallUsers(roomId);
+    
+    console.log('ChatRoom Members:', JSON.stringify(chatRoomData.members.map(m => ({id: m.userId.toString(), type: m.userType})), null, 2));
+    console.log('Active Users in Room:', activeUsers ? Array.from(activeUsers) : 'None');
+    console.log('Caller:', caller);
+
     const notifyUsers: IVedioCallNotify[] = chatRoomData.members
-      .filter((member) => member.userId.toString() !== caller)
+      .filter((member) => {
+        const memberId = member.userId.toString();
+        const isActive = activeUsers?.has(memberId);
+        const isCaller = memberId === caller;
+        
+        if (isCaller) return false;
+        if (isActive) {
+            console.log(`Skipping active user: ${memberId}`);
+            return false;
+        }
+        return true;
+      })
       .map((value) => ({
         userId: value.userId.toString(),
         userType: value.userType,
       }));
+
+    console.log('Users to Notify:', JSON.stringify(notifyUsers, null, 2));
 
     await socketNotificationHandler.vedioCallNotify(
       socketManagerServer.getIo(),

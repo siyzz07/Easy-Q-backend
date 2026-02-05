@@ -14,7 +14,7 @@ export interface IVendorShopServiceInterface{
   getEachVendorData (data:string):Promise<VendorDto|void>
   getVendorsData (data:{search?:string,page?:string,limit?:string,lat?:number,lng?:number,distance?:number,categories?:string[],ratings?:string[]}):Promise<{data:VendorDto[],pagination: IPaginationResponseMeta}>
 
-  addShopImages (datas:{data:IImage,userId:string}):Promise<boolean|void>
+  addShopImages (datas:{data:IImage[],userId:string}):Promise<boolean|void>
   removeImage(data:{publicId:string,image_id:string,userId:string}):Promise<boolean|void>
     
 }

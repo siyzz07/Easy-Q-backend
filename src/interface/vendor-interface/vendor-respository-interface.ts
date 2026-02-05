@@ -26,7 +26,7 @@ export interface IVendorRepo {
     getEachVendorData(_id:string):Promise<IVendor|null>//-------------------------------------------------
     
 
-    addImage (_id:string,image:IImage):Promise<boolean>
+    addImage (_id:string,image:IImage[]):Promise<boolean>
     deleteShopImage(_id:string,imageId:string):Promise<boolean>
 
     vendorsDataWithPagination (data:{search?:string,page?:string,limit?:string, lat?:number, lng?: number,distance?:number, categories?:string[],ratings?:string[]}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>

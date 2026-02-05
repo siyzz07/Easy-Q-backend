@@ -324,4 +324,7 @@ export enum ContractNotificationContentEnum {
     "The contract has been signed by both parties. Work can begin as scheduled.",
   CONTRACT_CANCELLED =
     "This contract has been cancelled. No further action is required.",
+    CONTRACT_REMOVED =
+  "You have been removed from the contract \"{{contractName}}\" by the customer.",
+
 }

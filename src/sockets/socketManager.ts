@@ -3,6 +3,8 @@ import http from "http";
 import { socketAuth } from '../middlewares/socketAuth';
 import logger from "../utils/logger";
 import { ChatEvents } from "./events/chatEvents";
+import { getRoomIdByUserId } from "./handlers/chatHandlers";
+import { chatRoomServiceInstance } from "../di/chatDi";
 
 
 export interface ISocketManager {
@@ -39,6 +41,19 @@ export class SocketManager implements ISocketManager {
 
       new ChatEvents(socket, this.io).register();
       // // new NotificationEvents(socket, this.io).register();
+
+      socket.on("disconnect", async () => {
+          console.log(`Client disconnected: ${socket.id}`);
+          if (userId) {
+              const roomId = getRoomIdByUserId(userId);
+              if (roomId) {
+                  console.log(`User ${userId} disconnected while in video call ${roomId}. Cleaning up...`);
+                  chatRoomServiceInstance.leaveVedioCall(roomId, userId).catch(err => {
+                      console.error("Error cleaning up video call on disconnect", err);
+                  });
+              }
+          }
+      });
     });
 
     console.log("Socket Server initialized");

@@ -157,9 +157,37 @@ sendContractNotificationToCustomer = async (customerId: string, category: "booki
     const result = await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
-    await socketNotificationHandler.contractNotificationToCustomer(
+    await socketNotificationHandler.contractNotification(
       socketManagerServer.getIo(),
       customerId.toString(),
+      NotificationPayload
+    );
+}
+
+//--------------------- send contract notification to vendor
+sendContractNotificationToVendor = async(vendorId: string, category: "booking" | "contract" | "message", type: "contract_applied" | "contract_approved" | "contract_rejected" | "contract_cancelled", title: string, content: string, contractId: string): Promise<void> =>{
+   const NotificationPayload: Partial<INotification> = {
+      recipient: new mongoose.Types.ObjectId(vendorId),
+      recipientType: 'Vendor',
+      category,
+      type: type,
+      title:title,
+      content:content,
+      createdAt:new Date(),
+      metaData: {
+        contract: {
+          id: contractId,
+        },
+      },
+    };
+
+    const result = await this._NotificationRepository.addNewNotification(
+      NotificationPayload
+    );
+
+     await socketNotificationHandler.contractNotification(
+      socketManagerServer.getIo(),
+      vendorId.toString(),
       NotificationPayload
     );
 }

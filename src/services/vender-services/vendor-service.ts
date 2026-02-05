@@ -202,7 +202,7 @@ class VendorService implements IVendorShopServiceInterface {
 
 
     //---------------------------- add shop image
-    addShopImages = async (datas: { data: IImage; userId: string; }): Promise<boolean | void> => {
+    addShopImages = async (datas: { data: IImage[]; userId: string; }): Promise<boolean | void> => {
        const {userId,data} = datas
        const result = await this._vendorRepo.addImage(userId,data)
        if(result){
