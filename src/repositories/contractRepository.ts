@@ -23,7 +23,7 @@ class ContractRepository
     data: Partial<IContract>,
   ): Promise<IContract | null> {
     return await this._ContractModel
-      .findOneAndUpdate({ contractId: contractId }, data, { new: true })
+      .findOneAndUpdate({ _id: contractId }, data, { new: true })
       .exec();
   }
 

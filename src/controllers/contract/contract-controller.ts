@@ -37,21 +37,19 @@ class ContractController {
   editContract = async (
     req: Request,
     res: Response,
-    next: NextFunction,
   ): Promise<void> => {
-    try {
       const { contractId } = req.params;
       const contractData = req.body;
+      const userId = req.body.userId
       const result = await this._contractService.editContract(
         contractId,
+        userId,
         contractData,
       );
       res
         .status(StatusCodeEnum.OK)
-        .json({ message: "Contract updated successfully", data: result });
-    } catch (error) {
-      next(error);
-    }
+        .json({ success:true, message: "Contract updated successfully" });
+ 
   };
 
   getContract = async (

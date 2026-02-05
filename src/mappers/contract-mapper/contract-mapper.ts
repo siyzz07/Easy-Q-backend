@@ -24,7 +24,7 @@ export const ContractMapper = {
 
         if (contract.address && contract.address.address) {
             address = {
-                _id: contract.addressId ? contract.addressId.toString() : "",
+                _id:contract.address._id,
                 address: contract.address.address,
                 city: contract.address.city,
                 state: contract.address.state,

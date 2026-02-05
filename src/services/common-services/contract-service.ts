@@ -97,11 +97,12 @@ class ContractService implements IContractServiceInterface {
       contractId: `CTR-${nanoid(10)}`,
       customerId: new mongoose.Types.ObjectId(userId),
       address: {
+        _id:address,
         address: selectedAddress?.address || "",
         city: selectedAddress?.city || "",
         state: selectedAddress?.state || "",
         country: selectedAddress?.country || "",
-        phone: selectedAddress?.phone || "",
+        phone: phone || "",
       },
       title: contractName,
       description: description,
@@ -148,14 +149,53 @@ class ContractService implements IContractServiceInterface {
 
   async editContract(
     contractId: string,
-    contractData: Partial<IContract>,
-  ): Promise<ContractDto | null> {
+    userId:string,
+    contractData:IAddContracValues,
+  ): Promise<boolean | null> {
+
+
+
+const { contractName, description, phone, address, serviceType } =contractData;
+
+
+    const addressesData = await this._AddressRepository.getAllAddress(userId);
+    let selectedAddress = addressesData?.address.find(
+      (data) => data._id?.toString() === address.toString(),
+    );
+
+    if (!selectedAddress) {
+      throw new ErrorResponse("Address not found", StatusCodeEnum.NOT_FOUND);
+    }
+
+    const location: IGeoLocation = {
+      type: "Point",
+      coordinates: [
+        Number(selectedAddress?.coordinates.lng),
+        Number(selectedAddress?.coordinates.lat),
+      ],
+    };
+
+    const contractPayload = {
+      address: {
+        _id:address,
+        address: selectedAddress?.address || "",
+        city: selectedAddress?.city || "",
+        state: selectedAddress?.state || "",
+        country: selectedAddress?.country || "",
+        phone: phone || "",
+      },
+      title: contractName,
+      description: description,
+      service: new mongoose.Types.ObjectId(serviceType),
+      location,
+    };
+ 
     const result = await this._ContractRepository.editContract(
       contractId,
-      contractData,
+      contractPayload,
     );
     if (result) {
-      return ContractMapper.toDTO(result);
+       return true
     } else {
       throw new ErrorResponse(
         "Failed to update contract",
@@ -216,6 +256,7 @@ class ContractService implements IContractServiceInterface {
     query: {
       page?: string;
       limit?: string;
+      filter:string;
       search?: string;
       lat?: number;
       lng?: number;
@@ -246,7 +287,7 @@ class ContractService implements IContractServiceInterface {
           lat: query.lat,
           lng: query.lng,
           distance: query.distance,
-          postedWithin: query.postedWithin || "",
+          postedWithin: query.filter,
         },
       );
 

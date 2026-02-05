@@ -181,6 +181,7 @@ export interface IContract {
   contractId: string;
   customerId: mongoose.Types.ObjectId;
   address: {
+    _id:string
     address: string;
     city: string;
     state: string;

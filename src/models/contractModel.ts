@@ -1,6 +1,7 @@
 import { Schema, model, Types } from "mongoose";
 import { IContract } from "../types/common-types";
 import { ContractStatusEnum } from "../enums/contractEnum";
+import { string } from "joi";
 
 const ContractSchema = new Schema<IContract>({
   contractId: {
@@ -15,6 +16,11 @@ const ContractSchema = new Schema<IContract>({
     required: true,
   },
   address: {
+
+    _id:{
+      type:String
+    },
+
     address: {
       type: String,
       required: true,
