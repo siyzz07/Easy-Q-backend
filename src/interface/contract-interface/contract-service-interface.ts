@@ -1,9 +1,9 @@
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
-import { IAddContracValues, IContract, IPaginationMeta, IPaginationResponseMeta } from "../../types/common-types";
+import { IAddContracValues, IContract, IPaginationMeta, IPaginationResponseMeta, IUpdateContractValues } from "../../types/common-types";
 
 export interface IContractServiceInterface {
     addNewContract(userId:string,contractData: IAddContracValues): Promise<ContractDto>;
-    editContract(contractId: string,userId:string, contractData: Partial<IAddContracValues>): Promise<boolean | null>;
+    editContract(contractId: string,userId:string, contractData: Partial<IUpdateContractValues>): Promise<boolean | null>;
     getContract(contractId: string): Promise<ContractDto | null>;
     getContracts(filter?: any): Promise<ContractDto[]>;
     getCustomerContracts(customerId:string,query:{page?:string,limit?:string,search?:string, filter?:string}):Promise< {data:ContractDto[], pagination:IPaginationResponseMeta}>

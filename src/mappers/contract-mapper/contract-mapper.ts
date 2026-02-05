@@ -101,6 +101,7 @@ export const ContractMapper = {
             acceptedVendors: acceptedVendors,
             appliedVendors:appliedVendors,
             status: contract.status,
+            isHiring:contract.isHiring,
             createdAt: contract.createdAt,
             updatedAt: contract.updatedAt 
         };

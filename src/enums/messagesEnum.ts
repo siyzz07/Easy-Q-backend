@@ -223,6 +223,12 @@ export enum MessageEnum {
     CONTRACT_ALREADY_APPLIED = "You have already applied for this contract",
     CONTRACT_FETCH_SUCCESS = "Contract fetched successfully",
     CONTRACT_FETCH_FAILED = "Failed to fetch contract",
+    CONTRACT_EDIT_NOT_ALLOWED_COMPLETED = "Editing is not allowed for completed contracts",
+    CONTRACT_EDIT_NOT_ALLOWED_CANCELLED = "Editing is not allowed for cancelled contracts",
+    CONTRACT_HIRE_NOT_ALLOWED_COMPLETED = "Hiring is not allowed on completed contracts",
+    CONTRACT_HIRE_NOT_ALLOWED_CANCELLED = "Hiring is not allowed on cancelled contracts",
+    CONTRACT_EDIT_COMPLETED_DENIED = "Editing is not allowed for completed contracts",
+    CONTRACT_EDIT_CANCELLED_DENIED = "Editing is not allowed for cancelled contracts",
     // --------------------------------------------------------------------------chatRoom
     CHAT_ROOM_CREATE_SUCCESS = "Chat room created successfully",
     CHAT_ROOM_CREATE_FAILED = "Failed to create chat room",

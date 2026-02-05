@@ -98,6 +98,12 @@ const ContractSchema = new Schema<IContract>({
     type: Date,
     default: Date.now,
   },
+
+  isHiring :{
+    type:Boolean,
+    default:true
+  }
+
 });
 
 ContractSchema.index({ location: "2dsphere" });

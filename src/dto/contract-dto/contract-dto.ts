@@ -51,6 +51,7 @@ export interface ContractDto {
     acceptedVendors: (ContractVendorDto | string)[];
     appliedVendors:(ContractVendorDto | string)[]
     status: string;
+    isHiring:string;
     createdAt?: Date;
     updatedAt?: Date;
 }

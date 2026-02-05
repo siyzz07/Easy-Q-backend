@@ -7,6 +7,7 @@ import {
   IContract,
   IPaginationMeta,
   IPaginationResponseMeta,
+  IUpdateContractValues,
 } from "../../types/common-types";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
@@ -50,11 +51,13 @@ class ContractService implements IContractServiceInterface {
     this._ContractRepository = contractRepo;
     this._AddressRepository = addressRepository;
     this._VendorRepositroy = vendorRepository;
-    if(notificationService) this._NotificationService = notificationService;
-    if(chatRoomService) this._ChatRoomService = chatRoomService;
+    if (notificationService) this._NotificationService = notificationService;
+    if (chatRoomService) this._ChatRoomService = chatRoomService;
   }
 
-  public setNotificationService(notificationService: INotificationServiceInterface) {
+  public setNotificationService(
+    notificationService: INotificationServiceInterface,
+  ) {
     this._NotificationService = notificationService;
   }
 
@@ -71,10 +74,10 @@ class ContractService implements IContractServiceInterface {
     userId: string,
     contractData: IAddContracValues,
   ): Promise<ContractDto> {
-    const { contractName, description, phone, address, serviceType } =contractData;
+    const { contractName, description, phone, address, serviceType } =
+      contractData;
 
-    console.log('reached add contract -service');
-    
+    console.log("reached add contract -service");
 
     const addressesData = await this._AddressRepository.getAllAddress(userId);
     let selectedAddress = addressesData?.address.find(
@@ -97,7 +100,7 @@ class ContractService implements IContractServiceInterface {
       contractId: `CTR-${nanoid(10)}`,
       customerId: new mongoose.Types.ObjectId(userId),
       address: {
-        _id:address,
+        _id: address,
         address: selectedAddress?.address || "",
         city: selectedAddress?.city || "",
         state: selectedAddress?.state || "",
@@ -113,18 +116,19 @@ class ContractService implements IContractServiceInterface {
       status: ContractStatusEnum.OPEN,
       createdAt: new Date(),
     };
-    console.log('11');
-    
-    const result = await this._ContractRepository.addNewContract(contractPayload);
-    console.log('12');
-    
+    console.log("11");
+
+    const result =
+      await this._ContractRepository.addNewContract(contractPayload);
+    console.log("12");
+
     if (result) {
-      console.log('13');
+      console.log("13");
       let response = await this._ChatRoomService.createChatRoom(
         result._id?.toString() as string,
         userId,
       );
-      console.log('14');
+      console.log("14");
 
       if (!response) {
         throw new ErrorResponse(
@@ -149,14 +153,42 @@ class ContractService implements IContractServiceInterface {
 
   async editContract(
     contractId: string,
-    userId:string,
-    contractData:IAddContracValues,
+    userId: string,
+    contractData: IUpdateContractValues,
   ): Promise<boolean | null> {
+    let {
+      contractName,
+      description,
+      phone,
+      address,
+      serviceType,
+      isHiring,
+      status,
+    } = contractData;
 
+    const getContractData =
+      await this._ContractRepository.getContract(contractId);
 
+    if (getContractData?.status == ContractStatusEnum.COMPLETED) {
+      throw new ErrorResponse(
+        MessageEnum.CONTRACT_EDIT_COMPLETED_DENIED,
+        StatusCodeEnum.BAD_REQUEST,
+      );
+    }
 
-const { contractName, description, phone, address, serviceType } =contractData;
+    if (getContractData?.status == ContractStatusEnum.CANCELLED) {
+      throw new ErrorResponse(
+        MessageEnum.CONTRACT_EDIT_NOT_ALLOWED_CANCELLED,
+        StatusCodeEnum.BAD_REQUEST,
+      );
+    }
 
+    if (
+      status == ContractStatusEnum.CANCELLED ||
+      status == ContractStatusEnum.COMPLETED
+    ) {
+      isHiring = false;
+    }
 
     const addressesData = await this._AddressRepository.getAllAddress(userId);
     let selectedAddress = addressesData?.address.find(
@@ -177,7 +209,7 @@ const { contractName, description, phone, address, serviceType } =contractData;
 
     const contractPayload = {
       address: {
-        _id:address,
+        _id: address,
         address: selectedAddress?.address || "",
         city: selectedAddress?.city || "",
         state: selectedAddress?.state || "",
@@ -188,14 +220,16 @@ const { contractName, description, phone, address, serviceType } =contractData;
       description: description,
       service: new mongoose.Types.ObjectId(serviceType),
       location,
+      status,
+      isHiring,
     };
- 
+
     const result = await this._ContractRepository.editContract(
       contractId,
       contractPayload,
     );
     if (result) {
-       return true
+      return true;
     } else {
       throw new ErrorResponse(
         "Failed to update contract",
@@ -256,7 +290,7 @@ const { contractName, description, phone, address, serviceType } =contractData;
     query: {
       page?: string;
       limit?: string;
-      filter:string;
+      filter: string;
       search?: string;
       lat?: number;
       lng?: number;
@@ -350,15 +384,21 @@ const { contractName, description, phone, address, serviceType } =contractData;
     contractId: string,
     decision: "accept" | "reject",
   ): Promise<boolean> => {
-
     if (decision == "accept") {
-       let result = await this._ContractRepository.acceptVendorForContract(contractId,vendorId)
-       if(result){
-
-          let chatRoomResult = await this._ChatRoomService.addMemberToChatRoom(contractId,vendorId,'Vendor','member')
-       }
-       logger.info('vendor added in contract successfully')
-       return true
+      let result = await this._ContractRepository.acceptVendorForContract(
+        contractId,
+        vendorId,
+      );
+      if (result) {
+        let chatRoomResult = await this._ChatRoomService.addMemberToChatRoom(
+          contractId,
+          vendorId,
+          "Vendor",
+          "member",
+        );
+      }
+      logger.info("vendor added in contract successfully");
+      return true;
     } else {
       let result = await this._ContractRepository.removeFromContractRequest(
         contractId,
@@ -373,14 +413,19 @@ const { contractName, description, phone, address, serviceType } =contractData;
    *    get contracts of vendor
    *
    */
-  getVendorContracts =async(vendorId: string, query: { page?: string; limit?: string; search?: string; }): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta; }> => {
-    
-    let result  = await this._ContractRepository.getVendorContracts(vendorId,query)
-     return {
+  getVendorContracts = async (
+    vendorId: string,
+    query: { page?: string; limit?: string; search?: string },
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> => {
+    let result = await this._ContractRepository.getVendorContracts(
+      vendorId,
+      query,
+    );
+    return {
       data: ContractMapper.toDTOList(result.data),
       pagination: result.pagination,
     };
-  }
+  };
 }
 
 export default ContractService;

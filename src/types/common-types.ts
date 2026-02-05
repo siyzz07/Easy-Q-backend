@@ -202,10 +202,21 @@ export interface IContract {
   acceptedVendors: mongoose.Types.ObjectId[];
   appliedVendors: mongoose.Types.ObjectId[]
   status: "open" | "in_progress" | "completed" | "cancelled"|"closed";
-
+  isHiring:boolean
   createdAt: Date;
 }
 
+
+
+export interface IUpdateContractValues {
+  contractName: string;
+  description: string;
+  phone: string;
+  address: string;
+  serviceType: string;
+  status: ContractStatusEnum;
+  isHiring: boolean;
+}
 
 export interface IAddContracValues {
   contractName: string;
@@ -235,6 +246,7 @@ export interface IChatRoom {
 
 
 import { Types } from "mongoose";
+import { ContractStatusEnum } from "../enums/contractEnum";
 
 export type SenderModelType = "Vendor" | "Customer";
 
