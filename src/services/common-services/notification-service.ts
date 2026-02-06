@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 import {
-  BookingMessageContent,
-  BookingMessageContentLong,
-  BookingMessageTitle,
   MessageEnum,
 } from "../../enums/messagesEnum";
 import { INotificationRepositoryInterface } from "../../interface/notificaion-interface/notificaion-repository-interface";
@@ -127,6 +124,72 @@ export class NotificationService implements INotificationServiceInterface {
       NotificationPayload
     );
   };
+
+
+/**
+ * 
+ * 
+ *  contract notification --- to CUSTOMER
+ * 
+ */
+//--------------------- send contract notification to customer
+sendContractNotificationToCustomer = async (customerId: string, category: "booking" | "contract" | "message", type: "contract_applied" | "contract_approved" | "contract_rejected" | "contract_cancelled", title: string, content: string,contractId:string): Promise<void> =>{
+  
+   
+    const NotificationPayload: Partial<INotification> = {
+      recipient: new mongoose.Types.ObjectId(customerId),
+      recipientType: 'Customer',
+      category,
+      type: type,
+      title:title,
+      content:content,
+      createdAt:new Date(),
+      metaData: {
+        contract: {
+          id: contractId,
+        },
+      },
+    };
+
+    const result = await this._NotificationRepository.addNewNotification(
+      NotificationPayload
+    );
+    await socketNotificationHandler.contractNotification(
+      socketManagerServer.getIo(),
+      customerId.toString(),
+      NotificationPayload
+    );
+}
+
+//--------------------- send contract notification to vendor
+sendContractNotificationToVendor = async(vendorId: string, category: "booking" | "contract" | "message", type: "contract_applied" | "contract_approved" | "contract_rejected" | "contract_cancelled", title: string, content: string, contractId: string): Promise<void> =>{
+   const NotificationPayload: Partial<INotification> = {
+      recipient: new mongoose.Types.ObjectId(vendorId),
+      recipientType: 'Vendor',
+      category,
+      type: type,
+      title:title,
+      content:content,
+      createdAt:new Date(),
+      metaData: {
+        contract: {
+          id: contractId,
+        },
+      },
+    };
+
+    const result = await this._NotificationRepository.addNewNotification(
+      NotificationPayload
+    );
+
+     await socketNotificationHandler.contractNotification(
+      socketManagerServer.getIo(),
+      vendorId.toString(),
+      NotificationPayload
+    );
+}
+
+
 
 
 }

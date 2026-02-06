@@ -254,10 +254,10 @@ export class BookingService implements IBookingServiceInterface {
       shopId,
     } = data;
 
-    let dateNow = new Date();
-    let selectedDate = new Date(data.date);
-    let dateFormat = dateNow.toDateString();
-    let selectedDateFromat = selectedDate.toDateString();
+    const dateNow = new Date();
+    const selectedDate = new Date(data.date);
+    const dateFormat = dateNow.toDateString();
+    const selectedDateFromat = selectedDate.toDateString();
 
     if (dateFormat == selectedDateFromat) {
       const now = new Date();
@@ -680,7 +680,7 @@ selectedBookingData = async (
       payload
     );
 
-    let eligibility = result.some(
+    const eligibility = result.some(
       (data: IBooking) => data.status == BookingStatusEnum.COMPLETED
     );
 
@@ -704,9 +704,9 @@ selectedBookingData = async (
         StatusCodeEnum.INTERNAL_SERVER_ERROR
       );
     }
-    let payload: Partial<IBooking> = {};
+    const payload: Partial<IBooking> = {};
     if (status == BookingStatusEnum.COMPLETED) {
-      let bookingData = await this._BookingRepository.getEachBookingDataById(
+      const bookingData = await this._BookingRepository.getEachBookingDataById(
         bookingId
       );
 
@@ -837,10 +837,10 @@ selectedBookingData = async (
     date: string
   ): Promise<{ startTime: string; endTime: string } | false> {
     let isCurrentDay = false;
-    let dateNow = new Date();
-    let selectedDate = new Date(date);
-    let dateFormat = dateNow.toDateString();
-    let selectedDateFromat = selectedDate.toDateString();
+    const dateNow = new Date();
+    const selectedDate = new Date(date);
+    const dateFormat = dateNow.toDateString();
+    const selectedDateFromat = selectedDate.toDateString();
 
     if (dateFormat == selectedDateFromat) {
       isCurrentDay = false;
@@ -864,7 +864,7 @@ selectedBookingData = async (
 
     for (let i = startIdx; i < endIdx; i++) {
       let start = timeLine[i].end;
-      let end = timeLine[i + 1].start;
+      const end = timeLine[i + 1].start;
 
       if (isCurrentDay) {
         const now = new Date();

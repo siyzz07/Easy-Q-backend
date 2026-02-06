@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IService, IServiceData, IStaff } from "../../types/vendorType";
+import { IService, IServiceData } from "../../types/vendorType";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
 import { IServiceInterface } from "../../interface/service-interface/service-service-interface";

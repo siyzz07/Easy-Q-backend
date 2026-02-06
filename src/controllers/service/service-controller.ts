@@ -44,6 +44,7 @@ export class VendorServiceController {
   editService = async (req:Request,res:Response,next:NextFunction) :Promise<void> =>{
     try{
 
+       console.log('req.body :>> ', req.body);
 
       const result = await this._Service.editService(req.body)
       if(result){

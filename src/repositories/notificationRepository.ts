@@ -48,7 +48,7 @@ export class NotificationRepository
       _id?: mongoose.Types.ObjectId;
     };
 
-    let payload: PayloadType = {
+    const payload: PayloadType = {
       recipient: new mongoose.Types.ObjectId(userid),
     };
 

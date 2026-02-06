@@ -70,13 +70,7 @@ class VendorController {
     }
   };
 
-  //----------------------------------------------------------------------- get the shop service type
-  //----------------------------------------------------------------------- get the shop service type
-  //----------------------------------------------------------------------- get the shop service type
-  //----------------------------------------------------------------------- get the shop service type
-  //----------------------------------------------------------------------- get the shop service type
-  //----------------------------------------------------------------------- get the shop service type
-  //----------------------------------------------------------------------- get the shop service type
+
   getShopServiceType = async (
     req: Request,
     res: Response,
@@ -201,6 +195,8 @@ class VendorController {
     next: NextFunction
   ): Promise<void> => {
     try {
+
+
       const result = await this._vendorShopService.addShopImages(req.body);
       if (result) {
         res

@@ -35,7 +35,6 @@ export class WalletService implements IWalletServiceInterface {
  // --------------------------- update wallet data
     updateWallet = async(id: string, type: "Vendor" | "Customer", amount: number): Promise<boolean|void> => {
         
-            console.log('id',id , 'type',type, 'amount ',amount)
         
         const data = await this._WalletRepository.getWalletByuser(id)
         if(!data){

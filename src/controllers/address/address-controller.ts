@@ -17,6 +17,9 @@ export class CustomerAddressContorller {
     next: NextFunction
   ): Promise<void> => {
     try {
+
+      console.log('in address reached');
+      
       const custoemrId = req.body.userId;
       const response = await this._addressService.getAddress(custoemrId);
 

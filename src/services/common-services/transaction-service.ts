@@ -7,8 +7,8 @@ import { ITransactionServiceInterface } from "../../interface/transaction-interf
 import { ErrorResponse } from "../../utils/errorResponse";
 import crypto from "crypto";
 import logger from "../../utils/logger";
-import { IPaginationResponseMeta, ITransaction } from "../../types/common-types";
-import { query } from "winston";
+import { IPaginationResponseMeta } from "../../types/common-types";
+
 
 import { TransactionMapper } from "../../mappers/transaction-mapper/transaction-mapper";
 import { TransactionDTO } from "../../dto/transaction-dto/transaction-dto";

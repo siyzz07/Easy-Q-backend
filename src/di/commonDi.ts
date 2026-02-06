@@ -20,10 +20,11 @@ import { TransactionController } from "../controllers/transaction/transaction-co
 import { WalletService } from "../services/common-services/wallet-service"
 import { WalletController } from "../controllers/wallet/wallet-controller"
 import { NotificaionController } from "../controllers/notification/notificaion-controller"
+import { notificationControllerInstance, notificationServiceInstance } from "./notificationDi"
 
 // ------------------ Notificaton di
-const notificationServiceInstance = new NotificationService(notificationRepository)
-const notificationControllerInstance = new NotificaionController(notificationServiceInstance)
+// const notificationServiceInstance = new NotificationService(notificationRepository)
+// const notificationControllerInstance = new NotificaionController(notificationServiceInstance)
 
 
 // ------------------ wallet

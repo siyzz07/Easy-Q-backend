@@ -204,10 +204,48 @@ export enum MessageEnum {
     // --------------------------------------------------------------------------Notificaion
     NOTIFICATION_FETCH_SUCCESS = "Notifications fetched successfully",
     NOTIFICATION_FETCH_FAILED = "Failed to fetch notifications",
-
+    
     NOTIFICATION_UPDATED_SUCCESS = "Updated successfully",
     NOTIFICATION_UPDATED_FAILED = "Update failed",
- 
+    // --------------------------------------------------------------------------Contract
+    CONTRACT_CREATED = "Contract created successfully",
+    CONTRACT_UPDATED = "Contract updated successfully",
+    CONTRACT_DELETED = "Contract deleted successfully",
+    CONTRACT_APPLIED = "Contract applied successfully",
+    CONTRACT_ACCEPTED = "Vendor accepted for the contract",
+    CONTRACT_REJECTED = "Vendor rejected for the contract",
+    CONTRACT_CLOSED = "Contract closed successfully",
+    CONTRACT_COMPLETED = "Contract marked as completed",
+    CONTRACT_CREATE_FAILED = "Failed to create contract",
+    CONTRACT_UPDATE_FAILED = "Failed to update contract",
+    CONTRACT_DELETE_FAILED = "Failed to delete contract",
+    CONTRACT_NOT_FOUND = "Contract not found",
+    CONTRACT_ALREADY_APPLIED = "You have already applied for this contract",
+    CONTRACT_FETCH_SUCCESS = "Contract fetched successfully",
+    CONTRACT_FETCH_FAILED = "Failed to fetch contract",
+    CONTRACT_EDIT_NOT_ALLOWED_COMPLETED = "Editing is not allowed for completed contracts",
+    CONTRACT_EDIT_NOT_ALLOWED_CANCELLED = "Editing is not allowed for cancelled contracts",
+    CONTRACT_HIRE_NOT_ALLOWED_COMPLETED = "Hiring is not allowed on completed contracts",
+    CONTRACT_HIRE_NOT_ALLOWED_CANCELLED = "Hiring is not allowed on cancelled contracts",
+    CONTRACT_EDIT_COMPLETED_DENIED = "Editing is not allowed for completed contracts",
+    CONTRACT_EDIT_CANCELLED_DENIED = "Editing is not allowed for cancelled contracts",
+    CONTRACT_VENDOR_REMOVED_SUCCESS = "Vendor removed successfully",
+    // --------------------------------------------------------------------------chatRoom
+    CHAT_ROOM_CREATE_SUCCESS = "Chat room created successfully",
+    CHAT_ROOM_CREATE_FAILED = "Failed to create chat room",
+    CHAT_ROOM_FETCH_SUCCESS = "Chat room fetched successfully",
+    CHAT_ROOM_FETCH_FAILED = "Failed to fetch chat room",
+    CHAT_ROOM_UPDATE_SUCCESS = "Chat room updated successfully",
+    CHAT_ROOM_UPDATE_FAILED = "Failed to update chat room",
+    CHAT_ROOM_DELETE_SUCCESS = "Chat room deleted successfully",
+    CHAT_ROOM_DELETE_FAILED = "Failed to delete chat room",
+    CHAT_ROOM_NOT_FOUND = "Chat room not found",
+    
+    // --------------------------------------------------------------------------message
+    MESSAGE_CREATED_FILED = 'Error to save message',
+    MESSAGE_FETCH_FILED = 'Error to fetch messages',
+    MESSAGE_FETCH_SUCCESS = '"Messages fetched successfully"',
+
 }
 
 
@@ -266,4 +304,27 @@ export enum BookingMessageContentLong {
 
  
   
+export enum ContractNotificationTitleEnum {
+  CONTRACT_APPLIED = "New apply for contract",
+  CONTRACT_APPROVED = "Contract approved",
+  CONTRACT_REJECTED = "Contract rejected",
+  CONTRACT_SIGNED = "Contract signed",
+  CONTRACT_CANCELLED = "Contract cancelled",
+}
 
+
+export enum ContractNotificationContentEnum {
+  CONTRACT_APPLIED =
+    "A vendor has applied for your contract \"{{contractName}}\". Please review the application and take action.",
+  CONTRACT_APPROVED =
+    "Your contract has been approved successfully. You can proceed with the next steps.",
+  CONTRACT_REJECTED =
+    "Your contract application has been rejected. You may review the details or apply again.",
+  CONTRACT_SIGNED =
+    "The contract has been signed by both parties. Work can begin as scheduled.",
+  CONTRACT_CANCELLED =
+    "This contract has been cancelled. No further action is required.",
+    CONTRACT_REMOVED =
+  "You have been removed from the contract \"{{contractName}}\" by the customer.",
+
+}

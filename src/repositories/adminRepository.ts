@@ -9,10 +9,10 @@ import { IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
 export class AdminRepository extends BaseRepository<IAdmin> implements IAdminRepo {
-  private _AdminModel = adminModel; // Corrected to adminModel (lowercase) and kept only this model as per edit
+  private _AdminModel = adminModel; 
 
   constructor() {
-    super(adminModel); // Corrected to adminModel (lowercase)
+    super(adminModel); 
   }
 
   //------------------------------------------------------- check admin exist

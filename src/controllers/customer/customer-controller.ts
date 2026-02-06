@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { log } from "console";
 import { ICustomerServiceInterface } from "../../interface/customer-interface/customer-service-interface";
 import logger from "../../utils/logger";
 

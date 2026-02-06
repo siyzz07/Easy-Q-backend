@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IStaff, IStaffAdd } from "../../types/vendorType";
+import {  IStaffAdd } from "../../types/vendorType";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IStaffServiceInterface } from "../../interface/staff-interface/staff-service-interface";

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
-import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 export class NotificaionController {
@@ -15,7 +14,7 @@ export class NotificaionController {
  * 
  */
   getNotification = async (req: Request, res: Response) => {
-    let userId = req.body.userId;
+    const userId = req.body.userId;
     const result = await this._NotificationService.getNotification(userId);
     if (result) {
       res.status(StatusCodeEnum.OK).json({ success: true, data: result });

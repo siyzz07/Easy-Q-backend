@@ -46,7 +46,7 @@ export class ReviewService implements IReviewServiceInterface {
       comment: data.comment,
     };
 
-    let result = await this._ReviewRepository.addReview(reviewData);
+    const result = await this._ReviewRepository.addReview(reviewData);
 
     if (result) {
       const totalReview = await this._ReviewRepository.getReviews(
@@ -100,7 +100,7 @@ export class ReviewService implements IReviewServiceInterface {
     if (ReviewData) {
       shopId = ReviewData.vendorId;
     }
-    let review = await this._ReviewRepository.deleteReview(reviewId);
+    const review = await this._ReviewRepository.deleteReview(reviewId);
 
     if (review) {
       const totalReview = await this._ReviewRepository.getReviews(
@@ -135,7 +135,7 @@ export class ReviewService implements IReviewServiceInterface {
     if (ReviewData) {
       shopId = ReviewData.vendorId;
     }
-    let review = await this._ReviewRepository.updateReview(reviewId, data);
+    const review = await this._ReviewRepository.updateReview(reviewId, data);
 
     if (review) {
       const totalReview = await this._ReviewRepository.getReviews(

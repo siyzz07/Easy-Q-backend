@@ -1,6 +1,5 @@
-import { FilterQuery, PopulateOption, PopulateOptions } from "mongoose";
+import { FilterQuery, PopulateOptions } from "mongoose";
 import { IBookingRopsitoryInterface } from "../interface/booking-interface/booking-repository-interface";
-import { IBaseRepositoryInterface } from "../interface/common-interface/base-resposiotry-interface";
 import { BookingModel } from "../models/bookingModel";
 import {
   IBooking,
@@ -8,8 +7,6 @@ import {
   IPaginationResponseMeta,
 } from "../types/common-types";
 import BaseRepository from "./baseRepository";
-import { log } from "console";
-import { ErrorReply } from "redis";
 import { ErrorResponse } from "../utils/errorResponse";
 import { MessageEnum } from "../enums/messagesEnum";
 import { StatusCodeEnum } from "../enums/httpStatusCodeEnum";

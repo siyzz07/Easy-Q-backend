@@ -32,7 +32,8 @@ export class ServiceTypeController {
   getServiceTypes = async (req: Request, res: Response): Promise<void> => {
     try {
       
-      
+        console.log('service types reached');
+        
       const result = await this._ServiceTypeService.getServices()
       
       res
@@ -50,20 +51,15 @@ export class ServiceTypeController {
   //--------------------------------------------------------------------------edit services
   editServiceType = async (req:Request,res:Response) :Promise<void> =>{
     try{
-        console.log( req.body);
+    
         const result = await this._ServiceTypeService.editServiceType(req.body)
-        console.log('ppp',result);
         
         if( result){
           res
             .status(StatusCodeEnum.OK)
             .json({message:MessageEnum.SERVICE_EDIT_SUCCESS})
         }
-    }catch(error : unknown){
-      
-
-
-    }
+    }catch(error : unknown){ }
   }
   
 }

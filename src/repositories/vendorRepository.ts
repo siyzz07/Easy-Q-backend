@@ -149,10 +149,10 @@ export class VendorRepository
   }
 
   // ----------------------- add vendor shop image
-  async addImage(_id: string, image: IImage): Promise<boolean> {
+  async addImage(_id: string, image: IImage[]): Promise<boolean> {
     const result = await this._vendorModel.findByIdAndUpdate(
       _id,
-      { $push: { images: image } },
+      { $push: { images: {$each:image} } },
       { new: true }
     );
 

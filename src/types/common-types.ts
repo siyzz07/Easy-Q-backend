@@ -1,6 +1,6 @@
-import mongoose, { Mongoose, SortOrder } from "mongoose";
+import mongoose, {  SortOrder } from "mongoose";
 import { ICustomer, ICustomerAddressData } from "./customerType";
-import { IService, IServiceData, IStaff, IVendor } from "./vendorType";
+import { IService, IStaff, IVendor } from "./vendorType";
 import { TransactionTypeEnum, TransactionStatusEnum, TransactionOwnerTypeEnu } from "../enums/transactionEnum";
 
 export interface IJwtPayload {
@@ -85,9 +85,11 @@ export interface INotification {
     | "new_booking"
     | "booking_cancelled"
     | "booking_completed"
-    | "contract_applyied"
     |'booking_rescheduled'
-    | "contract_signed"
+    | "contract_applied"
+    |"contract_approved"
+    |"contract_rejected"
+    |"contract_cancelled"
     | "message"
     | "system"
     | "payment_success"
@@ -170,3 +172,96 @@ export interface IWallet {
   balance: number;
 
 }
+
+
+
+
+export interface IContract {
+  _id?: mongoose.Types.ObjectId;
+  contractId: string;
+  customerId: mongoose.Types.ObjectId;
+  address: {
+    _id:string
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    phone: string;
+  };
+  title: string;
+  description: string;
+  service:mongoose.Types.ObjectId;
+  budget: number;
+
+  location: {
+    type: "Point";
+    coordinates: number[]; 
+  };
+
+
+  acceptedVendors: mongoose.Types.ObjectId[];
+  appliedVendors: mongoose.Types.ObjectId[]
+  status: "open" | "in_progress" | "completed" | "cancelled"|"closed";
+  isHiring:boolean
+  createdAt: Date;
+}
+
+
+
+export interface IUpdateContractValues {
+  contractName: string;
+  description: string;
+  phone: string;
+  address: string;
+  serviceType: string;
+  status: ContractStatusEnum;
+  isHiring: boolean;
+}
+
+export interface IAddContracValues {
+  contractName: string;
+  description: string;
+  phone: string;
+  address: string;
+  serviceType: string;
+}
+
+
+
+
+export interface IChatMember {
+  userId: mongoose.Types.ObjectId;
+  userType: "Customer" | "Vendor";
+  role: "admin" | "member";
+}
+
+export interface IChatRoom {
+  _id?: mongoose.Types.ObjectId;
+  contractId: mongoose.Types.ObjectId;
+  members: IChatMember[];
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+
+import { Types } from "mongoose";
+import { ContractStatusEnum } from "../enums/contractEnum";
+
+export type SenderModelType = "Vendor" | "Customer";
+
+export interface IMessage {
+  _id?: Types.ObjectId;
+  chatRoomId: Types.ObjectId;
+  sender: Types.ObjectId;
+  senderRole: SenderModelType;
+  text?: string;
+  attachments?: {
+    url: string;
+    type: "image" ;
+  }[];
+
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+

@@ -37,7 +37,7 @@ export const AddStaffSchema = Joi.object({
     .items(
       Joi.object({
         breakStartTime: Joi.string()
-          .required()
+          // .required()
           .custom((value, helpers) => {
             const parent = helpers.state.ancestors[1]; 
             const { openingTime, closingTime } = parent;
@@ -58,7 +58,7 @@ export const AddStaffSchema = Joi.object({
           }),
 
         breakEndTime: Joi.string()
-          .required()
+          // .required()
           .custom((value, helpers) => {
             const breakObj = helpers.state.ancestors[0];
             const parent = helpers.state.ancestors[1];
