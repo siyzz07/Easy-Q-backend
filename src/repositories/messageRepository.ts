@@ -15,13 +15,13 @@ export class MessageRepository
   }
 
     async createMessage(data: Partial<IMessage>): Promise<any> {
-      let result = await this.create(data as IMessage)
-      let message = await this._MessageModel.findById(result._id).populate('sender')   
+      const result = await this.create(data as IMessage)
+      const message = await this._MessageModel.findById(result._id).populate('sender')   
       return message 
     } 
 
   async getMessages(chatRoomId: string): Promise<IMessage[]> {
-    let data = await this._MessageModel.find({ chatRoomId:new mongoose.Types.ObjectId(chatRoomId) }).populate('sender')
+    const data = await this._MessageModel.find({ chatRoomId:new mongoose.Types.ObjectId(chatRoomId) }).populate('sender')
     return data
   }
 }

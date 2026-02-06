@@ -1,4 +1,4 @@
-// models/BookingModel.ts
+
 import mongoose, { Schema } from "mongoose";
 import { IBooking } from "../types/common-types";
 import { string } from "joi";

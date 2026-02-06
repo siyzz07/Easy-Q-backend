@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IShopTypeServiceInterface } from "../../interface/service-types-interface/service-type-service-interface";
-import { log } from "console";
 
 export class ServiceTypeController {
   private _ServiceTypeService: IShopTypeServiceInterface;
@@ -60,11 +59,7 @@ export class ServiceTypeController {
             .status(StatusCodeEnum.OK)
             .json({message:MessageEnum.SERVICE_EDIT_SUCCESS})
         }
-    }catch(error : unknown){
-      
-
-
-    }
+    }catch(error : unknown){ }
   }
   
 }

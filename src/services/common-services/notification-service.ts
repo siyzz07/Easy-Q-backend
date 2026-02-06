@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 import {
-  BookingMessageContent,
-  BookingMessageContentLong,
-  BookingMessageTitle,
   MessageEnum,
 } from "../../enums/messagesEnum";
 import { INotificationRepositoryInterface } from "../../interface/notificaion-interface/notificaion-repository-interface";

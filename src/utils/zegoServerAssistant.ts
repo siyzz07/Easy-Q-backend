@@ -147,15 +147,12 @@ export const generateToken04 = (
 
     const plaintText = JSON.stringify(tokenInfo);
 
-    // A randomly generated 16-byte string used as the AES encryption vector,
-    // which is Base64 encoded with the ciphertext to generate the final token
+
     const iv: string = makeRandomIv();
 
     // Encrypt
     const encryptBuf = aesEncrypt(plaintText, secret, iv);
 
-    // Token binary splicing: expiration time + Base64(iv length + iv + encrypted
-    // information length + encrypted information)
     const [b1, b2, b3] = [
         new Uint8Array(8),
         new Uint8Array(2),

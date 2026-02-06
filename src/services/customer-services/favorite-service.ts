@@ -2,7 +2,6 @@ import {
   FavoriteRquestDto,
   getFavoriteReqDto,
   getFavoriteResDto,
-  getFavoriteShopesResDto,
 } from "../../dto/favorite-dto/favorite-dto";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
@@ -13,8 +12,6 @@ import {
   getFavoriteResMapper,
   getFavoriteShopsResMapper,
 } from "../../mappers/favorite-mapper/favorite-mapper";
-import { IFavorite } from "../../types/customerType";
-import { IVendor } from "../../types/vendorType";
 import { ErrorResponse } from "../../utils/errorResponse";
 import logger from "../../utils/logger";
 

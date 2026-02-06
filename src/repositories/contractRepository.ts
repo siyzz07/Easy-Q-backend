@@ -80,7 +80,7 @@ class ContractRepository
       { path: "appliedVendors" },
     ];
 
-    let result = await this.filterWithPagination(options, filter, populate);
+    const result = await this.filterWithPagination(options, filter, populate);
     return result;
   }
 

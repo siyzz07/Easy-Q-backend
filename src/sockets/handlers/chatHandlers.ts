@@ -1,8 +1,7 @@
 import { Socket,Server } from "socket.io";
-import { socketAuth } from "../../middlewares/socketAuth";
 import { messageServiceInstance } from "../../di/chatDi";
 import mongoose from "mongoose";
-import { MessageResponseDTO } from "../../dto/message-dto/message-dto";
+
 
 export type AttachmentType = {
   url: string;

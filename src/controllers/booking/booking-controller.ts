@@ -3,7 +3,7 @@ import { IBookingServiceInterface } from "../../interface/booking-interface/book
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { checkTimeReqMapper } from "../../mappers/booking-mapper/booking-mapper";
-import { log } from "console";
+
 
 
 
@@ -196,7 +196,7 @@ export class BookingController {
    */
   statusUpdate = async (req:Request,res:Response) =>{
 
-    let bookingId = req.params.bookingId
+    const bookingId = req.params.bookingId
 
     const result = await this._BookingService.bookingStatusUpdate(bookingId,req.body.status)
 
@@ -221,8 +221,8 @@ export class BookingController {
    */
   isThereBooking = async (req:Request,res:Response) :Promise<void> =>{
 
-    let vendorId = req.params.vendorId
-    let customerId= req.body.userId
+    const vendorId = req.params.vendorId
+    const customerId= req.body.userId
     const result = await this._BookingService.bookingCheck({vendorId,customerId})
     res
       .status(StatusCodeEnum.OK)

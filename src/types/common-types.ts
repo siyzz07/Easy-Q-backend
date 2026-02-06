@@ -1,6 +1,6 @@
-import mongoose, { Mongoose, SortOrder } from "mongoose";
+import mongoose, {  SortOrder } from "mongoose";
 import { ICustomer, ICustomerAddressData } from "./customerType";
-import { IService, IServiceData, IStaff, IVendor } from "./vendorType";
+import { IService, IStaff, IVendor } from "./vendorType";
 import { TransactionTypeEnum, TransactionStatusEnum, TransactionOwnerTypeEnu } from "../enums/transactionEnum";
 
 export interface IJwtPayload {

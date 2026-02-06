@@ -1,5 +1,5 @@
 
-import { NextFunction, Request, response, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AuthServiceInterface } from "../../interface/auth-interface/auth-serivce-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";

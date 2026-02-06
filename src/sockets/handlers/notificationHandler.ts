@@ -1,7 +1,6 @@
 import { Server } from "socket.io";
 import logger from "../../utils/logger";
 import { INotification } from "../../types/common-types";
-import { log } from "winston";
 
 export interface INotificationPayload {
   title: string;

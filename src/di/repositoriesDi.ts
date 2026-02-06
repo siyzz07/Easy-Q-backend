@@ -13,9 +13,9 @@ import { VendorRepository } from "../repositories/vendorRepository";
 import { WalletRepository } from "../repositories/walletRepository";
 import ContractRepository from "../repositories/contractRepository";
 import { ChatRoomRepository } from "../repositories/chatRoomRepository";
+import { MessageRepository } from "../repositories/messageRepository";
 
 
-// Instantiate all Rep ositories ONCE
 export const adminRepository = new AdminRepository();
 export const bookingRepository = new BookingRepository();
 export const customerRepository = new CustomerRepository();
@@ -31,5 +31,4 @@ export const transactionRepository = new TransactionRepository()
 export const walletRepository = new WalletRepository()
 export const contractRepository = new ContractRepository();
 export const chatRoomRepository = new ChatRoomRepository()
-import { MessageRepository } from "../repositories/messageRepository";
 export const messageRepository = new MessageRepository();

@@ -14,7 +14,6 @@ import transactionRoute from './routes/transacationRoutes';
 import walletRoutes from './routes/walletRoutes';
 import notificaionRoute from './routes/notificaionRoutes';
 import contractRoute from './routes/contractRoutes';
-import chatRoom from './models/chatRoom';
 import chatRoute from './routes/chatRoute';
 
 

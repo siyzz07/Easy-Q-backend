@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
-import { MessageEnum } from "../../enums/messagesEnum"; // Assuming this exists
-import { log } from "console";
+import { MessageEnum } from "../../enums/messagesEnum"; 
+
 
 class ContractController {
   private _contractService: IContractServiceInterface;
@@ -137,7 +137,7 @@ class ContractController {
   applyContract = async (req: Request, res: Response): Promise<void> => {
     const vendorId = req.body.userId;
     const contractId = req.params.contractId;
-    let result = await this._contractService.applyForContract(
+    const result = await this._contractService.applyForContract(
       vendorId,
       contractId,
     );
@@ -198,8 +198,8 @@ class ContractController {
    */
   removeVendorFromContract = async (req:Request,res:Response) :Promise<void> =>{
 
-    let contractId = req.params.contractId
-    let vendorId= req.params.vendorId
+    const contractId = req.params.contractId
+    const vendorId= req.params.vendorId
 
     const result = await this._contractService.removeFromContract(vendorId,contractId)
 

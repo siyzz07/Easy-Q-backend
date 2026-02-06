@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { ICustomerAddressServiceInterface } from "../../interface/address-interface/address-service-interface";
-import { log } from "console";
 
 export class CustomerAddressContorller {
   private _addressService: ICustomerAddressServiceInterface;

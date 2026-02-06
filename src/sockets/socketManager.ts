@@ -1,7 +1,6 @@
 import { Server, Socket } from "socket.io";
 import http from "http";
 import { socketAuth } from '../middlewares/socketAuth';
-import logger from "../utils/logger";
 import { ChatEvents } from "./events/chatEvents";
 import { getRoomIdByUserId } from "./handlers/chatHandlers";
 import { chatRoomServiceInstance } from "../di/chatDi";

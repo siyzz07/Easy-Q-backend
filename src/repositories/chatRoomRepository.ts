@@ -66,7 +66,7 @@ export class ChatRoomRepository
    */
    async getChatRoomByContractId(contractId: string): Promise<IChatRoom | void> {
     
-    let result =  await this.findOneByCondiition({contractId:contractId})
+    const result =  await this.findOneByCondiition({contractId:contractId})
     if(result){
       return result
     }

@@ -46,7 +46,7 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       logger.info("chat room created");
 
       console.log("2");
-      let result = await this._ChatRoomRepository.addMemberToChatRoom(
+      const result = await this._ChatRoomRepository.addMemberToChatRoom(
         contractId.toString(),
         customerId,
         "Customer",

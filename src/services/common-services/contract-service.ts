@@ -80,7 +80,7 @@ class ContractService implements IContractServiceInterface {
     console.log("reached add contract -service");
 
     const addressesData = await this._AddressRepository.getAllAddress(userId);
-    let selectedAddress = addressesData?.address.find(
+    const selectedAddress = addressesData?.address.find(
       (data) => data._id?.toString() === address.toString(),
     );
 
@@ -124,7 +124,7 @@ class ContractService implements IContractServiceInterface {
 
     if (result) {
       console.log("13");
-      let response = await this._ChatRoomService.createChatRoom(
+      const response = await this._ChatRoomService.createChatRoom(
         result._id?.toString() as string,
         userId,
       );
@@ -191,7 +191,7 @@ class ContractService implements IContractServiceInterface {
     }
 
     const addressesData = await this._AddressRepository.getAllAddress(userId);
-    let selectedAddress = addressesData?.address.find(
+    const selectedAddress = addressesData?.address.find(
       (data) => data._id?.toString() === address.toString(),
     );
 
@@ -340,7 +340,7 @@ class ContractService implements IContractServiceInterface {
     contractId: string,
   ): Promise<boolean> => {
     const contract = await this._ContractRepository.getContract(contractId);
-    let result = await this._ContractRepository.applyForAContract(
+    const result = await this._ContractRepository.applyForAContract(
       vendorId,
       contractId,
     );
@@ -385,12 +385,12 @@ class ContractService implements IContractServiceInterface {
     decision: "accept" | "reject",
   ): Promise<boolean> => {
     if (decision == "accept") {
-      let result = await this._ContractRepository.acceptVendorForContract(
+      const result = await this._ContractRepository.acceptVendorForContract(
         contractId,
         vendorId,
       );
       if (result) {
-        let chatRoomResult = await this._ChatRoomService.addMemberToChatRoom(
+        const chatRoomResult = await this._ChatRoomService.addMemberToChatRoom(
           contractId,
           vendorId,
           "Vendor",
@@ -400,7 +400,7 @@ class ContractService implements IContractServiceInterface {
       logger.info("vendor added in contract successfully");
       return true;
     } else {
-      let result = await this._ContractRepository.removeFromContractRequest(
+      const result = await this._ContractRepository.removeFromContractRequest(
         contractId,
         vendorId,
       );
@@ -417,7 +417,7 @@ class ContractService implements IContractServiceInterface {
     vendorId: string,
     query: { page?: string; limit?: string; search?: string },
   ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> => {
-    let result = await this._ContractRepository.getVendorContracts(
+    const result = await this._ContractRepository.getVendorContracts(
       vendorId,
       query,
     );
