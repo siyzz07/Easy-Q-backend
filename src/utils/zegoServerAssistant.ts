@@ -97,8 +97,7 @@ export const DEFAULT_EXPIRY = 3600;
 
 export const ZEGO_APP_ID = Number(process.env.ZEGOCLOUD_APP_ID);
 export const ZEGO_SERVER_SECRET = String(process.env.ZEGOCLOUD_SERVER_SECRET);
-console.log("zc appid", ZEGO_APP_ID);
-console.log("zc secret", ZEGO_SERVER_SECRET);
+
 
 export const generateToken04 = (
     appId: number,

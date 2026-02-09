@@ -17,7 +17,7 @@ export class ServiceTypes
   }
 
   //--------------------------------------------------------------- add new Service
-  async addServiceType(data: {
+  async   addServiceType(data: {
     serviceName: string;
     description: string;
     isActive: boolean;
@@ -59,4 +59,10 @@ export class ServiceTypes
     const result = await this._ServiceTypeModel.find()
     return result
   }
+
+    //---------------------------------------------------------------- get service by condition
+     async getServiceByCondition(data: Partial<IServiceType>): Promise<IServiceType[]> {
+      const result = await this.findManyByCondition(data)
+      return result
+    }
 }

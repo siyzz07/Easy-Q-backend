@@ -537,6 +537,8 @@ export class AuthService implements AuthServiceInterface {
     let refreshToken: string | undefined;
     let entity: string;
 
+      console.log('role :>> ', role);
+
     switch (role?.toLowerCase()) {
       case RoleEnum.CUSTOMER.toLowerCase():
         refreshToken = token?.CustomerJwt;

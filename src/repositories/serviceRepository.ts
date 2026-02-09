@@ -37,7 +37,6 @@ export class ServiceRepository
           { serviceName: { $regex: query.search, $options: "i" } },
       ]
     }
-    
      const options = {
             page: Number(query.page) || 1,
             limit: Number(query.limit) || 10,

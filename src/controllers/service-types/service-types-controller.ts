@@ -50,7 +50,6 @@ export class ServiceTypeController {
 
   //--------------------------------------------------------------------------edit services
   editServiceType = async (req:Request,res:Response) :Promise<void> =>{
-    try{
     
         const result = await this._ServiceTypeService.editServiceType(req.body)
         
@@ -59,7 +58,6 @@ export class ServiceTypeController {
             .status(StatusCodeEnum.OK)
             .json({message:MessageEnum.SERVICE_EDIT_SUCCESS})
         }
-    }catch(error : unknown){ }
   }
   
 }
