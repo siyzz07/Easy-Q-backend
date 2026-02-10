@@ -1,7 +1,6 @@
-import { error, log } from "console";
+
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-
 import { AuthServiceInterface } from "../../interface/auth-interface/auth-serivce-interface";
 import { IAdmin } from "../../types/adminTypes";
 import { IJwtPayload, ILogin } from "../../types/common-types";
@@ -14,9 +13,7 @@ import logger from "../../utils/logger";
 import { sendEmail } from "../../utils/nodeMailer";
 
 import Jwt, {
-  JsonWebTokenError,
   JwtPayload,
-  TokenExpiredError,
 } from "jsonwebtoken";
 import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
 import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
@@ -162,8 +159,6 @@ export class AuthService implements AuthServiceInterface {
         ...payload,
         password: hashedPassword,
       };
-
-      console.log('vaaaaaalues',values)
 
       const result = await this._vendorRepository.addNewVendor(values as IVendor);
       if (result) {
@@ -537,7 +532,7 @@ export class AuthService implements AuthServiceInterface {
     let refreshToken: string | undefined;
     let entity: string;
 
-      console.log('role :>> ', role);
+    
 
     switch (role?.toLowerCase()) {
       case RoleEnum.CUSTOMER.toLowerCase():

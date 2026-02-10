@@ -4,20 +4,17 @@ import {
 } from "../../enums/messagesEnum";
 import { INotificationRepositoryInterface } from "../../interface/notificaion-interface/notificaion-repository-interface";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
-import { IBooking, INotification } from "../../types/common-types";
+import { INotification } from "../../types/common-types";
 import { socketNotificationHandler } from "../../sockets/handlers/notificationHandler";
-// import { ISocketManager, SocketManager } from "../../sockets/socketManager";
 import { socketManagerServer } from "../../sockets/socketInstance";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 export class NotificationService implements INotificationServiceInterface {
   private _NotificationRepository: INotificationRepositoryInterface;
-  // private _SocketManager :ISocketManager
 
   constructor(notificationRepository: INotificationRepositoryInterface) {
     this._NotificationRepository = notificationRepository;
-    //  this._SocketManager = socketManager;
   }
 
   /**
@@ -45,9 +42,9 @@ export class NotificationService implements INotificationServiceInterface {
   upateNotification = async (userId: string, updateType: string, id?: string): Promise<void>  =>{
 
       if(updateType == 'one'){
-         const  result = await this._NotificationRepository.updateNotification(userId,id)
+         await this._NotificationRepository.updateNotification(userId,id)
       }else{
-        const  result = await this._NotificationRepository.updateNotification(userId)
+        await this._NotificationRepository.updateNotification(userId)
       }
   }
 
@@ -78,7 +75,7 @@ export class NotificationService implements INotificationServiceInterface {
       },
     };
 
-    const result = await this._NotificationRepository.addNewNotification(
+     await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
 
@@ -115,7 +112,7 @@ export class NotificationService implements INotificationServiceInterface {
       },
     };
 
-    const result = await this._NotificationRepository.addNewNotification(
+     await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
     await socketNotificationHandler.bookingNotificationToCustomer(
@@ -151,7 +148,7 @@ sendContractNotificationToCustomer = async (customerId: string, category: "booki
       },
     };
 
-    const result = await this._NotificationRepository.addNewNotification(
+    await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
     await socketNotificationHandler.contractNotification(
@@ -178,7 +175,7 @@ sendContractNotificationToVendor = async(vendorId: string, category: "booking" |
       },
     };
 
-    const result = await this._NotificationRepository.addNewNotification(
+    await this._NotificationRepository.addNewNotification(
       NotificationPayload
     );
 

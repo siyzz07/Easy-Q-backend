@@ -1,5 +1,5 @@
 import {ICustomer} from "../../types/customerType";
-import { IService, IVendor } from "../../types/vendorType";
+
 
 
 

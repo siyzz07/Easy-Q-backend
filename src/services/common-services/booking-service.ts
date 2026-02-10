@@ -21,7 +21,7 @@ import {
   checkTimeDto,
 } from "../../dto/booking-dto/booking-dto";
 import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
-import mongoose, { mongo, Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
 import { IBooking, IPaginationResponseMeta } from "../../types/common-types";
@@ -35,7 +35,6 @@ import {
 } from "../../enums/transactionEnum";
 import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
 import { RoleEnum } from "../../enums/role";
-import { log } from "console";
 import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
 import {
   BookingNotificationTypeEnum,
@@ -553,7 +552,7 @@ selectedBookingData = async (
           this._TransactionRepository.createTransaction(vendorTransaction),
         ]);
       } catch (error) {
-        logger.error("error to refund data");
+        logger.error("error to refund data",error);
         throw new ErrorResponse(
           "Error to refund data",
           StatusCodeEnum.INTERNAL_SERVER_ERROR

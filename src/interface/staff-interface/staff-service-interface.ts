@@ -1,11 +1,6 @@
-import { IServiceType } from "../../types/adminTypes";
 import { IPaginationResponseMeta } from "../../types/common-types";
 import {
-  IService,
-  IShopData,
   IStaff,
-  IStaffAdd,
-  IVendor,
 } from "../../types/vendorType";
 
 //-------------------------------------------------vednor staff

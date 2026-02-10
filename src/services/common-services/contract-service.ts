@@ -4,8 +4,6 @@ import { ContractDto } from "../../dto/contract-dto/contract-dto";
 import { ContractMapper } from "../../mappers/contract-mapper/contract-mapper";
 import {
   IAddContracValues,
-  IContract,
-  IPaginationMeta,
   IPaginationResponseMeta,
   IUpdateContractValues,
 } from "../../types/common-types";
@@ -23,16 +21,12 @@ import { ContractStatusEnum } from "../../enums/contractEnum";
 import { IGeoLocation } from "../../types/vendorType";
 import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
 import logger from "../../utils/logger";
-import { string } from "joi";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
-import { INotificationRepositoryInterface } from "../../interface/notificaion-interface/notificaion-repository-interface";
-import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
 import {
   ContractNotificationTypeEnum,
   NotificationCategoryEnum,
 } from "../../enums/notificationEnum";
 import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
-import { log } from "winston";
 
 class ContractService implements IContractServiceInterface {
   private _ContractRepository: IContractRepositoryInterface;
@@ -116,20 +110,17 @@ class ContractService implements IContractServiceInterface {
       status: ContractStatusEnum.OPEN,
       createdAt: new Date(),
     };
-    console.log("11");
 
     const result =
       await this._ContractRepository.addNewContract(contractPayload);
-    console.log("12");
+
 
     if (result) {
-      console.log("13");
       const response = await this._ChatRoomService.createChatRoom(
         result._id?.toString() as string,
         userId,
       );
-      console.log("14");
-
+ 
       if (!response) {
         throw new ErrorResponse(
           "Failed to create contract",
@@ -390,7 +381,7 @@ class ContractService implements IContractServiceInterface {
         vendorId,
       );
       if (result) {
-        const chatRoomResult = await this._ChatRoomService.addMemberToChatRoom(
+       await this._ChatRoomService.addMemberToChatRoom(
           contractId,
           vendorId,
           "Vendor",
@@ -400,7 +391,7 @@ class ContractService implements IContractServiceInterface {
       logger.info("vendor added in contract successfully");
       return true;
     } else {
-      const result = await this._ContractRepository.removeFromContractRequest(
+      await this._ContractRepository.removeFromContractRequest(
         contractId,
         vendorId,
       );

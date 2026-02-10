@@ -1,6 +1,6 @@
 // import { VENDOR_DETAILS } from "../../actions/vendorActions";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
-import { IVendor } from "../../types/vendorType";
+
 
 export const VendorMapper = {
     toDTO(vendor: any): VendorDto {

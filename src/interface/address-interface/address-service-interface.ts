@@ -1,5 +1,5 @@
-import { IAddress, ICustomer} from "../../types/customerType";
-import { IService, IVendor } from "../../types/vendorType";
+import { IAddress} from "../../types/customerType";
+
 
 
 export interface ICustomerAddressServiceInterface{

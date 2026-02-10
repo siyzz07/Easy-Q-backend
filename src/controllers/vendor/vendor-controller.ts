@@ -3,7 +3,7 @@ import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
 import { workerData } from "worker_threads";
-import { log } from "console";
+
 
 class VendorController {
   private _vendorShopService: IVendorShopServiceInterface;
@@ -123,8 +123,10 @@ class VendorController {
     next: NextFunction
   ): Promise<void> => {
     try {
+      const year = req.query.year ? Number(req.query.year) : undefined;
       const result = await this._vendorShopService.getDashboard(
-        req.body.userId
+        req.body.userId,
+        year
       );
 
       if (result) {

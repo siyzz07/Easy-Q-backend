@@ -1,6 +1,5 @@
-import { Document, FilterQuery, UpdateQuery } from "mongoose"
+import {  FilterQuery, UpdateQuery } from "mongoose"
 import { ICustomerAddress } from "../../types/customerType";
-import { IStaff } from "../../types/vendorType";
 import { IPaginationMeta, IPaginationResponseMeta } from "../../types/common-types";
 
 

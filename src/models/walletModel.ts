@@ -1,4 +1,4 @@
-import mongoose, { model, Schema } from "mongoose";
+import  { model, Schema } from "mongoose";
 import { IWallet } from "../types/common-types";
 
 const walletSchema = new Schema<IWallet>(

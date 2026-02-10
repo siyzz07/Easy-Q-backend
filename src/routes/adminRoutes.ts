@@ -1,9 +1,6 @@
 import express from "express";
 import { adminController, serviceTypesControllerInstence } from "../di/adminDi";
 import { isAdmin, verifyToken } from "../middlewares/authTokenVerify";
-import { customerControllerInstance } from "../di/customerDi"; // Kept if needed for other things, but likely removable
-import { vendorControllerInstance } from "../di/vendorDi"; // Kept if needed
-
 const adminRoute = express.Router();
 
 /**

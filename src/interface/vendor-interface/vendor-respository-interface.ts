@@ -1,7 +1,5 @@
-import { VendorDTO } from "../../dto/booking-dto/booking-dto";
-import { IServiceType } from "../../types/adminTypes";
 import { IPaginationResponseMeta } from "../../types/common-types";
-import { IImage, IService, IStaff, IVendor } from "../../types/vendorType";
+import { IImage, IVendor } from "../../types/vendorType";
 
 
 export interface IVendorRepo {

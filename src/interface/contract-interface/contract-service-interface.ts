@@ -1,5 +1,5 @@
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
-import { IAddContracValues, IContract, IPaginationMeta, IPaginationResponseMeta, IUpdateContractValues } from "../../types/common-types";
+import { IAddContracValues, IPaginationResponseMeta, IUpdateContractValues } from "../../types/common-types";
 
 export interface IContractServiceInterface {
     addNewContract(userId:string,contractData: IAddContracValues): Promise<ContractDto>;

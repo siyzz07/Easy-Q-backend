@@ -13,7 +13,7 @@ dbConfig();
 
 const server = http.createServer(app);
 
-const PORT: string = process.env.PORT || "7003";
+const PORT: string = process.env.PORT || "7004";
 
 initSocket(server)
 

@@ -1,6 +1,4 @@
-import { IAddress, ICustomer, ICustomerAddress } from "../../types/customerType"
-import { IService, IVendor } from "../../types/vendorType"
-
+import { ICustomer } from "../../types/customerType"
 
 
 

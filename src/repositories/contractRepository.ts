@@ -1,9 +1,8 @@
-import mongoose, { FilterQuery, mongo, PopulateOptions } from "mongoose";
+import mongoose, { FilterQuery, PopulateOptions } from "mongoose";
 import { IContractRepositoryInterface } from "../interface/contract-interface/contract-respositlory-interface";
 import { Contract } from "../models/contractModel";
 import { IContract, IPaginationResponseMeta } from "../types/common-types";
 import BaseRepository from "./baseRepository";
-import { ContractDto } from "../dto/contract-dto/contract-dto";
 
 class ContractRepository
   extends BaseRepository<IContract>
@@ -279,6 +278,40 @@ class ContractRepository
     });
 
     return !!result;
+  }
+
+  /**
+   *
+   *  get contract stats
+   *
+   */
+  async getContractStats(vendorId: string, year: number): Promise<any> {
+    try {
+      const stats = await this._ContractModel.aggregate([
+        {
+          $match: {
+            acceptedVendors: new mongoose.Types.ObjectId(vendorId),
+            createdAt: {
+              $gte: new Date(`${year}-01-01`),
+              $lt: new Date(`${year + 1}-01-01`),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { "_id": 1 },
+        },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching contract stats:", error);
+      throw error;
+    }
   }
 }
 

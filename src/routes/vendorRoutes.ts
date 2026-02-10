@@ -1,9 +1,7 @@
 import express from "express";
 import { staffControllerInstance, vendorServiceControllerInstance, vendorControllerInstance } from "../di/vendorDi";
-import { emailVerifyTokenMIddleware } from "../middlewares/emailTokenVerify";
 import { isVendor, isVendorOrCustomer, verifyToken } from "../middlewares/authTokenVerify";
 import { vendorBlockAuth } from "../middlewares/vendorBlockAuth";
-import { authControllerInstance } from "../di/authDi";
 import { validate } from "../middlewares/validate";
 import { AddStaffSchema } from "../validations/staff-validation";
 

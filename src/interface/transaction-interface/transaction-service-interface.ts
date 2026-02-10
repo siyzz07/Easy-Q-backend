@@ -1,5 +1,5 @@
 import { TransactionDTO } from "../../dto/transaction-dto/transaction-dto"
-import { IPaginationResponseMeta, ITransaction } from "../../types/common-types"
+import { IPaginationResponseMeta } from "../../types/common-types"
 
 
 

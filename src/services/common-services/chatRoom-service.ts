@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+
 import { IChatRoomRepositoryInterface } from "../../interface/chatRoom-interface/chatRoom-respsitory-interface";
 import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
 import { IChatRoom } from "../../types/common-types";
@@ -12,7 +12,6 @@ import {
 } from "../../sockets/handlers/notificationHandler";
 import { socketManagerServer } from "../../sockets/socketInstance";
 import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
-import { log } from "console";
 import { generateToken04 } from "../../utils/zegoServerAssistant";
 import { leaveVedioCallNotify, getActiveCallUsers } from "../../sockets/handlers/chatHandlers";
 
@@ -37,22 +36,17 @@ export class ChatRoomService implements IChatRoomServiceInterface {
     contractId: string,
     customerId: string,
   ): Promise<boolean | void> => {
-    console.log("contractId :>> ", contractId);
-    console.log("customerId :>> ", customerId);
+
     const roomData = await this._ChatRoomRepository.createChatRoom(contractId);
-    console.log("1");
 
     if (roomData) {
       logger.info("chat room created");
-
-      console.log("2");
       const result = await this._ChatRoomRepository.addMemberToChatRoom(
         contractId.toString(),
         customerId,
         "Customer",
         "admin",
       );
-      console.log("3");
 
       if (result) {
         logger.info("Member addedd in chat room");
@@ -60,7 +54,6 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       } else {
         logger.error("error to add member in contract room");
       }
-      console.log("4");
     } else {
       logger.error("error to create chat room");
     }
@@ -220,14 +213,7 @@ export class ChatRoomService implements IChatRoomServiceInterface {
   const appId = Number(process.env.ZEGOCLOUD_APP_ID);
   const serverSecret = process.env.ZEGOCLOUD_SERVER_SECRET as string;
   const effectiveTime = 3600; 
-
-  console.log('appId :>> ', appId);
-  console.log('userId :>> ', userId);
-  console.log('serverSecret :>> ', serverSecret);
-  console.log('effectiveTime :>> ', effectiveTime);
-  console.log('roomId :>> ', roomId);
-
-
+ 
 
   
   const token = generateToken04(

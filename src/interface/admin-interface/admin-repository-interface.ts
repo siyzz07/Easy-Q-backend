@@ -1,6 +1,5 @@
 import { IAdmin } from "../../types/adminTypes"
-import { ICustomer } from "../../types/customerType"
-import { IVendor } from "../../types/vendorType"
+
 
 
 

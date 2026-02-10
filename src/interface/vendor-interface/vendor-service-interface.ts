@@ -8,7 +8,7 @@ export interface IVendorShopServiceInterface{
  addShopData (data:IShopData,vendorId:string,coordinates:{lat:number,lon:number},workingDays:string) :Promise<any>
  getShopData (id:string):Promise<VendorDto>
  getShopTypes () :Promise<IServiceType[]|[]>
- getDashboard (data:string) :Promise<any>
+ getDashboard (data:string, year?: number) :Promise<any>
  updateVendor(id:string,workingDays:string,data:IVendor):Promise<boolean|void>;
 
   getEachVendorData (data:string):Promise<VendorDto|void>

@@ -1,9 +1,7 @@
 import {
-  Document,
   Model,
   FilterQuery,
   UpdateQuery,
-  FlattenMaps,
   PopulateOptions,
 } from "mongoose";
 
@@ -13,7 +11,7 @@ import {
   IPaginationMeta,
   IPaginationResponseMeta,
 } from "../types/common-types";
-import { options } from "joi";
+
 
 class BaseRepository<T>
   implements IBaseRepositoryInterface<T>

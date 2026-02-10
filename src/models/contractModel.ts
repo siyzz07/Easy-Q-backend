@@ -1,7 +1,6 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IContract } from "../types/common-types";
 import { ContractStatusEnum } from "../enums/contractEnum";
-import { string } from "joi";
 
 const ContractSchema = new Schema<IContract>({
   contractId: {

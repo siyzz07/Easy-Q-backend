@@ -15,4 +15,5 @@ import { IContract, IPaginationResponseMeta } from "../../types/common-types";
     acceptVendorForContract (contractId:string,vendorId:string):Promise<boolean>
     getVendorContracts(vendorId:string, query:{page?:string,limit?:string,search?:string}):Promise<{data:ContractDto[] , pagination:IPaginationResponseMeta}>
     removeRomAcceptedVendor(contractId:string , vendorId:string):Promise<boolean>
+    getContractStats(vendorId: string, year: number): Promise<any>
  }

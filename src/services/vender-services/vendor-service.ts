@@ -14,17 +14,31 @@ import { IPaginationResponseMeta } from "../../types/common-types";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 
+import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
+import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
+
 class VendorService implements IVendorShopServiceInterface {
   private _vendorRepo: IVendorRepo;
   private _staffRepo:IStaffRepositoryInterface
   private _serviceTypesRepo:IServiceTypesRepositoryInterface
   private _serviceRepo :IServiceRepositoryInterface
+  private _bookingRepo: IBookingRopsitoryInterface
+  private _contractRepo: IContractRepositoryInterface
 
-  constructor(vendorRepo: IVendorRepo,staffRepo:IStaffRepositoryInterface,serviceTypes:IServiceTypesRepositoryInterface,serviceRepo:IServiceRepositoryInterface) {
+  constructor(
+    vendorRepo: IVendorRepo,
+    staffRepo:IStaffRepositoryInterface,
+    serviceTypes:IServiceTypesRepositoryInterface,
+    serviceRepo:IServiceRepositoryInterface,
+    bookingRepo: IBookingRopsitoryInterface,
+    contractRepo: IContractRepositoryInterface
+  ) {
     this._vendorRepo = vendorRepo;
     this._staffRepo= staffRepo
     this._serviceTypesRepo=serviceTypes
     this._serviceRepo = serviceRepo
+    this._bookingRepo = bookingRepo
+    this._contractRepo = contractRepo
   }
 
 
@@ -100,12 +114,16 @@ class VendorService implements IVendorShopServiceInterface {
 
 
   //----------------------------------------- vendor dashboard
-  getDashboard = async (data: string): Promise<any> => {
+  getDashboard = async (data: string, year?: number): Promise<any> => {
     const shopId= data
+    const currentYear = year || new Date().getFullYear();
 
 
     const staffData = await this._staffRepo.getStaffData(shopId)
     const serviceData = await this._serviceRepo.getServiceData(shopId)
+    const bookingStats = await this._bookingRepo.getBookingStats(shopId, currentYear);
+    const contractStats = await this._contractRepo.getContractStats(shopId, currentYear);
+    const weeklyBookingStats = await this._bookingRepo.getWeeklyBookingStats(shopId);
     
 
     const totalStaff = staffData.length
@@ -139,8 +157,30 @@ class VendorService implements IVendorShopServiceInterface {
       return acc
     },0)
     
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    
+    const chartData = months.map((month, index) => {
+        const monthNum = index + 1;
+        const booking = bookingStats.find((b: any) => b._id === monthNum);
+        const contract = contractStats.find((c: any) => c._id === monthNum);
+        return {
+            month: month,
+            bookings: booking ? booking.count : 0,
+            contracts: contract ? contract.count : 0
+        };
+    });
 
-    return {totalStaff,availableStaff,totalUnavailableStaff,totalService,totalAvailableService,totalUnavailableService}
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const weeklyChartData = days.map((day, index) => {
+      const dayNum = index + 1; // MongoDB $dayOfWeek returns 1 (Sunday) to 7 (Saturday)
+      const booking = weeklyBookingStats.find((b: any) => b._id === dayNum);
+      return {
+        day: day,
+        bookings: booking ? booking.count : 0,
+      };
+    });
+
+    return {totalStaff,availableStaff,totalUnavailableStaff,totalService,totalAvailableService,totalUnavailableService, chartData, weeklyChartData}
 
   }
 

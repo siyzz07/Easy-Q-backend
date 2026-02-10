@@ -1,3 +1,4 @@
+
 import { FilterQuery, PopulateOptions } from "mongoose";
 import { IBookingRopsitoryInterface } from "../interface/booking-interface/booking-repository-interface";
 import { BookingModel } from "../models/bookingModel";
@@ -167,4 +168,79 @@ export class BookingRepository
       pagination: IPaginationResponseMeta;
     };
   }
+
+  //----------------------------------- get booking stats
+  async getBookingStats(vendorId: string, year: number): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        {
+          $match: {
+            shopId: new mongoose.Types.ObjectId(vendorId),
+            createdAt: {
+              $gte: new Date(`${year}-01-01`),
+              $lt: new Date(`${year + 1}-01-01`),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { "_id": 1 },
+        },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching booking stats:", error);
+      throw new ErrorResponse(
+        MessageEnum.SERVER_ERROR,
+        StatusCodeEnum.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  //----------------------------------- get weekly booking stats
+  async getWeeklyBookingStats(vendorId: string): Promise<any> {
+    try {
+      const startOfWeek = new Date();
+      startOfWeek.setHours(0, 0, 0, 0);
+      startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(endOfWeek.getDate() + 7);
+
+      const stats = await this._BookingModal.aggregate([
+        {
+          $match: {
+            shopId: new mongoose.Types.ObjectId(vendorId),
+            createdAt: {
+              $gte: startOfWeek,
+              $lt: endOfWeek,
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $dayOfWeek: "$createdAt" },
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { "_id": 1 },
+        },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching weekly booking stats:", error);
+      throw new ErrorResponse(
+        MessageEnum.SERVER_ERROR,
+        StatusCodeEnum.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+
 }

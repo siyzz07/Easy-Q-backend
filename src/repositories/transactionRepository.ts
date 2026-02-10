@@ -1,9 +1,9 @@
-import { options } from "joi";
+
 import { ITransactionRepositoryInterface } from "../interface/transaction-interface/transaction-repository-interface";
 import { TransactionModel } from "../models/transactionModel";
 import { IPaginationResponseMeta, ITransaction } from "../types/common-types";
 import BaseRepository from "./baseRepository";
-import mongoose, { FilterQuery, PopulateOption, PopulateOptions } from 'mongoose';
+import  { FilterQuery, PopulateOptions } from 'mongoose';
 
 
 export class TransactionRepository extends BaseRepository<ITransaction> implements ITransactionRepositoryInterface{
