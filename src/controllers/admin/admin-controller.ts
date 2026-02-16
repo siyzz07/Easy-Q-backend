@@ -19,11 +19,7 @@ export class AdminController {
     try {
       const result = await this._adminService.dashboard();
       res.status(StatusCodeEnum.OK).json({
-        totalCutomers: result.totalCutomers,
-        totalVednors: result.totalVednors,
-        pendingVendors: result.pendingVendors,
-        verifiedVendors: result.verifiedVendors,
-        rejectedVendors: result.rejectedVendors,
+        ...result,
       });
     } catch (error: unknown) {
       next(error);

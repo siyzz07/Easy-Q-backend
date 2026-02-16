@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, model, mongo } from "mongoose";
+import mongoose, { Schema} from "mongoose";
 import { INotification } from "../types/common-types";
 
 

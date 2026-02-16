@@ -172,7 +172,7 @@ class VendorService implements IVendorShopServiceInterface {
 
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const weeklyChartData = days.map((day, index) => {
-      const dayNum = index + 1; // MongoDB $dayOfWeek returns 1 (Sunday) to 7 (Saturday)
+      const dayNum = index + 1;
       const booking = weeklyBookingStats.find((b: any) => b._id === dayNum);
       return {
         day: day,
@@ -180,7 +180,21 @@ class VendorService implements IVendorShopServiceInterface {
       };
     });
 
-    return {totalStaff,availableStaff,totalUnavailableStaff,totalService,totalAvailableService,totalUnavailableService, chartData, weeklyChartData}
+    const extraStats = await this._bookingRepo.getVendorRevenueAndCustomerCount(shopId);
+
+    return {
+      totalStaff,
+      availableStaff,
+      totalUnavailableStaff,
+      totalService,
+      totalAvailableService,
+      totalUnavailableService,
+      totalRevenue: extraStats.totalRevenue,
+      customerCount: extraStats.customerCount,
+      pendingBookingsCount: extraStats.pendingBookings,
+      chartData, 
+      weeklyChartData
+    }
 
   }
 

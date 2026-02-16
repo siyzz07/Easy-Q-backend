@@ -16,8 +16,6 @@ export class StaffController {
   addStaff = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
     try {
       const { userId, ...data }:{userId:string,data:IStaffAdd} = { ...req.body };
-
-        console.log("---------------------------0",req.body);
         
       const result = await this._StaffServices.addNewStaff(userId, data);
       if (result) {

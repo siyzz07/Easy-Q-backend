@@ -7,7 +7,6 @@ export class AdminRepository
   extends BaseRepository<IAdmin>
   implements IAdminRepo
 {
-  private _AdminModel = adminModel;
 
   constructor() {
     super(adminModel);

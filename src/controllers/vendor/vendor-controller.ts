@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
-import { workerData } from "worker_threads";
+
 
 
 class VendorController {

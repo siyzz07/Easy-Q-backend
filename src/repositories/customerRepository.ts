@@ -1,8 +1,6 @@
 import { ICustomer } from "../types/customerType";
 import customer from "../models/customerModel";
 import BaseRepository from "./baseRepository";
-import vendorModel from "../models/vendorModel";
-import Service from "../models/ServiceModel";
 import { ICustomerRepo } from "../interface/customer-interface/customer-repository-interface";
 
 export class CustomerRepository
@@ -10,8 +8,6 @@ export class CustomerRepository
   implements ICustomerRepo
 {
   private _customerModel = customer;
-  private _vendorModel = vendorModel;
-  private _VendorServiceModel = Service;
 
   constructor() {
     super(customer);

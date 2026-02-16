@@ -1,7 +1,6 @@
 
 import  express from 'express'
 import { isCustomer, isVendor, isVendorOrCustomer, verifyToken } from '../middlewares/authTokenVerify'
-import { customerBlockAuth } from '../middlewares/customerBlockAuth'
 import { BookingControllerInstance } from '../di/commonDi'
 
 const bookingRoute = express.Router()

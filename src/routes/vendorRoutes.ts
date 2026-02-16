@@ -12,18 +12,6 @@ const vendorRoute = express.Router()
 
 
 
-//---------------------------------------------- Auth
-
-// vendorRoute.post('/auth/verify-email',authControllerInstance.verifyEmail)
-// vendorRoute.post('/auth/add-vendor',emailVerifyTokenMIddleware,authControllerInstance.addNewEntity)
-// vendorRoute.post('/auth/login',authControllerInstance.login)
-// vendorRoute.post('/reset-password/verify',authControllerInstance.resetPasswordEmailVerify)
-// vendorRoute.post('/reset-password',emailVerifyTokenMIddleware,authControllerInstance.resetPassword)
-// vendorRoute.post('/auth/refresh-token',authControllerInstance.refreshToken)
-// vendorRoute.post('/logout',verifyToken,authControllerInstance.logout)
-
-
-
 
 
 //----------------------------------------------  vendor

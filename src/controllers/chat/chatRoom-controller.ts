@@ -38,11 +38,8 @@ export class ChatRoomController {
         const contractId = req.body.contractId
         const caller = req.body.caller
 
-        console.log('req.body :>> ', req.body);
 
         const response = await this._ChatRoomService.startVedioCall(roomId,contractId,caller)
-
-        console.log('response :>> ', response);
         res
             .status(StatusCodeEnum.OK)
             .json({success:true , roomId:response})
@@ -75,8 +72,7 @@ export class ChatRoomController {
      */
     leaveVedioCall = async (req:Request,res:Response):Promise<void> =>{
 
-        const response = await this._ChatRoomService.leaveVedioCall(req.body.roomId , req.body.leaveUser)
-
+         await this._ChatRoomService.leaveVedioCall(req.body.roomId , req.body.leaveUser)
         res
             .status(StatusCodeEnum.OK)
             .json({succcess:true})

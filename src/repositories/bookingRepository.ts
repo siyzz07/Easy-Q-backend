@@ -242,5 +242,101 @@ export class BookingRepository
     }
   }
 
+  //----------------------------------- get admin booking stats
+  async getAdminBookingStats(): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalRevenue: { $sum: { $toDouble: "$totalAmount" } },
+            totalBookings: { $sum: 1 },
+            completedBookings: {
+              $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] },
+            },
+            cancelledBookings: {
+              $sum: { $cond: [{ $eq: ["$status", "cancelled"] }, 1, 0] },
+            },
+            pendingBookings: {
+              $sum: { $cond: [{ $eq: ["$status", "pending"] }, 1, 0] },
+            },
+          },
+        },
+      ]);
+      return stats[0] || { totalRevenue: 0, totalBookings: 0, completedBookings: 0, cancelledBookings: 0, pendingBookings: 0 };
+    } catch (error) {
+      console.error("Error fetching admin booking stats:", error);
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
 
+  //----------------------------------- get admin monthly revenue stats
+  async getAdminMonthlyRevenueStats(year: number): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(`${year}-01-01`),
+              $lt: new Date(`${year + 1}-01-01`),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            revenue: { $sum: { $toDouble: "$totalAmount" } },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id": 1 } },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching admin monthly revenue stats:", error);
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  //----------------------------------- get vendor revenue and customer count
+  async getVendorRevenueAndCustomerCount(vendorId: string): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        {
+          $match: {
+            shopId: new mongoose.Types.ObjectId(vendorId),
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalRevenue: {
+              $sum: {
+                $cond: [
+                  { $eq: ["$status", "completed"] },
+                  { $toDouble: "$totalAmount" },
+                  0,
+                ],
+              },
+            },
+            uniqueCustomers: { $addToSet: "$customerId" },
+            pendingBookings: {
+              $sum: { $cond: [{ $eq: ["$status", "pending"] }, 1, 0] },
+            },
+          },
+        },
+        {
+          $project: {
+            totalRevenue: 1,
+            pendingBookings: 1,
+            customerCount: { $size: "$uniqueCustomers" },
+          },
+        },
+      ]);
+      return stats[0] || { totalRevenue: 0, customerCount: 0, pendingBookings: 0 };
+    } catch (error) {
+      console.error("Error fetching vendor revenue stats:", error);
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
 }

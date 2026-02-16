@@ -13,7 +13,7 @@ export class TransactionMapper {
             status: transaction.status,
             createdAt: transaction.createdAt,
             
-            // Format dates
+       
             date: format(new Date(transaction.createdAt), "MMM dd, yyyy"),
             time: format(new Date(transaction.createdAt), "hh:mm a"),
             bookingId: undefined,

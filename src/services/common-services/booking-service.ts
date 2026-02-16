@@ -50,7 +50,6 @@ export class BookingService implements IBookingServiceInterface {
   private _WalletService: IWalletServiceInterface;
   private _TransactionRepository: ITransactionRepositoryInterface;
   private _AddresRepository: ICustomerAddressRepositoryInterface;
-  // private _Cache_service: ICacheService;
 
   constructor(
     bookingService: IBookingRopsitoryInterface,
@@ -60,7 +59,6 @@ export class BookingService implements IBookingServiceInterface {
     walletSerivce: IWalletServiceInterface,
     transactionRepository: ITransactionRepositoryInterface,
     addressRepository: ICustomerAddressRepositoryInterface
-    // cacheService: ICacheService
   ) {
     this._BookingRepository = bookingService;
     this._ServiceRepository = serviceRepository;
@@ -69,7 +67,6 @@ export class BookingService implements IBookingServiceInterface {
     this._WalletService = walletSerivce;
     this._TransactionRepository = transactionRepository;
     this._AddresRepository = addressRepository;
-    // this._Cache_service = cacheService;
   }
 
   // ------------------------------- add new  booking ----------------------

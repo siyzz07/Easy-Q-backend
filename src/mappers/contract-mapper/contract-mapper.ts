@@ -1,4 +1,3 @@
-import { IContract } from "../../types/common-types";
 import { 
     ContractDto, 
     ContractCustomerDto, 

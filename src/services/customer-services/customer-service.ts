@@ -1,6 +1,5 @@
 
 import { MessageEnum } from "../../enums/messagesEnum";
-
 import { ICustomer } from "../../types/customerType";
 import { comparePassword, hashPassword } from "../../utils/hash";
 import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
@@ -36,10 +35,6 @@ export class CustomerService implements ICustomerServiceInterface {
     email: string;
     phone: string;
   }): Promise<boolean|void> => {
-
-     
-      
-      
 
     const result = await this._customerRepository.editProfile(data);
     

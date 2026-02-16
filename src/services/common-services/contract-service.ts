@@ -147,15 +147,16 @@ class ContractService implements IContractServiceInterface {
     userId: string,
     contractData: IUpdateContractValues,
   ): Promise<boolean | null> {
-    let {
+    const {
       contractName,
       description,
       phone,
       address,
       serviceType,
-      isHiring,
       status,
     } = contractData;
+
+    let {isHiring} = contractData
 
     const getContractData =
       await this._ContractRepository.getContract(contractId);
@@ -335,7 +336,7 @@ class ContractService implements IContractServiceInterface {
       vendorId,
       contractId,
     );
-    const vendroData = await this._VendorRepositroy.getEachVendorData(vendorId);
+     await this._VendorRepositroy.getEachVendorData(vendorId);
 
     if (result && contract) {
       const customerId = contract.customerId._id;
@@ -409,6 +410,25 @@ class ContractService implements IContractServiceInterface {
     query: { page?: string; limit?: string; search?: string },
   ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> => {
     const result = await this._ContractRepository.getVendorContracts(
+      vendorId,
+      query,
+    );
+    return {
+      data: ContractMapper.toDTOList(result.data),
+      pagination: result.pagination,
+    };
+  };
+
+  /**
+   *
+   *    get applied contracts of vendor
+   *
+   */
+  getVendorAppliedContracts = async (
+    vendorId: string,
+    query: { page?: string; limit?: string; search?: string },
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> => {
+    const result = await this._ContractRepository.getVendorAppliedContracts(
       vendorId,
       query,
     );

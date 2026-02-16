@@ -65,12 +65,17 @@ export class ChatRoomRepository
    *
    */
    async getChatRoomByContractId(contractId: string): Promise<IChatRoom | void> {
-    
-    const result =  await this.findOneByCondiition({contractId:contractId})
-    if(result){
-      return result
-    }
+    const filter = mongoose.isValidObjectId(contractId) 
+      ? { contractId: new mongoose.Types.ObjectId(contractId) }
+      : { contractId }; // Fallback for nanoid or other formats if used
 
+    const result = await this._ChatRoomModel.findOne(filter)
+      .populate('members.userId')
+      .exec();
+    
+    if (result) {
+      return result;
+    }
   }
 
    /**

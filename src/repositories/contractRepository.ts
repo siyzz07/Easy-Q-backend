@@ -266,6 +266,38 @@ class ContractRepository
 
   /**
    *
+   *  get vendor applied contracts
+   *
+   */
+  async getVendorAppliedContracts(
+    vendorId: string,
+    query: { page?: string; limit?: string; search?: string },
+  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
+    const filter: FilterQuery<IContract> = {};
+
+    if (query.search?.trim()) {
+      filter.$or = [{ title: { $regex: query.search, $options: "i" } }];
+    }
+
+    filter.appliedVendors = { $in: [vendorId] };
+
+    const options = {
+      page: Number(query.page) || 1,
+      limit: Number(query.limit) || 9,
+      sort: { createdAt: -1 as const },
+    };
+
+    const populate: PopulateOptions[] = [
+      { path: "customerId" },
+      { path: "service" },
+    ];
+
+    const result = await this.filterWithPagination(options, filter, populate);
+    return result;
+  }
+
+  /**
+   *
    *   remove from the accepted vendor contract
    *
    */
@@ -310,6 +342,32 @@ class ContractRepository
       return stats;
     } catch (error) {
       console.error("Error fetching contract stats:", error);
+      throw error;
+    }
+  }
+
+  async getAdminContractStats(): Promise<any> {
+    try {
+      const stats = await this._ContractModel.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalContracts: { $sum: 1 },
+            openContracts: {
+              $sum: { $cond: [{ $eq: ["$status", "open"] }, 1, 0] },
+            },
+            completedContracts: {
+              $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] },
+            },
+            cancelledContracts: {
+              $sum: { $cond: [{ $eq: ["$status", "cancelled"] }, 1, 0] },
+            },
+          },
+        },
+      ]);
+      return stats[0] || { totalContracts: 0, openContracts: 0, completedContracts: 0, cancelledContracts: 0 };
+    } catch (error) {
+      console.error("Error fetching admin contract stats:", error);
       throw error;
     }
   }

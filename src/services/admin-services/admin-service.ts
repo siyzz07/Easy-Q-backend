@@ -1,7 +1,8 @@
-import { IAdminRepo } from "../../interface/admin-interface/admin-repository-interface";
 import { IAdminServiceInterface } from "../../interface/admin-interface/admin-service-interface";
 import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
 import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
+import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
 import { IVendor } from "../../types/vendorType";
 import { CustomerDto } from "../../dto/customer-dto/customer-dto";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
@@ -10,18 +11,21 @@ import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 import { IPaginationResponseMeta } from "../../types/common-types";
 
 export class AdminService implements IAdminServiceInterface {
-  private _adminRepository: IAdminRepo;
   private _customerRepository: ICustomerRepo;
   private _vendorRepository: IVendorRepo;
+  private _bookingRepository: IBookingRopsitoryInterface;
+  private _contractRepository: IContractRepositoryInterface;
 
   constructor(
-    adminRepo: IAdminRepo,
     customerRepo: ICustomerRepo,
-    vendorRepo: IVendorRepo
+    vendorRepo: IVendorRepo,
+    bookingRepo: IBookingRopsitoryInterface,
+    contractRepo: IContractRepositoryInterface
   ) {
-    this._adminRepository = adminRepo;
     this._customerRepository = customerRepo;
     this._vendorRepository = vendorRepo;
+    this._bookingRepository = bookingRepo;
+    this._contractRepository = contractRepo;
   }
 
 
@@ -34,46 +38,52 @@ export class AdminService implements IAdminServiceInterface {
   dashboard = async (): Promise<any> => {
     const vendorsData = await this._vendorRepository.getVendorData();
     const customerData = await this._customerRepository.getCusomersData();
+    const bookingStats = await this._bookingRepository.getAdminBookingStats();
+    const contractStats = await this._contractRepository.getAdminContractStats();
+    
+    // Get analytics for current year
+    const year = new Date().getFullYear();
+    const monthlyRevenue = await this._bookingRepository.getAdminMonthlyRevenueStats(year);
 
-    const pendingVendors = vendorsData.reduce(
-      (acc: number, vendor: IVendor) => {
-        if (vendor.isVerified === "pending") {
-          acc += 1;
-        }
-        return acc;
-      },
-      0
-    );
+    const pendingVendors = vendorsData.reduce((acc: number, vendor: IVendor) => {
+      if (vendor.isVerified === "pending") acc += 1;
+      return acc;
+    }, 0);
 
-    const verifiedVendors = vendorsData.reduce(
-      (acc: number, vendor: IVendor) => {
-        if (vendor.isVerified === "verified") {
-          acc += 1;
-        }
-        return acc;
-      },
-      0
-    );
+    const verifiedVendors = vendorsData.reduce((acc: number, vendor: IVendor) => {
+      if (vendor.isVerified === "verified") acc += 1;
+      return acc;
+    }, 0);
 
-    const rejectedVendors = vendorsData.reduce(
-      (acc: number, vendor: IVendor) => {
-        if (vendor.isVerified === "rejected") {
-          acc += 1;
-        }
-        return acc;
-      },
-      0
-    );
+    const rejectedVendors = vendorsData.reduce((acc: number, vendor: IVendor) => {
+      if (vendor.isVerified === "rejected") acc += 1;
+      return acc;
+    }, 0);
 
-    const totalVednors = verifiedVendors + pendingVendors;
-    const totalCutomers = customerData.length;
+    const totalVendors = verifiedVendors + pendingVendors;
+    const totalCustomers = customerData.length;
+
+    // Prepare monthly data for chart
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const revenueChartData = months.map((month, index) => {
+      const monthNum = index + 1;
+      const data = monthlyRevenue.find((m: any) => m._id === monthNum);
+      return {
+        month,
+        revenue: data ? data.revenue : 0,
+        bookings: data ? data.count : 0
+      };
+    });
 
     return {
-      totalCutomers,
-      totalVednors,
+      totalCustomers,
+      totalVendors,
       pendingVendors,
       verifiedVendors,
       rejectedVendors,
+      bookingStats,
+      contractStats,
+      revenueChartData
     };
   };
 

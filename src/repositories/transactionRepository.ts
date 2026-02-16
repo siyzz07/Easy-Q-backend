@@ -1,4 +1,3 @@
-
 import { ITransactionRepositoryInterface } from "../interface/transaction-interface/transaction-repository-interface";
 import { TransactionModel } from "../models/transactionModel";
 import { IPaginationResponseMeta, ITransaction } from "../types/common-types";
@@ -8,8 +7,6 @@ import  { FilterQuery, PopulateOptions } from 'mongoose';
 
 export class TransactionRepository extends BaseRepository<ITransaction> implements ITransactionRepositoryInterface{
 
-
-    private _TransactionModel = TransactionModel
     constructor(){
         super(TransactionModel)
     }

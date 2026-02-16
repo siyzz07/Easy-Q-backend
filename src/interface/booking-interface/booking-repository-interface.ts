@@ -11,4 +11,7 @@ export interface IBookingRopsitoryInterface {
     bookingDatasForVendor (data:string ,query:{page?:string,limit?:string,search?:string, date?:string}) :Promise<{data:IBookingPopulated[],pagination:IPaginationResponseMeta}>
     getBookingStats(vendorId: string, year: number): Promise<any>
     getWeeklyBookingStats(vendorId: string): Promise<any>
+    getAdminBookingStats(): Promise<any>
+    getAdminMonthlyRevenueStats(year: number): Promise<any>
+    getVendorRevenueAndCustomerCount(vendorId: string): Promise<any>
 }

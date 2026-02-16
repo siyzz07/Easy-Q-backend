@@ -1,23 +1,15 @@
 import { FilterQuery } from "mongoose";
 import { IVendorRepo } from "../interface/vendor-interface/vendor-respository-interface";
-import Service from "../models/ServiceModel";
-import ServiceTypesModel from "../models/ServiceTypesModel";
-import staffModel from "../models/staffModel";
 import vendorModel from "../models/vendorModel";
-import { IServiceType } from "../types/adminTypes";
-import { IImage, IService, IStaff, IVendor } from "../types/vendorType";
+import { IImage, IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 import { IPaginationResponseMeta } from "../types/common-types";
-import { VendorDto } from "../dto/vendor-dto/vendor-dto";
 
 export class VendorRepository
   extends BaseRepository<IVendor>
   implements IVendorRepo
 {
   private _vendorModel = vendorModel;
-  private _ServiceTypeModel = ServiceTypesModel;
-  private _Service = Service;
-  private _Staff = staffModel;
 
   constructor() {
     super(vendorModel);

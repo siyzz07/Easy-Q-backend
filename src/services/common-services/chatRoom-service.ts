@@ -142,38 +142,70 @@ export class ChatRoomService implements IChatRoomServiceInterface {
     };
 
     const activeUsers = getActiveCallUsers(roomId);
+    const callerIdStr = String(caller);
     
-    console.log('ChatRoom Members:', JSON.stringify(chatRoomData.members.map(m => ({id: m.userId.toString(), type: m.userType})), null, 2));
-    console.log('Active Users in Room:', activeUsers ? Array.from(activeUsers) : 'None');
-    console.log('Caller:', caller);
+    console.log('--- startVedioCall: Detailed Notification Audit ---');
+    console.log('Contract ID:', contractId);
+    console.log('Room ID (ChatRoom):', roomId);
+    console.log('Caller ID:', callerIdStr);
+    console.log('Total Members Found in DB:', chatRoomData.members.length);
+    
+    // Log member types for debugging
+    const memberSummary = chatRoomData.members.map(m => ({
+        type: m.userType,
+        id: String((m.userId as any)?._id || m.userId)
+    }));
+    console.log('Members Summary:', JSON.stringify(memberSummary));
+    
+    const stats = { vendor: 0, customer: 0 };
+    chatRoomData.members.forEach(m => {
+        if (m.userType === 'Vendor') stats.vendor++;
+        else if (m.userType === 'Customer') stats.customer++;
+    });
+    console.log(`Member Counts -> Vendors: ${stats.vendor}, Customers: ${stats.customer}`);
 
     const notifyUsers: IVedioCallNotify[] = chatRoomData.members
       .filter((member) => {
-        const memberId = member.userId.toString();
-        const isActive = activeUsers?.has(memberId);
-        const isCaller = memberId === caller;
-        
-        if (isCaller) return false;
-        if (isActive) {
-            console.log(`Skipping active user: ${memberId}`);
+        // Robust ID extraction for populated user objects
+        const mUserId = (member.userId as any)?._id || member.userId;
+        if (!mUserId) {
+            console.log(`WARNING: Member has no userId! Type: ${member.userType}`);
             return false;
         }
+        
+        const memberId = String(mUserId);
+        const isActive = activeUsers?.has(memberId);
+        const isCaller = memberId === callerIdStr;
+        
+        console.log(`[AUDIT] Member: ${memberId} | Type: ${member.userType} | isCaller: ${isCaller} | isActive: ${isActive}`);
+
+        if (isCaller) return false;
+        
+        // Skip users already in the Zego meeting
+        if (isActive) {
+            console.log(`[AUDIT] --> Skipping already active participant: ${memberId}`);
+            return false;
+        }
+        
+        console.log(`[AUDIT] --> ACCEPTED for notification: ${memberId}`);
         return true;
       })
-      .map((value) => ({
-        userId: value.userId.toString(),
-        userType: value.userType,
-      }));
+      .map((value) => {
+        const id = String((value.userId as any)?._id || value.userId);
+        return {
+            userId: id,
+            userType: value.userType,
+        };
+      });
 
-    console.log('Users to Notify:', JSON.stringify(notifyUsers, null, 2));
+    console.log(`Total notifications to be sent: ${notifyUsers.length}`);
+    console.log('Notification Target IDs:', notifyUsers.map(u => u.userId));
 
     await socketNotificationHandler.vedioCallNotify(
       socketManagerServer.getIo(),
       notifyUsers,
       payload,
     );
-
-    console.log("roomId :>> ", roomId);
 
     return roomId;
   }
