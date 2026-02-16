@@ -73,7 +73,7 @@ export class BookingService implements IBookingServiceInterface {
   addNewbooking = async (
     data: CreateBookingDTO
   ): Promise<BookingResponseDTO | void> => {
-    const { userId, paymentMethod, bookingId, totalAmount, status } = data;
+    const { userId, paymentMethod, bookingId, status } = data;
 
     const existBooking = await this._BookingRepository.getEachBookingDataById(
       bookingId
@@ -125,7 +125,7 @@ export class BookingService implements IBookingServiceInterface {
           this._TransactionRepository.createTransaction(vendorTransaction),
         ]);
 
-        const vendorWallet = await this._WalletService.getWalletData(
+        await this._WalletService.getWalletData(
           existBooking.shopId._id as string,
           RoleEnum.VENDOR
         );
@@ -141,7 +141,7 @@ export class BookingService implements IBookingServiceInterface {
           userId as string,
           RoleEnum.CUSTOMER
         );
-        const vendorWallet = await this._WalletService.getWalletData(
+        await this._WalletService.getWalletData(
           existBooking.shopId._id as string,
           RoleEnum.VENDOR
         );
@@ -230,7 +230,6 @@ export class BookingService implements IBookingServiceInterface {
           result.bookingTimeStart
         );
         return BookingMapper.toDTO(result);
-      } else {
       }
     }
   };
@@ -496,7 +495,7 @@ selectedBookingData = async (
         booking.shopId._id as string,
         RoleEnum.VENDOR
       );
-      const custoerWallet = await this._WalletService.getWalletData(
+      await this._WalletService.getWalletData(
         booking.customerId._id as string,
         RoleEnum.CUSTOMER
       );

@@ -31,9 +31,9 @@ export class TransactionService implements ITransactionServiceInterface {
    */
   createTransaction = async (data: {
     bookingId: string;
-    type: string;
+    type?: string;
   }): Promise<any> => {
-    const { bookingId, type } = data;
+    const { bookingId } = data;
 
     const booking = await this._BookingRepository.getEachBookingDataById(
       bookingId

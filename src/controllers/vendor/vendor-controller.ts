@@ -38,17 +38,7 @@ class VendorController {
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.SHOP_DATA_ADDED_SUCCESS });
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message == MessageEnum.SHOP_DATA_ADDED_FAILED) {
-          res
-            .status(StatusCodeEnum.FORBIDDEN)
-            .json({ message: MessageEnum.SHOP_DATA_ADDED_FAILED });
-        } else {
-          res.status(StatusCodeEnum.FORBIDDEN).json({ message: error.message });
-        }
-      } else {
-        console.log("shop data adding error");
-      }
+       next(error)
     }
   };
 
@@ -64,9 +54,7 @@ class VendorController {
       const data = await this._vendorShopService.getShopData(id);
       res.status(StatusCodeEnum.OK).json({ data: data });
     } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
+      next(error)
     }
   };
 
@@ -85,9 +73,7 @@ class VendorController {
           .json({ message: MessageEnum.SERVICE_FETCH_SUCCESS, data: result });
       }
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
+      next(error)
     }
   };
 
@@ -135,7 +121,7 @@ class VendorController {
           .json({ message: MessageEnum.SUCCEESS, data: result });
       }
     } catch (error) {
-      throw error;
+      next(error);
     }
   };
 

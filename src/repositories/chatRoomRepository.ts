@@ -67,8 +67,7 @@ export class ChatRoomRepository
    async getChatRoomByContractId(contractId: string): Promise<IChatRoom | void> {
     const filter = mongoose.isValidObjectId(contractId) 
       ? { contractId: new mongoose.Types.ObjectId(contractId) }
-      : { contractId }; // Fallback for nanoid or other formats if used
-
+      : { contractId }; 
     const result = await this._ChatRoomModel.findOne(filter)
       .populate('members.userId')
       .exec();

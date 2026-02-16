@@ -6,7 +6,6 @@ dotenv.config({debug:false})
 import http from 'http'
 import app from "./app";
 import dbConfig from "./config/dbConfig";
-import { SocketManager } from './sockets/socketManager';
 import { initSocket } from './sockets/socketInstance';
 
 dbConfig();

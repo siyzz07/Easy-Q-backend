@@ -166,7 +166,7 @@ export class BookingController {
 
     const bookingId = req.params.bookingId
 
-    const result = await this._BookingService.refundBookingCash(bookingId)
+    await this._BookingService.refundBookingCash(bookingId)
 
     res
       .status(StatusCodeEnum.OK)

@@ -67,8 +67,8 @@ export class ChatRoomService implements IChatRoomServiceInterface {
   async addMemberToChatRoom(
     contractId: string,
     memberId: string,
-    memberType: "Customer" | "Vendor",
-    role: "admin" | "member",
+    _memberType: "Customer" | "Vendor",
+    _role: "admin" | "member",
   ): Promise<boolean> {
     const result = await this._ChatRoomRepository.addMemberToChatRoom(
       contractId,
@@ -76,6 +76,8 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       "Vendor",
       "member",
     );
+    console.log(_role,_memberType);
+    
     if (result) {
       logger.info("new vendor added in chat room");
       return true;

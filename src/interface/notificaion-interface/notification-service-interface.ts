@@ -1,4 +1,4 @@
-import { IBooking, INotification } from "../../types/common-types";
+import { INotification } from "../../types/common-types";
 
 
 export interface INotificationServiceInterface {

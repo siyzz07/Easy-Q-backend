@@ -1,4 +1,4 @@
-import { ITransaction, IBooking, IBookingPopulated } from "../../types/common-types";
+import { ITransaction, IBookingPopulated } from "../../types/common-types";
 import { TransactionDTO } from "../../dto/transaction-dto/transaction-dto";
 import { format } from "date-fns";
 

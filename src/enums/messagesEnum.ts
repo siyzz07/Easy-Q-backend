@@ -90,7 +90,7 @@ export enum MessageEnum {
   TOKEN_INVALID = "Invalid token",
   TOKEN_MISSING = "Token missing, please login",
   TOKEN_REFRESH_SUCCESS = "Access token refreshed successfully",
-  TOKEN_REFRESH_MISSING = "Refresh token missing",
+  TOKEN_REFRESH_MISSING = MessageEnum.REFRESH_TOKEN_MISSING,
 
 
 
@@ -122,7 +122,7 @@ export enum MessageEnum {
   ADDRESS_DELETED_FAILED = "Unable to delete address",
   ADDRESS_INVALID = "Invalid address data",
   ADDRESS_EDIT_SUCCESS = "Address editing success",
-  ADDRESS_EDIT_FAILED = "Invalid address data",
+  ADDRESS_EDIT_FAILED = "Invalid address data.",
 
 
   // --------------------------------------------------------------------------service by admin
@@ -146,11 +146,11 @@ export enum MessageEnum {
 
 
    // --------------------------------------------------------------------------service by vendor
-  VENDOR_SERVICE_ADD_SUCCESS = "Service added successfully.",
-  VENDOR_SERVICE_FETCH_SUCCESS = "Service fetch successfully.",
-  VENDOR_SERVICE_ADD_FAILD = "Failed to add service. Please try again.",
-  VENDOR_SERVICE_ALREADY_EXIST = "Service already exists.",
-  VENDOR_SERVICE_EDIT_SUCCESS = "Service edited successfully.",
+  VENDOR_SERVICE_ADD_SUCCESS = MessageEnum.SERVICE_ADD_SUCCESS,
+  VENDOR_SERVICE_FETCH_SUCCESS = MessageEnum.SERVICE_FETCH_SUCCESS,
+  VENDOR_SERVICE_ADD_FAILD = MessageEnum.SERVICE_ADD_FAILD,
+  VENDOR_SERVICE_ALREADY_EXIST = MessageEnum.SERVICE_ALREADY_EXIST,
+  VENDOR_SERVICE_EDIT_SUCCESS = MessageEnum.SERVICE_EDIT_SUCCESS,
 
   // --------------------------------------------------------------------------Booking
   BOOKING_CREATED_SUCCESS = "Booking created successfully.",
@@ -227,8 +227,8 @@ export enum MessageEnum {
     CONTRACT_EDIT_NOT_ALLOWED_CANCELLED = "Editing is not allowed for cancelled contracts",
     CONTRACT_HIRE_NOT_ALLOWED_COMPLETED = "Hiring is not allowed on completed contracts",
     CONTRACT_HIRE_NOT_ALLOWED_CANCELLED = "Hiring is not allowed on cancelled contracts",
-    CONTRACT_EDIT_COMPLETED_DENIED = "Editing is not allowed for completed contracts",
-    CONTRACT_EDIT_CANCELLED_DENIED = "Editing is not allowed for cancelled contracts",
+    CONTRACT_EDIT_COMPLETED_DENIED = MessageEnum.CONTRACT_EDIT_NOT_ALLOWED_COMPLETED,
+    CONTRACT_EDIT_CANCELLED_DENIED = MessageEnum.CONTRACT_EDIT_NOT_ALLOWED_CANCELLED,
     CONTRACT_VENDOR_REMOVED_SUCCESS = "Vendor removed successfully",
     // --------------------------------------------------------------------------chatRoom
     CHAT_ROOM_CREATE_SUCCESS = "Chat room created successfully",

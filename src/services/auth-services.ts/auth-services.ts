@@ -375,8 +375,8 @@ export class AuthService implements AuthServiceInterface {
       audience:process.env.GOOGLE_CLIENT_ID
     })
 
-    if(!ticket){
-
+    if (!ticket) {
+      throw new ErrorResponse(MessageEnum.TOKEN_INVALID, StatusCodeEnum.UNAUTHORIZED);
     }
 
     const googleData = ticket.getPayload() 
