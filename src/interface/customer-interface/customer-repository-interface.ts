@@ -2,7 +2,7 @@ import { ICustomer } from "../../types/customerType"
 
 
 
-export interface ICustomerRepo{
+export interface ICustomerRepositoryInterface{
     addNewCustomer(data:Partial<ICustomer>) :Promise <boolean>,
     checkCustomerExist(email:string) :Promise<boolean>
     customerDataByEmail(email:string) :Promise <ICustomer|null>

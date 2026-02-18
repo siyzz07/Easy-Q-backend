@@ -841,6 +841,7 @@ selectedBookingData = async (
       isCurrentDay = false;
     }
 
+
     const indexes: number[] = [];
 
     function add(index: number) {

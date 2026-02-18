@@ -1,11 +1,11 @@
-import { IAdminRepo } from "../interface/admin-interface/admin-repository-interface";
+import { IAdminRepositoryInterface } from "../interface/admin-interface/admin-repository-interface";
 import adminModel from "../models/adminModel";
 import { IAdmin } from "../types/adminTypes";
 import BaseRepository from "./baseRepository";
 
 export class AdminRepository
   extends BaseRepository<IAdmin>
-  implements IAdminRepo
+  implements IAdminRepositoryInterface
 {
 
   constructor() {

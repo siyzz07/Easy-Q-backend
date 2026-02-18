@@ -1,7 +1,7 @@
 import { IFavorite } from "../../types/customerType";
 
 
-export interface IFavoriteRepository {
+export interface IFavoriteRepositoryInterface {
   createFavorite(data: {customerId:string,list:[]}): Promise<IFavorite>;
   getFavoriteByCustomerId(customerId: string): Promise<IFavorite | null>;
   addVendorToFavorite(customerId: string, vendorId: string): Promise<boolean >;

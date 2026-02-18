@@ -1,6 +1,6 @@
 import { IAdminServiceInterface } from "../../interface/admin-interface/admin-service-interface";
-import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
-import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
+import { ICustomerRepositoryInterface } from "../../interface/customer-interface/customer-repository-interface";
+import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
 import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
 import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
 import { IVendor } from "../../types/vendorType";
@@ -11,14 +11,14 @@ import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 import { IPaginationResponseMeta } from "../../types/common-types";
 
 export class AdminService implements IAdminServiceInterface {
-  private _customerRepository: ICustomerRepo;
-  private _vendorRepository: IVendorRepo;
+  private _customerRepository: ICustomerRepositoryInterface;
+  private _vendorRepository: IVendorRepositoryInterface;
   private _bookingRepository: IBookingRopsitoryInterface;
   private _contractRepository: IContractRepositoryInterface;
 
   constructor(
-    customerRepo: ICustomerRepo,
-    vendorRepo: IVendorRepo,
+    customerRepo: ICustomerRepositoryInterface,
+    vendorRepo: IVendorRepositoryInterface,
     bookingRepo: IBookingRopsitoryInterface,
     contractRepo: IContractRepositoryInterface
   ) {

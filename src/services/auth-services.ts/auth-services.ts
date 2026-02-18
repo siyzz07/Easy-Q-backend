@@ -15,23 +15,23 @@ import { sendEmail } from "../../utils/nodeMailer";
 import Jwt, {
   JwtPayload,
 } from "jsonwebtoken";
-import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
-import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
-import { IAdminRepo } from "../../interface/admin-interface/admin-repository-interface";
+import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
+import { ICustomerRepositoryInterface } from "../../interface/customer-interface/customer-repository-interface";
+import { IAdminRepositoryInterface } from "../../interface/admin-interface/admin-repository-interface";
 import { RoleEnum } from "../../enums/role";
 import { OAuth2Client } from "google-auth-library";
 
 
 
 export class AuthService implements AuthServiceInterface {
-  private _vendorRepository: IVendorRepo;
-  private _customerRepository: ICustomerRepo;
-  private _adminRepository: IAdminRepo;
+  private _vendorRepository: IVendorRepositoryInterface;
+  private _customerRepository: ICustomerRepositoryInterface;
+  private _adminRepository: IAdminRepositoryInterface;
 
   constructor(
-    vendorRpository: IVendorRepo,
-    customerRepository: ICustomerRepo,
-    adminRepository: IAdminRepo
+    vendorRpository: IVendorRepositoryInterface,
+    customerRepository: ICustomerRepositoryInterface,
+    adminRepository: IAdminRepositoryInterface
   ) {
     this._customerRepository = customerRepository;
     this._vendorRepository = vendorRpository;

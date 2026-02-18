@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IFavoriteService } from "../../interface/favorite-interface/favorite-service-interface";
+import { IFavoriteServiceInterface } from "../../interface/favorite-interface/favorite-service-interface";
 import { favoriteUpdataReqMapper, getFavoriteReqMapper } from "../../mappers/favorite-mapper/favorite-mapper";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
@@ -7,9 +7,9 @@ import { MessageEnum } from "../../enums/messagesEnum";
 
 export class FavoriteController {
 
-    private _favoriteService :IFavoriteService
+    private _favoriteService :IFavoriteServiceInterface
 
-    constructor(favoriteservice:IFavoriteService){
+    constructor(favoriteservice:IFavoriteServiceInterface){
         this._favoriteService=favoriteservice
     }
 

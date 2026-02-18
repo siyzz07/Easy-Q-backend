@@ -1,5 +1,5 @@
 import { FilterQuery } from "mongoose";
-import { IVendorRepo } from "../interface/vendor-interface/vendor-respository-interface";
+import { IVendorRepositoryInterface } from "../interface/vendor-interface/vendor-respository-interface";
 import vendorModel from "../models/vendorModel";
 import { IImage, IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
@@ -7,7 +7,7 @@ import { IPaginationResponseMeta } from "../types/common-types";
 
 export class VendorRepository
   extends BaseRepository<IVendor>
-  implements IVendorRepo
+  implements IVendorRepositoryInterface
 {
   private _vendorModel = vendorModel;
 

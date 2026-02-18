@@ -1,11 +1,11 @@
-import { IFavoriteRepository } from "../interface/favorite-interface/favorite-repository-interface";
+import { IFavoriteRepositoryInterface } from "../interface/favorite-interface/favorite-repository-interface";
 import favoriteModel from "../models/favoriteModel";
 import { IFavorite } from "../types/customerType";
 import BaseRepository from "./baseRepository";
 import mongoose from "mongoose";
 
 
-export class FavoriteRepository extends BaseRepository<IFavorite> implements IFavoriteRepository{
+export class FavoriteRepository extends BaseRepository<IFavorite> implements IFavoriteRepositoryInterface{
 
         private _FavoriteModel  = favoriteModel
 

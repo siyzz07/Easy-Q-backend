@@ -19,7 +19,7 @@ import { nanoid } from "nanoid";
 import mongoose from "mongoose";
 import { ContractStatusEnum } from "../../enums/contractEnum";
 import { IGeoLocation } from "../../types/vendorType";
-import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
 import logger from "../../utils/logger";
 import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
 import {
@@ -31,14 +31,14 @@ import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/ch
 class ContractService implements IContractServiceInterface {
   private _ContractRepository: IContractRepositoryInterface;
   private _AddressRepository: ICustomerAddressRepositoryInterface;
-  private _VendorRepositroy: IVendorRepo;
+  private _VendorRepositroy: IVendorRepositoryInterface;
   private _NotificationService!: INotificationServiceInterface;
   private _ChatRoomService!: IChatRoomServiceInterface;
 
   constructor(
     contractRepo: IContractRepositoryInterface,
     addressRepository: ICustomerAddressRepositoryInterface,
-    vendorRepository: IVendorRepo,
+    vendorRepository: IVendorRepositoryInterface,
     notificationService?: INotificationServiceInterface,
     chatRoomService?: IChatRoomServiceInterface,
   ) {

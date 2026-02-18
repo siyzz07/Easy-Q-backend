@@ -5,7 +5,7 @@ import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { ReviewResponseDTO } from "../../dto/review-dto/review-dto";
 import { ReviewMapper } from "../../mappers/review-mapper/review-mapper";
-import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
 
 interface IReviewPayload {
   userId: string;
@@ -16,11 +16,11 @@ interface IReviewPayload {
 
 export class ReviewService implements IReviewServiceInterface {
   private _ReviewRepository: IReviewRepositoryInterface;
-  private _VendorRepository: IVendorRepo;
+  private _VendorRepository: IVendorRepositoryInterface;
 
   constructor(
     reviewRepository: IReviewRepositoryInterface,
-    vendorRepository: IVendorRepo
+    vendorRepository: IVendorRepositoryInterface
   ) {
     this._ReviewRepository = reviewRepository;
     this._VendorRepository = vendorRepository;

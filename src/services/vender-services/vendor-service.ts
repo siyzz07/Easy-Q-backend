@@ -2,7 +2,7 @@ import { MessageEnum } from "../../enums/messagesEnum";
 import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
 import { IServiceTypesRepositoryInterface } from "../../interface/service-types-interface/service-type-repository-interface";
 import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
-import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
 import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
 import { IServiceType } from "../../types/adminTypes";
 import { IImage, IService, IShopData, IStaff, IVendor } from "../../types/vendorType";
@@ -18,7 +18,7 @@ import { IBookingRopsitoryInterface } from "../../interface/booking-interface/bo
 import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
 
 class VendorService implements IVendorShopServiceInterface {
-  private _vendorRepo: IVendorRepo;
+  private _vendorRepo: IVendorRepositoryInterface;
   private _staffRepo:IStaffRepositoryInterface
   private _serviceTypesRepo:IServiceTypesRepositoryInterface
   private _serviceRepo :IServiceRepositoryInterface
@@ -26,7 +26,7 @@ class VendorService implements IVendorShopServiceInterface {
   private _contractRepo: IContractRepositoryInterface
 
   constructor(
-    vendorRepo: IVendorRepo,
+    vendorRepo: IVendorRepositoryInterface,
     staffRepo:IStaffRepositoryInterface,
     serviceTypes:IServiceTypesRepositoryInterface,
     serviceRepo:IServiceRepositoryInterface,

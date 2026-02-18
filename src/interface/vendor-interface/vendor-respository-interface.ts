@@ -2,7 +2,7 @@ import { IPaginationResponseMeta } from "../../types/common-types";
 import { IImage, IVendor } from "../../types/vendorType";
 
 
-export interface IVendorRepo {
+export interface IVendorRepositoryInterface {
     addNewVendor(data:IVendor):Promise<boolean>
     checkVendorExist(email:string):Promise<boolean>
     vendorData(email:string):Promise<IVendor|any>

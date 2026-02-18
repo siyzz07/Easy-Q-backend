@@ -3,7 +3,7 @@ import { IAdmin } from "../../types/adminTypes"
 
 
 
-export interface IAdminRepo {
+export interface IAdminRepositoryInterface {
 
     checkAdminExist (email:string):Promise<boolean>
     adminDataByEmail (email:string):Promise<IAdmin | null>

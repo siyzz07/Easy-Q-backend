@@ -1,11 +1,11 @@
 import { ICustomer } from "../types/customerType";
 import customer from "../models/customerModel";
 import BaseRepository from "./baseRepository";
-import { ICustomerRepo } from "../interface/customer-interface/customer-repository-interface";
+import { ICustomerRepositoryInterface } from "../interface/customer-interface/customer-repository-interface";
 
 export class CustomerRepository
   extends BaseRepository<ICustomer>
-  implements ICustomerRepo
+  implements ICustomerRepositoryInterface
 {
   private _customerModel = customer;
 
