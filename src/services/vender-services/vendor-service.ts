@@ -1,9 +1,9 @@
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
-import { IServiceTypesRepositoryInterface } from "../../interface/service-types-interface/service-type-repository-interface";
-import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
-import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
-import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
+import { IServiceRepository } from "../../interface/service-interface/service-repository-interface";
+import { IServiceTypesRepository } from "../../interface/service-types-interface/service-type-repository-interface";
+import { IStaffRepository } from "../../interface/staff-interface/staff-repository-interface";
+import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IVendorShopService } from "../../interface/vendor-interface/vendor-service-interface";
 import { IServiceType } from "../../types/adminTypes";
 import { IImage, IService, IShopData, IStaff, IVendor } from "../../types/vendorType";
 import { ErrorResponse } from "../../utils/errorResponse";
@@ -14,24 +14,24 @@ import { IPaginationResponseMeta } from "../../types/common-types";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 
-import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
-import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
+import { IBookingRopsitory } from "../../interface/booking-interface/booking-repository-interface";
+import { IContractRepository } from "../../interface/contract-interface/contract-respositlory-interface";
 
-class VendorService implements IVendorShopServiceInterface {
-  private _vendorRepo: IVendorRepositoryInterface;
-  private _staffRepo:IStaffRepositoryInterface
-  private _serviceTypesRepo:IServiceTypesRepositoryInterface
-  private _serviceRepo :IServiceRepositoryInterface
-  private _bookingRepo: IBookingRopsitoryInterface
-  private _contractRepo: IContractRepositoryInterface
+class VendorService implements IVendorShopService {
+  private _vendorRepo: IVendorRepository;
+  private _staffRepo:IStaffRepository
+  private _serviceTypesRepo:IServiceTypesRepository
+  private _serviceRepo :IServiceRepository
+  private _bookingRepo: IBookingRopsitory
+  private _contractRepo: IContractRepository
 
   constructor(
-    vendorRepo: IVendorRepositoryInterface,
-    staffRepo:IStaffRepositoryInterface,
-    serviceTypes:IServiceTypesRepositoryInterface,
-    serviceRepo:IServiceRepositoryInterface,
-    bookingRepo: IBookingRopsitoryInterface,
-    contractRepo: IContractRepositoryInterface
+    vendorRepo: IVendorRepository,
+    staffRepo:IStaffRepository,
+    serviceTypes:IServiceTypesRepository,
+    serviceRepo:IServiceRepository,
+    bookingRepo: IBookingRopsitory,
+    contractRepo: IContractRepository
   ) {
     this._vendorRepo = vendorRepo;
     this._staffRepo= staffRepo

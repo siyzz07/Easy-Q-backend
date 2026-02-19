@@ -1,8 +1,8 @@
-import { IAdminServiceInterface } from "../../interface/admin-interface/admin-service-interface";
-import { ICustomerRepositoryInterface } from "../../interface/customer-interface/customer-repository-interface";
-import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
-import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
-import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
+import { IAdminService } from "../../interface/admin-interface/admin-service-interface";
+import { ICustomerRepository } from "../../interface/customer-interface/customer-repository-interface";
+import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IBookingRopsitory } from "../../interface/booking-interface/booking-repository-interface";
+import { IContractRepository } from "../../interface/contract-interface/contract-respositlory-interface";
 import { IVendor } from "../../types/vendorType";
 import { CustomerDto } from "../../dto/customer-dto/customer-dto";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
@@ -10,17 +10,17 @@ import { CustomerMapper } from "../../mappers/customer-mapper/customer-mapper";
 import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 import { IPaginationResponseMeta } from "../../types/common-types";
 
-export class AdminService implements IAdminServiceInterface {
-  private _customerRepository: ICustomerRepositoryInterface;
-  private _vendorRepository: IVendorRepositoryInterface;
-  private _bookingRepository: IBookingRopsitoryInterface;
-  private _contractRepository: IContractRepositoryInterface;
+export class AdminService implements IAdminService {
+  private _customerRepository: ICustomerRepository;
+  private _vendorRepository: IVendorRepository;
+  private _bookingRepository: IBookingRopsitory;
+  private _contractRepository: IContractRepository;
 
   constructor(
-    customerRepo: ICustomerRepositoryInterface,
-    vendorRepo: IVendorRepositoryInterface,
-    bookingRepo: IBookingRopsitoryInterface,
-    contractRepo: IContractRepositoryInterface
+    customerRepo: ICustomerRepository,
+    vendorRepo: IVendorRepository,
+    bookingRepo: IBookingRopsitory,
+    contractRepo: IContractRepository
   ) {
     this._customerRepository = customerRepo;
     this._vendorRepository = vendorRepo;

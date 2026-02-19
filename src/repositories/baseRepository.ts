@@ -6,7 +6,7 @@ import {
 } from "mongoose";
 
 import { ICustomerAddress } from "../types/customerType";
-import { IBaseRepositoryInterface } from "../interface/common-interface/base-resposiotry-interface";
+import { IBaseRepository } from "../interface/common-interface/base-resposiotry-interface";
 import {
   IPaginationMeta,
   IPaginationResponseMeta,
@@ -14,7 +14,7 @@ import {
 
 
 class BaseRepository<T>
-  implements IBaseRepositoryInterface<T>
+  implements IBaseRepository<T>
 {
   protected _Model: Model<T>;
 

@@ -1,7 +1,7 @@
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
 import { IAddContracValues, IPaginationResponseMeta, IUpdateContractValues } from "../../types/common-types";
 
-export interface IContractServiceInterface {
+export interface IContractService {
     addNewContract(userId:string,contractData: IAddContracValues): Promise<ContractDto>;
     editContract(contractId: string,userId:string, contractData: Partial<IUpdateContractValues>): Promise<boolean | null>;
     getContract(contractId: string): Promise<ContractDto | null>;

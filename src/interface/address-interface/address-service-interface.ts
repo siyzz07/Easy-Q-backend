@@ -2,7 +2,7 @@ import { IAddress} from "../../types/customerType";
 
 
 
-export interface ICustomerAddressServiceInterface{
+export interface ICustomerAddressService{
 
    addAddress (data:IAddress):Promise<void>
    getAddress (customerId:string):Promise<IAddress[]|[]>

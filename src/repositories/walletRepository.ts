@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { IWalletRepositoryInterface } from "../interface/wallet-interface/wallet-repository-interface";
+import { IWalletRepository } from "../interface/wallet-interface/wallet-repository-interface";
 import walletModel from "../models/walletModel";
 import { IWallet } from "../types/common-types";
 import BaseRepository from "./baseRepository";
 
 export class WalletRepository
   extends BaseRepository<IWallet>
-  implements IWalletRepositoryInterface
+  implements IWalletRepository
 {
   private _WalletModel = walletModel;
 

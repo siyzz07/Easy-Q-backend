@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
+import { INotificationService } from "../../interface/notificaion-interface/notification-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 export class NotificaionController {
-  private _NotificationService: INotificationServiceInterface;
+  private _NotificationService: INotificationService;
 
-  constructor(notificationService: INotificationServiceInterface) {
+  constructor(notificationService: INotificationService) {
     this._NotificationService = notificationService;
   }
 /**

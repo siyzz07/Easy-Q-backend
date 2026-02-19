@@ -1,12 +1,12 @@
 
 import { FilterQuery } from "mongoose";
-import { IReviewRepositoryInterface } from "../interface/reivew-interface/review-repository-interface";
+import { IReviewRepository } from "../interface/reivew-interface/review-repository-interface";
 import Review from "../models/ReviewModel";
 import { IReview } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
 
-export class ReviewRepository extends BaseRepository<IReview> implements IReviewRepositoryInterface{
+export class ReviewRepository extends BaseRepository<IReview> implements IReviewRepository{
 
         private _ReviewModel = Review
 

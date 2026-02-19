@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IServiceTypesRepositoryInterface } from "../../interface/service-types-interface/service-type-repository-interface";
-import { IShopTypeServiceInterface } from "../../interface/service-types-interface/service-type-service-interface";
+import { IServiceTypesRepository } from "../../interface/service-types-interface/service-type-repository-interface";
+import { IShopTypeService } from "../../interface/service-types-interface/service-type-service-interface";
 import { IServiceType } from "../../types/adminTypes";
 import { ErrorResponse } from "../../utils/errorResponse";
 import logger from "../../utils/logger";
 
-export class ServiceTypesService implements IShopTypeServiceInterface {
-  private _ServiceTypeRepository: IServiceTypesRepositoryInterface;
+export class ServiceTypesService implements IShopTypeService {
+  private _ServiceTypeRepository: IServiceTypesRepository;
 
-  constructor(serviceTypeRepo: IServiceTypesRepositoryInterface) {
+  constructor(serviceTypeRepo: IServiceTypesRepository) {
     this._ServiceTypeRepository = serviceTypeRepo;
   }
 

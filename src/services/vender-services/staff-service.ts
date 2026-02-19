@@ -1,16 +1,16 @@
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
-import { IStaffServiceInterface } from "../../interface/staff-interface/staff-service-interface";
+import { IStaffRepository } from "../../interface/staff-interface/staff-repository-interface";
+import { IStaffService } from "../../interface/staff-interface/staff-service-interface";
 import { IPaginationResponseMeta } from "../../types/common-types";
 import { IStaff, IStaffAdd } from "../../types/vendorType";
 import { ErrorResponse } from "../../utils/errorResponse";
 import logger from "../../utils/logger";
 
-export class StaffService implements IStaffServiceInterface {
-  private _StaffRepository: IStaffRepositoryInterface;
+export class StaffService implements IStaffService {
+  private _StaffRepository: IStaffRepository;
 
-  constructor(staffReopository: IStaffRepositoryInterface) {
+  constructor(staffReopository: IStaffRepository) {
     this._StaffRepository = staffReopository;
   }
 

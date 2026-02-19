@@ -1,5 +1,5 @@
 import  { FilterQuery, UpdateQuery } from "mongoose";
-import { IStaffRepositoryInterface } from "../interface/staff-interface/staff-repository-interface";
+import { IStaffRepository } from "../interface/staff-interface/staff-repository-interface";
 import staffModel from "../models/staffModel";
 import { IStaff } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
@@ -7,7 +7,7 @@ import { IPaginationResponseMeta } from "../types/common-types";
 
 export class StaffRepository
   extends BaseRepository<IStaff>
-  implements IStaffRepositoryInterface
+  implements IStaffRepository
 {
   private _StaffModel = staffModel;
 

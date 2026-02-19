@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { IMessageServiceInterface } from "../../interface/message-interface/message-service-interface";
+import { IMessageService } from "../../interface/message-interface/message-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 
 export class MessageController {
-  private _messageService: IMessageServiceInterface;
+  private _messageService: IMessageService;
 
-  constructor(messageService: IMessageServiceInterface) {
+  constructor(messageService: IMessageService) {
     this._messageService = messageService;
   }
 

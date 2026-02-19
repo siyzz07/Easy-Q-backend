@@ -3,7 +3,7 @@ import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { IPaginationResponseMeta } from "../../types/common-types";
 import { IVendor } from "../../types/vendorType";
 
-export interface IAdminServiceInterface {
+export interface IAdminService {
   dashboard(): Promise<any>;
 
   getVendors(): Promise<VendorDto[]>;

@@ -1,5 +1,5 @@
 import { FilterQuery } from "mongoose";
-import { IServiceRepositoryInterface } from "../interface/service-interface/service-repository-interface";
+import { IServiceRepository } from "../interface/service-interface/service-repository-interface";
 import Service from "../models/ServiceModel";
 import { IPaginationResponseMeta } from "../types/common-types";
 import { IService, IServiceData } from "../types/vendorType";
@@ -7,7 +7,7 @@ import BaseRepository from "./baseRepository";
 
 export class ServiceRepository
   extends BaseRepository<IService>
-  implements IServiceRepositoryInterface
+  implements IServiceRepository
 {
   private _ServiceModel = Service;
 

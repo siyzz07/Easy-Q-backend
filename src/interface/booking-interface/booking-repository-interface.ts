@@ -2,7 +2,7 @@ import { IBooking, IBookingPopulated, IPaginationResponseMeta } from "../../type
 
 
 
-export interface IBookingRopsitoryInterface {
+export interface IBookingRopsitory {
     addNewBooking(data: Partial<IBooking>): Promise<IBooking|void>;
     getBookedDatasByCondition (data:object):Promise<IBooking[]>
     getEachBookingDataById (_id:string):Promise<IBookingPopulated|void>

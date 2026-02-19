@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { IService, IServiceData } from "../../types/vendorType";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
+import { IServiceRepository } from "../../interface/service-interface/service-repository-interface";
 import { IServiceInterface } from "../../interface/service-interface/service-service-interface";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
@@ -11,9 +11,9 @@ import { ServiceResponseDTO } from "../../dto/service-dto/service-dto";
 import { ServiceMapper } from "../../mappers/service-mapper/service-mapper";
 
 export class VendorServiceService implements IServiceInterface {
-  private _ServiceRpository: IServiceRepositoryInterface;
+  private _ServiceRpository: IServiceRepository;
 
-  constructor(serviceRepository: IServiceRepositoryInterface) {
+  constructor(serviceRepository: IServiceRepository) {
     this._ServiceRpository = serviceRepository;
   }
 

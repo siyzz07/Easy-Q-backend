@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
+import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum"; 
 
 
 class ContractController {
-  private _contractService: IContractServiceInterface;
+  private _contractService: IContractService;
 
-  constructor(contractService: IContractServiceInterface) {
+  constructor(contractService: IContractService) {
     this._contractService = contractService;
   }
 

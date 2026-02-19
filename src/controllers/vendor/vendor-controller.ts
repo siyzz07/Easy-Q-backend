@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
+import { IVendorShopService } from "../../interface/vendor-interface/vendor-service-interface";
 
 
 
 class VendorController {
-  private _vendorShopService: IVendorShopServiceInterface;
+  private _vendorShopService: IVendorShopService;
 
-  constructor(vendorService: IVendorShopServiceInterface) {
+  constructor(vendorService: IVendorShopService) {
     this._vendorShopService = vendorService;
   }
 

@@ -3,7 +3,7 @@ import { IPaginationResponseMeta } from "../../types/common-types";
 import { IImage, IShopData, IVendor } from "../../types/vendorType";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 
-export interface IVendorShopServiceInterface{
+export interface IVendorShopService{
 
  addShopData (data:IShopData,vendorId:string,coordinates:{lat:number,lon:number},workingDays:string) :Promise<any>
  getShopData (id:string):Promise<VendorDto>

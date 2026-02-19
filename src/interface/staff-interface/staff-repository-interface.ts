@@ -5,7 +5,7 @@ import { IPaginationResponseMeta } from "../../types/common-types";
 
 
 //----------------------------------------------------vendor staff 
-export interface IStaffRepositoryInterface {
+export interface IStaffRepository {
     addStaff (data:IStaff):Promise<boolean>
      getStaff (shopId:string,query:{page?:string,limit?:string,search?:string,isActive?:string}): Promise<{data:IStaff[],pagination:IPaginationResponseMeta}>
     getSingleStaff(shopId:string,staffName?:string,staffId?:string):Promise<IStaff|null>

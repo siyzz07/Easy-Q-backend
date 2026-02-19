@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import {  IStaffAdd } from "../../types/vendorType";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IStaffServiceInterface } from "../../interface/staff-interface/staff-service-interface";
+import { IStaffService } from "../../interface/staff-interface/staff-service-interface";
 
 export class StaffController {
-  private _StaffServices: IStaffServiceInterface;
+  private _StaffServices: IStaffService;
 
-  constructor(staffService: IStaffServiceInterface) {
+  constructor(staffService: IStaffService) {
     this._StaffServices = staffService;
   }
 

@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { INotificationRepositoryInterface } from "../interface/notificaion-interface/notificaion-repository-interface";
+import { INotificationRepository } from "../interface/notificaion-interface/notificaion-repository-interface";
 import notificationModel from "../models/notificationModel";
 import { INotification } from "../types/common-types";
 import BaseRepository from "./baseRepository";
 
 export class NotificationRepository
   extends BaseRepository<INotification>
-  implements INotificationRepositoryInterface
+  implements INotificationRepository
 {
   private _NotificationModel = notificationModel;
 

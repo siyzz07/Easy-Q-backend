@@ -2,16 +2,16 @@ import { IAddress } from "../../types/customerType";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
-import { ICustomerAddressRepositoryInterface } from "../../interface/address-interface/address-repository-interface";
-import { ICustomerAddressServiceInterface } from "../../interface/address-interface/address-service-interface";
+import { ICustomerAddressRepository } from "../../interface/address-interface/address-repository-interface";
+import { ICustomerAddressService } from "../../interface/address-interface/address-service-interface";
 import logger from "../../utils/logger";
 
 export class CustomerAddressService
-  implements ICustomerAddressServiceInterface
+  implements ICustomerAddressService
 {
-  private _addressRepository: ICustomerAddressRepositoryInterface;
+  private _addressRepository: ICustomerAddressRepository;
 
-  constructor(addressRepository: ICustomerAddressRepositoryInterface) {
+  constructor(addressRepository: ICustomerAddressRepository) {
     this._addressRepository = addressRepository;
   }
 

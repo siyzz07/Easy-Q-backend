@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IShopTypeServiceInterface } from "../../interface/service-types-interface/service-type-service-interface";
+import { IShopTypeService } from "../../interface/service-types-interface/service-type-service-interface";
 
 export class ServiceTypeController {
-  private _ServiceTypeService: IShopTypeServiceInterface;
+  private _ServiceTypeService: IShopTypeService;
 
-  constructor(serviceTypes: IShopTypeServiceInterface) {
+  constructor(serviceTypes: IShopTypeService) {
     this._ServiceTypeService = serviceTypes;
   }
 

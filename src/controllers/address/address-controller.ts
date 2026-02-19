@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { ICustomerAddressServiceInterface } from "../../interface/address-interface/address-service-interface";
+import { ICustomerAddressService } from "../../interface/address-interface/address-service-interface";
 
 export class CustomerAddressContorller {
-  private _addressService: ICustomerAddressServiceInterface;
+  private _addressService: ICustomerAddressService;
 
-  constructor(addressServicd: ICustomerAddressServiceInterface) {
+  constructor(addressServicd: ICustomerAddressService) {
     this._addressService = addressServicd;
   }
 

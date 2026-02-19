@@ -1,11 +1,11 @@
-import { IReviewRepositoryInterface } from "../../interface/reivew-interface/review-repository-interface";
-import { IReviewServiceInterface } from "../../interface/reivew-interface/review-service-interface";
+import { IReviewRepository } from "../../interface/reivew-interface/review-repository-interface";
+import { IReviewService } from "../../interface/reivew-interface/review-service-interface";
 import { IReview } from "../../types/vendorType";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { ReviewResponseDTO } from "../../dto/review-dto/review-dto";
 import { ReviewMapper } from "../../mappers/review-mapper/review-mapper";
-import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
 
 interface IReviewPayload {
   userId: string;
@@ -14,13 +14,13 @@ interface IReviewPayload {
   comment: string;
 }
 
-export class ReviewService implements IReviewServiceInterface {
-  private _ReviewRepository: IReviewRepositoryInterface;
-  private _VendorRepository: IVendorRepositoryInterface;
+export class ReviewService implements IReviewService {
+  private _ReviewRepository: IReviewRepository;
+  private _VendorRepository: IVendorRepository;
 
   constructor(
-    reviewRepository: IReviewRepositoryInterface,
-    vendorRepository: IVendorRepositoryInterface
+    reviewRepository: IReviewRepository,
+    vendorRepository: IVendorRepository
   ) {
     this._ReviewRepository = reviewRepository;
     this._VendorRepository = vendorRepository;

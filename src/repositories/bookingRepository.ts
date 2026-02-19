@@ -1,6 +1,6 @@
 
 import { FilterQuery, PopulateOptions } from "mongoose";
-import { IBookingRopsitoryInterface } from "../interface/booking-interface/booking-repository-interface";
+import { IBookingRopsitory } from "../interface/booking-interface/booking-repository-interface";
 import { BookingModel } from "../models/bookingModel";
 import {
   IBooking,
@@ -16,7 +16,7 @@ import logger from "../utils/logger";
 
 export class BookingRepository
   extends BaseRepository<IBooking>
-  implements IBookingRopsitoryInterface
+  implements IBookingRopsitory
 {
   private _BookingModal = BookingModel;
 

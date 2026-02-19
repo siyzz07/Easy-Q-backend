@@ -1,5 +1,5 @@
-import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
-import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
+import { IContractRepository } from "../../interface/contract-interface/contract-respositlory-interface";
+import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
 import { ContractMapper } from "../../mappers/contract-mapper/contract-mapper";
 import {
@@ -14,33 +14,33 @@ import {
   ContractNotificationTitleEnum,
   MessageEnum,
 } from "../../enums/messagesEnum";
-import { ICustomerAddressRepositoryInterface } from "../../interface/address-interface/address-repository-interface";
+import { ICustomerAddressRepository } from "../../interface/address-interface/address-repository-interface";
 import { nanoid } from "nanoid";
 import mongoose from "mongoose";
 import { ContractStatusEnum } from "../../enums/contractEnum";
 import { IGeoLocation } from "../../types/vendorType";
-import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
 import logger from "../../utils/logger";
-import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
+import { INotificationService } from "../../interface/notificaion-interface/notification-service-interface";
 import {
   ContractNotificationTypeEnum,
   NotificationCategoryEnum,
 } from "../../enums/notificationEnum";
-import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
+import { IChatRoomService } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
 
-class ContractService implements IContractServiceInterface {
-  private _ContractRepository: IContractRepositoryInterface;
-  private _AddressRepository: ICustomerAddressRepositoryInterface;
-  private _VendorRepositroy: IVendorRepositoryInterface;
-  private _NotificationService!: INotificationServiceInterface;
-  private _ChatRoomService!: IChatRoomServiceInterface;
+class ContractService implements IContractService {
+  private _ContractRepository: IContractRepository;
+  private _AddressRepository: ICustomerAddressRepository;
+  private _VendorRepositroy: IVendorRepository;
+  private _NotificationService!: INotificationService;
+  private _ChatRoomService!: IChatRoomService;
 
   constructor(
-    contractRepo: IContractRepositoryInterface,
-    addressRepository: ICustomerAddressRepositoryInterface,
-    vendorRepository: IVendorRepositoryInterface,
-    notificationService?: INotificationServiceInterface,
-    chatRoomService?: IChatRoomServiceInterface,
+    contractRepo: IContractRepository,
+    addressRepository: ICustomerAddressRepository,
+    vendorRepository: IVendorRepository,
+    notificationService?: INotificationService,
+    chatRoomService?: IChatRoomService,
   ) {
     this._ContractRepository = contractRepo;
     this._AddressRepository = addressRepository;
@@ -50,12 +50,12 @@ class ContractService implements IContractServiceInterface {
   }
 
   public setNotificationService(
-    notificationService: INotificationServiceInterface,
+    notificationService: INotificationService,
   ) {
     this._NotificationService = notificationService;
   }
 
-  public setChatRoomService(chatRoomService: IChatRoomServiceInterface) {
+  public setChatRoomService(chatRoomService: IChatRoomService) {
     this._ChatRoomService = chatRoomService;
   }
 

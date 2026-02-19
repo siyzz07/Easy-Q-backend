@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { ICustomerServiceInterface } from "../../interface/customer-interface/customer-service-interface";
+import { ICustomerService } from "../../interface/customer-interface/customer-service-interface";
 import logger from "../../utils/logger";
 
 export class CustomerController {
-  private _customerService: ICustomerServiceInterface;
+  private _customerService: ICustomerService;
 
-  constructor(customerservice: ICustomerServiceInterface) {
+  constructor(customerservice: ICustomerService) {
     this._customerService = customerservice;
   }
 

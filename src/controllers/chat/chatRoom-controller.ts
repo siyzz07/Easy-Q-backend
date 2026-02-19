@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
+import { IChatRoomService } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
 
 export class ChatRoomController {
-    private _ChatRoomService :IChatRoomServiceInterface
+    private _ChatRoomService :IChatRoomService
 
-    constructor (chatRoomService :IChatRoomServiceInterface) {
+    constructor (chatRoomService :IChatRoomService) {
         this._ChatRoomService = chatRoomService
     }
 

@@ -1,14 +1,14 @@
 
 import { NextFunction, Request, Response } from "express";
-import { AuthServiceInterface } from "../../interface/auth-interface/auth-serivce-interface";
+import { IAuthService } from "../../interface/auth-interface/auth-serivce-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import logger from "../../utils/logger";
 
 export class AuthController {
-  private _authService: AuthServiceInterface;
+  private _authService: IAuthService;
 
-  constructor(authService: AuthServiceInterface) {
+  constructor(authService: IAuthService) {
     this._authService = authService;
   }
 

@@ -1,7 +1,7 @@
 
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { AuthServiceInterface } from "../../interface/auth-interface/auth-serivce-interface";
+import { IAuthService } from "../../interface/auth-interface/auth-serivce-interface";
 import { IAdmin } from "../../types/adminTypes";
 import { IJwtPayload, ILogin } from "../../types/common-types";
 import { ICustomer } from "../../types/customerType";
@@ -14,23 +14,23 @@ import { sendEmail } from "../../utils/nodeMailer";
 import Jwt, {
   JwtPayload,
 } from "jsonwebtoken";
-import { IVendorRepositoryInterface } from "../../interface/vendor-interface/vendor-respository-interface";
-import { ICustomerRepositoryInterface } from "../../interface/customer-interface/customer-repository-interface";
-import { IAdminRepositoryInterface } from "../../interface/admin-interface/admin-repository-interface";
+import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
+import { ICustomerRepository } from "../../interface/customer-interface/customer-repository-interface";
+import { IAdminRepository } from "../../interface/admin-interface/admin-repository-interface";
 import { RoleEnum } from "../../enums/role";
 import { OAuth2Client } from "google-auth-library";
 
 
 
-export class AuthService implements AuthServiceInterface {
-  private _vendorRepository: IVendorRepositoryInterface;
-  private _customerRepository: ICustomerRepositoryInterface;
-  private _adminRepository: IAdminRepositoryInterface;
+export class AuthService implements IAuthService {
+  private _vendorRepository: IVendorRepository;
+  private _customerRepository: ICustomerRepository;
+  private _adminRepository: IAdminRepository;
 
   constructor(
-    vendorRpository: IVendorRepositoryInterface,
-    customerRepository: ICustomerRepositoryInterface,
-    adminRepository: IAdminRepositoryInterface
+    vendorRpository: IVendorRepository,
+    customerRepository: ICustomerRepository,
+    adminRepository: IAdminRepository
   ) {
     this._customerRepository = customerRepository;
     this._vendorRepository = vendorRpository;

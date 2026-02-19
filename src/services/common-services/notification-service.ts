@@ -2,18 +2,18 @@ import mongoose from "mongoose";
 import {
   MessageEnum,
 } from "../../enums/messagesEnum";
-import { INotificationRepositoryInterface } from "../../interface/notificaion-interface/notificaion-repository-interface";
-import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
+import { INotificationRepository } from "../../interface/notificaion-interface/notificaion-repository-interface";
+import { INotificationService } from "../../interface/notificaion-interface/notification-service-interface";
 import { INotification } from "../../types/common-types";
 import { socketNotificationHandler } from "../../sockets/handlers/notificationHandler";
 import { socketManagerServer } from "../../sockets/socketInstance";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 
-export class NotificationService implements INotificationServiceInterface {
-  private _NotificationRepository: INotificationRepositoryInterface;
+export class NotificationService implements INotificationService {
+  private _NotificationRepository: INotificationRepository;
 
-  constructor(notificationRepository: INotificationRepositoryInterface) {
+  constructor(notificationRepository: INotificationRepository) {
     this._NotificationRepository = notificationRepository;
   }
 

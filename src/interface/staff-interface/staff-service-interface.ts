@@ -4,7 +4,7 @@ import {
 } from "../../types/vendorType";
 
 //-------------------------------------------------vednor staff
-export interface IStaffServiceInterface {
+export interface IStaffService {
   addNewStaff(userId: string, data: any): Promise<boolean | void>;
   getStaffService(shopId: string,query:{page?:string,limit?:string,search?:string,isActive?:string}): Promise<{data:IStaff[],pagination:IPaginationResponseMeta}>;
   editStaff(data: IStaff): Promise<boolean | void>;

@@ -1,17 +1,17 @@
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IWalletRepositoryInterface } from "../../interface/wallet-interface/wallet-repository-interface";
-import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
+import { IWalletRepository } from "../../interface/wallet-interface/wallet-repository-interface";
+import { IWalletService } from "../../interface/wallet-interface/wallet-service-interface";
 import { IWallet } from "../../types/common-types";
 import { ErrorResponse } from "../../utils/errorResponse";
 import logger from "../../utils/logger";
 
 
-export class WalletService implements IWalletServiceInterface {
+export class WalletService implements IWalletService {
 
-    private _WalletRepository :IWalletRepositoryInterface
+    private _WalletRepository :IWalletRepository
 
-    constructor (walletRepository:IWalletRepositoryInterface){
+    constructor (walletRepository:IWalletRepository){
         this._WalletRepository = walletRepository
     }
 

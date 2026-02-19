@@ -3,7 +3,7 @@ import { FavoriteRquestDto, getFavoriteReqDto, getFavoriteResDto } from "../../d
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 
 
-export interface IFavoriteServiceInterface{
+export interface IFavoriteService{
     
     favoriteUpdate(data:FavoriteRquestDto):Promise<string|void>
     getFavorite(data:getFavoriteReqDto):Promise<getFavoriteResDto|[]>

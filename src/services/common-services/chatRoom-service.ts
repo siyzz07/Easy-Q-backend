@@ -1,6 +1,6 @@
 
-import { IChatRoomRepositoryInterface } from "../../interface/chatRoom-interface/chatRoom-respsitory-interface";
-import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
+import { IChatRoomRepository } from "../../interface/chatRoom-interface/chatRoom-respsitory-interface";
+import { IChatRoomService } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
 import { IChatRoom } from "../../types/common-types";
 import logger from "../../utils/logger";
 import { ErrorResponse } from "../../utils/errorResponse";
@@ -11,17 +11,17 @@ import {
   socketNotificationHandler,
 } from "../../sockets/handlers/notificationHandler";
 import { socketManagerServer } from "../../sockets/socketInstance";
-import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
+import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { generateToken04 } from "../../utils/zegoServerAssistant";
 import { leaveVedioCallNotify, getActiveCallUsers } from "../../sockets/handlers/chatHandlers";
 
-export class ChatRoomService implements IChatRoomServiceInterface {
-  private _ChatRoomRepository: IChatRoomRepositoryInterface;
-  private _ContractService: IContractServiceInterface;
+export class ChatRoomService implements IChatRoomService {
+  private _ChatRoomRepository: IChatRoomRepository;
+  private _ContractService: IContractService;
 
   constructor(
-    chatRoomRepository: IChatRoomRepositoryInterface,
-    contractService: IContractServiceInterface,
+    chatRoomRepository: IChatRoomRepository,
+    contractService: IContractService,
   ) {
     this._ChatRoomRepository = chatRoomRepository;
     this._ContractService = contractService;

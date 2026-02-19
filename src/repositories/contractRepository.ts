@@ -1,12 +1,12 @@
 import mongoose, { FilterQuery, PopulateOptions } from "mongoose";
-import { IContractRepositoryInterface } from "../interface/contract-interface/contract-respositlory-interface";
+import { IContractRepository } from "../interface/contract-interface/contract-respositlory-interface";
 import { Contract } from "../models/contractModel";
 import { IContract, IPaginationResponseMeta } from "../types/common-types";
 import BaseRepository from "./baseRepository";
 
 class ContractRepository
   extends BaseRepository<IContract>
-  implements IContractRepositoryInterface
+  implements IContractRepository
 {
   private _ContractModel = Contract;
   constructor() {

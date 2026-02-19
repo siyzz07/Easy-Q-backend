@@ -6,8 +6,8 @@ import {
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IFavoriteRepositoryInterface } from "../../interface/favorite-interface/favorite-repository-interface";
-import { IFavoriteServiceInterface } from "../../interface/favorite-interface/favorite-service-interface";
+import { IFavoriteRepository } from "../../interface/favorite-interface/favorite-repository-interface";
+import { IFavoriteService } from "../../interface/favorite-interface/favorite-service-interface";
 import {
   getFavoriteResMapper,
   getFavoriteShopsResMapper,
@@ -15,10 +15,10 @@ import {
 import { ErrorResponse } from "../../utils/errorResponse";
 import logger from "../../utils/logger";
 
-export class FavoriteService implements IFavoriteServiceInterface {
-  private _favoriteRepository: IFavoriteRepositoryInterface;
+export class FavoriteService implements IFavoriteService {
+  private _favoriteRepository: IFavoriteRepository;
 
-  constructor(favoriteRepo: IFavoriteRepositoryInterface) {
+  constructor(favoriteRepo: IFavoriteRepository) {
     this._favoriteRepository = favoriteRepo;
   }
 

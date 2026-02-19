@@ -3,7 +3,7 @@ import { ICustomerAddress } from "../../types/customerType";
 import { IPaginationMeta, IPaginationResponseMeta } from "../../types/common-types";
 
 
-export interface IBaseRepositoryInterface<T> {
+export interface IBaseRepository<T> {
    
   create(data: T): Promise<T>;
   findById(id: string): Promise<T | null>;

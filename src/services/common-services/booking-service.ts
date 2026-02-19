@@ -1,7 +1,7 @@
-import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
-import { IBookingServiceInterface } from "../../interface/booking-interface/booking-service-interface";
-import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
-import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
+import { IBookingRopsitory } from "../../interface/booking-interface/booking-repository-interface";
+import { IBookingService } from "../../interface/booking-interface/booking-service-interface";
+import { IServiceRepository } from "../../interface/service-interface/service-repository-interface";
+import { IStaffRepository } from "../../interface/staff-interface/staff-repository-interface";
 import { ErrorResponse } from "../../utils/errorResponse";
 import {
   BookingMessageContent,
@@ -25,40 +25,40 @@ import mongoose, { Types } from "mongoose";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
 import { IBooking, IPaginationResponseMeta } from "../../types/common-types";
-import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
+import { INotificationService } from "../../interface/notificaion-interface/notification-service-interface";
 import { nanoid } from "nanoid";
-import { ITransactionRepositoryInterface } from "../../interface/transaction-interface/transaction-repository-interface";
+import { ITransactionRepository } from "../../interface/transaction-interface/transaction-repository-interface";
 import {
   TransactionOwnerTypeEnu,
   TransactionStatusEnum,
   TransactionTypeEnum,
 } from "../../enums/transactionEnum";
-import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
+import { IWalletService } from "../../interface/wallet-interface/wallet-service-interface";
 import { RoleEnum } from "../../enums/role";
 import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
 import {
   BookingNotificationTypeEnum,
   NotificationCategoryEnum,
 } from "../../enums/notificationEnum";
-import { ICustomerAddressRepositoryInterface } from "../../interface/address-interface/address-repository-interface";
+import { ICustomerAddressRepository } from "../../interface/address-interface/address-repository-interface";
 
-export class BookingService implements IBookingServiceInterface {
-  private _BookingRepository: IBookingRopsitoryInterface;
-  private _ServiceRepository: IServiceRepositoryInterface;
-  private _StaffRepository: IStaffRepositoryInterface;
-  private _NotificationService: INotificationServiceInterface;
-  private _WalletService: IWalletServiceInterface;
-  private _TransactionRepository: ITransactionRepositoryInterface;
-  private _AddresRepository: ICustomerAddressRepositoryInterface;
+export class BookingService implements IBookingService {
+  private _BookingRepository: IBookingRopsitory;
+  private _ServiceRepository: IServiceRepository;
+  private _StaffRepository: IStaffRepository;
+  private _NotificationService: INotificationService;
+  private _WalletService: IWalletService;
+  private _TransactionRepository: ITransactionRepository;
+  private _AddresRepository: ICustomerAddressRepository;
 
   constructor(
-    bookingService: IBookingRopsitoryInterface,
-    serviceRepository: IServiceRepositoryInterface,
-    staffRepository: IStaffRepositoryInterface,
-    notificationService: INotificationServiceInterface,
-    walletSerivce: IWalletServiceInterface,
-    transactionRepository: ITransactionRepositoryInterface,
-    addressRepository: ICustomerAddressRepositoryInterface
+    bookingService: IBookingRopsitory,
+    serviceRepository: IServiceRepository,
+    staffRepository: IStaffRepository,
+    notificationService: INotificationService,
+    walletSerivce: IWalletService,
+    transactionRepository: ITransactionRepository,
+    addressRepository: ICustomerAddressRepository
   ) {
     this._BookingRepository = bookingService;
     this._ServiceRepository = serviceRepository;

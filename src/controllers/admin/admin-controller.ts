@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IAdminServiceInterface } from "../../interface/admin-interface/admin-service-interface";
+import { IAdminService } from "../../interface/admin-interface/admin-service-interface";
 
 export class AdminController {
-  private _adminService: IAdminServiceInterface;
+  private _adminService: IAdminService;
 
-  constructor(adminService: IAdminServiceInterface) {
+  constructor(adminService: IAdminService) {
     this._adminService = adminService;
   }
 

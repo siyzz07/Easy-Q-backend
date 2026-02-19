@@ -2,17 +2,17 @@
 import { MessageEnum } from "../../enums/messagesEnum";
 import { ICustomer } from "../../types/customerType";
 import { comparePassword, hashPassword } from "../../utils/hash";
-import { ICustomerRepositoryInterface } from "../../interface/customer-interface/customer-repository-interface";
-import { ICustomerServiceInterface } from "../../interface/customer-interface/customer-service-interface";
+import { ICustomerRepository } from "../../interface/customer-interface/customer-repository-interface";
+import { ICustomerService } from "../../interface/customer-interface/customer-service-interface";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import logger from "../../utils/logger";
 
 
-export class CustomerService implements ICustomerServiceInterface {
-  private _customerRepository: ICustomerRepositoryInterface
+export class CustomerService implements ICustomerService {
+  private _customerRepository: ICustomerRepository
 
-  constructor(customerRepo: ICustomerRepositoryInterface) {
+  constructor(customerRepo: ICustomerRepository) {
     this._customerRepository = customerRepo;
   }
 

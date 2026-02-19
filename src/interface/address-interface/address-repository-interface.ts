@@ -4,7 +4,7 @@ import { IAddress, ICustomerAddress } from "../../types/customerType"
 
 
 
-export interface ICustomerAddressRepositoryInterface{
+export interface ICustomerAddressRepository{
     
     checkUserAddressExist (customerId:string):Promise<boolean>
     addAddress (id:string,payload:IAddress):Promise<void>

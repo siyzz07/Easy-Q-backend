@@ -1,9 +1,9 @@
 import { razorpayConfig } from "../../config/razorpayConfig";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
-import { ITransactionRepositoryInterface } from "../../interface/transaction-interface/transaction-repository-interface";
-import { ITransactionServiceInterface } from "../../interface/transaction-interface/transaction-service-interface";
+import { IBookingRopsitory } from "../../interface/booking-interface/booking-repository-interface";
+import { ITransactionRepository } from "../../interface/transaction-interface/transaction-repository-interface";
+import { ITransactionService } from "../../interface/transaction-interface/transaction-service-interface";
 import { ErrorResponse } from "../../utils/errorResponse";
 import crypto from "crypto";
 import logger from "../../utils/logger";
@@ -13,13 +13,13 @@ import { IPaginationResponseMeta } from "../../types/common-types";
 import { TransactionMapper } from "../../mappers/transaction-mapper/transaction-mapper";
 import { TransactionDTO } from "../../dto/transaction-dto/transaction-dto";
 
-export class TransactionService implements ITransactionServiceInterface {
-  private _TransactionRepository: ITransactionRepositoryInterface;
-  private _BookingRepository: IBookingRopsitoryInterface;
+export class TransactionService implements ITransactionService {
+  private _TransactionRepository: ITransactionRepository;
+  private _BookingRepository: IBookingRopsitory;
 
   constructor(
-    transactionRepository: ITransactionRepositoryInterface,
-    bookingRepositroy: IBookingRopsitoryInterface
+    transactionRepository: ITransactionRepository,
+    bookingRepositroy: IBookingRopsitory
   ) {
     this._TransactionRepository = transactionRepository;
     this._BookingRepository = bookingRepositroy;

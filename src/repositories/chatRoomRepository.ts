@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { IChatRoomRepositoryInterface } from "../interface/chatRoom-interface/chatRoom-respsitory-interface";
+import { IChatRoomRepository } from "../interface/chatRoom-interface/chatRoom-respsitory-interface";
 import chatRoom from "../models/chatRoom";
 import { IChatRoom } from "../types/common-types";
 import BaseRepository from "./baseRepository";
 
 export class ChatRoomRepository
   extends BaseRepository<IChatRoom>
-  implements IChatRoomRepositoryInterface
+  implements IChatRoomRepository
 {
   private _ChatRoomModel = chatRoom;
 

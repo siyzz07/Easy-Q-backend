@@ -2,7 +2,7 @@ import { BookingResponseDTO, checkTimeDto, CreateBookingDTO, bookingDatasPopulat
 import { IBooking, IPaginationResponseMeta } from "../../types/common-types";
 
 
-export interface IBookingServiceInterface {
+export interface IBookingService {
     addNewbooking(data: CreateBookingDTO): Promise<BookingResponseDTO|void>;
     checkTimeAvailable(data:checkTimeDto):Promise<boolean|string>
     customerBooking(userId:string,query:{page?:string,limit?:string,search?:string}) :Promise<{data:bookingDatasPopulatedDto[] ,pagination:IPaginationResponseMeta}>

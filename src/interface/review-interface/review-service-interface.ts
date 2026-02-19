@@ -1,6 +1,6 @@
 import { CreateReviewDTO, ReviewResponseDTO } from "../../dto/review-dto/review-dto";
 
-export interface IReviewServiceInterface{
+export interface IReviewService{
     addReview (data:CreateReviewDTO):Promise<ReviewResponseDTO[]>
     getReviews (vendorId:string) :Promise<ReviewResponseDTO[]>
     deleteReview (reviewId:string,vendorId:string):Promise<ReviewResponseDTO[]>

@@ -1,7 +1,7 @@
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
 import { IContract, IPaginationResponseMeta } from "../../types/common-types";
 
- export interface IContractRepositoryInterface {
+ export interface IContractRepository {
 
     addNewContract (data:Partial<IContract>):Promise<IContract>
     editContract(contractId:string, data:Partial<IContract>):Promise<IContract | null>
