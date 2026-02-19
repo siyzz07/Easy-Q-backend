@@ -40,10 +40,16 @@ export class AdminService implements IAdminServiceInterface {
     const customerData = await this._customerRepository.getCusomersData();
     const bookingStats = await this._bookingRepository.getAdminBookingStats();
     const contractStats = await this._contractRepository.getAdminContractStats();
+    const platformStatusBreakdown = await this._bookingRepository.getAdminPlatformStatusBreakdown();
+    const topVendors = await this._bookingRepository.getAdminTopVendors(5);
+    const topServices = await this._bookingRepository.getAdminTopServices(5);
+    const peakHours = await this._bookingRepository.getAdminPeakHours();
     
     // Get analytics for current year
     const year = new Date().getFullYear();
     const monthlyRevenue = await this._bookingRepository.getAdminMonthlyRevenueStats(year);
+    const customerGrowth = await this._customerRepository.getMonthlyUserGrowth(year);
+    const vendorGrowth = await this._vendorRepository.getMonthlyUserGrowth(year);
 
     const pendingVendors = vendorsData.reduce((acc: number, vendor: IVendor) => {
       if (vendor.isVerified === "pending") acc += 1;
@@ -63,8 +69,9 @@ export class AdminService implements IAdminServiceInterface {
     const totalVendors = verifiedVendors + pendingVendors;
     const totalCustomers = customerData.length;
 
-    // Prepare monthly data for chart
+    // Prepare monthly data for charts
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    
     const revenueChartData = months.map((month, index) => {
       const monthNum = index + 1;
       const data = monthlyRevenue.find((m: any) => m._id === monthNum);
@@ -75,6 +82,17 @@ export class AdminService implements IAdminServiceInterface {
       };
     });
 
+    const userGrowthChartData = months.map((month, index) => {
+       const monthNum = index + 1;
+       const cData = customerGrowth.find((m: any) => m._id === monthNum);
+       const vData = vendorGrowth.find((m: any) => m._id === monthNum);
+       return {
+         month,
+         customers: cData ? cData.count : 0,
+         vendors: vData ? vData.count : 0
+       };
+    });
+
     return {
       totalCustomers,
       totalVendors,
@@ -83,7 +101,12 @@ export class AdminService implements IAdminServiceInterface {
       rejectedVendors,
       bookingStats,
       contractStats,
-      revenueChartData
+      platformStatusBreakdown,
+      topVendors,
+      topServices,
+      peakHours,
+      revenueChartData,
+      userGrowthChartData
     };
   };
 

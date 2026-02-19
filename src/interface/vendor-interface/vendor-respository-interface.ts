@@ -28,5 +28,5 @@ export interface IVendorRepositoryInterface {
     deleteShopImage(_id:string,imageId:string):Promise<boolean>
 
     vendorsDataWithPagination (data:{search?:string,page?:string,limit?:string, lat?:number, lng?: number,distance?:number, categories?:string[],ratings?:string[]}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>
-    
+    getMonthlyUserGrowth(year: number): Promise<any>
 }

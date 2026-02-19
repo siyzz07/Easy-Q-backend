@@ -82,4 +82,31 @@ export class CustomerRepository
       .lean();
     return !!updated;
   }
+
+  //----------------------------- get monthly customer growth
+  async getMonthlyUserGrowth(year: number): Promise<any> {
+    try {
+      const stats = await this._customerModel.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(`${year}-01-01`),
+              $lt: new Date(`${year + 1}-01-01`),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id": 1 } },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching monthly customer growth:", error);
+      return [];
+    }
+  }
 }

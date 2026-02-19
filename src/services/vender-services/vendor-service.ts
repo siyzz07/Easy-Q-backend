@@ -177,10 +177,12 @@ class VendorService implements IVendorShopServiceInterface {
       return {
         day: day,
         bookings: booking ? booking.count : 0,
+        revenue: booking ? booking.revenue : 0,
       };
     });
 
     const extraStats = await this._bookingRepo.getVendorRevenueAndCustomerCount(shopId);
+    const detailedAnalytics = await this._bookingRepo.getDetailedVendorAnalytics(shopId);
 
     return {
       totalStaff,
@@ -193,7 +195,8 @@ class VendorService implements IVendorShopServiceInterface {
       customerCount: extraStats.customerCount,
       pendingBookingsCount: extraStats.pendingBookings,
       chartData, 
-      weeklyChartData
+      weeklyChartData,
+      ...detailedAnalytics
     }
 
   }

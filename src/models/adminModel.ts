@@ -1,5 +1,3 @@
-
-
 import { model, Schema } from "mongoose";
 import { IAdmin } from "../types/adminTypes";
 

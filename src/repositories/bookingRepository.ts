@@ -226,6 +226,7 @@ export class BookingRepository
           $group: {
             _id: { $dayOfWeek: "$createdAt" },
             count: { $sum: 1 },
+            revenue: { $sum: { $toDouble: "$totalAmount" } },
           },
         },
         {
@@ -298,6 +299,119 @@ export class BookingRepository
     }
   }
 
+  //----------------------------------- get admin platform status breakdown
+  async getAdminPlatformStatusBreakdown(): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        { $group: { _id: "$status", count: { $sum: 1 } } },
+        { $project: { status: "$_id", count: 1, _id: 0 } }
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching platform status breakdown:", error);
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  //----------------------------------- get admin top vendors
+  async getAdminTopVendors(limit: number): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        { $match: { status: "completed" } },
+        {
+          $group: {
+            _id: "$shopId",
+            revenue: { $sum: { $toDouble: "$totalAmount" } },
+            bookings: { $sum: 1 },
+          },
+        },
+        {
+          $lookup: {
+            from: "vendors",
+            localField: "_id",
+            foreignField: "_id",
+            as: "vendorDetails",
+          },
+        },
+        { $unwind: "$vendorDetails" },
+        {
+          $project: {
+            _id: 1,
+            revenue: 1,
+            bookings: 1,
+            shopName: "$vendorDetails.shopName",
+            email: "$vendorDetails.email",
+          },
+        },
+        { $sort: { revenue: -1 } },
+        { $limit: limit },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching top vendors:", error);
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  //----------------------------------- get admin top services platform wide
+  async getAdminTopServices(limit: number): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        { $match: { status: "completed" } },
+        {
+          $group: {
+            _id: "$serviceId",
+            count: { $sum: 1 },
+            revenue: { $sum: { $toDouble: "$totalAmount" } }
+          }
+        },
+        {
+          $lookup: {
+            from: "services",
+            localField: "_id",
+            foreignField: "_id",
+            as: "serviceDetails"
+          }
+        },
+        { $unwind: "$serviceDetails" },
+        {
+          $project: {
+            _id: 1,
+            name: "$serviceDetails.serviceName",
+            count: 1,
+            revenue: 1
+          }
+        },
+        { $sort: { count: -1 } },
+        { $limit: limit }
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching admin top services:", error);
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  //----------------------------------- get admin platform peak hours
+  async getAdminPeakHours(): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        { 
+          $group: { 
+            _id: { $hour: "$createdAt" }, 
+            count: { $sum: 1 } 
+          } 
+        },
+        { $project: { hour: "$_id", count: 1, _id: 0 } },
+        { $sort: { hour: 1 } }
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching platform peak hours:", error);
+      throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   //----------------------------------- get vendor revenue and customer count
   async getVendorRevenueAndCustomerCount(vendorId: string): Promise<any> {
     try {
@@ -337,6 +451,185 @@ export class BookingRepository
     } catch (error) {
       console.error("Error fetching vendor revenue stats:", error);
       throw new ErrorResponse(MessageEnum.SERVER_ERROR, StatusCodeEnum.INTERNAL_SERVER_ERROR);
+    }
+  }
+  //----------------------------------- get detailed vendor analytics
+  async getDetailedVendorAnalytics(vendorId: string): Promise<any> {
+    try {
+      const stats = await this._BookingModal.aggregate([
+        {
+          $match: {
+            shopId: new mongoose.Types.ObjectId(vendorId),
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalBookings: { $sum: 1 },
+            completedBookings: {
+              $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] },
+            },
+            cancelledBookings: {
+              $sum: { $cond: [{ $eq: ["$status", "cancelled"] }, 1, 0] },
+            },
+            totalRevenue: {
+              $sum: {
+                $cond: [
+                  { $eq: ["$status", "completed"] },
+                  { $toDouble: "$totalAmount" },
+                  0,
+                ],
+              },
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            totalBookings: 1,
+            completedBookings: 1,
+            cancelledBookings: 1,
+            totalRevenue: 1,
+            averageBookingValue: {
+              $cond: [
+                { $gt: ["$completedBookings", 0] },
+                { $divide: ["$totalRevenue", "$completedBookings"] },
+                0,
+              ],
+            },
+            completionRate: {
+              $cond: [
+                { $gt: ["$totalBookings", 0] },
+                {
+                  $multiply: [
+                    { $divide: ["$completedBookings", "$totalBookings"] },
+                    100,
+                  ],
+                },
+                0,
+              ],
+            },
+          },
+        },
+      ]);
+
+      const topServices = await this._BookingModal.aggregate([
+        {
+          $match: {
+            shopId: new mongoose.Types.ObjectId(vendorId),
+            status: "completed",
+          },
+        },
+        {
+          $group: {
+            _id: "$serviceId",
+            count: { $sum: 1 },
+            revenue: { $sum: { $toDouble: "$totalAmount" } },
+          },
+        },
+        {
+          $lookup: {
+            from: "services", // Adjust collection name if necessary
+            localField: "_id",
+            foreignField: "_id",
+            as: "serviceDetails",
+          },
+        },
+        { $unwind: "$serviceDetails" },
+        {
+          $project: {
+            _id: 1,
+            count: 1,
+            revenue: 1,
+            name: "$serviceDetails.serviceName",
+          },
+        },
+        { $sort: { count: -1 } },
+        { $limit: 5 },
+      ]);
+
+      const recentBookings = await this._BookingModal
+        .find({ shopId: new mongoose.Types.ObjectId(vendorId) })
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .populate("customerId", "name email")
+        .populate("serviceId", "serviceName")
+        .lean();
+
+      const staffPerformance = await this._BookingModal.aggregate([
+        {
+          $match: {
+            shopId: new mongoose.Types.ObjectId(vendorId),
+            status: "completed",
+            staffId: { $exists: true, $ne: null }
+          },
+        },
+        {
+          $group: {
+            _id: "$staffId",
+            count: { $sum: 1 },
+            revenue: { $sum: { $toDouble: "$totalAmount" } },
+          },
+        },
+        {
+          $lookup: {
+            from: "staffs",
+            localField: "_id",
+            foreignField: "_id",
+            as: "staffDetails",
+          },
+        },
+        { $unwind: { path: "$staffDetails", preserveNullAndEmptyArrays: true } },
+        {
+          $project: {
+            _id: 1,
+            count: 1,
+            revenue: 1,
+            name: "$staffDetails.staffName",
+          },
+        },
+        { $sort: { count: -1 } },
+      ]);
+
+      const statusBreakdown = await this._BookingModal.aggregate([
+        { $match: { shopId: new mongoose.Types.ObjectId(vendorId) } },
+        { $group: { _id: "$status", count: { $sum: 1 } } },
+        { $project: { status: "$_id", count: 1, _id: 0 } }
+      ]);
+
+      const peakHours = await this._BookingModal.aggregate([
+        { $match: { shopId: new mongoose.Types.ObjectId(vendorId) } },
+        { 
+          $group: { 
+            _id: { $hour: "$createdAt" }, 
+            count: { $sum: 1 } 
+          } 
+        },
+        { $project: { hour: "$_id", count: 1, _id: 0 } },
+        { $sort: { hour: 1 } }
+      ]);
+
+      return {
+        ...(stats[0] || {
+          totalBookings: 0,
+          completedBookings: 0,
+          cancelledBookings: 0,
+          totalRevenue: 0,
+          averageBookingValue: 0,
+          completionRate: 0,
+        }),
+        topServices,
+        recentBookings,
+        staffPerformance,
+        statusBreakdown,
+        peakHours,
+      };
+    } catch (error) {
+      console.error("Error fetching detailed vendor analytics:", error);
+      throw new ErrorResponse(
+        MessageEnum.SERVER_ERROR,
+        StatusCodeEnum.INTERNAL_SERVER_ERROR
+      );
     }
   }
 }

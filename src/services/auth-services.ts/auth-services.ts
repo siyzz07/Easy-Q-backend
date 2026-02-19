@@ -11,7 +11,6 @@ import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, generateJwtToken, refreshToken } from "../../utils/jwt";
 import logger from "../../utils/logger";
 import { sendEmail } from "../../utils/nodeMailer";
-
 import Jwt, {
   JwtPayload,
 } from "jsonwebtoken";

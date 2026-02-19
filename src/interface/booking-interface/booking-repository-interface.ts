@@ -13,5 +13,10 @@ export interface IBookingRopsitoryInterface {
     getWeeklyBookingStats(vendorId: string): Promise<any>
     getAdminBookingStats(): Promise<any>
     getAdminMonthlyRevenueStats(year: number): Promise<any>
+    getAdminPlatformStatusBreakdown(): Promise<any>
+    getAdminTopVendors(limit: number): Promise<any>
+    getAdminTopServices(limit: number): Promise<any>
+    getAdminPeakHours(): Promise<any>
     getVendorRevenueAndCustomerCount(vendorId: string): Promise<any>
+    getDetailedVendorAnalytics(vendorId: string): Promise<any>
 }

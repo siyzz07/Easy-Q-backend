@@ -227,4 +227,31 @@ export class VendorRepository
     const response = await this.filterWithPagination(options, filter);
     return response;
   }
+
+  //----------------------------- get monthly vendor growth
+  async getMonthlyUserGrowth(year: number): Promise<any> {
+    try {
+      const stats = await this._vendorModel.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(`${year}-01-01`),
+              $lt: new Date(`${year + 1}-01-01`),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id": 1 } },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching monthly vendor growth:", error);
+      return [];
+    }
+  }
 }
