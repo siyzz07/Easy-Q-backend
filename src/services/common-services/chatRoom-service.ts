@@ -271,6 +271,7 @@ export class ChatRoomService implements IChatRoomService {
     const roomData = await this._ChatRoomRepository.getChatRoomById(roomId)
 
     
+      console.log('roomdData. :>> ', roomData.members);
     const notifyUsers: [{userId:string}] = roomData.members
 
       .filter((member:any) => member.userId._id.toString() !== userId)

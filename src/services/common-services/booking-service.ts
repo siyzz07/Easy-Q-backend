@@ -29,10 +29,11 @@ import { INotificationService } from "../../interface/notificaion-interface/noti
 import { nanoid } from "nanoid";
 import { ITransactionRepository } from "../../interface/transaction-interface/transaction-repository-interface";
 import {
-  TransactionOwnerTypeEnu,
+  TransactionOwnerTypeEnum,
   TransactionStatusEnum,
   TransactionTypeEnum,
 } from "../../enums/transactionEnum";
+import { PaymentStatusEnum } from "../../enums/statusEnum";
 import { IWalletService } from "../../interface/wallet-interface/wallet-service-interface";
 import { RoleEnum } from "../../enums/role";
 import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
@@ -103,7 +104,7 @@ export class BookingService implements IBookingService {
         const customerTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(userId),
-          userType: TransactionOwnerTypeEnu.CUSTOMER,
+          userType: TransactionOwnerTypeEnum.CUSTOMER,
           flow: "debit",
           transactionType: TransactionTypeEnum.RAZORPAY,
           status: TransactionStatusEnum.SUCCESS,
@@ -113,7 +114,7 @@ export class BookingService implements IBookingService {
         const vendorTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
-          userType: TransactionOwnerTypeEnu.VENDOR,
+          userType: TransactionOwnerTypeEnum.VENDOR,
           flow: "credit",
           transactionType: TransactionTypeEnum.RAZORPAY,
           status: TransactionStatusEnum.SUCCESS,
@@ -156,7 +157,7 @@ export class BookingService implements IBookingService {
         const customerTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(userId),
-          userType: TransactionOwnerTypeEnu.CUSTOMER,
+          userType: TransactionOwnerTypeEnum.CUSTOMER,
           flow: "debit",
           transactionType: TransactionTypeEnum.WALLET,
           status: TransactionStatusEnum.SUCCESS,
@@ -166,7 +167,7 @@ export class BookingService implements IBookingService {
         const vendorTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
-          userType: TransactionOwnerTypeEnu.VENDOR,
+          userType: TransactionOwnerTypeEnum.VENDOR,
           flow: "credit",
           transactionType: TransactionTypeEnum.WALLET,
           status: TransactionStatusEnum.SUCCESS,
@@ -190,7 +191,7 @@ export class BookingService implements IBookingService {
 
         query = {
           paymentMethod,
-          paymentStatus: "paid",
+          paymentStatus: PaymentStatusEnum.PAID,
           expireAt: null,
         };
       }
@@ -198,7 +199,7 @@ export class BookingService implements IBookingService {
       if (paymentMethod == "payAtShop") {
         query = {
           paymentMethod,
-          paymentStatus: "pending",
+          paymentStatus: PaymentStatusEnum.PENDING,
           expireAt: null,
         };
       }
@@ -316,8 +317,8 @@ export class BookingService implements IBookingService {
       bookingTimeStart: availableTime.startTime,
       bookingTimeEnd: availableTime.endTime,
       totalAmount: serviceData?.price,
-      status: "pending",
-      paymentStatus: "pending",
+      status: BookingStatusEnum.PENDING,
+      paymentStatus: PaymentStatusEnum.PENDING,
       expireAt: new Date(Date.now() + TTL * 60 * 1000),
     };
 
@@ -512,7 +513,7 @@ selectedBookingData = async (
       const customerTransaction = {
         bookingId: new mongoose.Types.ObjectId(booking._id),
         user: new mongoose.Types.ObjectId(booking.customerId._id),
-        userType: TransactionOwnerTypeEnu.CUSTOMER,
+        userType: TransactionOwnerTypeEnum.CUSTOMER,
         flow: "credit",
         transactionType: TransactionTypeEnum.WALLET,
         status: TransactionStatusEnum.SUCCESS,
@@ -522,7 +523,7 @@ selectedBookingData = async (
       const vendorTransaction = {
         bookingId: new mongoose.Types.ObjectId(booking._id),
         user: new mongoose.Types.ObjectId(booking.shopId._id as string),
-        userType: TransactionOwnerTypeEnu.VENDOR,
+        userType: TransactionOwnerTypeEnum.VENDOR,
         flow: "debit",
         transactionType: TransactionTypeEnum.WALLET,
         status: TransactionStatusEnum.SUCCESS,
@@ -532,7 +533,7 @@ selectedBookingData = async (
       try {
         await Promise.all([
           this._BookingRepository.updateBooking(String(booking._id) as string, {
-            paymentStatus: "refunded",
+            paymentStatus: PaymentStatusEnum.REFUNDED,
           }),
           this._WalletService.updateWallet(
             booking.shopId._id as string,
@@ -706,7 +707,7 @@ selectedBookingData = async (
       );
 
       if (bookingData?.paymentMethod == TransactionTypeEnum.PAYATSHOP) {
-        payload.paymentStatus = "paid";
+        payload.paymentStatus = PaymentStatusEnum.PAID;
       }
     }
 

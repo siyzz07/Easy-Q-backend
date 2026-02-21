@@ -1,7 +1,8 @@
 import mongoose, {  SortOrder } from "mongoose";
+import { ChatRoleEnum } from "../enums/role";
 import { ICustomer, ICustomerAddressData } from "./customerType";
 import { IService, IStaff, IVendor } from "./vendorType";
-import { TransactionTypeEnum, TransactionStatusEnum, TransactionOwnerTypeEnu } from "../enums/transactionEnum";
+import { TransactionTypeEnum, TransactionStatusEnum, TransactionOwnerTypeEnum } from "../enums/transactionEnum";
 
 export interface IJwtPayload {
     userId:string;
@@ -155,7 +156,7 @@ export interface ITransaction extends Document {
     referenceId?: string;
     bookingId: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;
-    userType: TransactionOwnerTypeEnu;
+    userType: TransactionOwnerTypeEnum;
     flow:string
     transactionType: TransactionTypeEnum;
     amount: number;
@@ -232,7 +233,7 @@ export interface IAddContracValues {
 export interface IChatMember {
   userId: mongoose.Types.ObjectId;
   userType: "Customer" | "Vendor";
-  role: "admin" | "member";
+  role: ChatRoleEnum;
 }
 
 export interface IChatRoom {

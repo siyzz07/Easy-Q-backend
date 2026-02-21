@@ -42,13 +42,14 @@ export interface IVendor {
   
 }
 
+
 export interface IShopData {
   state: string;
   city: string;
   shopType: string;
-  openAt: any;
-  closeAt: any;
-  profileImage: any;
+  openAt: string;
+  closeAt: string;
+  profileImage: string;
   workingDays: string[]|string;
 }
 
@@ -113,4 +114,78 @@ export interface IReview extends Document {
   rating: string;
   createdAt?: Date;
   comment:string
+}
+
+
+
+// Monthly chart
+export interface IMonthlyChart {
+  month: string;
+  bookings: number;
+  contracts: number;
+}
+
+// Weekly chart
+export interface IWeeklyChart {
+  day: string;
+  bookings: number;
+  revenue: number;
+}
+
+// Booking status breakdown
+export interface IStatusBreakdown {
+  status: string;
+  count: number;
+}
+
+// Peak hours
+export interface IPeakHour {
+  hour: number;
+  count: number;
+}
+
+// Recent booking (simplified — you can expand if needed)
+export interface IRecentBooking {
+  _id: string;
+  bookingId: string;
+  bookingDate: string;
+  bookingTimeStart: string;
+  bookingTimeEnd: string;
+  status: string;
+  totalAmount: string;
+  paymentStatus: string;
+  paymentMethod?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Detailed analytics
+export interface IDetailedAnalytics {
+  totalBookings: number;
+  completedBookings: number;
+  cancelledBookings: number;
+  totalRevenue: number;
+  averageBookingValue: number;
+  completionRate: number;
+  recentBookings: IRecentBooking[];
+  statusBreakdown: IStatusBreakdown[];
+  peakHours: IPeakHour[];
+}
+
+// Final Dashboard Response
+export interface IVendorDashboardResponse extends IDetailedAnalytics {
+  totalStaff: number;
+  availableStaff: number;
+  totalUnavailableStaff: number;
+
+  totalService: number;
+  totalAvailableService: number;
+  totalUnavailableService: number;
+
+  totalRevenue: number;
+  customerCount: number;
+  pendingBookingsCount: number;
+
+  chartData: IMonthlyChart[];
+  weeklyChartData: IWeeklyChart[];
 }

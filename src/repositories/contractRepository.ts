@@ -243,7 +243,7 @@ class ContractRepository
   ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {};
 
-    if (query.search?.trim()) {
+    if (query.search?.trim()) {  
       filter.$or = [{ title: { $regex: query.search, $options: "i" } }];
     }
 
