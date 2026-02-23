@@ -23,7 +23,7 @@ import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 
 import { IBookingRopsitory } from "../../interface/booking-interface/booking-repository-interface";
 import { IContractRepository } from "../../interface/contract-interface/contract-respositlory-interface";
-import { log } from "console";
+
 
 class VendorService implements IVendorShopService {
   private _vendorRepo: IVendorRepository;

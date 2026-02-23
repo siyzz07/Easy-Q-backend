@@ -1,4 +1,5 @@
 import { IBooking, IBookingPopulated, IPaginationResponseMeta } from "../../types/common-types";
+import { AdminBookingStats, MonthlyData, PeakHour, PlatformStatusBreakdown, TopService, TopVendor } from "../../types/adminType";
 
 
 
@@ -11,12 +12,12 @@ export interface IBookingRopsitory {
     bookingDatasForVendor (data:string ,query:{page?:string,limit?:string,search?:string, date?:string}) :Promise<{data:IBookingPopulated[],pagination:IPaginationResponseMeta}>
     getBookingStats(vendorId: string, year: number): Promise<any>
     getWeeklyBookingStats(vendorId: string): Promise<any>
-    getAdminBookingStats(): Promise<any>
-    getAdminMonthlyRevenueStats(year: number): Promise<any>
-    getAdminPlatformStatusBreakdown(): Promise<any>
-    getAdminTopVendors(limit: number): Promise<any>
-    getAdminTopServices(limit: number): Promise<any>
-    getAdminPeakHours(): Promise<any>
+    getAdminBookingStats(): Promise<AdminBookingStats>
+    getAdminMonthlyRevenueStats(year: number): Promise<MonthlyData[]>
+    getAdminPlatformStatusBreakdown(): Promise<PlatformStatusBreakdown[]>
+    getAdminTopVendors(limit: number): Promise<TopVendor[]>
+    getAdminTopServices(limit: number): Promise<TopService[]>
+    getAdminPeakHours(): Promise<PeakHour[]>
     getVendorRevenueAndCustomerCount(vendorId: string): Promise<any>
     getDetailedVendorAnalytics(vendorId: string): Promise<any>
 }

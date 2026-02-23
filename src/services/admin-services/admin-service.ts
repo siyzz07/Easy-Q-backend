@@ -9,6 +9,7 @@ import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { CustomerMapper } from "../../mappers/customer-mapper/customer-mapper";
 import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 import { IPaginationResponseMeta } from "../../types/common-types";
+import { AdminDashboardDashboardResponse, MonthlyData } from "../../types/adminType";
 
 export class AdminService implements IAdminService {
   private _customerRepository: ICustomerRepository;
@@ -35,7 +36,7 @@ export class AdminService implements IAdminService {
    *  Admin dashboard
    * 
    */
-  dashboard = async (): Promise<any> => {
+  dashboard = async (): Promise<AdminDashboardDashboardResponse> => {
     const vendorsData = await this._vendorRepository.getVendorData();
     const customerData = await this._customerRepository.getCusomersData();
     const bookingStats = await this._bookingRepository.getAdminBookingStats();
@@ -74,18 +75,18 @@ export class AdminService implements IAdminService {
     
     const revenueChartData = months.map((month, index) => {
       const monthNum = index + 1;
-      const data = monthlyRevenue.find((m: any) => m._id === monthNum);
+      const data = monthlyRevenue.find((m) => m._id === monthNum);
       return {
         month,
-        revenue: data ? data.revenue : 0,
+        revenue: data?.revenue ?? 0,
         bookings: data ? data.count : 0
       };
     });
 
     const userGrowthChartData = months.map((month, index) => {
        const monthNum = index + 1;
-       const cData = customerGrowth.find((m: any) => m._id === monthNum);
-       const vData = vendorGrowth.find((m: any) => m._id === monthNum);
+       const cData = customerGrowth.find((m) => m._id === monthNum);
+       const vData = vendorGrowth.find((m) => m._id === monthNum);
        return {
          month,
          customers: cData ? cData.count : 0,

@@ -1,4 +1,5 @@
 import { ICustomer } from "../../types/customerType"
+import { MonthlyData } from "../../types/adminType";
 
 
 
@@ -9,7 +10,7 @@ export interface ICustomerRepository{
     customerDataById(id:string) :Promise <ICustomer|null>
     resetPassword (email:string,passowrd:string):Promise<void>
     editProfile(data:{userId:string;name:string;email:string;phone:string}):Promise<boolean>
-    getMonthlyUserGrowth(year: number): Promise<any>
+    getMonthlyUserGrowth(year: number): Promise<MonthlyData[]>
     
  
 //----------------------------------------------------------------------------------

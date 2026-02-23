@@ -14,6 +14,15 @@ import { socketManagerServer } from "../../sockets/socketInstance";
 import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { generateToken04 } from "../../utils/zegoServerAssistant";
 import { leaveVedioCallNotify, getActiveCallUsers } from "../../sockets/handlers/chatHandlers";
+import { ICustomer } from "../../types/customerType";
+import { IVendor } from "../../types/vendorType";
+import mongoose from "mongoose";
+
+interface PopulatedUserId {
+  _id: string | mongoose.Types.ObjectId;
+  name?: string;
+  shopName?: string;
+}
 
 export class ChatRoomService implements IChatRoomService {
   private _ChatRoomRepository: IChatRoomRepository;
@@ -153,10 +162,13 @@ export class ChatRoomService implements IChatRoomService {
     console.log('Total Members Found in DB:', chatRoomData.members.length);
     
     // Log member types for debugging
-    const memberSummary = chatRoomData.members.map(m => ({
-        type: m.userType,
-        id: String((m.userId as any)?._id || m.userId)
-    }));
+    const memberSummary = chatRoomData.members.map(m => {
+        const userIdObj = m.userId as unknown as PopulatedUserId;
+        return {
+            type: m.userType,
+            id: String(userIdObj?._id || m.userId)
+        };
+    });
     console.log('Members Summary:', JSON.stringify(memberSummary));
     
     const stats = { vendor: 0, customer: 0 };
@@ -169,7 +181,7 @@ export class ChatRoomService implements IChatRoomService {
     const notifyUsers: IVedioCallNotify[] = chatRoomData.members
       .filter((member) => {
         // Robust ID extraction for populated user objects
-        const mUserId = (member.userId as any)?._id || member.userId;
+        const mUserId = (member.userId as unknown as PopulatedUserId)?._id || member.userId;
         if (!mUserId) {
             console.log(`WARNING: Member has no userId! Type: ${member.userType}`);
             return false;
@@ -193,7 +205,8 @@ export class ChatRoomService implements IChatRoomService {
         return true;
       })
       .map((value) => {
-        const id = String((value.userId as any)?._id || value.userId);
+        const userIdObj = value.userId as unknown as PopulatedUserId;
+        const id = String(userIdObj?._id || value.userId);
         return {
             userId: id,
             userType: value.userType,
@@ -231,7 +244,11 @@ export class ChatRoomService implements IChatRoomService {
   }
 
   const userMember = roomData.members.find(
-    (value: any) => value.userId._id.toString() === userId
+    (value) => {
+      const userIdObj = value.userId as unknown as PopulatedUserId;
+      const mId = userIdObj?._id ? userIdObj._id.toString() : value.userId.toString();
+      return mId === userId;
+    }
   );
 
   if (!userMember) {
@@ -239,9 +256,9 @@ export class ChatRoomService implements IChatRoomService {
   }
 
   if (userMember.userType === "Vendor") {
-    name = userMember.userId.shopName;
+    name = (userMember.userId as IVendor).shopName || "";
   } else {
-    name = userMember.userId.name;
+    name = (userMember.userId as ICustomer).name || "";
   }
 
   const appId = Number(process.env.ZEGOCLOUD_APP_ID);
@@ -266,24 +283,36 @@ export class ChatRoomService implements IChatRoomService {
    *  remove form vedio room
    *
    */
-  leaveVedioCall = async(roomId: string, userId: string): Promise<boolean | void> => {
+  leaveVedioCall = async (roomId: string, userId: string): Promise<boolean | void> => {
+    const roomData = await this._ChatRoomRepository.getChatRoomById(roomId);
 
-    const roomData = await this._ChatRoomRepository.getChatRoomById(roomId)
+    if (!roomData) return;
 
-    
-      console.log('roomdData. :>> ', roomData.members);
-    const notifyUsers: [{userId:string}] = roomData.members
+    console.log("roomdData. :>> ", roomData.members);
+    const notifyUsers: { userId: string }[] = roomData.members
+      .filter((member) => {
+        const userIdObj = member.userId as unknown as PopulatedUserId;
+        const mId = userIdObj?._id
+          ? userIdObj._id.toString()
+          : member.userId.toString();
+        return mId !== userId;
+      })
+      .map((value) => {
+        const userIdObj = value.userId as unknown as PopulatedUserId;
+        const mId = userIdObj?._id
+          ? userIdObj._id.toString()
+          : value.userId.toString();
+        return {
+          userId: mId,
+        };
+      });
 
-      .filter((member:any) => member.userId._id.toString() !== userId)
-      .map((value:any) => ({
-        userId: value.userId._id.toString(),
-
-      }));
-      
-
-      leaveVedioCallNotify(socketManagerServer.getIo(),{roomId,userId},notifyUsers)
-
-  }
+    leaveVedioCallNotify(
+      socketManagerServer.getIo(),
+      { roomId, userId },
+      notifyUsers,
+    );
+  };
 
     /**
    *

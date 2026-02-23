@@ -2,9 +2,10 @@ import { CustomerDto } from "../../dto/customer-dto/customer-dto";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { IPaginationResponseMeta } from "../../types/common-types";
 import { IVendor } from "../../types/vendorType";
+import { AdminDashboardDashboardResponse } from "../../types/adminType";
 
 export interface IAdminService {
-  dashboard(): Promise<any>;
+  dashboard(): Promise<AdminDashboardDashboardResponse>;
 
   getVendors(): Promise<VendorDto[]>;
   getVendorsPagination(query: {

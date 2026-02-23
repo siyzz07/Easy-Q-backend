@@ -2,6 +2,8 @@ import mongoose, { FilterQuery, PopulateOptions } from "mongoose";
 import { IContractRepository } from "../interface/contract-interface/contract-respositlory-interface";
 import { Contract } from "../models/contractModel";
 import { IContract, IPaginationResponseMeta } from "../types/common-types";
+import { AdminContractStats, MonthlyData } from "../types/adminType";
+import { ContractDto } from "../dto/contract-dto/contract-dto";
 import BaseRepository from "./baseRepository";
 
 class ContractRepository
@@ -36,7 +38,7 @@ class ContractRepository
       .exec();
   }
 
-  async getContracts(filter: any = {}): Promise<IContract[]> {
+  async getContracts(filter: FilterQuery<IContract> = {}): Promise<IContract[]> {
     return await this._ContractModel
       .find(filter)
       .populate("customerId")
@@ -53,7 +55,7 @@ class ContractRepository
   async getCustomerContracts(
     customerId: string,
     query: { page?: string; limit?: string; search?: string; filter?: string },
-  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {
       customerId: customerId,
     };
@@ -79,7 +81,7 @@ class ContractRepository
       { path: "appliedVendors" },
     ];
 
-    const result = await this.filterWithPagination(options, filter, populate);
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
     return result;
   }
 
@@ -100,7 +102,7 @@ class ContractRepository
       distance?: number;
       postedWithin: string;
     },
-  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {
       service: new mongoose.Types.ObjectId(serviceType),
     };
@@ -167,7 +169,7 @@ class ContractRepository
       { path: "appliedVendors" },
     ];
 
-    const result = await this.filterWithPagination(options, filter, populate);
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
     return result;
   }
 
@@ -240,7 +242,7 @@ class ContractRepository
   async getVendorContracts(
     vendorId: string,
     query: { page?: string; limit?: string; search?: string },
-  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {};
 
     if (query.search?.trim()) {  
@@ -260,7 +262,7 @@ class ContractRepository
       { path: "service" },
     ];
 
-    const result = await this.filterWithPagination(options, filter, populate);
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
     return result;
   }
 
@@ -272,7 +274,7 @@ class ContractRepository
   async getVendorAppliedContracts(
     vendorId: string,
     query: { page?: string; limit?: string; search?: string },
-  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {};
 
     if (query.search?.trim()) {
@@ -292,7 +294,7 @@ class ContractRepository
       { path: "service" },
     ];
 
-    const result = await this.filterWithPagination(options, filter, populate);
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
     return result;
   }
 
@@ -317,7 +319,7 @@ class ContractRepository
    *  get contract stats
    *
    */
-  async getContractStats(vendorId: string, year: number): Promise<any> {
+  async getContractStats(vendorId: string, year: number): Promise<MonthlyData[]> {
     try {
       const stats = await this._ContractModel.aggregate([
         {
@@ -346,7 +348,7 @@ class ContractRepository
     }
   }
 
-  async getAdminContractStats(): Promise<any> {
+  async getAdminContractStats(): Promise<AdminContractStats> {
     try {
       const stats = await this._ContractModel.aggregate([
         {

@@ -123,7 +123,7 @@ export interface INotification {
       transactionId?: string;
     };
 
-    extra?: Record<string, any>;
+    extra?: Record<string, unknown>;
   };
 
   createdAt: Date;
@@ -231,7 +231,7 @@ export interface IAddContracValues {
 
 
 export interface IChatMember {
-  userId: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId | ICustomer | IVendor;
   userType: "Customer" | "Vendor";
   role: ChatRoleEnum;
 }
