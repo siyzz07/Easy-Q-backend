@@ -98,7 +98,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
+          file: ./dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
@@ -107,30 +107,36 @@ jobs:
           cache-to: type=gha,mode=max
 
   # ════════════════════════════════════════════════
-  # JOB 3: Deploy (Example — uncomment when ready)
+  # JOB 3: Deploy to AWS EC2
   # ════════════════════════════════════════════════
-  # deploy:
-  #   name: 🚀 Deploy to Production
-  #   runs-on: ubuntu-latest
-  #   needs: docker
-  #   if: github.ref == 'refs/heads/main'
-  #
-  #   steps:
-  #     # Option A: Deploy to a VPS via SSH
-  #     - name: 🚀 Deploy to Server
-  #       uses: appleboy/ssh-action@v1
-  #       with:
-  #         host: ${{ secrets.SERVER_HOST }}
-  #         username: ${{ secrets.SERVER_USER }}
-  #         key: ${{ secrets.SERVER_SSH_KEY }}
-  #         script: |
-  #           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/easyq-backend:latest
-  #           docker compose -f /app/docker-compose.yml up -d --no-deps backend
-  #
-  #     # Option B: Deploy to Render
-  #     # - name: 🚀 Trigger Render Deploy
-  #     #   run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-  #
-  #     # Option C: Deploy to Railway
-  #     # - name: 🚀 Trigger Railway Deploy
-  #     #   run: railway up --service easyq-backend
+  deploy:
+    name: 🚀 Deploy to AWS EC2
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: 🚀 Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Pull the latest image from Docker Hub
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/easyq-backend:latest
+
+            # Stop and remove the old container (if running)
+            docker stop easyq-backend || true
+            docker rm easyq-backend || true
+
+            # Start the new container
+            docker run -d \
+              --name easyq-backend \
+              --restart always \
+              --env-file ~/easyq-backend/.env.production \
+              -p 7004:7004 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/easyq-backend:latest
+
+            # Clean up old unused images
+            docker image prune -f

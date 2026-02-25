@@ -31,8 +31,8 @@ FROM node:20-alpine AS production
 # Add dumb-init for proper PID 1 signal handling
 RUN apk add --no-cache dumb-init
 
-# bcrypt needs native libs at runtime
-RUN apk add --no-cache python3 make g++
+# bcrypt needs native C++ runtime libs (not the full build toolchain)
+RUN apk add --no-cache libstdc++ libgcc
 
 ENV NODE_ENV=production
 WORKDIR /app
