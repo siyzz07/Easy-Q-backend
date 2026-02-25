@@ -51,9 +51,7 @@ export class AuthController {
   login = async (
     req: Request,
     res: Response,
-    next: NextFunction
   ): Promise<void> => {
-    try {
       const data = req.body;
       const result = await this._authService.login(data);
       if (result) {
@@ -68,11 +66,6 @@ export class AuthController {
           ...(result.entityData && { data: result.entityData }),
         });
       }
-    } catch (error: unknown) {
-      console.log(error);
-
-      next(error);
-    }
   };
 
   /**

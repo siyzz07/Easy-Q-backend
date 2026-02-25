@@ -8,10 +8,12 @@ interface CustomError extends Error {
   statusCode?: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler = (
   err: CustomError, 
   req: Request, 
   res: Response, 
+  next: NextFunction
 ) => {
 
   logger.error(`${err.message} - ${req.method} ${req.originalUrl}`);

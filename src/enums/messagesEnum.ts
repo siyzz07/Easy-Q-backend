@@ -3,17 +3,17 @@ export enum MessageEnum {
   FORBIDDEN = "Forbidden Access denied",
 
   // --------------------------------------------------------------------------customer
-  CUSTOMER_ALREADY_EXISTS = "Customer already exists",
+  CUSTOMER_ALREADY_EXISTS = "An account with this email already exists. Please log in instead.",
   CUSTOMER_REGISTERED = "Customer registered successfully",
-  CUSTOMER_NOT_FOUND = "Customer not found",
+  CUSTOMER_NOT_FOUND = "No account found with this email. Please sign up first.",
   CUSTOMER_LOGIN_SUCCESS = "Customer logged in successfully",
   CUSTOMER_DATA_FETCH_SUCCESS ='Customer data fetch successfully',
   CUSTOMER_DATA_UPDATION_SUCCESS ='Customer data updated successfully',
   CUSTOMER_DATA_FETCH_FAILED ='Customer data fetching failed',
   CUSTOMER_ALL_DATA_FETCH_SUCCESS ='Customers datas fetch successfully',
-  CUSTOMER_BLOCKED ='Customer blocked by admin',
+  CUSTOMER_BLOCKED ='Your account has been blocked by admin. Please contact support.',
   CUSTOMER_PROFILE_UPDATED ='Customer profile updated',
-  CUSTOMER_ADD_ERROR='Error to add customer please try again latter',
+  CUSTOMER_ADD_ERROR='Failed to create account. Please try again later.',
   
 
   
@@ -34,17 +34,17 @@ export enum MessageEnum {
   //--------------------------------------------------------------------------common
 
   
-  INVALID_CREDENTIALS = "Invalid email or password",
+  INVALID_CREDENTIALS = "Invalid password. Please try again.",
   INVALID_PASSWORD = "Invalid password",
   MISSING_FIELDS = "Required fields are missing",
-  LOGOOUT_SUCCESS = 'Logut success',
+  LOGOOUT_SUCCESS = 'Logout successful',
   SERVER_ERROR = 'Internal server error',
-  PASSWROD_CAHNGE_SUCCESS ='Password change successfully',
+  PASSWROD_CAHNGE_SUCCESS ='Password changed successfully',
   PASSWROD_CAHNGE_FAILED ='Unable to change password',
   ACCOUNT_BLOCKED="Your account is blocked",
   SUCCEESS ="success",
 
-  REGISTER_SUCCESS ='Register success pleas verify your email',
+  REGISTER_SUCCESS ='Registration successful. Please verify your email.',
   ROLE_NOT_FOUND="Entity role not found",
   ENTITY_ADDEDD_SUCCESSFULY = 'Registration has been successfully completed.',
   LOGIN_SUCCESSFLLY = ' login successfully',
@@ -52,24 +52,24 @@ export enum MessageEnum {
 
 
   // --------------------------------------------------------------------------vendor
-  VENDOR_EXISTS = "Vendor already exists",
-  VENDOR_NOT_FOUND = "Vendor not found",
-  VENDOR_ADD_ERROR='Error to add vendor please try again latter',
+  VENDOR_EXISTS = "A vendor with this email already exists. Please log in instead.",
+  VENDOR_NOT_FOUND = "No vendor account found with this email. Please sign up first.",
+  VENDOR_ADD_ERROR='Failed to create vendor account. Please try again later.',
   VENDOR_CREATED = "Vendor created successfully",
   VENDOR_UPDATED = "Vendor updated successfully",
   VENDOR_DELETED = "Vendor deleted successfully",
   VENDOR_REGISTERED = "Vendor registered successfully",
-  VENDOR_BLOCKED = "Vendor blocked by admin",
+  VENDOR_BLOCKED = "Your account has been blocked by admin. Please contact support.",
   VENDOR_DATA_UPDATION_SUCCESS ='Vendor data updated successfully',
   VENDOR_DATA_UPDATION_FAILED ='Failed to update vendor data ',
   LOGIN_SUCCESS = "Vendor logged in successfully",
   UNAUTHORIZED = "You are not authorized to perform this action",
   PLAN_EXPIRED = "Vendor plan has expired",
   VENDOR__DATA_FETCH_SUCCESS ='Vendor data fetch successfully',
-  VENDOR__DATA_FETCH_FAILED ='Error to fetch vedor data',
+  VENDOR__DATA_FETCH_FAILED ='Error to fetch vendor data',
   VENDOR_UNDER_VERIFICATION = "Your account is under verification. Please wait for admin approval.",
   VENDOR_VERIFICATION_REJECTED = "Your account verification was rejected by admin. Please register again with valid data.",
-  VENDOR_VRIFIED = "Vendor vierified",
+  VENDOR_VRIFIED = "Vendor verified",
   VENDOR_DENIED = "Vendor verification rejected",
   VENDOR_SHOP_IMAGE_ADDED_SUCCESS = 'Image added successfully',
   VENDOR_SHOP_IMAGE_DELETED_SUCCESS = 'Image deleted successfully',
@@ -100,8 +100,8 @@ export enum MessageEnum {
   
   ADMIN_LOGIN_SUCCESS = "Admin logged in successfully.",
   ADMIN_LOGIN_FAILED = "Invalid email or password.",
-  ADMIN_NOT_FOUND = "Admin not found.",
-  ADMIN_PASSWORD_INCORRECT = "Incorrect password.",
+  ADMIN_NOT_FOUND = "Admin account not found. Please check your email.",
+  ADMIN_PASSWORD_INCORRECT = "Invalid password. Please try again.",
   ADMIN_ALREADY_EXISTS = "Admin already exists",
 
 

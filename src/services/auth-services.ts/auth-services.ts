@@ -317,6 +317,9 @@ export class AuthService implements IAuthService {
         }
       }
     } else if (role == RoleEnum.ADMIN.toLowerCase()) {
+
+      console.log('role :>> ', role);
+
       const adminExist = await this._adminRepository.checkAdminExist(email);
 
       if (!adminExist) {
@@ -333,7 +336,7 @@ export class AuthService implements IAuthService {
       if (!mathcPassword) {
         throw new ErrorResponse(
           MessageEnum.ADMIN_PASSWORD_INCORRECT,
-          StatusCodeEnum.NOT_FOUND
+          StatusCodeEnum.BAD_REQUEST
         );
       }
 
