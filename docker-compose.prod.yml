@@ -51,6 +51,8 @@ services:
   nginx-proxy:
     container_name: easyq-nginx-proxy
     image: nginxproxy/nginx-proxy:alpine
+    labels:
+      - "com.github.nginx-proxy.nginx"
     ports:
       - "80:80"
       - "443:443"
@@ -68,7 +70,8 @@ services:
     container_name: easyq-acme-companion
     image: nginxproxy/acme-companion
     environment:
-      - DEFAULT_EMAIL=shibinsiyad.k.kdpm@gmail.com # Replaced with your email
+      - DEFAULT_EMAIL=shibinsiyad.k.kdpm@gmail.com
+      - NGINX_PROXY_CONTAINER=easyq-nginx-proxy
     volumes:
       - certs:/etc/nginx/certs:rw
       - vhost:/etc/nginx/vhost.d:rw
