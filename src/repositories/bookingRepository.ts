@@ -13,7 +13,8 @@ import { MessageEnum } from "../enums/messagesEnum";
 import { StatusCodeEnum } from "../enums/httpStatusCodeEnum";
 import mongoose from "mongoose";
 import logger from "../utils/logger";
-
+import { AdminBookingStats, MonthlyData, PeakHour, PlatformStatusBreakdown, TopService, TopVendor } from "../types/adminType";
+import { IMonthlyStats, IWeeklyStats, IVendorRevenueStats, IDetailedVendorAnalytics } from "../types/statsTypes";
 export class BookingRepository
   extends BaseRepository<IBooking>
   implements IBookingRopsitory
@@ -170,7 +171,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get booking stats
-  async getBookingStats(vendorId: string, year: number): Promise<any> {
+  async getBookingStats(vendorId: string, year: number): Promise<IMonthlyStats[]> {
     try {
       const stats = await this._BookingModal.aggregate([
         {
@@ -203,7 +204,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get weekly booking stats
-  async getWeeklyBookingStats(vendorId: string): Promise<any> {
+  async getWeeklyBookingStats(vendorId: string): Promise<IWeeklyStats[]> {
     try {
       const startOfWeek = new Date();
       startOfWeek.setHours(0, 0, 0, 0);
@@ -244,7 +245,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get admin booking stats
-  async getAdminBookingStats(): Promise<any> {
+  async getAdminBookingStats(): Promise<AdminBookingStats> {
     try {
       const stats = await this._BookingModal.aggregate([
         {
@@ -272,7 +273,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get admin monthly revenue stats
-  async getAdminMonthlyRevenueStats(year: number): Promise<any> {
+  async getAdminMonthlyRevenueStats(year: number): Promise<MonthlyData[]> {
     try {
       const stats = await this._BookingModal.aggregate([
         {
@@ -300,7 +301,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get admin platform status breakdown
-  async getAdminPlatformStatusBreakdown(): Promise<any> {
+  async getAdminPlatformStatusBreakdown(): Promise<PlatformStatusBreakdown[]> {
     try {
       const stats = await this._BookingModal.aggregate([
         { $group: { _id: "$status", count: { $sum: 1 } } },
@@ -314,7 +315,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get admin top vendors
-  async getAdminTopVendors(limit: number): Promise<any> {
+  async getAdminTopVendors(limit: number): Promise<TopVendor[]> {
     try {
       const stats = await this._BookingModal.aggregate([
         { $match: { status: "completed" } },
@@ -354,7 +355,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get admin top services platform wide
-  async getAdminTopServices(limit: number): Promise<any> {
+  async getAdminTopServices(limit: number): Promise<TopService[]> {
     try {
       const stats = await this._BookingModal.aggregate([
         { $match: { status: "completed" } },
@@ -393,7 +394,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get admin platform peak hours
-  async getAdminPeakHours(): Promise<any> {
+  async getAdminPeakHours(): Promise<PeakHour[]> {
     try {
       const stats = await this._BookingModal.aggregate([
         { 
@@ -413,7 +414,7 @@ export class BookingRepository
   }
 
   //----------------------------------- get vendor revenue and customer count
-  async getVendorRevenueAndCustomerCount(vendorId: string): Promise<any> {
+  async getVendorRevenueAndCustomerCount(vendorId: string): Promise<IVendorRevenueStats> {
     try {
       const stats = await this._BookingModal.aggregate([
         {
@@ -454,7 +455,7 @@ export class BookingRepository
     }
   }
   //----------------------------------- get detailed vendor analytics
-  async getDetailedVendorAnalytics(vendorId: string): Promise<any> {
+  async getDetailedVendorAnalytics(vendorId: string): Promise<IDetailedVendorAnalytics> {
     try {
       const stats = await this._BookingModal.aggregate([
         {

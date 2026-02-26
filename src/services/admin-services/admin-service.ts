@@ -9,7 +9,7 @@ import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { CustomerMapper } from "../../mappers/customer-mapper/customer-mapper";
 import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
 import { IPaginationResponseMeta } from "../../types/common-types";
-import { AdminDashboardDashboardResponse, MonthlyData } from "../../types/adminType";
+import { AdminDashboardDashboardResponse } from "../../types/adminType";
 
 export class AdminService implements IAdminService {
   private _customerRepository: ICustomerRepository;

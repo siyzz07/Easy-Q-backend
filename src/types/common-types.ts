@@ -153,6 +153,7 @@ export interface IPaginationResponseMeta {
 
 
 export interface ITransaction extends Document {
+    _id?: mongoose.Types.ObjectId;
     referenceId?: string;
     bookingId: mongoose.Types.ObjectId;
     user: mongoose.Types.ObjectId;

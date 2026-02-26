@@ -94,7 +94,7 @@ export class StaffService implements IStaffService {
 
 
   //  ---------------------------------- edit staff bookin blok dates
-  editStaffBlockDate = async (data: { _id: string; blockedDates:any; userId: string; }): Promise<boolean | void> =>{
+  editStaffBlockDate = async (data: { _id: string; blockedDates:Date[]; userId: string; }): Promise<boolean | void> =>{
 
     const{_id,blockedDates,userId} = data
     

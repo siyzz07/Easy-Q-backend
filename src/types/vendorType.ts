@@ -68,7 +68,7 @@ export interface IStaff {
   closingTime: string;
   breaks:IBreakTime[]
   isActive?: boolean;
-  blockedDates?: [];
+  blockedDates?: Date[];
   userId?:string;
 }
 
@@ -169,23 +169,21 @@ export interface IDetailedAnalytics {
   completionRate: number;
   recentBookings: IRecentBooking[];
   statusBreakdown: IStatusBreakdown[];
-  peakHours: IPeakHour[];
 }
 
-// Final Dashboard Response
-export interface IVendorDashboardResponse extends IDetailedAnalytics {
-  totalStaff: number;
-  availableStaff: number;
-  totalUnavailableStaff: number;
+// export interface IVendorDashboardResponse extends IDetailedAnalytics {
+//   totalStaff: number;
+//   availableStaff: number;
+//   totalUnavailableStaff: number;
 
-  totalService: number;
-  totalAvailableService: number;
-  totalUnavailableService: number;
+//   totalService: number;
+//   totalAvailableService: number;
+//   totalUnavailableService: number;
 
-  totalRevenue: number;
-  customerCount: number;
-  pendingBookingsCount: number;
+//   totalRevenue: number;
+//   customerCount: number;
+//   pendingBookingsCount: number;
 
-  chartData: IMonthlyChart[];
-  weeklyChartData: IWeeklyChart[];
-}
+//   chartData: IMonthlyChart[];
+//   weeklyChartData: IWeeklyChart[];
+// }

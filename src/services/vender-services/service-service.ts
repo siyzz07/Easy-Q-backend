@@ -94,6 +94,6 @@ export class VendorServiceService implements IServiceInterface {
   //-------------------------------------DD
   getEachVendorServices = async (data: string): Promise<ServiceResponseDTO[] | []> => {
     const result = await this._ServiceRpository.getEachvendorServices(data)
-    return ServiceMapper.toDTOList(result as unknown as any[]);
+    return ServiceMapper.toDTOList(result as unknown as IService[]);
   };
 }

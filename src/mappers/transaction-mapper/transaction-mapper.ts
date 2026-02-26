@@ -6,7 +6,7 @@ export class TransactionMapper {
     static toDTO(transaction: ITransaction): TransactionDTO {
 
         const dto: TransactionDTO = {
-            id: (transaction as any)._id.toString(), 
+            id: String(transaction._id), 
             flow: transaction.flow as "debit" | "credit",
             transactionType: transaction.transactionType as "razorpay" | "wallet",
             amount: transaction.amount,

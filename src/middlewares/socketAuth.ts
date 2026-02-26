@@ -26,15 +26,18 @@ export const socketAuth = (
 
     socket.data.userId = decoded.userId;
     next(); 
-  } catch (err:any) {
+  } catch (err:unknown) {
     logger.error("Socket authentication error:", err);
+    if (err instanceof Error){
 
- 
-    next(
-      new ErrorResponse(
-         err?.message,
-        StatusCodeEnum.INTERNAL_SERVER_ERROR
-      ) as unknown as ExtendedError
-    );
+      
+      
+      next(
+        new ErrorResponse(
+          err?.message,
+          StatusCodeEnum.INTERNAL_SERVER_ERROR
+        ) as unknown as ExtendedError
+      );
+    }
   }
 };

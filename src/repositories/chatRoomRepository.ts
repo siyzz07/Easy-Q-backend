@@ -82,7 +82,7 @@ export class ChatRoomRepository
    *  get chat room data by id
    *
    */
-   async getChatRoomById(id: string): Promise<any> {
+   async getChatRoomById(id: string): Promise<IChatRoom | null> {
     
     const result = await this._ChatRoomModel.findById(id).populate('members.userId')
     return result

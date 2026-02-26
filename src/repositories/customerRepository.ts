@@ -2,6 +2,7 @@ import { ICustomer } from "../types/customerType";
 import customer from "../models/customerModel";
 import BaseRepository from "./baseRepository";
 import { ICustomerRepository } from "../interface/customer-interface/customer-repository-interface";
+import { MonthlyData } from "../types/adminType";
 
 export class CustomerRepository
   extends BaseRepository<ICustomer>
@@ -84,7 +85,7 @@ export class CustomerRepository
   }
 
   //----------------------------- get monthly customer growth
-  async getMonthlyUserGrowth(year: number): Promise<any> {
+  async getMonthlyUserGrowth(year: number): Promise<MonthlyData[]> {
     try {
       const stats = await this._customerModel.aggregate([
         {

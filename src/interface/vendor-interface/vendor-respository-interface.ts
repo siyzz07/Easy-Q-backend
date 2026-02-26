@@ -6,9 +6,9 @@ import { MonthlyData } from "../../types/adminType";
 export interface IVendorRepository {
     addNewVendor(data:IVendor):Promise<boolean>
     checkVendorExist(email:string):Promise<boolean>
-    vendorData(email:string):Promise<IVendor|any>
-    vendorDatabyId(id:string) :Promise<IVendor|any>
-    findByIdAndUpdate (id:string,data:object) :Promise<any>
+    vendorData(email:string):Promise<IVendor|null>
+    vendorDatabyId(id:string) :Promise<IVendor|null>
+    findByIdAndUpdate (id:string,data:object) :Promise<IVendor|null>
     resetPassword (email:string,passowrd:string):Promise<void>
     deleteVendor (email:string):Promise<null>
     

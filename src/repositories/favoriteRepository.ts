@@ -1,6 +1,6 @@
 import { IFavoriteRepository } from "../interface/favorite-interface/favorite-repository-interface";
 import favoriteModel from "../models/favoriteModel";
-import { IFavorite } from "../types/customerType";
+import { IFavorite, IFavoritePopulated } from "../types/customerType";
 import BaseRepository from "./baseRepository";
 import mongoose from "mongoose";
 
@@ -58,9 +58,9 @@ export class FavoriteRepository extends BaseRepository<IFavorite> implements IFa
 }
 
 //-------------------------------------------------------get favorite shopes
-async getFavoreiteShopes(customerId: string): Promise<IFavorite|null> {
-  const result = await this._FavoriteModel.findOne({customerId:customerId}).populate('vendors')
-  return result
+async getFavoreiteShopes(customerId: string): Promise<IFavoritePopulated | null> {
+  const result = await this._FavoriteModel.findOne({ customerId }).populate('vendors');
+  return result as unknown as IFavoritePopulated | null;
 }
 
 }

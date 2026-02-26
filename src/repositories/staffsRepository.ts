@@ -74,16 +74,16 @@ export class StaffRepository
 
   //-----------------------------------------------------find the duplicate of the staff
   async duplicateStaffFind(shopId: string,staffName:string, staffId?: string): Promise<IStaff[]|[]> {
-  const query: any = { shopId,staffName };
+  const query: FilterQuery<IStaff> = { shopId, staffName };
   if (staffId) {
-    query._id = { $ne: staffId }; 
+    query._id = { $ne: staffId };
   }
 
   const result = await this._StaffModel.find(query);
   return result;
 }
   //-----------------------------------------------------edit Staff
-  async editStaff(shopId: string,_id:string, data: IStaff): Promise<boolean | void> {
+  async editStaff(shopId: string,_id:string, data: Partial<IStaff>): Promise<boolean | void> {
     
     const result = await this._StaffModel.findOneAndUpdate({_id},{$set:data},{new:true})
     return !!result

@@ -24,7 +24,7 @@ import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
 import mongoose, { Types } from "mongoose";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
-import { IBooking, IPaginationResponseMeta } from "../../types/common-types";
+import { IBooking, IBookingPopulated, IPaginationResponseMeta } from "../../types/common-types";
 import { INotificationService } from "../../interface/notificaion-interface/notification-service-interface";
 import { nanoid } from "nanoid";
 import { ITransactionRepository } from "../../interface/transaction-interface/transaction-repository-interface";
@@ -447,7 +447,7 @@ selectedBookingData = async (
     customerAddressId: selectedAddress || null, 
   };
 
-  return toBookingPopulatedMapper.toDto(updatedBookingData as any);
+  return toBookingPopulatedMapper.toDto(updatedBookingData as unknown as IBookingPopulated);
 };
 
   /**

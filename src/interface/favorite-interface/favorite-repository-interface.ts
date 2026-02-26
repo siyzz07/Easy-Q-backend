@@ -1,4 +1,4 @@
-import { IFavorite } from "../../types/customerType";
+import { IFavorite, IFavoritePopulated } from "../../types/customerType";
 
 
 export interface IFavoriteRepository {
@@ -6,6 +6,6 @@ export interface IFavoriteRepository {
   getFavoriteByCustomerId(customerId: string): Promise<IFavorite | null>;
   addVendorToFavorite(customerId: string, vendorId: string): Promise<boolean >;
  removeVendorFromFavorite(customerId: string, vendorId: string): Promise<boolean>;
-  getFavoreiteShopes (customerId:string):Promise<IFavorite|null>
+  getFavoreiteShopes(customerId: string): Promise<IFavoritePopulated | null>
 //   deleteFavorite(customerId: string): Promise<IFavorite | null>;
 }

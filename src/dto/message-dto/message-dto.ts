@@ -1,3 +1,18 @@
+export interface IPopulatedMessage {
+    _id: string;
+    chatRoomId: string;
+    text: string;
+    createdAt: string;
+    attachments?: { url: string; type: string }[];
+    senderRole: "Vendor" | "Customer";
+    sender?: {
+        _id?: string;
+        name?: string;
+        shopName?: string;
+        ProfileImage?: string;
+    };
+}
+
 export class MessageResponseDTO {
     _id: string;
     chatRoomId: string;
@@ -9,9 +24,9 @@ export class MessageResponseDTO {
     };
     text: string;
     time: string;
-    attachments: any[];
+    attachments: unknown[];
 
-    constructor(data: any) {
+    constructor(data: IPopulatedMessage) {
 
         this._id = data._id;
         this.chatRoomId = data.chatRoomId;
@@ -23,8 +38,8 @@ export class MessageResponseDTO {
         const isVendor = data.senderRole === "Vendor";
 
         this.sender = {
-            _id: sender._id,
-            name: isVendor ? (sender.shopName || sender.name) : sender.name,
+            _id: sender._id as string,
+            name: (isVendor ? (sender.shopName || sender.name) : sender.name) || "",
             profileImage: isVendor ? sender.ProfileImage : undefined,
             role: data.senderRole
         };

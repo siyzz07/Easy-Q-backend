@@ -75,6 +75,7 @@ class ContractController {
   ): Promise<void> => {
     try {
       const filter = req.query;
+      console.log(' 000000000000:>> ', );
       const result = await this._contractService.getContracts(filter);
       res
         .status(StatusCodeEnum.OK)

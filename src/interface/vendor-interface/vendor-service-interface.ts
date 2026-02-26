@@ -1,14 +1,15 @@
 import { IServiceType } from "../../types/adminTypes";
 import { IPaginationResponseMeta } from "../../types/common-types";
-import { IImage, IShopData, IVendor, IVendorDashboardResponse } from "../../types/vendorType";
+import { IImage, IShopData, IVendor } from "../../types/vendorType";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
+import { IVendorDashboardData } from "../../types/statsTypes";
 
 export interface IVendorShopService{
 
  addShopData (data:IShopData,vendorId:string,coordinates:{lat:number,lon:number},workingDays:string) :Promise<void>
  getShopData (id:string):Promise<VendorDto>
  getShopTypes () :Promise<IServiceType[]|[]>
- getDashboard (data:string, year?: number) :Promise<IVendorDashboardResponse>
+ getDashboard (data:string, year?: number) :Promise<IVendorDashboardData>
  updateVendor(id:string,workingDays:string,data:IVendor):Promise<boolean|void>;
 
   getEachVendorData (data:string):Promise<VendorDto|void>
