@@ -56,7 +56,7 @@ jobs:
       - name: 🔍 Lint check
         run: npm run lint
 
-      # 5. Build TypeScript → JavaScript
+      # 5. Build TypeScript → JavaScri
       - name: 🏗️ Build
         run: npm run build
 
