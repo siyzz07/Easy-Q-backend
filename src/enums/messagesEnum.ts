@@ -59,7 +59,7 @@ export enum MessageEnum {
   VENDOR_UPDATED = "Vendor updated successfully",
   VENDOR_DELETED = "Vendor deleted successfully",
   VENDOR_REGISTERED = "Vendor registered successfully",
-  VENDOR_BLOCKED = "Your account has been blocked by admin. Please contact support.",
+  VENDOR_BLOCKED = "Your vendor account has been blocked by admin. Please contact support.",
   VENDOR_DATA_UPDATION_SUCCESS ='Vendor data updated successfully',
   VENDOR_DATA_UPDATION_FAILED ='Failed to update vendor data ',
   LOGIN_SUCCESS = "Vendor logged in successfully",
@@ -101,7 +101,7 @@ export enum MessageEnum {
   ADMIN_LOGIN_SUCCESS = "Admin logged in successfully.",
   ADMIN_LOGIN_FAILED = "Invalid email or password.",
   ADMIN_NOT_FOUND = "Admin account not found. Please check your email.",
-  ADMIN_PASSWORD_INCORRECT = "Invalid password. Please try again.",
+  ADMIN_PASSWORD_INCORRECT = "Invalid admin password. Please try again.",
   ADMIN_ALREADY_EXISTS = "Admin already exists",
 
 
