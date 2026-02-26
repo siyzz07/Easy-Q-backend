@@ -116,6 +116,18 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📁 Copy Docker files to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "docker-compose.prod.yml"
+          target: "~/easyq-backend/"
+
       - name: 🚀 Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1
         with:
@@ -123,20 +135,16 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Pull the latest image from Docker Hub
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/easyq-backend:latest
-
-            # Stop and remove the old container (if running)
-            docker stop easyq-backend || true
-            docker rm easyq-backend || true
-
-            # Start the new container
-            docker run -d \
-              --name easyq-backend \
-              --restart always \
-              --env-file ~/easyq-backend/.env.production \
-              -p 7004:7004 \
-              ${{ secrets.DOCKERHUB_USERNAME }}/easyq-backend:latest
-
+            cd ~/easyq-backend
+            
+            # Export DOCKERHUB_USERNAME so docker compose can inject it into the yml
+            export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            
+            # Pull the latest backend image
+            docker compose -f docker-compose.prod.yml pull
+            
+            # Start the new containers using Docker Compose
+            docker compose -f docker-compose.prod.yml up -d
+            
             # Clean up old unused images
             docker image prune -f

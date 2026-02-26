@@ -1,36 +1,33 @@
 # ═══════════════════════════════════════════════════════════════
-#  EasyQ — Production Docker Compose (Backend Only)
+#  EasyQ — Production Docker Compose
 # ═══════════════════════════════════════════════════════════════
-#  Frontend is hosted on Vercel (auto-deploys from GitHub)
-#  Using: MongoDB Atlas (cloud) + Redis Cloud
-#
-#  Usage:
-#    docker compose -f docker-compose.prod.yml up -d --build
-#    docker compose -f docker-compose.prod.yml logs -f
-#    docker compose -f docker-compose.prod.yml down
-#
-#  Prerequisites:
-#    1. Copy easyq-backend/.env.production.example → .env.production
-#    2. Fill in your Atlas URI, Redis Cloud creds, and all secrets
+#  Using:
+#  - EasyQ Node.js Backend
+#  - Nginx Proxy (Auto-Routes Traffic to Backend)
+#  - Let's Encrypt ACME Companion (Auto-Generates Free HTTPS Certificates)
 # ═══════════════════════════════════════════════════════════════
 
 name: easyq-prod
 
 services:
   # ──────────────────────────────────────────
-  # Backend — Node.js (Production Build)
+  # Backend API
   # ──────────────────────────────────────────
   backend:
     container_name: easyq-backend
-    build:
-      context: .
-      dockerfile: dockerfile
-      target: production
+    # Uses the Docker Hub image pulled through CI/CD instead of manually building it
+    image: ${DOCKERHUB_USERNAME}/easyq-backend:latest
     env_file:
       - ./.env.production
     environment:
       - NODE_ENV=production
       - PORT=7004
+      # Nginx-Proxy Config to catch incoming requests
+      - VIRTUAL_HOST=api.easyq.shibinsiyad.site
+      - VIRTUAL_PORT=7004
+      # Let's Encrypt Config to auto-generate HTTPS certificates
+      - LETSENCRYPT_HOST=api.easyq.shibinsiyad.site
+      - LETSENCRYPT_EMAIL=shibinsiyad.k.kdpm@gmail.com # Replaced with your email for SSL renewals
     expose:
       - "7004"
     restart: always
@@ -49,15 +46,42 @@ services:
         max-file: "3"
 
   # ──────────────────────────────────────────
-  # Reverse Proxy — Nginx
+  # Reverse Proxy (Handles the HTTP/HTTPS Web Traffic & WebSockets)
   # ──────────────────────────────────────────
-  nginx:
-    container_name: easyq-nginx
-    image: nginx:alpine
+  nginx-proxy:
+    container_name: easyq-nginx-proxy
+    image: nginxproxy/nginx-proxy:alpine
     ports:
       - "80:80"
+      - "443:443"
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - backend
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     restart: always
+
+  # ──────────────────────────────────────────
+  # Let's Encrypt Companion (Auto-Generates SSL Certificates)
+  # ──────────────────────────────────────────
+  acme-companion:
+    container_name: easyq-acme-companion
+    image: nginxproxy/acme-companion
+    environment:
+      - DEFAULT_EMAIL=shibinsiyad.k.kdpm@gmail.com # Replaced with your email
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhost:/etc/nginx/vhost.d:rw
+      - html:/usr/share/nginx/html:rw
+      - acme:/etc/acme.sh:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - nginx-proxy
+    restart: always
+
+# Persistent storage for SSL certificates so they don't reset when restarting containers
+volumes:
+  certs:
+  vhost:
+  html:
+  acme:
