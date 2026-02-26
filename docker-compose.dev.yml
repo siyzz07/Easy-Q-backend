@@ -1,0 +1,98 @@
+# ═══════════════════════════════════════════════════════════════
+#  EasyQ — Development Docker Compose
+# ═══════════════════════════════════════════════════════════════
+#  Using: MongoDB Atlas (cloud) + Redis Cloud
+#
+#  Usage:
+#    docker compose -f docker-compose.dev.yml up
+#    docker compose -f docker-compose.dev.yml watch     (hot reload)
+#    docker compose -f docker-compose.dev.yml up --build
+#    docker compose -f docker-compose.dev.yml down
+# ═══════════════════════════════════════════════════════════════
+
+name: easyq-dev
+
+services:
+  # ──────────────────────────────────────────
+  # Backend — Node.js + TypeScript (Dev Mode)
+  # ──────────────────────────────────────────
+  backend:
+    container_name: easyq-backend-dev
+    image: node:20-alpine
+    working_dir: /app
+    # Install bcrypt build tools, then install deps, then run dev server
+    command: >
+      sh -c "
+        apk add --no-cache python3 make g++ &&
+        npm install &&
+        npx nodemon --exec ts-node src/server.ts
+      "
+    volumes:
+      - ./:/app # Mount entire project
+      - backend_nodemodules:/app/node_modules # Persist node_modules in volume
+    ports:
+      - "7004:7004" # Backend API
+      - "9229:9229" # Node.js debugger
+    env_file:
+      - ./.env # Uses your Atlas + Redis Cloud connection strings
+    environment:
+      - NODE_ENV=development
+    networks:
+      - easyq-network
+    restart: unless-stopped
+    # ─── Docker Compose Watch (modern hot reload) ───
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /app/src
+        - action: rebuild
+          path: ./package.json
+
+  # ──────────────────────────────────────────
+  # Frontend — Vite + React (Dev Server)
+  # ──────────────────────────────────────────
+  frontend:
+    container_name: easyq-frontend-dev
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    volumes:
+      - ../easyq-frontend:/app
+      - frontend_nodemodules:/app/node_modules
+    ports:
+      - "5173:5173" # Vite dev server
+    env_file:
+      - ../easyq-frontend/.env
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    networks:
+      - easyq-network
+    restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ../easyq-frontend/src
+          target: /app/src
+        - action: rebuild
+          path: ../easyq-frontend/package.json
+
+# ──────────────────────────────────────────
+# Named Volumes
+# ──────────────────────────────────────────
+volumes:
+  backend_nodemodules:
+    driver: local
+  frontend_nodemodules:
+    driver: local
+
+# ──────────────────────────────────────────
+# Network
+# ──────────────────────────────────────────
+networks:
+  easyq-network:
+    driver: bridge
+
+#  docker compose -f docker-compose.dev.yml up
