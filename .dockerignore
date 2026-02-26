@@ -13,3 +13,5 @@ logs
 *.log
 Dockerfile
 .dockerignore
+docker-compose*.yml
+nginx
