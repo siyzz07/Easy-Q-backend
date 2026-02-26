@@ -44,6 +44,9 @@ RUN npm ci --omit=dev && npm cache clean --force
 # Copy compiled JS from builder stage
 COPY --from=builder /app/build ./build
 
+# Create logs directory and give the node user permissions
+RUN mkdir -p logs && chown -R node:node /app
+
 # Use non-root user for security
 USER node
 
