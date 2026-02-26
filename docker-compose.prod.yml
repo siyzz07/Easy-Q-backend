@@ -23,10 +23,10 @@ services:
       - NODE_ENV=production
       - PORT=7004
       # Nginx-Proxy Config to catch incoming requests
-      - VIRTUAL_HOST=api.easyq.shibinsiyad.site
+      - VIRTUAL_HOST=api.shibinsiyad.site
       - VIRTUAL_PORT=7004
       # Let's Encrypt Config to auto-generate HTTPS certificates
-      - LETSENCRYPT_HOST=api.easyq.shibinsiyad.site
+      - LETSENCRYPT_HOST=api.shibinsiyad.site
       - LETSENCRYPT_EMAIL=shibinsiyad.k.kdpm@gmail.com # Replaced with your email for SSL renewals
     expose:
       - "7004"
