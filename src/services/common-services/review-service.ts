@@ -1,6 +1,8 @@
 import { IReviewRepository } from "../../interface/reivew-interface/review-repository-interface";
 import { IReviewService } from "../../interface/reivew-interface/review-service-interface";
 import { IReview } from "../../types/vendorType";
+import { IReviewPopulated } from "../../interface/reivew-interface/review-repository-interface";
+import mongoose from "mongoose";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { ReviewResponseDTO } from "../../dto/review-dto/review-dto";
@@ -79,8 +81,8 @@ export class ReviewService implements IReviewService {
     if (userId && reviews.length > 0) {
       // Find the review by the current user
       const userReviewIndex = reviews.findIndex(
-        (review: any) =>
-          review.customerId?._id?.toString() === userId ||
+        (review: IReviewPopulated) =>
+          (review.customerId as unknown as { _id?: mongoose.Types.ObjectId })?._id?.toString() === userId ||
           review.customerId?.toString() === userId
       );
 

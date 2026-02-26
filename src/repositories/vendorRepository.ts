@@ -4,6 +4,7 @@ import vendorModel from "../models/vendorModel";
 import { IImage, IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 import { IPaginationResponseMeta } from "../types/common-types";
+import { MonthlyData } from "../types/adminType";
 
 export class VendorRepository
   extends BaseRepository<IVendor>
@@ -229,7 +230,7 @@ export class VendorRepository
   }
 
   //----------------------------- get monthly vendor growth
-  async getMonthlyUserGrowth(year: number): Promise<any> {
+  async getMonthlyUserGrowth(year: number): Promise<MonthlyData[]> {
     try {
       const stats = await this._vendorModel.aggregate([
         {

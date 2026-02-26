@@ -1,4 +1,5 @@
 import mongoose, { Types } from "mongoose";
+import { IVendor } from "./vendorType";
 
 
 
@@ -51,12 +52,22 @@ export interface IAddress{
   state:string;
   country:string;
   phone:string;
-  coordinates:any
+  coordinates:{
+    lat:string;
+    lng:string
+  }
   userId?:string
 }
+
 
 export interface IFavorite{
   _id?:string;
   customerId:mongoose.Types.ObjectId
   vendors: mongoose.Types.ObjectId[];
+}
+
+export interface IFavoritePopulated {
+  _id?: string;
+  customerId: mongoose.Types.ObjectId;
+  vendors: IVendor[];
 }

@@ -1,9 +1,10 @@
 import { IContractRepository } from "../../interface/contract-interface/contract-respositlory-interface";
 import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
-import { ContractMapper } from "../../mappers/contract-mapper/contract-mapper";
+import { ContractMapper, IPopulatedContract } from "../../mappers/contract-mapper/contract-mapper";
 import {
   IAddContracValues,
+  IContract,
   IPaginationResponseMeta,
   IUpdateContractValues,
 } from "../../types/common-types";
@@ -16,7 +17,7 @@ import {
 } from "../../enums/messagesEnum";
 import { ICustomerAddressRepository } from "../../interface/address-interface/address-repository-interface";
 import { nanoid } from "nanoid";
-import mongoose from "mongoose";
+import mongoose, { FilterQuery } from "mongoose";
 import { ContractStatusEnum } from "../../enums/contractEnum";
 import { IGeoLocation } from "../../types/vendorType";
 import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
@@ -127,7 +128,7 @@ class ContractService implements IContractService {
           StatusCodeEnum.INTERNAL_SERVER_ERROR,
         );
       }
-      return ContractMapper.toDTO(result);
+      return ContractMapper.toDTO(result as unknown as IPopulatedContract);
     } else {
       throw new ErrorResponse(
         "Failed to create contract",
@@ -238,16 +239,19 @@ class ContractService implements IContractService {
   async getContract(contractId: string): Promise<ContractDto | null> {
     const result = await this._ContractRepository.getContract(contractId);
     if (result) {
-      return ContractMapper.toDTO(result);
+      return ContractMapper.toDTO(result as unknown as IPopulatedContract);
     } else {
       throw new ErrorResponse("Contract not found", StatusCodeEnum.NOT_FOUND);
     }
   }
 
-  async getContracts(filter: any = {}): Promise<ContractDto[]> {
+  async getContracts(filter: FilterQuery<IContract> = {}): Promise<ContractDto[]> {
+
+      console.log('filter :>> ', filter);
+
     const result = await this._ContractRepository.getContracts(filter);
     if (result) {
-      return ContractMapper.toDTOList(result);
+      return ContractMapper.toDTOList(result as unknown as IPopulatedContract[]);
     } else {
       return [];
     }
@@ -267,7 +271,7 @@ class ContractService implements IContractService {
       query,
     );
     return {
-      data: ContractMapper.toDTOList(result.data),
+      data: ContractMapper.toDTOList(result.data as unknown as IPopulatedContract[]),
       pagination: result.pagination,
     };
   };
@@ -318,7 +322,7 @@ class ContractService implements IContractService {
       );
 
     return {
-      data: ContractMapper.toDTOList(result.data),
+      data: ContractMapper.toDTOList(result.data as unknown as IPopulatedContract[]),
       pagination: result.pagination,
     };
   }
@@ -414,7 +418,7 @@ class ContractService implements IContractService {
       query,
     );
     return {
-      data: ContractMapper.toDTOList(result.data),
+      data: ContractMapper.toDTOList(result.data as unknown as IPopulatedContract[]),
       pagination: result.pagination,
     };
   };
@@ -433,7 +437,7 @@ class ContractService implements IContractService {
       query,
     );
     return {
-      data: ContractMapper.toDTOList(result.data),
+      data: ContractMapper.toDTOList(result.data as unknown as IPopulatedContract[]),
       pagination: result.pagination,
     };
   };

@@ -32,7 +32,7 @@ export class TransactionService implements ITransactionService {
   createTransaction = async (data: {
     bookingId: string;
     type?: string;
-  }): Promise<any> => {
+  }): Promise<unknown> => {
     const { bookingId } = data;
 
     const booking = await this._BookingRepository.getEachBookingDataById(
@@ -66,7 +66,7 @@ export class TransactionService implements ITransactionService {
     razorpay_order_id: string;
     razorpay_signature: string;
     userId: string;
-  }): Promise<any> => {
+  }): Promise<void> => {
     const body = data.razorpay_order_id + "|" + data.razorpay_payment_id;
 
     const expectedSignature = crypto

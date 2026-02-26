@@ -7,5 +7,5 @@ export interface ServiceResponseDTO {
   price: string;
   image: string;
   isActive: boolean;
-  availableStaff: any[]; 
+  availableStaff: unknown[]; 
 }

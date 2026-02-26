@@ -11,7 +11,6 @@ import {
   IShopData,
   IStaff,
   IVendor,
-  IVendorDashboardResponse,
 } from "../../types/vendorType";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
@@ -20,6 +19,7 @@ import { deleteCloudinaryImage } from "../../utils/cloudinary";
 import { IPaginationResponseMeta } from "../../types/common-types";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 import { VendorMapper } from "../../mappers/vendor-mapper/vendor-mapper";
+import { IVendorDashboardData } from "../../types/statsTypes";
 
 import { IBookingRopsitory } from "../../interface/booking-interface/booking-repository-interface";
 import { IContractRepository } from "../../interface/contract-interface/contract-respositlory-interface";
@@ -122,7 +122,7 @@ class VendorService implements IVendorShopService {
   getDashboard = async (
     data: string,
     year?: number,
-  ): Promise<IVendorDashboardResponse> => {
+  ): Promise<IVendorDashboardData> => {
     const shopId = data;
     const currentYear = year || new Date().getFullYear();
 
@@ -235,7 +235,6 @@ class VendorService implements IVendorShopService {
       totalService,
       totalAvailableService,
       totalUnavailableService,
-      totalRevenue: extraStats.totalRevenue,
       customerCount: extraStats.customerCount,
       pendingBookingsCount: extraStats.pendingBookings,
       chartData,

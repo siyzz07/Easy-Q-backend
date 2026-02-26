@@ -1,6 +1,6 @@
 
 import { FilterQuery } from "mongoose";
-import { IReviewRepository } from "../interface/reivew-interface/review-repository-interface";
+import { IReviewRepository, IReviewPopulated } from "../interface/reivew-interface/review-repository-interface";
 import Review from "../models/ReviewModel";
 import { IReview } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
@@ -21,10 +21,9 @@ export class ReviewRepository extends BaseRepository<IReview> implements IReview
         }
 
     //------------------------------ get the vendor reviews
-    async getReviews(vendorId: string): Promise<IReview[]> {
-        
-        const result = await this._ReviewModel.find({vendorId:vendorId}).populate('customerId')
-        return result
+    async getReviews(vendorId: string): Promise<IReviewPopulated[]> {
+        const result = await this._ReviewModel.find({ vendorId }).populate('customerId');
+        return result as unknown as IReviewPopulated[];
     }
      
     //------------------------------ delete review

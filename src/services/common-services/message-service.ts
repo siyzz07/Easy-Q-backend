@@ -19,22 +19,22 @@ export class MessageService implements IMessageService {
    *  save message in db 
    * 
    */
-  async saveMessage(data: Partial<IMessage>): Promise<any> {
+  async saveMessage(data: Partial<IMessage>): Promise<MessageResponseDTO> {
       const result = await this._messageRepository.createMessage(data);
   
       if(!result){
         logger.error("Error saving message in service");
         throw new ErrorResponse(MessageEnum.MESSAGE_CREATED_FILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
       }
-      return  new MessageResponseDTO(result)
+      return  new MessageResponseDTO(result as unknown as import('../../dto/message-dto/message-dto').IPopulatedMessage)
   }
 
-  async getMessages(chatRoomId: string): Promise<any[]> {
+  async getMessages(chatRoomId: string): Promise<MessageResponseDTO[]> {
       const messages = await this._messageRepository.getMessages(chatRoomId);
       if(!messages){
         logger.error("Error fetching messages in service");
         throw new ErrorResponse(MessageEnum.MESSAGE_FETCH_FILED,StatusCodeEnum.INTERNAL_SERVER_ERROR)
       }
-      return messages.map(msg => new MessageResponseDTO(msg));
+      return messages.map(msg => new MessageResponseDTO(msg as unknown as import('../../dto/message-dto/message-dto').IPopulatedMessage));
   }
 }

@@ -82,9 +82,13 @@ export class AuthService implements IAuthService {
           email as string
         );
 
-        vendorDataVerified =
-          vendorData.isVerified === "pending" ||
-          vendorData.isVerified === "verified";
+        if(vendorData){
+
+
+          vendorDataVerified =
+            vendorData.isVerified === "pending" ||
+            vendorData.isVerified === "verified";
+        }
       }
       if (exist && vendorDataVerified) {
         throw new ErrorResponse(
@@ -270,7 +274,11 @@ export class AuthService implements IAuthService {
           StatusCodeEnum.NOT_FOUND
         );
       } else {
+
+
         const vendorData = await this._vendorRepository.vendorData(email);
+
+        if(vendorData){
         if (vendorData.isVerified == "pending") {
           throw new ErrorResponse(
             MessageEnum.VENDOR_UNDER_VERIFICATION,
@@ -291,7 +299,7 @@ export class AuthService implements IAuthService {
 
           const passwordMatch = await comparePassword(
             password,
-            vendorData.password
+            vendorData.password as string
           );
           if (!passwordMatch) {
             throw new ErrorResponse(
@@ -300,7 +308,7 @@ export class AuthService implements IAuthService {
             );
           } else {
             const payload: IJwtPayload = {
-              userId: vendorData._id,
+              userId: vendorData._id as string,
               role: RoleEnum.VENDOR,
             };
 
@@ -316,6 +324,8 @@ export class AuthService implements IAuthService {
           }
         }
       }
+
+      }
     } else if (role == RoleEnum.ADMIN.toLowerCase()) {
 
       console.log('role :>> ', role);
@@ -328,10 +338,18 @@ export class AuthService implements IAuthService {
           StatusCodeEnum.NOT_FOUND
         );
       }
-      const adminData: any = await this._adminRepository.adminDataByEmail(
+      const adminData = await this._adminRepository.adminDataByEmail(
         email
       );
-      const mathcPassword = await comparePassword(password, adminData.password);
+
+      if (!adminData) {
+         throw new ErrorResponse(
+          MessageEnum.ADMIN_NOT_FOUND,
+          StatusCodeEnum.NOT_FOUND
+        );
+      }
+
+      const mathcPassword = await comparePassword(password, adminData.password as string);
 
       if (!mathcPassword) {
         throw new ErrorResponse(
@@ -340,20 +358,18 @@ export class AuthService implements IAuthService {
         );
       }
 
-      if (adminData) {
-        const payload: IJwtPayload = {
-          userId: adminData._id,
-          role: RoleEnum.ADMIN,
-        };
-        const AccessToken: string = accessToken(payload);
-        const RefreshToken: string = refreshToken(payload);
+      const payload: IJwtPayload = {
+        userId: adminData._id as string,
+        role: RoleEnum.ADMIN,
+      };
+      const AccessToken: string = accessToken(payload);
+      const RefreshToken: string = refreshToken(payload);
 
         return {
           accessToken: AccessToken,
           refreshToken: RefreshToken,
           role: RoleEnum.ADMIN,
         };
-      }
     } else {
       logger.error('Role not found or invalid: ' + role);
       throw new ErrorResponse(
@@ -530,7 +546,7 @@ export class AuthService implements IAuthService {
    *  updata access token
    *
    */
-  updateAccessToken = async (token: any, role: string): Promise<string> => {
+  updateAccessToken = async (token: Record<string, string>, role: string): Promise<string> => {
     let refreshToken: string | undefined;
     let entity: string;
 
@@ -573,8 +589,8 @@ export class AuthService implements IAuthService {
         refreshToken,
         process.env.JWT_REFRESH_TOKEN_KEY!
       ) as JwtPayload;
-    } catch (error: any) {
-      logger.error(`Token verification failed: ${error.message}`);
+    } catch (error: unknown) {
+      logger.error(`Token verification failed: ${(error as Error).message}`);
       throw new ErrorResponse(
         MessageEnum.TOKEN_INVALID,
         StatusCodeEnum.UNAUTHORIZED

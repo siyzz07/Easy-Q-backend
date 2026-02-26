@@ -1,7 +1,8 @@
 import { ServiceResponseDTO } from "../../dto/service-dto/service-dto";
+import { IService } from "../../types/vendorType";
 
 export const ServiceMapper = {
-  toDTO(service: any): ServiceResponseDTO {
+  toDTO(service: IService): ServiceResponseDTO {
     return {
       id: service._id?.toString() || "",
       serviceName: service.serviceName,
@@ -14,7 +15,7 @@ export const ServiceMapper = {
       availableStaff: service.availableStaff
     };
   },
-  toDTOList(services: any[]): ServiceResponseDTO[] {
+  toDTOList(services: IService[]): ServiceResponseDTO[] {
     return services.map(s => this.toDTO(s));
   }
 }
