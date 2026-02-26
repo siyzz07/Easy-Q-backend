@@ -24,8 +24,8 @@ const logger = createLogger({
       filename: "logs/error-%DATE%.log",
       datePattern: "YYYY-MM-DD",
       level: "error",
-      maxFiles: process.env.LOGGER_RETENTION_MAXFILES,     
-      maxSize: process.env.LOGGER_RETENTION_MAXSIZE,    
+      maxFiles: process.env.LOGGER_RETENTION_MAXFILES || "14d",     
+      maxSize: process.env.LOGGER_RETENTION_MAXSIZE || "20m",    
       format: format.uncolorize(),
     }),
 
@@ -33,8 +33,8 @@ const logger = createLogger({
     new DailyRotateFile({
       filename: "logs/combined-%DATE%.log",
       datePattern: "YYYY-MM-DD",
-      maxFiles:process.env.LOGGER_RETENTION_MAXFILES,    
-      maxSize: process.env.LOGGER_RETENTION_MAXSIZE,
+      maxFiles: process.env.LOGGER_RETENTION_MAXFILES || "14d",    
+      maxSize: process.env.LOGGER_RETENTION_MAXSIZE || "20m",
       format: format.uncolorize(),
     }),
   ],
