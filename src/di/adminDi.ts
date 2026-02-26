@@ -6,11 +6,13 @@ import {
     adminRepository, 
     customerRepository, 
     serviceTypesRepository, 
-    vendorRepository 
+    vendorRepository,
+    bookingRepository,
+    contractRepository
 } from "./repositoriesDi";
 
 //---------------------------------------------------------------- admin serice liek get vendors get customer updata and etc..
-const adminService = new AdminService(adminRepository, customerRepository, vendorRepository)
+const adminService = new AdminService(customerRepository, vendorRepository, bookingRepository, contractRepository)
 const adminController = new AdminController(adminService)
 
 //---------------------------------------------------------------- service types for vendor 

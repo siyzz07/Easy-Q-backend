@@ -1,13 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
+import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum"; 
 
 
 class ContractController {
-  private _contractService: IContractServiceInterface;
+  private _contractService: IContractService;
 
-  constructor(contractService: IContractServiceInterface) {
+  constructor(contractService: IContractService) {
     this._contractService = contractService;
   }
 
@@ -41,7 +41,7 @@ class ContractController {
       const { contractId } = req.params;
       const contractData = req.body;
       const userId = req.body.userId
-      const result = await this._contractService.editContract(
+      await this._contractService.editContract(
         contractId,
         userId,
         contractData,
@@ -177,19 +177,53 @@ class ContractController {
    *  get vendors accepted contracts
    *
    */
-  getVendorContracts = async(req:Request,res:Response):Promise<void> =>{
+  getVendorContracts = async (req: Request, res: Response): Promise<void> => {
+    const vendorId = req.body.userId;
+    const query = req.query;
 
-    const vendorId = req.body.userId
-    const query = req.query
-
-    const reuslt = await this._contractService.getVendorContracts(vendorId,query)
-    if(reuslt){
-        res 
+    const reuslt = await this._contractService.getVendorContracts(
+      vendorId,
+      query,
+    );
+    if (reuslt) {
+      res
         .status(StatusCodeEnum.OK)
-        .json({success:true , message:MessageEnum.CONTRACT_FETCH_SUCCESS , data:reuslt.data , pagination:reuslt.pagination})
+        .json({
+          success: true,
+          message: MessageEnum.CONTRACT_FETCH_SUCCESS,
+          data: reuslt.data,
+          pagination: reuslt.pagination,
+        });
     }
+  };
 
-  }
+  /**
+   *
+   *  get vendors applied contracts
+   *
+   */
+  getVendorAppliedContracts = async (
+    req: Request,
+    res: Response,
+  ): Promise<void> => {
+    const vendorId = req.body.userId;
+    const query = req.query;
+
+    const reuslt = await this._contractService.getVendorAppliedContracts(
+      vendorId,
+      query,
+    );
+    if (reuslt) {
+      res
+        .status(StatusCodeEnum.OK)
+        .json({
+          success: true,
+          message: MessageEnum.CONTRACT_FETCH_SUCCESS,
+          data: reuslt.data,
+          pagination: reuslt.pagination,
+        });
+    }
+  };
 
   /**
    *
@@ -201,7 +235,7 @@ class ContractController {
     const contractId = req.params.contractId
     const vendorId= req.params.vendorId
 
-    const result = await this._contractService.removeFromContract(vendorId,contractId)
+    await this._contractService.removeFromContract(vendorId,contractId)
 
     res
       .status(StatusCodeEnum.OK)

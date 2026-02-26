@@ -1,4 +1,4 @@
-import mongoose, { Schema, Types, Model, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IChatRoom } from "../types/common-types";
 ;
 const ChatRoomSchema = new Schema<IChatRoom>(

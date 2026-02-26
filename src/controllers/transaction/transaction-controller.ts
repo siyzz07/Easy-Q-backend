@@ -1,13 +1,13 @@
 
 import { Request, Response } from "express";
-import { ITransactionServiceInterface } from "../../interface/transaction-interface/transaction-service-interface";
+import { ITransactionService } from "../../interface/transaction-interface/transaction-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 
 export class TransactionController {
-  private _TransactionService: ITransactionServiceInterface;
+  private _TransactionService: ITransactionService;
 
-  constructor(transactionService: ITransactionServiceInterface) {
+  constructor(transactionService: ITransactionService) {
     this._TransactionService = transactionService;
   }
 

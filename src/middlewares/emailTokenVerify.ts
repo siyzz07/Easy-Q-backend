@@ -28,12 +28,14 @@ export const emailVerifyTokenMIddleware = (
       throw new Error(MessageEnum.EMAIL_TOKEN_INVALID);
     }
 
-    const { iat, exp, ...decodedData } = decoded
+    const { iat: _iat, exp: _exp, ...decodedData } = decoded
+
 
     
     req.body = { ...data, ...decodedData };
+    console.log(_iat?"ii":'pp',_exp?"ii":'pp')
     next();
-  } catch (error: any) {
+  } catch (error: any) { 
     if (error.message == MessageEnum.EMAIL_TOKEN_MISSING) {
       console.log("8");
       res

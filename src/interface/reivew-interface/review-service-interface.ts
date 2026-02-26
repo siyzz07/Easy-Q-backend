@@ -1,7 +1,7 @@
 import { IReview } from "../../types/vendorType";
 import { ReviewResponseDTO } from "../../dto/review-dto/review-dto";
 
-export interface IReviewServiceInterface{
+export interface IReviewService{
     addReview(data: {userId: string; vendorId: string; rating: string; comment: string}): Promise<boolean | void>;
     getReviews(vendorId: string, userId?: string): Promise<ReviewResponseDTO[]>;
     deleteReview(reviewId: string): Promise<boolean>;

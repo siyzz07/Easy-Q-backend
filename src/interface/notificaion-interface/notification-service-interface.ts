@@ -1,7 +1,7 @@
-import { IBooking, INotification } from "../../types/common-types";
+import { INotification } from "../../types/common-types";
 
 
-export interface INotificationServiceInterface {
+export interface INotificationService {
 
     getNotification(userid:string):Promise<INotification[]>
     upateNotification (userId:string,updateType:string , id?:string):Promise<void>

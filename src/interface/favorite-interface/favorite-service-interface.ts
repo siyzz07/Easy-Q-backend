@@ -1,7 +1,5 @@
-import { promises } from "dns";
-import { FavoriteRquestDto, getFavoriteReqDto, getFavoriteResDto, getFavoriteShopesResDto } from "../../dto/favorite-dto/favorite-dto";
-import { IFavorite } from "../../types/customerType";
-import { IVendor } from "../../types/vendorType";
+
+import { FavoriteRquestDto, getFavoriteReqDto, getFavoriteResDto } from "../../dto/favorite-dto/favorite-dto";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
 
 

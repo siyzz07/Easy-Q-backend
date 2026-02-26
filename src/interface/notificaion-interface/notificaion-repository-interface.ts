@@ -1,7 +1,7 @@
 import { INotification } from "../../types/common-types";
 
 
-export interface INotificationRepositoryInterface{
+export interface INotificationRepository{
 
         getUserNotification(userId:string):Promise<INotification[]>
         addNewNotification(data:Partial<INotification>):Promise<boolean>

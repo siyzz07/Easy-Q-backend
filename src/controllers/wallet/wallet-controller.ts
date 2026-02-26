@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
+import { IWalletService } from "../../interface/wallet-interface/wallet-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 
 export class WalletController {
 
-    private _WalletService :IWalletServiceInterface
+    private _WalletService :IWalletService
 
-    constructor (walletService:IWalletServiceInterface){
+    constructor (walletService:IWalletService){
         this._WalletService=walletService
     }
 

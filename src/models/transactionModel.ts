@@ -1,6 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 import { ITransaction } from "../types/common-types";
-import { string } from "joi";
 import { TransactionStatusEnum } from "../enums/transactionEnum";
 
 

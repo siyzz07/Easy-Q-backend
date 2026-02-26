@@ -1,5 +1,6 @@
 import mongoose, { model, Schema } from "mongoose";
 import { IVendor } from "../types/vendorType";
+import { VerificationStatusEnum } from "../enums/statusEnum";
 
 const vendorSchema = new Schema<IVendor>(
   {
@@ -78,8 +79,8 @@ const vendorSchema = new Schema<IVendor>(
     },
     isVerified: {
       type: String,
-      enum: ["pending", "verified", "rejected"],
-      default: "pending",
+      enum: Object.values(VerificationStatusEnum),
+      default: VerificationStatusEnum.PENDING,
     },
   },
   { timestamps: true }

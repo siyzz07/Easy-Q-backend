@@ -12,7 +12,7 @@ export const errorHandler = (
   err: CustomError, 
   req: Request, 
   res: Response, 
-  next: NextFunction
+  _next: NextFunction
 ) => {
 
   logger.error(`${err.message} - ${req.method} ${req.originalUrl}`);

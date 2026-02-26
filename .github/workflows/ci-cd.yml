@@ -1,0 +1,142 @@
+# ═══════════════════════════════════════════════════════════
+#  EasyQ Backend — CI/CD Pipeline
+# ═══════════════════════════════════════════════════════════
+#  Triggers:
+#    - Push to main/develop    → Full CI + Docker build
+#    - Pull Request to main    → CI only (lint + build)
+#
+#  Flow:
+#    1. CI: Install → Lint → Build (TypeScript)
+#    2. CD: Build Docker image → Push to Docker Hub → Deploy
+# ═══════════════════════════════════════════════════════════
+
+name: 🚀 EasyQ Backend CI/CD
+
+on:
+  # Run on push to main or develop
+  push:
+    branches: [main, develop]
+
+  # Run on pull requests targeting main
+  pull_request:
+    branches: [main]
+
+# ─────────────────────────────────────────────────
+# Environment variables used across jobs
+# ─────────────────────────────────────────────────
+env:
+  NODE_VERSION: "20"
+  DOCKER_IMAGE_NAME: easyq-backend
+
+jobs:
+  # ════════════════════════════════════════════════
+  # JOB 1: CI — Lint & Build
+  # ════════════════════════════════════════════════
+  ci:
+    name: 🔍 Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Get the code from GitHub
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js with caching
+      - name: 📦 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+
+      # 3. Install dependencies (clean install)
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      # 4. Lint the code
+      - name: 🔍 Lint check
+        run: npm run lint
+
+      # 5. Build TypeScript → JavaScript
+      - name: 🏗️ Build
+        run: npm run build
+
+      # 6. Upload build artifacts (optional, useful for debugging)
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: backend-build
+          path: build/
+          retention-days: 7
+
+  # ════════════════════════════════════════════════
+  # JOB 2: Docker — Build & Push Image
+  # ════════════════════════════════════════════════
+  docker:
+    name: 🐳 Docker Build & Push
+    runs-on: ubuntu-latest
+    needs: ci # Only runs if CI passes
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      # Login to Docker Hub
+      - name: 🔐 Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Set up Docker Buildx (for multi-platform builds)
+      - name: 🛠️ Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Build and push the Docker image
+      - name: 🐳 Build & Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ════════════════════════════════════════════════
+  # JOB 3: Deploy to AWS EC2
+  # ════════════════════════════════════════════════
+  deploy:
+    name: 🚀 Deploy to AWS EC2
+    runs-on: ubuntu-latest
+    needs: docker
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: 🚀 Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Pull the latest image from Docker Hub
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/easyq-backend:latest
+
+            # Stop and remove the old container (if running)
+            docker stop easyq-backend || true
+            docker rm easyq-backend || true
+
+            # Start the new container
+            docker run -d \
+              --name easyq-backend \
+              --restart always \
+              --env-file ~/easyq-backend/.env.production \
+              -p 7004:7004 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/easyq-backend:latest
+
+            # Clean up old unused images
+            docker image prune -f

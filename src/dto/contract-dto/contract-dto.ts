@@ -5,7 +5,6 @@ export interface  ContractCustomerDto {
     name: string;
     email: string;
     phone: string;
-    // profileImage?: string; // Add if available
 }
 
 export interface ContractAddressDto {

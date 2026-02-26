@@ -1,7 +1,7 @@
 import { IReview } from "../../types/vendorType";
 
 
-export interface IReviewRepositoryInterface{
+export interface IReviewRepository{
 
     addReview(data: Partial<IReview>): Promise<boolean | void>
     getReviews(vendorId: string): Promise<IReview[]>

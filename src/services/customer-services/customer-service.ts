@@ -1,19 +1,18 @@
 
 import { MessageEnum } from "../../enums/messagesEnum";
-
 import { ICustomer } from "../../types/customerType";
 import { comparePassword, hashPassword } from "../../utils/hash";
-import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
-import { ICustomerServiceInterface } from "../../interface/customer-interface/customer-service-interface";
+import { ICustomerRepository } from "../../interface/customer-interface/customer-repository-interface";
+import { ICustomerService } from "../../interface/customer-interface/customer-service-interface";
 import { ErrorResponse } from "../../utils/errorResponse";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import logger from "../../utils/logger";
 
 
-export class CustomerService implements ICustomerServiceInterface {
-  private _customerRepository: ICustomerRepo
+export class CustomerService implements ICustomerService {
+  private _customerRepository: ICustomerRepository
 
-  constructor(customerRepo: ICustomerRepo) {
+  constructor(customerRepo: ICustomerRepository) {
     this._customerRepository = customerRepo;
   }
 
@@ -36,10 +35,6 @@ export class CustomerService implements ICustomerServiceInterface {
     email: string;
     phone: string;
   }): Promise<boolean|void> => {
-
-     
-      
-      
 
     const result = await this._customerRepository.editProfile(data);
     

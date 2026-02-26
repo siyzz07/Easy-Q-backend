@@ -1,8 +1,7 @@
-import { error, log } from "console";
+
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-
-import { AuthServiceInterface } from "../../interface/auth-interface/auth-serivce-interface";
+import { IAuthService } from "../../interface/auth-interface/auth-serivce-interface";
 import { IAdmin } from "../../types/adminTypes";
 import { IJwtPayload, ILogin } from "../../types/common-types";
 import { ICustomer } from "../../types/customerType";
@@ -12,29 +11,26 @@ import { comparePassword, hashPassword } from "../../utils/hash";
 import { accessToken, generateJwtToken, refreshToken } from "../../utils/jwt";
 import logger from "../../utils/logger";
 import { sendEmail } from "../../utils/nodeMailer";
-
 import Jwt, {
-  JsonWebTokenError,
   JwtPayload,
-  TokenExpiredError,
 } from "jsonwebtoken";
-import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
-import { ICustomerRepo } from "../../interface/customer-interface/customer-repository-interface";
-import { IAdminRepo } from "../../interface/admin-interface/admin-repository-interface";
+import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
+import { ICustomerRepository } from "../../interface/customer-interface/customer-repository-interface";
+import { IAdminRepository } from "../../interface/admin-interface/admin-repository-interface";
 import { RoleEnum } from "../../enums/role";
 import { OAuth2Client } from "google-auth-library";
 
 
 
-export class AuthService implements AuthServiceInterface {
-  private _vendorRepository: IVendorRepo;
-  private _customerRepository: ICustomerRepo;
-  private _adminRepository: IAdminRepo;
+export class AuthService implements IAuthService {
+  private _vendorRepository: IVendorRepository;
+  private _customerRepository: ICustomerRepository;
+  private _adminRepository: IAdminRepository;
 
   constructor(
-    vendorRpository: IVendorRepo,
-    customerRepository: ICustomerRepo,
-    adminRepository: IAdminRepo
+    vendorRpository: IVendorRepository,
+    customerRepository: ICustomerRepository,
+    adminRepository: IAdminRepository
   ) {
     this._customerRepository = customerRepository;
     this._vendorRepository = vendorRpository;
@@ -162,8 +158,6 @@ export class AuthService implements AuthServiceInterface {
         ...payload,
         password: hashedPassword,
       };
-
-      console.log('vaaaaaalues',values)
 
       const result = await this._vendorRepository.addNewVendor(values as IVendor);
       if (result) {
@@ -323,6 +317,9 @@ export class AuthService implements AuthServiceInterface {
         }
       }
     } else if (role == RoleEnum.ADMIN.toLowerCase()) {
+
+      console.log('role :>> ', role);
+
       const adminExist = await this._adminRepository.checkAdminExist(email);
 
       if (!adminExist) {
@@ -339,7 +336,7 @@ export class AuthService implements AuthServiceInterface {
       if (!mathcPassword) {
         throw new ErrorResponse(
           MessageEnum.ADMIN_PASSWORD_INCORRECT,
-          StatusCodeEnum.NOT_FOUND
+          StatusCodeEnum.BAD_REQUEST
         );
       }
 
@@ -380,8 +377,8 @@ export class AuthService implements AuthServiceInterface {
       audience:process.env.GOOGLE_CLIENT_ID
     })
 
-    if(!ticket){
-
+    if (!ticket) {
+      throw new ErrorResponse(MessageEnum.TOKEN_INVALID, StatusCodeEnum.UNAUTHORIZED);
     }
 
     const googleData = ticket.getPayload() 
@@ -536,6 +533,8 @@ export class AuthService implements AuthServiceInterface {
   updateAccessToken = async (token: any, role: string): Promise<string> => {
     let refreshToken: string | undefined;
     let entity: string;
+
+    
 
     switch (role?.toLowerCase()) {
       case RoleEnum.CUSTOMER.toLowerCase():

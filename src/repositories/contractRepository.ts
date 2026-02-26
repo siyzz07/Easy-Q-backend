@@ -1,13 +1,14 @@
-import mongoose, { FilterQuery, mongo, PopulateOptions } from "mongoose";
-import { IContractRepositoryInterface } from "../interface/contract-interface/contract-respositlory-interface";
+import mongoose, { FilterQuery, PopulateOptions } from "mongoose";
+import { IContractRepository } from "../interface/contract-interface/contract-respositlory-interface";
 import { Contract } from "../models/contractModel";
 import { IContract, IPaginationResponseMeta } from "../types/common-types";
-import BaseRepository from "./baseRepository";
+import { AdminContractStats, MonthlyData } from "../types/adminType";
 import { ContractDto } from "../dto/contract-dto/contract-dto";
+import BaseRepository from "./baseRepository";
 
 class ContractRepository
   extends BaseRepository<IContract>
-  implements IContractRepositoryInterface
+  implements IContractRepository
 {
   private _ContractModel = Contract;
   constructor() {
@@ -37,7 +38,7 @@ class ContractRepository
       .exec();
   }
 
-  async getContracts(filter: any = {}): Promise<IContract[]> {
+  async getContracts(filter: FilterQuery<IContract> = {}): Promise<IContract[]> {
     return await this._ContractModel
       .find(filter)
       .populate("customerId")
@@ -54,7 +55,7 @@ class ContractRepository
   async getCustomerContracts(
     customerId: string,
     query: { page?: string; limit?: string; search?: string; filter?: string },
-  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {
       customerId: customerId,
     };
@@ -80,7 +81,7 @@ class ContractRepository
       { path: "appliedVendors" },
     ];
 
-    const result = await this.filterWithPagination(options, filter, populate);
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
     return result;
   }
 
@@ -101,7 +102,7 @@ class ContractRepository
       distance?: number;
       postedWithin: string;
     },
-  ): Promise<{ data: any[]; pagination: IPaginationResponseMeta }> {
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
     const filter: FilterQuery<IContract> = {
       service: new mongoose.Types.ObjectId(serviceType),
     };
@@ -153,7 +154,7 @@ class ContractRepository
       }
     }
 
-    filter.isHiring = true
+    filter.isHiring = true;
 
     const options = {
       page: Number(query.page) || 1,
@@ -168,7 +169,7 @@ class ContractRepository
       { path: "appliedVendors" },
     ];
 
-    const result = await this.filterWithPagination(options, filter, populate);
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
     return result;
   }
 
@@ -217,9 +218,6 @@ class ContractRepository
     contractId: string,
     vendorId: string,
   ): Promise<boolean> {
-
-  
-
     const result = await this._ContractModel.findOneAndUpdate(
       {
         _id: contractId,
@@ -232,57 +230,148 @@ class ContractRepository
       },
       { new: true },
     );
-   
+
     return !!result;
   }
-
 
   /**
    *
    *  accept -- vendor from contract request
    *
    */
-   async getVendorContracts(vendorId: string, query: { page?: string; limit?: string; search?: string; }): Promise<{ data: any[]; pagination: IPaginationResponseMeta; }> {
-     
-        const filter :FilterQuery<IContract> ={}
+  async getVendorContracts(
+    vendorId: string,
+    query: { page?: string; limit?: string; search?: string },
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
+    const filter: FilterQuery<IContract> = {};
 
-        if(query.search?.trim()){
-          filter.$or=[
-            {title:{$regex:query.search ,$options:'i'}}
-          ]
-        }
+    if (query.search?.trim()) {  
+      filter.$or = [{ title: { $regex: query.search, $options: "i" } }];
+    }
 
-filter.acceptedVendors = { $in: [vendorId] };
+    filter.acceptedVendors = { $in: [vendorId] };
 
-        const options = {
-          page:Number(query.page)||1,
-          limit:Number(query.limit)||9,
-          sort:{createdAt : -1 as const}
-        }
+    const options = {
+      page: Number(query.page) || 1,
+      limit: Number(query.limit) || 9,
+      sort: { createdAt: -1 as const },
+    };
 
-        const populate :PopulateOptions[] = [
-          {path:'customerId'},
-          {path:'service'}
+    const populate: PopulateOptions[] = [
+      { path: "customerId" },
+      { path: "service" },
+    ];
 
-        ]
-
-        const result = await  this.filterWithPagination(options,filter,populate)
-        return result
-
-
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
+    return result;
   }
 
-   /**
+  /**
+   *
+   *  get vendor applied contracts
+   *
+   */
+  async getVendorAppliedContracts(
+    vendorId: string,
+    query: { page?: string; limit?: string; search?: string },
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> {
+    const filter: FilterQuery<IContract> = {};
+
+    if (query.search?.trim()) {
+      filter.$or = [{ title: { $regex: query.search, $options: "i" } }];
+    }
+
+    filter.appliedVendors = { $in: [vendorId] };
+
+    const options = {
+      page: Number(query.page) || 1,
+      limit: Number(query.limit) || 9,
+      sort: { createdAt: -1 as const },
+    };
+
+    const populate: PopulateOptions[] = [
+      { path: "customerId" },
+      { path: "service" },
+    ];
+
+    const result = await this.filterWithPagination<ContractDto>(options, filter, populate);
+    return result;
+  }
+
+  /**
    *
    *   remove from the accepted vendor contract
    *
    */
-   async removeRomAcceptedVendor(contractId: string, vendorId: string): Promise<boolean> {
-      const result = await this._ContractModel.findByIdAndUpdate(contractId, {
+  async removeRomAcceptedVendor(
+    contractId: string,
+    vendorId: string,
+  ): Promise<boolean> {
+    const result = await this._ContractModel.findByIdAndUpdate(contractId, {
       $pull: { acceptedVendors: vendorId },
     });
 
     return !!result;
+  }
+
+  /**
+   *
+   *  get contract stats
+   *
+   */
+  async getContractStats(vendorId: string, year: number): Promise<MonthlyData[]> {
+    try {
+      const stats = await this._ContractModel.aggregate([
+        {
+          $match: {
+            acceptedVendors: new mongoose.Types.ObjectId(vendorId),
+            createdAt: {
+              $gte: new Date(`${year}-01-01`),
+              $lt: new Date(`${year + 1}-01-01`),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            count: { $sum: 1 },
+          },
+        },
+        {
+          $sort: { "_id": 1 },
+        },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching contract stats:", error);
+      throw error;
+    }
+  }
+
+  async getAdminContractStats(): Promise<AdminContractStats> {
+    try {
+      const stats = await this._ContractModel.aggregate([
+        {
+          $group: {
+            _id: null,
+            totalContracts: { $sum: 1 },
+            openContracts: {
+              $sum: { $cond: [{ $eq: ["$status", "open"] }, 1, 0] },
+            },
+            completedContracts: {
+              $sum: { $cond: [{ $eq: ["$status", "completed"] }, 1, 0] },
+            },
+            cancelledContracts: {
+              $sum: { $cond: [{ $eq: ["$status", "cancelled"] }, 1, 0] },
+            },
+          },
+        },
+      ]);
+      return stats[0] || { totalContracts: 0, openContracts: 0, completedContracts: 0, cancelledContracts: 0 };
+    } catch (error) {
+      console.error("Error fetching admin contract stats:", error);
+      throw error;
+    }
   }
 }
 

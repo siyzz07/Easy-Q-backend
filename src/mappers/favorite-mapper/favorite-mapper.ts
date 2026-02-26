@@ -1,8 +1,7 @@
-import { toDate } from "date-fns";
-import { FavoriteRquestDto, getFavoriteReqDto, getFavoriteResDto, getFavoriteShopesResDto } from "../../dto/favorite-dto/favorite-dto";
+import { FavoriteRquestDto, getFavoriteReqDto, getFavoriteResDto } from "../../dto/favorite-dto/favorite-dto";
 import { IFavorite } from "../../types/customerType";
 import { VendorDto } from "../../dto/vendor-dto/vendor-dto";
-import { IVendor } from "../../types/vendorType";
+
 
 
 export const favoriteUpdataReqMapper ={

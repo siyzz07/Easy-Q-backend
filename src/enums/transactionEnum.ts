@@ -11,7 +11,7 @@ export enum TransactionStatusEnum {
   REFUNDED = "refunded",
 }
 
-export enum TransactionOwnerTypeEnu  {
+export enum TransactionOwnerTypeEnum  {
   CUSTOMER = "customer",
   VENDOR = "vendor",
   ADMIN = "admin",

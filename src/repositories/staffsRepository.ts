@@ -1,5 +1,5 @@
-import mongoose, { FilterQuery, UpdateQuery } from "mongoose";
-import { IStaffRepositoryInterface } from "../interface/staff-interface/staff-repository-interface";
+import  { FilterQuery, UpdateQuery } from "mongoose";
+import { IStaffRepository } from "../interface/staff-interface/staff-repository-interface";
 import staffModel from "../models/staffModel";
 import { IStaff } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
@@ -7,7 +7,7 @@ import { IPaginationResponseMeta } from "../types/common-types";
 
 export class StaffRepository
   extends BaseRepository<IStaff>
-  implements IStaffRepositoryInterface
+  implements IStaffRepository
 {
   private _StaffModel = staffModel;
 
@@ -27,17 +27,21 @@ export class StaffRepository
   }
 
   //-----------------------------------------------------get the shop staffs
-  async getStaff(shopId: string, query:{page?:string,limit?:string,search?:string}): Promise<{data:IStaff[],pagination:IPaginationResponseMeta}>{
+   async getStaff(shopId: string, query:{page?:string,limit?:string,search?:string,isActive?:string}): Promise<{data:IStaff[],pagination:IPaginationResponseMeta}>{
 
     const filter:FilterQuery<IStaff>={
       shopId
     }
 
-    if(query.search?.trim()){
-      filter.$or=[
-          { staffName: { $regex: query.search, $options: "i" } },
-      ]
-    }
+     if(query.search?.trim()){
+       filter.$or=[
+           { staffName: { $regex: query.search, $options: "i" } },
+       ]
+     }
+
+     if (query.isActive !== undefined && query.isActive !== "") {
+       filter.isActive = query.isActive === "true";
+     }
     
      const options = {
             page: Number(query.page) || 1,

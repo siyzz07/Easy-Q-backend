@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { IReviewServiceInterface } from "../../interface/reivew-interface/review-service-interface";
+import { IReviewService } from "../../interface/reivew-interface/review-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 
 export class ReviewController { 
-  private _ReviewService: IReviewServiceInterface;
+  private _ReviewService: IReviewService;
 
-  constructor(reviewService: IReviewServiceInterface) {
+  constructor(reviewService: IReviewService) {
     this._ReviewService = reviewService;
   }
 

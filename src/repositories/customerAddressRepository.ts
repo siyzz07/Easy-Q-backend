@@ -1,12 +1,12 @@
 import { FilterQuery } from "mongoose";
-import { ICustomerAddressRepositoryInterface } from "../interface/address-interface/address-repository-interface";
+import { ICustomerAddressRepository } from "../interface/address-interface/address-repository-interface";
 import addressModel from "../models/addressModel";
 import { IAddress, ICustomerAddress } from "../types/customerType";
 import BaseRepository from "./baseRepository";
 
 export class CustomerAddresRepository
   extends BaseRepository<ICustomerAddress>
-  implements ICustomerAddressRepositoryInterface
+  implements ICustomerAddressRepository
 {
   private _addressModel = addressModel;
 

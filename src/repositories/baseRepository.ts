@@ -1,22 +1,20 @@
 import {
-  Document,
   Model,
   FilterQuery,
   UpdateQuery,
-  FlattenMaps,
   PopulateOptions,
 } from "mongoose";
 
 import { ICustomerAddress } from "../types/customerType";
-import { IBaseRepositoryInterface } from "../interface/common-interface/base-resposiotry-interface";
+import { IBaseRepository } from "../interface/common-interface/base-resposiotry-interface";
 import {
   IPaginationMeta,
   IPaginationResponseMeta,
 } from "../types/common-types";
-import { options } from "joi";
+
 
 class BaseRepository<T>
-  implements IBaseRepositoryInterface<T>
+  implements IBaseRepository<T>
 {
   protected _Model: Model<T>;
 

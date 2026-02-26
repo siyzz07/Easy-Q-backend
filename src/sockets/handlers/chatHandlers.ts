@@ -72,7 +72,7 @@ export const  VedioCallRoomEnter = async (io:Server,data:{roomId:string,userId:s
 
 
 //---------------- leave from vedio call
-export const leaveVedioCallNotify = async (io:Server , data:{roomId:string , userId:string},users:[{userId:string}]) =>{
+export const leaveVedioCallNotify = async (io:Server , data:{roomId:string , userId:string},users:{userId:string}[]) =>{
 
 
      if (!activeCalls[data.roomId]) return;

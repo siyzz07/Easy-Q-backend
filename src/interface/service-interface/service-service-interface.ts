@@ -1,9 +1,7 @@
-import { promises } from "dns";
-import { IServiceType } from "../../types/adminTypes";
 import { ServiceResponseDTO } from "../../dto/service-dto/service-dto";
 import { IService, IServiceData } from "../../types/vendorType";
 import { IPaginationResponseMeta } from "../../types/common-types";
-// ... (imports)
+
 
 //-------------------------------------------------vednor sevices
 export interface IServiceInterface {

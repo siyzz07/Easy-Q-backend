@@ -1,5 +1,5 @@
 import express from 'express'
-import { isVendorOrCustomer, verifyToken } from '../middlewares/authTokenVerify'
+import { verifyToken } from '../middlewares/authTokenVerify'
 import { chatRoomControllerInstance, messageControllerInstance } from '../di/chatDi'
 
 const chatRoute = express.Router()

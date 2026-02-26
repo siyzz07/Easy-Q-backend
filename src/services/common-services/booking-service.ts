@@ -1,7 +1,7 @@
-import { IBookingRopsitoryInterface } from "../../interface/booking-interface/booking-repository-interface";
-import { IBookingServiceInterface } from "../../interface/booking-interface/booking-service-interface";
-import { IServiceRepositoryInterface } from "../../interface/service-interface/service-repository-interface";
-import { IStaffRepositoryInterface } from "../../interface/staff-interface/staff-repository-interface";
+import { IBookingRopsitory } from "../../interface/booking-interface/booking-repository-interface";
+import { IBookingService } from "../../interface/booking-interface/booking-service-interface";
+import { IServiceRepository } from "../../interface/service-interface/service-repository-interface";
+import { IStaffRepository } from "../../interface/staff-interface/staff-repository-interface";
 import { ErrorResponse } from "../../utils/errorResponse";
 import {
   BookingMessageContent,
@@ -21,47 +21,45 @@ import {
   checkTimeDto,
 } from "../../dto/booking-dto/booking-dto";
 import { CreateBookingDTO } from "../../dto/booking-dto/booking-dto";
-import mongoose, { mongo, Types } from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { IStaff } from "../../types/vendorType";
 import logger from "../../utils/logger";
 import { IBooking, IPaginationResponseMeta } from "../../types/common-types";
-import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
+import { INotificationService } from "../../interface/notificaion-interface/notification-service-interface";
 import { nanoid } from "nanoid";
-import { ITransactionRepositoryInterface } from "../../interface/transaction-interface/transaction-repository-interface";
+import { ITransactionRepository } from "../../interface/transaction-interface/transaction-repository-interface";
 import {
-  TransactionOwnerTypeEnu,
+  TransactionOwnerTypeEnum,
   TransactionStatusEnum,
   TransactionTypeEnum,
 } from "../../enums/transactionEnum";
-import { IWalletServiceInterface } from "../../interface/wallet-interface/wallet-service-interface";
+import { PaymentStatusEnum } from "../../enums/statusEnum";
+import { IWalletService } from "../../interface/wallet-interface/wallet-service-interface";
 import { RoleEnum } from "../../enums/role";
-import { log } from "console";
 import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
 import {
   BookingNotificationTypeEnum,
   NotificationCategoryEnum,
 } from "../../enums/notificationEnum";
-import { ICustomerAddressRepositoryInterface } from "../../interface/address-interface/address-repository-interface";
+import { ICustomerAddressRepository } from "../../interface/address-interface/address-repository-interface";
 
-export class BookingService implements IBookingServiceInterface {
-  private _BookingRepository: IBookingRopsitoryInterface;
-  private _ServiceRepository: IServiceRepositoryInterface;
-  private _StaffRepository: IStaffRepositoryInterface;
-  private _NotificationService: INotificationServiceInterface;
-  private _WalletService: IWalletServiceInterface;
-  private _TransactionRepository: ITransactionRepositoryInterface;
-  private _AddresRepository: ICustomerAddressRepositoryInterface;
-  // private _Cache_service: ICacheService;
+export class BookingService implements IBookingService {
+  private _BookingRepository: IBookingRopsitory;
+  private _ServiceRepository: IServiceRepository;
+  private _StaffRepository: IStaffRepository;
+  private _NotificationService: INotificationService;
+  private _WalletService: IWalletService;
+  private _TransactionRepository: ITransactionRepository;
+  private _AddresRepository: ICustomerAddressRepository;
 
   constructor(
-    bookingService: IBookingRopsitoryInterface,
-    serviceRepository: IServiceRepositoryInterface,
-    staffRepository: IStaffRepositoryInterface,
-    notificationService: INotificationServiceInterface,
-    walletSerivce: IWalletServiceInterface,
-    transactionRepository: ITransactionRepositoryInterface,
-    addressRepository: ICustomerAddressRepositoryInterface
-    // cacheService: ICacheService
+    bookingService: IBookingRopsitory,
+    serviceRepository: IServiceRepository,
+    staffRepository: IStaffRepository,
+    notificationService: INotificationService,
+    walletSerivce: IWalletService,
+    transactionRepository: ITransactionRepository,
+    addressRepository: ICustomerAddressRepository
   ) {
     this._BookingRepository = bookingService;
     this._ServiceRepository = serviceRepository;
@@ -70,14 +68,13 @@ export class BookingService implements IBookingServiceInterface {
     this._WalletService = walletSerivce;
     this._TransactionRepository = transactionRepository;
     this._AddresRepository = addressRepository;
-    // this._Cache_service = cacheService;
   }
 
   // ------------------------------- add new  booking ----------------------
   addNewbooking = async (
     data: CreateBookingDTO
   ): Promise<BookingResponseDTO | void> => {
-    const { userId, paymentMethod, bookingId, totalAmount, status } = data;
+    const { userId, paymentMethod, bookingId, status } = data;
 
     const existBooking = await this._BookingRepository.getEachBookingDataById(
       bookingId
@@ -107,7 +104,7 @@ export class BookingService implements IBookingServiceInterface {
         const customerTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(userId),
-          userType: TransactionOwnerTypeEnu.CUSTOMER,
+          userType: TransactionOwnerTypeEnum.CUSTOMER,
           flow: "debit",
           transactionType: TransactionTypeEnum.RAZORPAY,
           status: TransactionStatusEnum.SUCCESS,
@@ -117,7 +114,7 @@ export class BookingService implements IBookingServiceInterface {
         const vendorTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
-          userType: TransactionOwnerTypeEnu.VENDOR,
+          userType: TransactionOwnerTypeEnum.VENDOR,
           flow: "credit",
           transactionType: TransactionTypeEnum.RAZORPAY,
           status: TransactionStatusEnum.SUCCESS,
@@ -129,7 +126,7 @@ export class BookingService implements IBookingServiceInterface {
           this._TransactionRepository.createTransaction(vendorTransaction),
         ]);
 
-        const vendorWallet = await this._WalletService.getWalletData(
+        await this._WalletService.getWalletData(
           existBooking.shopId._id as string,
           RoleEnum.VENDOR
         );
@@ -145,7 +142,7 @@ export class BookingService implements IBookingServiceInterface {
           userId as string,
           RoleEnum.CUSTOMER
         );
-        const vendorWallet = await this._WalletService.getWalletData(
+        await this._WalletService.getWalletData(
           existBooking.shopId._id as string,
           RoleEnum.VENDOR
         );
@@ -160,7 +157,7 @@ export class BookingService implements IBookingServiceInterface {
         const customerTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(userId),
-          userType: TransactionOwnerTypeEnu.CUSTOMER,
+          userType: TransactionOwnerTypeEnum.CUSTOMER,
           flow: "debit",
           transactionType: TransactionTypeEnum.WALLET,
           status: TransactionStatusEnum.SUCCESS,
@@ -170,7 +167,7 @@ export class BookingService implements IBookingServiceInterface {
         const vendorTransaction = {
           bookingId: new mongoose.Types.ObjectId(existBooking._id),
           user: new mongoose.Types.ObjectId(existBooking.shopId._id as string),
-          userType: TransactionOwnerTypeEnu.VENDOR,
+          userType: TransactionOwnerTypeEnum.VENDOR,
           flow: "credit",
           transactionType: TransactionTypeEnum.WALLET,
           status: TransactionStatusEnum.SUCCESS,
@@ -194,7 +191,7 @@ export class BookingService implements IBookingServiceInterface {
 
         query = {
           paymentMethod,
-          paymentStatus: "paid",
+          paymentStatus: PaymentStatusEnum.PAID,
           expireAt: null,
         };
       }
@@ -202,7 +199,7 @@ export class BookingService implements IBookingServiceInterface {
       if (paymentMethod == "payAtShop") {
         query = {
           paymentMethod,
-          paymentStatus: "pending",
+          paymentStatus: PaymentStatusEnum.PENDING,
           expireAt: null,
         };
       }
@@ -234,7 +231,6 @@ export class BookingService implements IBookingServiceInterface {
           result.bookingTimeStart
         );
         return BookingMapper.toDTO(result);
-      } else {
       }
     }
   };
@@ -321,8 +317,8 @@ export class BookingService implements IBookingServiceInterface {
       bookingTimeStart: availableTime.startTime,
       bookingTimeEnd: availableTime.endTime,
       totalAmount: serviceData?.price,
-      status: "pending",
-      paymentStatus: "pending",
+      status: BookingStatusEnum.PENDING,
+      paymentStatus: PaymentStatusEnum.PENDING,
       expireAt: new Date(Date.now() + TTL * 60 * 1000),
     };
 
@@ -500,7 +496,7 @@ selectedBookingData = async (
         booking.shopId._id as string,
         RoleEnum.VENDOR
       );
-      const custoerWallet = await this._WalletService.getWalletData(
+      await this._WalletService.getWalletData(
         booking.customerId._id as string,
         RoleEnum.CUSTOMER
       );
@@ -517,7 +513,7 @@ selectedBookingData = async (
       const customerTransaction = {
         bookingId: new mongoose.Types.ObjectId(booking._id),
         user: new mongoose.Types.ObjectId(booking.customerId._id),
-        userType: TransactionOwnerTypeEnu.CUSTOMER,
+        userType: TransactionOwnerTypeEnum.CUSTOMER,
         flow: "credit",
         transactionType: TransactionTypeEnum.WALLET,
         status: TransactionStatusEnum.SUCCESS,
@@ -527,7 +523,7 @@ selectedBookingData = async (
       const vendorTransaction = {
         bookingId: new mongoose.Types.ObjectId(booking._id),
         user: new mongoose.Types.ObjectId(booking.shopId._id as string),
-        userType: TransactionOwnerTypeEnu.VENDOR,
+        userType: TransactionOwnerTypeEnum.VENDOR,
         flow: "debit",
         transactionType: TransactionTypeEnum.WALLET,
         status: TransactionStatusEnum.SUCCESS,
@@ -537,7 +533,7 @@ selectedBookingData = async (
       try {
         await Promise.all([
           this._BookingRepository.updateBooking(String(booking._id) as string, {
-            paymentStatus: "refunded",
+            paymentStatus: PaymentStatusEnum.REFUNDED,
           }),
           this._WalletService.updateWallet(
             booking.shopId._id as string,
@@ -553,7 +549,7 @@ selectedBookingData = async (
           this._TransactionRepository.createTransaction(vendorTransaction),
         ]);
       } catch (error) {
-        logger.error("error to refund data");
+        logger.error("error to refund data",error);
         throw new ErrorResponse(
           "Error to refund data",
           StatusCodeEnum.INTERNAL_SERVER_ERROR
@@ -711,7 +707,7 @@ selectedBookingData = async (
       );
 
       if (bookingData?.paymentMethod == TransactionTypeEnum.PAYATSHOP) {
-        payload.paymentStatus = "paid";
+        payload.paymentStatus = PaymentStatusEnum.PAID;
       }
     }
 
@@ -845,6 +841,7 @@ selectedBookingData = async (
     if (dateFormat == selectedDateFromat) {
       isCurrentDay = false;
     }
+
 
     const indexes: number[] = [];
 

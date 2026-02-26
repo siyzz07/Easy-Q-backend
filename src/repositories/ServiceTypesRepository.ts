@@ -1,14 +1,12 @@
-// in this repo is for the services types that have given by amdin in each vendor and its for the types of the shop like what type of service they provide
-
-
-import { IServiceTypesRepositoryInterface } from "../interface/service-types-interface/service-type-repository-interface";
+// -----in this repo is for the services types that have given by amdin in each vendor and its for the types of the shop like what type of service they provide
+import { IServiceTypesRepository } from "../interface/service-types-interface/service-type-repository-interface";
 import ServiceTypesModel from "../models/ServiceTypesModel";
 import { IServiceType } from "../types/adminTypes";
 import BaseRepository from "./baseRepository";
 
 export class ServiceTypes
   extends BaseRepository<IServiceType>
-  implements IServiceTypesRepositoryInterface
+  implements IServiceTypesRepository
 {
   private _ServiceTypeModel = ServiceTypesModel;
 
@@ -17,7 +15,7 @@ export class ServiceTypes
   }
 
   //--------------------------------------------------------------- add new Service
-  async addServiceType(data: {
+  async   addServiceType(data: {
     serviceName: string;
     description: string;
     isActive: boolean;
@@ -59,4 +57,10 @@ export class ServiceTypes
     const result = await this._ServiceTypeModel.find()
     return result
   }
+
+    //---------------------------------------------------------------- get service by condition
+     async getServiceByCondition(data: Partial<IServiceType>): Promise<IServiceType[]> {
+      const result = await this.findManyByCondition(data)
+      return result
+    }
 }

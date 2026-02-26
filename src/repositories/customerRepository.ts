@@ -1,18 +1,13 @@
 import { ICustomer } from "../types/customerType";
 import customer from "../models/customerModel";
 import BaseRepository from "./baseRepository";
-import vendorModel from "../models/vendorModel";
-import { IService, IVendor } from "../types/vendorType";
-import Service from "../models/ServiceModel";
-import { ICustomerRepo } from "../interface/customer-interface/customer-repository-interface";
+import { ICustomerRepository } from "../interface/customer-interface/customer-repository-interface";
 
 export class CustomerRepository
   extends BaseRepository<ICustomer>
-  implements ICustomerRepo
+  implements ICustomerRepository
 {
   private _customerModel = customer;
-  private _vendorModel = vendorModel;
-  private _VendorServiceModel = Service;
 
   constructor() {
     super(customer);
@@ -86,5 +81,32 @@ export class CustomerRepository
       })
       .lean();
     return !!updated;
+  }
+
+  //----------------------------- get monthly customer growth
+  async getMonthlyUserGrowth(year: number): Promise<any> {
+    try {
+      const stats = await this._customerModel.aggregate([
+        {
+          $match: {
+            createdAt: {
+              $gte: new Date(`${year}-01-01`),
+              $lt: new Date(`${year + 1}-01-01`),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id": 1 } },
+      ]);
+      return stats;
+    } catch (error) {
+      console.error("Error fetching monthly customer growth:", error);
+      return [];
+    }
   }
 }

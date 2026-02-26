@@ -1,7 +1,7 @@
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
-import { IAddContracValues, IContract, IPaginationMeta, IPaginationResponseMeta, IUpdateContractValues } from "../../types/common-types";
+import { IAddContracValues, IPaginationResponseMeta, IUpdateContractValues } from "../../types/common-types";
 
-export interface IContractServiceInterface {
+export interface IContractService {
     addNewContract(userId:string,contractData: IAddContracValues): Promise<ContractDto>;
     editContract(contractId: string,userId:string, contractData: Partial<IUpdateContractValues>): Promise<boolean | null>;
     getContract(contractId: string): Promise<ContractDto | null>;
@@ -11,6 +11,7 @@ export interface IContractServiceInterface {
     applyForContract (vendorId:string,contractId:string) :Promise<boolean>
     handleAppliedVendors (vendorId:string,contractId:string,decision:'accept'|'reject') :Promise<boolean>
     getVendorContracts (vendorId:string,query:{page?:string,limit?:string,search?:string}):Promise< {data:ContractDto[], pagination:IPaginationResponseMeta}>
+    getVendorAppliedContracts (vendorId:string,query:{page?:string,limit?:string,search?:string}):Promise< {data:ContractDto[], pagination:IPaginationResponseMeta}>
     removeFromContract (vendorId:string , contractId:string) :Promise<boolean|void>
 
 }

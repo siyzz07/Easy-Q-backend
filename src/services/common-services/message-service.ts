@@ -1,13 +1,13 @@
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { IMessageRepository } from "../../interface/message-interface/message-repository-interface";
-import { IMessageServiceInterface } from "../../interface/message-interface/message-service-interface";
+import { IMessageService } from "../../interface/message-interface/message-service-interface";
 import { IMessage } from "../../types/common-types";
 import { ErrorResponse } from "../../utils/errorResponse";
 import logger from "../../utils/logger";
 import { MessageResponseDTO } from "../../dto/message-dto/message-dto";
 
-export class MessageService implements IMessageServiceInterface {
+export class MessageService implements IMessageService {
   private _messageRepository: IMessageRepository;
 
   constructor(messageRepository: IMessageRepository) {

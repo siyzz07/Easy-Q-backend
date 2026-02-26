@@ -1,11 +1,11 @@
 import {ICustomer} from "../../types/customerType";
-import { IService, IVendor } from "../../types/vendorType";
 
 
 
 
 
-export interface ICustomerServiceInterface{
+
+export interface ICustomerService{
 
     getCustomerData (id:string):Promise<ICustomer|void>
     editProfile(data:{userId:string;name:string;email:string;phone:string}):Promise<boolean|void>

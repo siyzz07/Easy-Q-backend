@@ -1,32 +1,17 @@
 import express from 'express'
 
 import { AddressControllerInstance, customerControllerInstance, favoriteControllerInstance } from '../di/customerDi'
-import { emailVerifyTokenMIddleware } from '../middlewares/emailTokenVerify'
 import { isCustomer, verifyToken } from '../middlewares/authTokenVerify'
 import { customerBlockAuth } from '../middlewares/customerBlockAuth'
-import { authControllerInstance } from '../di/authDi'
 import { vendorControllerInstance, vendorServiceControllerInstance } from '../di/vendorDi'
-import { BookingControllerInstance } from '../di/commonDi'
 import { validate } from '../middlewares/validate'
 import { addAddressSchema, editAddressSchema } from '../validations/address-validation'
-// import { addAddressSchema, editAddressSchema } from '../validations/address-Validation'
 
 
 
 const customerRoute = express.Router()
 
-/**
- * 
- *  Auth
- * 
- */
-// customerRoute.post('/auth/signup',authControllerInstance.verifyEmail)
-// customerRoute.post('/auth/verify-email',emailVerifyTokenMIddleware,authControllerInstance.addNewEntity)
-// customerRoute.post('/auth/login',authControllerInstance.login )
-// customerRoute.post('/reset-password/verify',authControllerInstance.resetPasswordEmailVerify)
-// customerRoute.post('/reset-password',emailVerifyTokenMIddleware,authControllerInstance.resetPassword)
-// customerRoute.post('/auth/refresh-token',authControllerInstance.refreshToken)
-// customerRoute.post ('/logout',verifyToken,authControllerInstance.logout)
+
 
 /**
  * 

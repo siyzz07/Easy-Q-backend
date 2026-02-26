@@ -1,18 +1,15 @@
-
-import { IAdminRepo } from "../interface/admin-interface/admin-repository-interface";
+import { IAdminRepository } from "../interface/admin-interface/admin-repository-interface";
 import adminModel from "../models/adminModel";
-import customerModel from "../models/customerModel";
-import vendorModel from "../models/vendorModel";
 import { IAdmin } from "../types/adminTypes";
-import { ICustomer } from "../types/customerType";
-import { IVendor } from "../types/vendorType";
 import BaseRepository from "./baseRepository";
 
-export class AdminRepository extends BaseRepository<IAdmin> implements IAdminRepo {
-  private _AdminModel = adminModel; 
+export class AdminRepository
+  extends BaseRepository<IAdmin>
+  implements IAdminRepository
+{
 
   constructor() {
-    super(adminModel); 
+    super(adminModel);
   }
 
   //------------------------------------------------------- check admin exist
@@ -24,7 +21,7 @@ export class AdminRepository extends BaseRepository<IAdmin> implements IAdminRep
       return false;
     }
   }
-  
+
   //------------------------------------------------------- take amin data
   async adminDataByEmail(email: string): Promise<IAdmin | null> {
     const adminData = await this.findByEmail(email);
@@ -33,8 +30,6 @@ export class AdminRepository extends BaseRepository<IAdmin> implements IAdminRep
   }
 
   async addAdmin(data: IAdmin): Promise<void> {
-     await this.create(data);
+    await this.create(data);
   }
-
-
 }

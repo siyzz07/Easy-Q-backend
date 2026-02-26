@@ -1,4 +1,6 @@
 
+import mongoose from "mongoose";
+
 
 export interface IAdmin {
    _id?:string,
@@ -9,7 +11,7 @@ export interface IAdmin {
 
 
 export interface IServiceType{
-   _id?:string;
+   _id?:string|mongoose.Types.ObjectId;
    serviceName:string;
    description:string;
    isActive:boolean

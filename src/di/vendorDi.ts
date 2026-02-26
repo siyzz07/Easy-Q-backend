@@ -8,11 +8,13 @@ import {
     serviceRepository, 
     serviceTypesRepository, 
     staffRepository, 
-    vendorRepository 
+    vendorRepository,
+    bookingRepository,
+    contractRepository
 } from "./repositoriesDi";
 
 //----------------------------------------------------------- vendor shop like get shop dat updatad data etc...
-const vendorShopServiceInstance = new VendorService(vendorRepository, staffRepository, serviceTypesRepository, serviceRepository)
+const vendorShopServiceInstance = new VendorService(vendorRepository, staffRepository, serviceTypesRepository, serviceRepository, bookingRepository, contractRepository)
 const vendorControllerInstance = new VendorController(vendorShopServiceInstance)
 
 //----------------------------------------------------------- staff

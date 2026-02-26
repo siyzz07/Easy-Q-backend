@@ -1,9 +1,7 @@
 import express from "express";
 import { staffControllerInstance, vendorServiceControllerInstance, vendorControllerInstance } from "../di/vendorDi";
-import { emailVerifyTokenMIddleware } from "../middlewares/emailTokenVerify";
 import { isVendor, isVendorOrCustomer, verifyToken } from "../middlewares/authTokenVerify";
 import { vendorBlockAuth } from "../middlewares/vendorBlockAuth";
-import { authControllerInstance } from "../di/authDi";
 import { validate } from "../middlewares/validate";
 import { AddStaffSchema } from "../validations/staff-validation";
 
@@ -11,18 +9,6 @@ import { AddStaffSchema } from "../validations/staff-validation";
 
 
 const vendorRoute = express.Router()
-
-
-
-//---------------------------------------------- Auth
-
-// vendorRoute.post('/auth/verify-email',authControllerInstance.verifyEmail)
-// vendorRoute.post('/auth/add-vendor',emailVerifyTokenMIddleware,authControllerInstance.addNewEntity)
-// vendorRoute.post('/auth/login',authControllerInstance.login)
-// vendorRoute.post('/reset-password/verify',authControllerInstance.resetPasswordEmailVerify)
-// vendorRoute.post('/reset-password',emailVerifyTokenMIddleware,authControllerInstance.resetPassword)
-// vendorRoute.post('/auth/refresh-token',authControllerInstance.refreshToken)
-// vendorRoute.post('/logout',verifyToken,authControllerInstance.logout)
 
 
 

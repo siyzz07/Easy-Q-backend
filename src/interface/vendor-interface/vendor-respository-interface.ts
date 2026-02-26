@@ -1,10 +1,9 @@
-import { VendorDTO } from "../../dto/booking-dto/booking-dto";
-import { IServiceType } from "../../types/adminTypes";
 import { IPaginationResponseMeta } from "../../types/common-types";
-import { IImage, IService, IStaff, IVendor } from "../../types/vendorType";
+import { IImage, IVendor } from "../../types/vendorType";
+import { MonthlyData } from "../../types/adminType";
 
 
-export interface IVendorRepo {
+export interface IVendorRepository {
     addNewVendor(data:IVendor):Promise<boolean>
     checkVendorExist(email:string):Promise<boolean>
     vendorData(email:string):Promise<IVendor|any>
@@ -30,5 +29,5 @@ export interface IVendorRepo {
     deleteShopImage(_id:string,imageId:string):Promise<boolean>
 
     vendorsDataWithPagination (data:{search?:string,page?:string,limit?:string, lat?:number, lng?: number,distance?:number, categories?:string[],ratings?:string[]}):Promise<{data:IVendor[],pagination: IPaginationResponseMeta}>
-    
+    getMonthlyUserGrowth(year: number): Promise<MonthlyData[]>
 }

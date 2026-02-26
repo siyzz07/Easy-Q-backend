@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import { IChatRoomRepositoryInterface } from "../../interface/chatRoom-interface/chatRoom-respsitory-interface";
-import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
+
+import { IChatRoomRepository } from "../../interface/chatRoom-interface/chatRoom-respsitory-interface";
+import { IChatRoomService } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
 import { IChatRoom } from "../../types/common-types";
 import logger from "../../utils/logger";
 import { ErrorResponse } from "../../utils/errorResponse";
@@ -11,18 +11,26 @@ import {
   socketNotificationHandler,
 } from "../../sockets/handlers/notificationHandler";
 import { socketManagerServer } from "../../sockets/socketInstance";
-import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
-import { log } from "console";
+import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { generateToken04 } from "../../utils/zegoServerAssistant";
 import { leaveVedioCallNotify, getActiveCallUsers } from "../../sockets/handlers/chatHandlers";
+import { ICustomer } from "../../types/customerType";
+import { IVendor } from "../../types/vendorType";
+import mongoose from "mongoose";
 
-export class ChatRoomService implements IChatRoomServiceInterface {
-  private _ChatRoomRepository: IChatRoomRepositoryInterface;
-  private _ContractService: IContractServiceInterface;
+interface PopulatedUserId {
+  _id: string | mongoose.Types.ObjectId;
+  name?: string;
+  shopName?: string;
+}
+
+export class ChatRoomService implements IChatRoomService {
+  private _ChatRoomRepository: IChatRoomRepository;
+  private _ContractService: IContractService;
 
   constructor(
-    chatRoomRepository: IChatRoomRepositoryInterface,
-    contractService: IContractServiceInterface,
+    chatRoomRepository: IChatRoomRepository,
+    contractService: IContractService,
   ) {
     this._ChatRoomRepository = chatRoomRepository;
     this._ContractService = contractService;
@@ -37,22 +45,17 @@ export class ChatRoomService implements IChatRoomServiceInterface {
     contractId: string,
     customerId: string,
   ): Promise<boolean | void> => {
-    console.log("contractId :>> ", contractId);
-    console.log("customerId :>> ", customerId);
+
     const roomData = await this._ChatRoomRepository.createChatRoom(contractId);
-    console.log("1");
 
     if (roomData) {
       logger.info("chat room created");
-
-      console.log("2");
       const result = await this._ChatRoomRepository.addMemberToChatRoom(
         contractId.toString(),
         customerId,
         "Customer",
         "admin",
       );
-      console.log("3");
 
       if (result) {
         logger.info("Member addedd in chat room");
@@ -60,7 +63,6 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       } else {
         logger.error("error to add member in contract room");
       }
-      console.log("4");
     } else {
       logger.error("error to create chat room");
     }
@@ -74,8 +76,8 @@ export class ChatRoomService implements IChatRoomServiceInterface {
   async addMemberToChatRoom(
     contractId: string,
     memberId: string,
-    memberType: "Customer" | "Vendor",
-    role: "admin" | "member",
+    _memberType: "Customer" | "Vendor",
+    _role: "admin" | "member",
   ): Promise<boolean> {
     const result = await this._ChatRoomRepository.addMemberToChatRoom(
       contractId,
@@ -83,6 +85,8 @@ export class ChatRoomService implements IChatRoomServiceInterface {
       "Vendor",
       "member",
     );
+    console.log(_role,_memberType);
+    
     if (result) {
       logger.info("new vendor added in chat room");
       return true;
@@ -149,38 +153,74 @@ export class ChatRoomService implements IChatRoomServiceInterface {
     };
 
     const activeUsers = getActiveCallUsers(roomId);
+    const callerIdStr = String(caller);
     
-    console.log('ChatRoom Members:', JSON.stringify(chatRoomData.members.map(m => ({id: m.userId.toString(), type: m.userType})), null, 2));
-    console.log('Active Users in Room:', activeUsers ? Array.from(activeUsers) : 'None');
-    console.log('Caller:', caller);
+    console.log('--- startVedioCall: Detailed Notification Audit ---');
+    console.log('Contract ID:', contractId);
+    console.log('Room ID (ChatRoom):', roomId);
+    console.log('Caller ID:', callerIdStr);
+    console.log('Total Members Found in DB:', chatRoomData.members.length);
+    
+    // Log member types for debugging
+    const memberSummary = chatRoomData.members.map(m => {
+        const userIdObj = m.userId as unknown as PopulatedUserId;
+        return {
+            type: m.userType,
+            id: String(userIdObj?._id || m.userId)
+        };
+    });
+    console.log('Members Summary:', JSON.stringify(memberSummary));
+    
+    const stats = { vendor: 0, customer: 0 };
+    chatRoomData.members.forEach(m => {
+        if (m.userType === 'Vendor') stats.vendor++;
+        else if (m.userType === 'Customer') stats.customer++;
+    });
+    console.log(`Member Counts -> Vendors: ${stats.vendor}, Customers: ${stats.customer}`);
 
     const notifyUsers: IVedioCallNotify[] = chatRoomData.members
       .filter((member) => {
-        const memberId = member.userId.toString();
-        const isActive = activeUsers?.has(memberId);
-        const isCaller = memberId === caller;
-        
-        if (isCaller) return false;
-        if (isActive) {
-            console.log(`Skipping active user: ${memberId}`);
+        // Robust ID extraction for populated user objects
+        const mUserId = (member.userId as unknown as PopulatedUserId)?._id || member.userId;
+        if (!mUserId) {
+            console.log(`WARNING: Member has no userId! Type: ${member.userType}`);
             return false;
         }
+        
+        const memberId = String(mUserId);
+        const isActive = activeUsers?.has(memberId);
+        const isCaller = memberId === callerIdStr;
+        
+        console.log(`[AUDIT] Member: ${memberId} | Type: ${member.userType} | isCaller: ${isCaller} | isActive: ${isActive}`);
+
+        if (isCaller) return false;
+        
+        // Skip users already in the Zego meeting
+        if (isActive) {
+            console.log(`[AUDIT] --> Skipping already active participant: ${memberId}`);
+            return false;
+        }
+        
+        console.log(`[AUDIT] --> ACCEPTED for notification: ${memberId}`);
         return true;
       })
-      .map((value) => ({
-        userId: value.userId.toString(),
-        userType: value.userType,
-      }));
+      .map((value) => {
+        const userIdObj = value.userId as unknown as PopulatedUserId;
+        const id = String(userIdObj?._id || value.userId);
+        return {
+            userId: id,
+            userType: value.userType,
+        };
+      });
 
-    console.log('Users to Notify:', JSON.stringify(notifyUsers, null, 2));
+    console.log(`Total notifications to be sent: ${notifyUsers.length}`);
+    console.log('Notification Target IDs:', notifyUsers.map(u => u.userId));
 
     await socketNotificationHandler.vedioCallNotify(
       socketManagerServer.getIo(),
       notifyUsers,
       payload,
     );
-
-    console.log("roomId :>> ", roomId);
 
     return roomId;
   }
@@ -204,7 +244,11 @@ export class ChatRoomService implements IChatRoomServiceInterface {
   }
 
   const userMember = roomData.members.find(
-    (value: any) => value.userId._id.toString() === userId
+    (value) => {
+      const userIdObj = value.userId as unknown as PopulatedUserId;
+      const mId = userIdObj?._id ? userIdObj._id.toString() : value.userId.toString();
+      return mId === userId;
+    }
   );
 
   if (!userMember) {
@@ -212,22 +256,15 @@ export class ChatRoomService implements IChatRoomServiceInterface {
   }
 
   if (userMember.userType === "Vendor") {
-    name = userMember.userId.shopName;
+    name = (userMember.userId as IVendor).shopName || "";
   } else {
-    name = userMember.userId.name;
+    name = (userMember.userId as ICustomer).name || "";
   }
 
   const appId = Number(process.env.ZEGOCLOUD_APP_ID);
   const serverSecret = process.env.ZEGOCLOUD_SERVER_SECRET as string;
   const effectiveTime = 3600; 
-
-  console.log('appId :>> ', appId);
-  console.log('userId :>> ', userId);
-  console.log('serverSecret :>> ', serverSecret);
-  console.log('effectiveTime :>> ', effectiveTime);
-  console.log('roomId :>> ', roomId);
-
-
+ 
 
   
   const token = generateToken04(
@@ -246,23 +283,36 @@ export class ChatRoomService implements IChatRoomServiceInterface {
    *  remove form vedio room
    *
    */
-  leaveVedioCall = async(roomId: string, userId: string): Promise<boolean | void> => {
+  leaveVedioCall = async (roomId: string, userId: string): Promise<boolean | void> => {
+    const roomData = await this._ChatRoomRepository.getChatRoomById(roomId);
 
-    const roomData = await this._ChatRoomRepository.getChatRoomById(roomId)
+    if (!roomData) return;
 
-    
-    const notifyUsers: [{userId:string}] = roomData.members
+    console.log("roomdData. :>> ", roomData.members);
+    const notifyUsers: { userId: string }[] = roomData.members
+      .filter((member) => {
+        const userIdObj = member.userId as unknown as PopulatedUserId;
+        const mId = userIdObj?._id
+          ? userIdObj._id.toString()
+          : member.userId.toString();
+        return mId !== userId;
+      })
+      .map((value) => {
+        const userIdObj = value.userId as unknown as PopulatedUserId;
+        const mId = userIdObj?._id
+          ? userIdObj._id.toString()
+          : value.userId.toString();
+        return {
+          userId: mId,
+        };
+      });
 
-      .filter((member:any) => member.userId._id.toString() !== userId)
-      .map((value:any) => ({
-        userId: value.userId._id.toString(),
-
-      }));
-      
-
-      leaveVedioCallNotify(socketManagerServer.getIo(),{roomId,userId},notifyUsers)
-
-  }
+    leaveVedioCallNotify(
+      socketManagerServer.getIo(),
+      { roomId, userId },
+      notifyUsers,
+    );
+  };
 
     /**
    *

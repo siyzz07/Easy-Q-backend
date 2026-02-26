@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
-import { IVendorShopServiceInterface } from "../../interface/vendor-interface/vendor-service-interface";
-import { workerData } from "worker_threads";
-import { log } from "console";
+import { IVendorShopService } from "../../interface/vendor-interface/vendor-service-interface";
+
+
 
 class VendorController {
-  private _vendorShopService: IVendorShopServiceInterface;
+  private _vendorShopService: IVendorShopService;
 
-  constructor(vendorService: IVendorShopServiceInterface) {
+  constructor(vendorService: IVendorShopService) {
     this._vendorShopService = vendorService;
   }
 
@@ -38,17 +38,7 @@ class VendorController {
         .status(StatusCodeEnum.OK)
         .json({ message: MessageEnum.SHOP_DATA_ADDED_SUCCESS });
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.message == MessageEnum.SHOP_DATA_ADDED_FAILED) {
-          res
-            .status(StatusCodeEnum.FORBIDDEN)
-            .json({ message: MessageEnum.SHOP_DATA_ADDED_FAILED });
-        } else {
-          res.status(StatusCodeEnum.FORBIDDEN).json({ message: error.message });
-        }
-      } else {
-        console.log("shop data adding error");
-      }
+       next(error)
     }
   };
 
@@ -64,9 +54,7 @@ class VendorController {
       const data = await this._vendorShopService.getShopData(id);
       res.status(StatusCodeEnum.OK).json({ data: data });
     } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
+      next(error)
     }
   };
 
@@ -85,9 +73,7 @@ class VendorController {
           .json({ message: MessageEnum.SERVICE_FETCH_SUCCESS, data: result });
       }
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
+      next(error)
     }
   };
 
@@ -123,8 +109,10 @@ class VendorController {
     next: NextFunction
   ): Promise<void> => {
     try {
+      const year = req.query.year ? Number(req.query.year) : undefined;
       const result = await this._vendorShopService.getDashboard(
-        req.body.userId
+        req.body.userId,
+        year
       );
 
       if (result) {
@@ -133,7 +121,7 @@ class VendorController {
           .json({ message: MessageEnum.SUCCEESS, data: result });
       }
     } catch (error) {
-      throw error;
+      next(error);
     }
   };
 

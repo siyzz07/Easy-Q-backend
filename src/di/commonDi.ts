@@ -1,12 +1,9 @@
 import { BookingController } from "../controllers/booking/booking-controller"
 import { ReviewController } from "../controllers/reviews/review-controller"
-import { ReviewRepository } from "../repositories/reviewRepository"
 import { BookingService } from "../services/common-services/booking-service"
-import { NotificationService } from "../services/common-services/notification-service"
 import { ReviewService } from "../services/common-services/review-service"
 import { 
-    bookingRepository, 
-    notificationRepository, 
+    bookingRepository,  
     serviceRepository, 
     staffRepository,
     reviewRepository, 
@@ -19,7 +16,6 @@ import { TransactionService } from "../services/common-services/transaction-serv
 import { TransactionController } from "../controllers/transaction/transaction-controller"
 import { WalletService } from "../services/common-services/wallet-service"
 import { WalletController } from "../controllers/wallet/wallet-controller"
-import { NotificaionController } from "../controllers/notification/notificaion-controller"
 import { notificationControllerInstance, notificationServiceInstance } from "./notificationDi"
 
 // ------------------ Notificaton di

@@ -1,4 +1,4 @@
-import { ITransaction, IBooking, IBookingPopulated } from "../../types/common-types";
+import { ITransaction, IBookingPopulated } from "../../types/common-types";
 import { TransactionDTO } from "../../dto/transaction-dto/transaction-dto";
 import { format } from "date-fns";
 
@@ -13,7 +13,7 @@ export class TransactionMapper {
             status: transaction.status,
             createdAt: transaction.createdAt,
             
-            // Format dates
+       
             date: format(new Date(transaction.createdAt), "MMM dd, yyyy"),
             time: format(new Date(transaction.createdAt), "hh:mm a"),
             bookingId: undefined,

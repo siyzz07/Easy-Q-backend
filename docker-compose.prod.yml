@@ -1,0 +1,49 @@
+# ═══════════════════════════════════════════════════════════════
+#  EasyQ — Production Docker Compose (Backend Only)
+# ═══════════════════════════════════════════════════════════════
+#  Frontend is hosted on Vercel (auto-deploys from GitHub)
+#  Using: MongoDB Atlas (cloud) + Redis Cloud
+#
+#  Usage:
+#    docker compose -f docker-compose.prod.yml up -d --build
+#    docker compose -f docker-compose.prod.yml logs -f
+#    docker compose -f docker-compose.prod.yml down
+#
+#  Prerequisites:
+#    1. Copy easyq-backend/.env.production.example → .env.production
+#    2. Fill in your Atlas URI, Redis Cloud creds, and all secrets
+# ═══════════════════════════════════════════════════════════════
+
+name: easyq-prod
+
+services:
+  # ──────────────────────────────────────────
+  # Backend — Node.js (Production Build)
+  # ──────────────────────────────────────────
+  backend:
+    container_name: easyq-backend
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: production
+    env_file:
+      - ./.env.production
+    environment:
+      - NODE_ENV=production
+      - PORT=7004
+    ports:
+      - "7004:7004"
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

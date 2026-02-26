@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { IBookingServiceInterface } from "../../interface/booking-interface/booking-service-interface";
+import { IBookingService } from "../../interface/booking-interface/booking-service-interface";
 import { StatusCodeEnum } from "../../enums/httpStatusCodeEnum";
 import { MessageEnum } from "../../enums/messagesEnum";
 import { checkTimeReqMapper } from "../../mappers/booking-mapper/booking-mapper";
@@ -11,9 +11,9 @@ export class BookingController {
 
 
 
-  private _BookingService:IBookingServiceInterface
+  private _BookingService:IBookingService
 
-  constructor(bookingService:IBookingServiceInterface){
+  constructor(bookingService:IBookingService){
     this._BookingService = bookingService
   }
 
@@ -166,7 +166,7 @@ export class BookingController {
 
     const bookingId = req.params.bookingId
 
-    const result = await this._BookingService.refundBookingCash(bookingId)
+    await this._BookingService.refundBookingCash(bookingId)
 
     res
       .status(StatusCodeEnum.OK)

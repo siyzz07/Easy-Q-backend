@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { IChatRoomRepositoryInterface } from "../interface/chatRoom-interface/chatRoom-respsitory-interface";
+import { IChatRoomRepository } from "../interface/chatRoom-interface/chatRoom-respsitory-interface";
 import chatRoom from "../models/chatRoom";
 import { IChatRoom } from "../types/common-types";
 import BaseRepository from "./baseRepository";
 
 export class ChatRoomRepository
   extends BaseRepository<IChatRoom>
-  implements IChatRoomRepositoryInterface
+  implements IChatRoomRepository
 {
   private _ChatRoomModel = chatRoom;
 
@@ -65,12 +65,16 @@ export class ChatRoomRepository
    *
    */
    async getChatRoomByContractId(contractId: string): Promise<IChatRoom | void> {
+    const filter = mongoose.isValidObjectId(contractId) 
+      ? { contractId: new mongoose.Types.ObjectId(contractId) }
+      : { contractId }; 
+    const result = await this._ChatRoomModel.findOne(filter)
+      .populate('members.userId')
+      .exec();
     
-    const result =  await this.findOneByCondiition({contractId:contractId})
-    if(result){
-      return result
+    if (result) {
+      return result;
     }
-
   }
 
    /**

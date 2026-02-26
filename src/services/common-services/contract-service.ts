@@ -1,11 +1,9 @@
-import { IContractRepositoryInterface } from "../../interface/contract-interface/contract-respositlory-interface";
-import { IContractServiceInterface } from "../../interface/contract-interface/contract-service-interface";
+import { IContractRepository } from "../../interface/contract-interface/contract-respositlory-interface";
+import { IContractService } from "../../interface/contract-interface/contract-service-interface";
 import { ContractDto } from "../../dto/contract-dto/contract-dto";
 import { ContractMapper } from "../../mappers/contract-mapper/contract-mapper";
 import {
   IAddContracValues,
-  IContract,
-  IPaginationMeta,
   IPaginationResponseMeta,
   IUpdateContractValues,
 } from "../../types/common-types";
@@ -16,37 +14,33 @@ import {
   ContractNotificationTitleEnum,
   MessageEnum,
 } from "../../enums/messagesEnum";
-import { ICustomerAddressRepositoryInterface } from "../../interface/address-interface/address-repository-interface";
+import { ICustomerAddressRepository } from "../../interface/address-interface/address-repository-interface";
 import { nanoid } from "nanoid";
 import mongoose from "mongoose";
 import { ContractStatusEnum } from "../../enums/contractEnum";
 import { IGeoLocation } from "../../types/vendorType";
-import { IVendorRepo } from "../../interface/vendor-interface/vendor-respository-interface";
+import { IVendorRepository } from "../../interface/vendor-interface/vendor-respository-interface";
 import logger from "../../utils/logger";
-import { string } from "joi";
-import { INotificationServiceInterface } from "../../interface/notificaion-interface/notification-service-interface";
-import { INotificationRepositoryInterface } from "../../interface/notificaion-interface/notificaion-repository-interface";
-import { BookingStatusEnum } from "../../enums/bookingStatusEnum";
+import { INotificationService } from "../../interface/notificaion-interface/notification-service-interface";
 import {
   ContractNotificationTypeEnum,
   NotificationCategoryEnum,
 } from "../../enums/notificationEnum";
-import { IChatRoomServiceInterface } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
-import { log } from "winston";
+import { IChatRoomService } from "../../interface/chatRoom-interface/chatRoom-Service-Interface";
 
-class ContractService implements IContractServiceInterface {
-  private _ContractRepository: IContractRepositoryInterface;
-  private _AddressRepository: ICustomerAddressRepositoryInterface;
-  private _VendorRepositroy: IVendorRepo;
-  private _NotificationService!: INotificationServiceInterface;
-  private _ChatRoomService!: IChatRoomServiceInterface;
+class ContractService implements IContractService {
+  private _ContractRepository: IContractRepository;
+  private _AddressRepository: ICustomerAddressRepository;
+  private _VendorRepositroy: IVendorRepository;
+  private _NotificationService!: INotificationService;
+  private _ChatRoomService!: IChatRoomService;
 
   constructor(
-    contractRepo: IContractRepositoryInterface,
-    addressRepository: ICustomerAddressRepositoryInterface,
-    vendorRepository: IVendorRepo,
-    notificationService?: INotificationServiceInterface,
-    chatRoomService?: IChatRoomServiceInterface,
+    contractRepo: IContractRepository,
+    addressRepository: ICustomerAddressRepository,
+    vendorRepository: IVendorRepository,
+    notificationService?: INotificationService,
+    chatRoomService?: IChatRoomService,
   ) {
     this._ContractRepository = contractRepo;
     this._AddressRepository = addressRepository;
@@ -56,12 +50,12 @@ class ContractService implements IContractServiceInterface {
   }
 
   public setNotificationService(
-    notificationService: INotificationServiceInterface,
+    notificationService: INotificationService,
   ) {
     this._NotificationService = notificationService;
   }
 
-  public setChatRoomService(chatRoomService: IChatRoomServiceInterface) {
+  public setChatRoomService(chatRoomService: IChatRoomService) {
     this._ChatRoomService = chatRoomService;
   }
 
@@ -116,20 +110,17 @@ class ContractService implements IContractServiceInterface {
       status: ContractStatusEnum.OPEN,
       createdAt: new Date(),
     };
-    console.log("11");
 
     const result =
       await this._ContractRepository.addNewContract(contractPayload);
-    console.log("12");
+
 
     if (result) {
-      console.log("13");
       const response = await this._ChatRoomService.createChatRoom(
         result._id?.toString() as string,
         userId,
       );
-      console.log("14");
-
+ 
       if (!response) {
         throw new ErrorResponse(
           "Failed to create contract",
@@ -156,15 +147,16 @@ class ContractService implements IContractServiceInterface {
     userId: string,
     contractData: IUpdateContractValues,
   ): Promise<boolean | null> {
-    let {
+    const {
       contractName,
       description,
       phone,
       address,
       serviceType,
-      isHiring,
       status,
     } = contractData;
+
+    let {isHiring} = contractData
 
     const getContractData =
       await this._ContractRepository.getContract(contractId);
@@ -344,7 +336,7 @@ class ContractService implements IContractServiceInterface {
       vendorId,
       contractId,
     );
-    const vendroData = await this._VendorRepositroy.getEachVendorData(vendorId);
+     await this._VendorRepositroy.getEachVendorData(vendorId);
 
     if (result && contract) {
       const customerId = contract.customerId._id;
@@ -390,7 +382,7 @@ class ContractService implements IContractServiceInterface {
         vendorId,
       );
       if (result) {
-        const chatRoomResult = await this._ChatRoomService.addMemberToChatRoom(
+       await this._ChatRoomService.addMemberToChatRoom(
           contractId,
           vendorId,
           "Vendor",
@@ -400,7 +392,7 @@ class ContractService implements IContractServiceInterface {
       logger.info("vendor added in contract successfully");
       return true;
     } else {
-      const result = await this._ContractRepository.removeFromContractRequest(
+      await this._ContractRepository.removeFromContractRequest(
         contractId,
         vendorId,
       );
@@ -418,6 +410,25 @@ class ContractService implements IContractServiceInterface {
     query: { page?: string; limit?: string; search?: string },
   ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> => {
     const result = await this._ContractRepository.getVendorContracts(
+      vendorId,
+      query,
+    );
+    return {
+      data: ContractMapper.toDTOList(result.data),
+      pagination: result.pagination,
+    };
+  };
+
+  /**
+   *
+   *    get applied contracts of vendor
+   *
+   */
+  getVendorAppliedContracts = async (
+    vendorId: string,
+    query: { page?: string; limit?: string; search?: string },
+  ): Promise<{ data: ContractDto[]; pagination: IPaginationResponseMeta }> => {
+    const result = await this._ContractRepository.getVendorAppliedContracts(
       vendorId,
       query,
     );
