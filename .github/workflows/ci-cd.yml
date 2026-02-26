@@ -56,7 +56,7 @@ jobs:
       - name: 🔍 Lint check
         run: npm run lint
 
-      # 5. Build TypeScript → JavaScript
+      # 5. Build TypeScript → JavaScri
       - name: 🏗️ Build
         run: npm run build
 
@@ -137,8 +137,8 @@ jobs:
           script: |
             cd ~/easyq-backend
             
-            # Export DOCKERHUB_USERNAME so docker compose can inject it into the yml
-            export DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}
+            # Write the DockerHub Username to an environment file so compose can read it
+            echo "DOCKERHUB_USERNAME=${{ secrets.DOCKERHUB_USERNAME }}" > .env
             
             # Pull the latest backend image
             docker compose -f docker-compose.prod.yml pull
