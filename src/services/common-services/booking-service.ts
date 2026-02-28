@@ -838,6 +838,8 @@ selectedBookingData = async (
     const dateFormat = dateNow.toDateString();
     const selectedDateFromat = selectedDate.toDateString();
 
+    logger.info(`dateFormat ${dateFormat} -- selectedDateFromate ${selectedDateFromat}`)
+
     if (dateFormat == selectedDateFromat) {
       isCurrentDay = true;
     }
