@@ -839,7 +839,7 @@ selectedBookingData = async (
     const selectedDateFromat = selectedDate.toDateString();
 
     if (dateFormat == selectedDateFromat) {
-      isCurrentDay = false;
+      isCurrentDay = true;
     }
 
 
