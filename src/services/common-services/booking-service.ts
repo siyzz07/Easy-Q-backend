@@ -252,20 +252,26 @@ export class BookingService implements IBookingService {
 
     const dateNow = new Date();
     const selectedDate = new Date(data.date);
-    const dateFormat = dateNow.toDateString();
-    const selectedDateFromat = selectedDate.toDateString();
+    const todayIST = dateNow.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+const selectedIST = selectedDate.toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
 
-    if (dateFormat == selectedDateFromat) {
-      const now = new Date();
-      const nowMinutes = now.getHours() * 60 + now.getMinutes();
-      const [h, m] = timePreffer.split(":");
-      const preferredMinutes = Number(h) * 60 + Number(m);
+if (todayIST === selectedIST) {
+  const now = new Date();
 
-      if (nowMinutes >= preferredMinutes) {
-        logger.warn("time not available on the preffered time gap");
-        return false;
-      }
-    }
+  const nowIST = new Date(
+    now.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+  );
+
+  const nowMinutes = nowIST.getHours() * 60 + nowIST.getMinutes();
+
+  const [h, m] = timePreffer.split(":");
+  const preferredMinutes = Number(h) * 60 + Number(m);
+
+  if (nowMinutes >= preferredMinutes) {
+    logger.warn("time not available on the preferred time gap");
+    return false;
+  }
+}
 
     const staffData = await this._StaffRepository.getStaffById(staffId);
     if (!staffData) {
@@ -827,78 +833,88 @@ selectedBookingData = async (
    * find available time
    */
   private async findAvailabletime(
-    timeLine: { start: string; end: string; type: string }[],
-    serviceDuration: number,
-    preferredTime: string,
-    date: string
-  ): Promise<{ startTime: string; endTime: string } | false> {
-    let isCurrentDay = false;
-    const dateNow = new Date();
-    const selectedDate = new Date(date);
-    const dateFormat = dateNow.toDateString();
-    const selectedDateFromat = selectedDate.toDateString();
+  timeLine: { start: string; end: string; type: string }[],
+  serviceDuration: number,
+  preferredTime: string,
+  date: string
+): Promise<{ startTime: string; endTime: string } | false> {
 
-    if (dateFormat == selectedDateFromat) {
-      isCurrentDay = true;
-    }
+  let isCurrentDay = false;
 
+  const todayIST = new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Kolkata",
+  });
 
-    const indexes: number[] = [];
+  const selectedIST = new Date(date).toLocaleDateString("en-CA", {
+    timeZone: "Asia/Kolkata",
+  });
 
-    function add(index: number) {
-      indexes.push(index);
-      if (indexes.length > 2) indexes.shift();
-    }
+  logger.info(`todayIST ${todayIST} -- selectedIST ${selectedIST}`);
 
-    timeLine.some((item, index) => {
-      if (item.type === "checkpoint") add(index);
-      return item.start === preferredTime;
-    });
-
-    if (indexes.length < 2) return false;
-
-    const [startIdx, endIdx] = indexes;
-
-    for (let i = startIdx; i < endIdx; i++) {
-      let start = timeLine[i].end;
-      const end = timeLine[i + 1].start;
-
-      if (isCurrentDay) {
-        const now = new Date();
-        const nowMinutes = now.getHours() * 60 + now.getMinutes();
-        const [h, m] = start.split(":");
-        const startMinutes = Number(h) * 60 + Number(m);
-        const endMinutes = Number(h) * 60 + Number(m);
-
-        if (nowMinutes >= startMinutes && nowMinutes > endMinutes) {
-          continue;
-        }
-
-        if (nowMinutes > startMinutes && nowMinutes < endMinutes) {
-          const time = now.toLocaleTimeString("en-IN", {
-            timeZone: "Asia/Kolkata",
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-          });
-
-          start = time;
-        }
-      }
-
-      const freeTime = this.diffMinutes(start, end);
-      // const freeTime = this.diffMinutes(timeLine[i].end, timeLine[i + 1].start);
-
-      if (freeTime >= serviceDuration) {
-        const startTime = start;
-        // const startTime = timeLine[i].end;
-        const endTime = this.findEndTime(startTime, serviceDuration);
-        return { startTime, endTime };
-      }
-    }
-
-    return false;
+  if (todayIST === selectedIST) {
+    isCurrentDay = true;
   }
+
+  const indexes: number[] = [];
+
+  function add(index: number) {
+    indexes.push(index);
+    if (indexes.length > 2) indexes.shift();
+  }
+
+  timeLine.some((item, index) => {
+    if (item.type === "checkpoint") add(index);
+    return item.start === preferredTime;
+  });
+
+  if (indexes.length < 2) return false;
+
+  const [startIdx, endIdx] = indexes;
+
+  const nowIST = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+  );
+
+  const nowMinutes = nowIST.getHours() * 60 + nowIST.getMinutes();
+
+  for (let i = startIdx; i < endIdx; i++) {
+    let start = timeLine[i].end;
+    const end = timeLine[i + 1].start;
+
+    if (isCurrentDay) {
+      const [sh, sm] = start.split(":");
+      const [eh, em] = end.split(":");
+
+      const startMinutes = Number(sh) * 60 + Number(sm);
+      const endMinutes = Number(eh) * 60 + Number(em);
+
+      if (nowMinutes >= startMinutes && nowMinutes > endMinutes) {
+        continue;
+      }
+
+      if (nowMinutes > startMinutes && nowMinutes < endMinutes) {
+        const time = nowIST.toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        });
+
+        start = time;
+      }
+    }
+
+    const freeTime = this.diffMinutes(start, end);
+
+    if (freeTime >= serviceDuration) {
+      const startTime = start;
+      const endTime = this.findEndTime(startTime, serviceDuration);
+
+      return { startTime, endTime };
+    }
+  }
+
+  return false;
+}
 
   /**
    * find service end time
