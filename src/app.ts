@@ -26,13 +26,20 @@ app.use(cookieParser());
 console.log(process.env.BASE_URL);
 
 
-app.use(cors({
-    origin:[process.env.BASE_URL as string],
-    methods:["GET", "POST", "PUT", "DELETE","OPTIONS",'PATCH'],
-    credentials:true
-}))
+// app.use(cors({
+//     origin:[process.env.BASE_URL as string],
+//     methods:["GET", "POST", "PUT", "DELETE","OPTIONS",'PATCH'],
+//     credentials:true
+// }))
  
-
+app.use(cors({
+  origin: [
+    "https://easyq.shibinsiyad.site",
+    "https://www.easyq.shibinsiyad.site"
+  ],
+  methods: ["GET","POST","PUT","DELETE","OPTIONS","PATCH"],
+  credentials: true
+}));
 
 
 // app.use(
